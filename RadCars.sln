@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars", "RadCars\RadCars.csproj", "{44637146-528A-4E8D-B544-3BA9147D7A2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.Data", "RadCars.Data\RadCars.Data.csproj", "{42E09276-197D-447A-ACF5-988AB88C2364}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.Data.Models", "RadCars.Data.Models\RadCars.Data.Models.csproj", "{BEF07109-3EB4-436E-8363-79EA890AA57C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.Services", "RadCars.Services\RadCars.Services.csproj", "{B0374C22-FE1F-4B50-A800-E423C66AB1A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.ViewModels", "RadCars.ViewModels\RadCars.ViewModels.csproj", "{04389871-0606-408F-B803-6471ABEDA3CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.Common", "RadCars.Common\RadCars.Common.csproj", "{1143266D-4DFE-414F-9200-DC621F72EB8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{44637146-528A-4E8D-B544-3BA9147D7A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44637146-528A-4E8D-B544-3BA9147D7A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44637146-528A-4E8D-B544-3BA9147D7A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44637146-528A-4E8D-B544-3BA9147D7A2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42E09276-197D-447A-ACF5-988AB88C2364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42E09276-197D-447A-ACF5-988AB88C2364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42E09276-197D-447A-ACF5-988AB88C2364}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42E09276-197D-447A-ACF5-988AB88C2364}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEF07109-3EB4-436E-8363-79EA890AA57C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF07109-3EB4-436E-8363-79EA890AA57C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF07109-3EB4-436E-8363-79EA890AA57C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEF07109-3EB4-436E-8363-79EA890AA57C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0374C22-FE1F-4B50-A800-E423C66AB1A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0374C22-FE1F-4B50-A800-E423C66AB1A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0374C22-FE1F-4B50-A800-E423C66AB1A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0374C22-FE1F-4B50-A800-E423C66AB1A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04389871-0606-408F-B803-6471ABEDA3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04389871-0606-408F-B803-6471ABEDA3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04389871-0606-408F-B803-6471ABEDA3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04389871-0606-408F-B803-6471ABEDA3CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1143266D-4DFE-414F-9200-DC621F72EB8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1143266D-4DFE-414F-9200-DC621F72EB8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1143266D-4DFE-414F-9200-DC621F72EB8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1143266D-4DFE-414F-9200-DC621F72EB8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09F70478-64A5-4C20-8A93-34DF1347560C}
+	EndGlobalSection
+EndGlobal
