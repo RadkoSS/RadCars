@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RadCars.Common\RadCars.Common.csproj" />
+  </ItemGroup>
+
 </Project>

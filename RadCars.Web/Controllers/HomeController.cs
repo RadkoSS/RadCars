@@ -1,9 +1,10 @@
-﻿namespace RadCars.Controllers
+﻿namespace RadCars.Web.Controllers
 {
     using System.Diagnostics;
+
     using Microsoft.AspNetCore.Mvc;
 
-    using ViewModels.Error;
+    using ViewModels.Home;
 
     public class HomeController : Controller
     {

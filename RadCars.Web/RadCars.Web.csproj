@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-RadCars-78f2b167-5ad8-4305-87c3-4103b9fa5c0e</UserSecretsId>
+    <UserSecretsId>aspnet-RadCars.Web-0d4dd111-1e29-47d5-9233-a461065218e0</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RadCars.Common\RadCars.Common.csproj" />
     <ProjectReference Include="..\RadCars.Data\RadCars.Data.csproj" />
-    <ProjectReference Include="..\RadCars.Services\RadCars.Services.csproj" />
-    <ProjectReference Include="..\RadCars.ViewModels\RadCars.ViewModels.csproj" />
+    <ProjectReference Include="..\RadCars.Web.ViewModels\RadCars.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

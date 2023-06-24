@@ -9,7 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="..\RadCars.Data.Models\RadCars.Data.Models.csproj" />
     <ProjectReference Include="..\RadCars.Data\RadCars.Data.csproj" />
-    <ProjectReference Include="..\RadCars.ViewModels\RadCars.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

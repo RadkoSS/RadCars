@@ -1,4 +1,4 @@
-namespace RadCars.ViewModels.Error
+namespace RadCars.Web.ViewModels.Home
 {
     public class ErrorViewModel
     {
