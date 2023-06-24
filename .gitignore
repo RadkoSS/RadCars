@@ -361,3 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/RadCars/appsettings.json
+/RadCars/appsettings.Development.json
+/RadCars/Properties/launchSettings.json
+/RadCars/Properties/serviceDependencies.json
+/RadCars.Web/appsettings.json
+/RadCars.Web/appsettings.Development.json
+/RadCars.Web/Properties/launchSettings.json
+/RadCars.Web/Properties/serviceDependencies.json
