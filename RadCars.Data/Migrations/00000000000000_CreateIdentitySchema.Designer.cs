@@ -9,7 +9,7 @@ namespace RadCars.Data.Migrations
     using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
     using RadCars.Data;
 
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(RadCarsDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {

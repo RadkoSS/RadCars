@@ -1,7 +1,9 @@
 ﻿namespace RadCars.Data.Models.Entities;
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
+using User;
 using Enums;
 
 public class Listing
@@ -20,23 +22,11 @@ public class Listing
     [Required]
     public string Description { get; set; } = null!;
 
-    //This should be the user's name
-    //[Required]
-    //public string AuthorName { get; set; }
-
-    //[Required]
-    //[ForeignKey(nameof(Make))]
-    //public short MakeId { get; set; }
-
-    //public Make Make { get; set; } = null!;
-
-    //public Model Model { get; set; } = null!;
-
     [Required]
     public DateTime Year { get; set; }
 
     [Required]
-    public long Mileage { get; set; }
+    public uint Mileage { get; set; }
 
     [Required]
     public string EngineModel { get; set; } = null!;
@@ -48,4 +38,23 @@ public class Listing
 
     [Required]
     public string VinNumber { get; set; } = null!;
+
+    [Required]
+    public Guid CreatorId { get; set; }
+
+    public virtual ApplicationUser Creator { get; set; } = null!;
+
+    [Required]
+    [ForeignKey(nameof(Make))]
+    public ushort MakeId { get; set; }
+
+    public virtual Make Make { get; set; } = null!;
+
+    [Required]
+    [ForeignKey(nameof(Model))]
+    public ushort ModelId { get; set; }
+
+    public virtual Model Model { get; set; } = null!;
+
+    public virtual ICollection<FeatureCategory> CategoriesWithFeatures { get; set; }
 }

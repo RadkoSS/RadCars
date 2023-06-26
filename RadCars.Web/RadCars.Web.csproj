@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RadCars.Common\RadCars.Common.csproj" />
     <ProjectReference Include="..\RadCars.Data\RadCars.Data.csproj" />
+    <ProjectReference Include="..\RadCars.Web.Infrastructure\RadCars.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\RadCars.Web.ViewModels\RadCars.Web.ViewModels.csproj" />
   </ItemGroup>
 

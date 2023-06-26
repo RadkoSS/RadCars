@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{DA956BE1-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{A9CDA973-EB2C-425A-9948-73544F1D1109}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.Web.Infrastructure", "RadCars.Web.Infrastructure\RadCars.Web.Infrastructure.csproj", "{E42B42C9-9D70-488A-A41F-6AC650C5BB3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{56A50533-CDBE-4D8C-B527-6E3EF87E8E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56A50533-CDBE-4D8C-B527-6E3EF87E8E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56A50533-CDBE-4D8C-B527-6E3EF87E8E90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E42B42C9-9D70-488A-A41F-6AC650C5BB3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E42B42C9-9D70-488A-A41F-6AC650C5BB3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E42B42C9-9D70-488A-A41F-6AC650C5BB3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E42B42C9-9D70-488A-A41F-6AC650C5BB3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{B0374C22-FE1F-4B50-A800-E423C66AB1A1} = {A9CDA973-EB2C-425A-9948-73544F1D1109}
 		{3CFDCED2-57B6-4E87-B22F-0F7C4277B2F6} = {ED1DBC73-7AC1-4E7B-B93C-D582320878D6}
 		{56A50533-CDBE-4D8C-B527-6E3EF87E8E90} = {ED1DBC73-7AC1-4E7B-B93C-D582320878D6}
+		{E42B42C9-9D70-488A-A41F-6AC650C5BB3E} = {ED1DBC73-7AC1-4E7B-B93C-D582320878D6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09F70478-64A5-4C20-8A93-34DF1347560C}

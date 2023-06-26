@@ -2,19 +2,18 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public class Make
+public class FeatureCategory
 {
-    public Make()
+    public FeatureCategory()
     {
-        this.Models = new HashSet<Model>();
+        this.Features = new HashSet<Feature>();
     }
 
     [Key]
     public ushort Id { get; set; }
 
     [Required]
-    [StringLength(1)]
     public string Name { get; set; } = null!;
-    
-    public virtual ICollection<Model> Models { get; set; }
+
+    public virtual ICollection<Feature> Features { get; set; }
 }
