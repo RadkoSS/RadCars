@@ -369,3 +369,4 @@ FodyWeavers.xsd
 /RadCars.Web/appsettings.Development.json
 /RadCars.Web/Properties/launchSettings.json
 /RadCars.Web/Properties/serviceDependencies.json
+/RadCars.Web/appsettings.Production.json
