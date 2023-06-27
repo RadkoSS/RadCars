@@ -4,9 +4,9 @@ using Models.Entities;
 
 internal static class FeatureCategoriesSeeder
 {
-    internal static FeatureCategory[] SeedFeatureCategories()
+    internal static Category[] SeedFeatureCategories()
     {
-        var featureCategories = new HashSet<FeatureCategory>();
+        var featureCategories = new HashSet<Category>();
 
         return featureCategories.ToArray();
     }

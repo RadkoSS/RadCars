@@ -4,9 +4,9 @@ using Models.Entities;
 
 internal static class ModelsSeeder
 {
-    internal static Model[] SeedModels()
+    internal static CarModel[] SeedModels()
     {
-        var models = new HashSet<Model>();
+        var models = new HashSet<CarModel>();
 
         return models.ToArray();
     }
