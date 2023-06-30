@@ -12,7 +12,7 @@ using RadCars.Data;
 namespace RadCars.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230627214002_Initial")]
+    [Migration("20230630131237_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -200,6 +200,26 @@ namespace RadCars.Data.Migrations
                     b.ToTable("CarModels");
                 });
 
+            modelBuilder.Entity("RadCars.Data.Models.Entities.CarPicture", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ListingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ListingId");
+
+                    b.ToTable("CarPictures");
+                });
+
             modelBuilder.Entity("RadCars.Data.Models.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -288,8 +308,8 @@ namespace RadCars.Data.Migrations
                         .HasMaxLength(17)
                         .HasColumnType("nvarchar(17)");
 
-                    b.Property<DateTime>("Year")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -460,6 +480,17 @@ namespace RadCars.Data.Migrations
                     b.Navigation("CarMake");
                 });
 
+            modelBuilder.Entity("RadCars.Data.Models.Entities.CarPicture", b =>
+                {
+                    b.HasOne("RadCars.Data.Models.Entities.Listing", "Listing")
+                        .WithMany("Pictures")
+                        .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Listing");
+                });
+
             modelBuilder.Entity("RadCars.Data.Models.Entities.Feature", b =>
                 {
                     b.HasOne("RadCars.Data.Models.Entities.Category", "Category")
@@ -556,6 +587,8 @@ namespace RadCars.Data.Migrations
                     b.Navigation("Favorites");
 
                     b.Navigation("ListingFeatures");
+
+                    b.Navigation("Pictures");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.User.ApplicationUser", b =>

@@ -13,8 +13,7 @@ public class CarModel
     [Required]
     [StringLength(NameMaximumLength)]
     public string Name { get; set; } = null!;
-
-    //[ForeignKey(nameof(CarMake))]
+    
     public ushort CarMakeId { get; set; }
 
     public virtual CarMake CarMake { get; set; } = null!;

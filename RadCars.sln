@@ -19,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{DA956BE1-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{A9CDA973-EB2C-425A-9948-73544F1D1109}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.Web.Infrastructure", "RadCars.Web.Infrastructure\RadCars.Web.Infrastructure.csproj", "{E42B42C9-9D70-488A-A41F-6AC650C5BB3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadCars.Web.Infrastructure", "RadCars.Web.Infrastructure\RadCars.Web.Infrastructure.csproj", "{E42B42C9-9D70-488A-A41F-6AC650C5BB3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.Services.Data", "RadCars.Services.Data\RadCars.Services.Data.csproj", "{88740257-5D9D-44B7-973A-8FA24B1466B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadCars.Services.Data", "RadCars.Services.Data\RadCars.Services.Data.csproj", "{88740257-5D9D-44B7-973A-8FA24B1466B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

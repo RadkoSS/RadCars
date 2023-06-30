@@ -18,8 +18,7 @@ public class Feature
     [Required]
     [StringLength(NameMaximumLength)]
     public string Name { get; set; } = null!;
-
-    //[ForeignKey(nameof(Category))]
+    
     public ushort CategoryId { get; set; }
 
     public virtual Category Category { get; set; } = null!;

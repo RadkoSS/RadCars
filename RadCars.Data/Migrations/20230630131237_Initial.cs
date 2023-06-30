@@ -229,7 +229,7 @@ namespace RadCars.Data.Migrations
                     EditedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),
-                    Year = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
                     Mileage = table.Column<long>(type: "bigint", nullable: false),
                     EngineModel = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     EngineType = table.Column<int>(type: "int", nullable: false),
@@ -259,6 +259,25 @@ namespace RadCars.Data.Migrations
                         principalTable: "CarModels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CarPictures",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ListingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarPictures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CarPictures_Listings_ListingId",
+                        column: x => x.ListingId,
+                        principalTable: "Listings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -354,6 +373,11 @@ namespace RadCars.Data.Migrations
                 column: "CarMakeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CarPictures_ListingId",
+                table: "CarPictures",
+                column: "ListingId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Features_CategoryId",
                 table: "Features",
                 column: "CategoryId");
@@ -400,6 +424,9 @@ namespace RadCars.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CarPictures");
 
             migrationBuilder.DropTable(
                 name: "ListingFeatures");

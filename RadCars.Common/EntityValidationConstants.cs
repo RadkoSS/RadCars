@@ -20,6 +20,8 @@ public static class EntityValidationConstants
 
         public const int VinNumberMinimumLength = 11;
         public const int VinNumberMaximumLength = 17;
+
+        public const int YearMinimumValue = 1910;
     }
 
     public static class FeatureCategoryConstants

@@ -30,6 +30,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
 
     public DbSet<UserFavoriteListing> UserFavoriteListings { get; set; } = null!;
 
+    public DbSet<CarPicture> CarPictures { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder

@@ -1,0 +1,14 @@
+﻿@model CreateListingInputModel
+
+<form enctype="multipart/form-data" method="post">
+    <dl>
+        <dt>
+            <label asp-for="@Model.Pictures"></label>
+        </dt>
+        <dd>
+            <input asp-for="@Model.Pictures" type="file" multiple="">
+            <span asp-validation-for="@Model.Pictures"></span>
+        </dd>
+    </dl>
+    <input asp-page-handler="Upload" class="btn" type="submit" value="Upload" />
+</form>

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ListingViewModel>
+
+@{
+    ViewData["Title"] = "Всички обяви";
+}
+
+<div class="container flex-row">
+    @foreach (var listing in Model)
+    {
+        <div class="card">
+            <div class="card-body">
+                <img class="card-img" style="width: 200px" src="@listing.Thumbnail.Url"/>
+                <p class="card-title">@listing.Title</p>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li>@listing.Description</li>
+                        <li>@listing.Year</li>
+                    </ul>
+                </div>
+                @*<form asp-controller="Listing" asp-action="" asp-route-id="@listing.Id" method="post">
+                    <input type="submit" class="btn btn-danger" value="Изтрий обявата" />
+                </form>*@
+                <form asp-controller="Listing" asp-action="Details" asp-route-listingId="@listing.Id">
+                    <input type="submit" class="btn btn-info" value="Разгледай обявата" />
+                </form>
+            </div>
+        </div>
+    }
+</div>

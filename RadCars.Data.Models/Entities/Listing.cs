@@ -14,8 +14,10 @@ public class Listing
     {
         this.Id = Guid.NewGuid();
         this.CreatedOn = DateTime.UtcNow;
+
         this.ListingFeatures = new HashSet<ListingFeature>();
         this.Favorites = new HashSet<UserFavoriteListing>();
+        this.Pictures = new HashSet<CarPicture>();
     }
 
     [Key]
@@ -35,7 +37,7 @@ public class Listing
     public string Description { get; set; } = null!;
 
     [Required]
-    public DateTime Year { get; set; }
+    public ushort Year { get; set; }
 
     [Required]
     public uint Mileage { get; set; }
@@ -52,24 +54,28 @@ public class Listing
     public string VinNumber { get; set; } = null!;
 
     [Required]
-    //[ForeignKey(nameof(Creator))]
     public Guid CreatorId { get; set; }
 
     public virtual ApplicationUser Creator { get; set; } = null!;
 
     [Required]
-    //[ForeignKey(nameof(CarMake))]
     public ushort CarMakeId { get; set; }
 
     public virtual CarMake CarMake { get; set; } = null!;
 
     [Required]
-    //[ForeignKey(nameof(CarModel))]
     public ushort CarModelId { get; set; }
 
     public virtual CarModel CarModel { get; set; } = null!;
+    
+    [ForeignKey(nameof(Thumbnail))]
+    public Guid? ThumbnailId { get; set; }
+
+    public virtual CarPicture? Thumbnail { get; set; }
 
     public virtual ICollection<ListingFeature> ListingFeatures { get; set; }
 
     public virtual ICollection<UserFavoriteListing> Favorites { get; set; }
+
+    public virtual ICollection<CarPicture> Pictures { get; set; }
 }
