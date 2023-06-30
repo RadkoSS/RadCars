@@ -25,6 +25,10 @@ internal class ListingEntityConfiguration : IEntityTypeConfiguration<Listing>
             .HasForeignKey(l => l.CarModelId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.HasOne(l => l.Thumbnail)
+            .WithMany()
+            .HasForeignKey(l => l.ThumbnailId);
+
         builder.HasMany(l => l.ListingFeatures)
             .WithOne()
             .HasForeignKey(lf => lf.ListingId);

@@ -1,7 +1,6 @@
 ﻿namespace RadCars.Data.Models.Entities;
 
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 using User;
 using Enums;
@@ -68,7 +67,6 @@ public class Listing
 
     public virtual CarModel CarModel { get; set; } = null!;
     
-    [ForeignKey(nameof(Thumbnail))]
     public Guid? ThumbnailId { get; set; }
 
     public virtual CarPicture? Thumbnail { get; set; }
