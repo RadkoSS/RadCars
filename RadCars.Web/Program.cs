@@ -7,25 +7,26 @@ using RadCars.Web.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString).UseLazyLoadingProxies());
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
-    {
-        options.SignIn.RequireConfirmedAccount =
+{
+    options.SignIn.RequireConfirmedAccount =
             builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
-        options.Password.RequireLowercase =
+    options.Password.RequireLowercase =
             builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
-        options.Password.RequireUppercase =
+    options.Password.RequireUppercase =
             builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
-        options.Password.RequireNonAlphanumeric =
+    options.Password.RequireNonAlphanumeric =
             builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
-        options.Password.RequiredLength =
+    options.Password.RequiredLength =
             builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
-    })
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+})
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddApplicationServices(typeof(IListingService));
 

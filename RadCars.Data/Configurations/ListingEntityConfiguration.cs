@@ -32,5 +32,15 @@ internal class ListingEntityConfiguration : IEntityTypeConfiguration<Listing>
         builder.HasMany(l => l.ListingFeatures)
             .WithOne()
             .HasForeignKey(lf => lf.ListingId);
+
+        builder
+            .HasOne(l => l.City)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasOne(l => l.Country)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

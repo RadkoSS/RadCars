@@ -4,7 +4,7 @@ using System.Globalization;
 
 using CsvHelper;
 
-internal static class CarMakeModelCsvReader
+internal static class CarMakesModelsCsvReader
 {
     internal static SortedDictionary<string, HashSet<string>> ReadMakesAndModels()
     {

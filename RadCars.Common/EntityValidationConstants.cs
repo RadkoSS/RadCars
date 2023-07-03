@@ -13,7 +13,7 @@ public static class EntityValidationConstants
         public const int MileageMinimum = 0;
 
         public const int EngineTypeMinimum = 1;
-        public const int EngineTypeMaximum = 5;
+        public const int EngineTypeMaximum = 6;
 
         public const int EngineModelMinimumLength = 2;
         public const int EngineModelMaximumLength = 10;
@@ -46,5 +46,17 @@ public static class EntityValidationConstants
     {
         public const int NameMinimumLength = 1;
         public const int NameMaximumLength = 70;
+    }
+
+    public static class CountryConstants
+    {
+        public const int NameMinimumLength = 3;
+        public const int NameMaximumLength = 56;
+    }
+
+    public static class CityConstants
+    {
+        public const int NameMinimumLength = 1;
+        public const int NameMaximumLength = 85;
     }
 }

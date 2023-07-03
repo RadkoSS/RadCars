@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Seeding\CsvData\BulgarianCities.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Seeding\CsvData\MakesModelsDb.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

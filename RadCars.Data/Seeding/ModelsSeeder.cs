@@ -2,7 +2,7 @@
 
 using Models.Entities;
 
-using static CsvData.CarMakeModelCsvReader;
+using static CsvData.CarMakesModelsCsvReader;
 
 internal static class ModelsSeeder
 {

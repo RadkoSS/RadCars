@@ -32,6 +32,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
 
     public DbSet<CarPicture> CarPictures { get; set; } = null!;
 
+    public DbSet<Country> Countries { get; set; } = null!;
+
+    public DbSet<City> Cities { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder

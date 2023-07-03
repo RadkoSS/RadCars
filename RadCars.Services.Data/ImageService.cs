@@ -2,27 +2,34 @@
 
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 using Contracts;
 using RadCars.Data;
 using RadCars.Data.Models.Entities;
 
-using static Common.SecretCredentials;
 using static Common.ExceptionsErrorMessages;
 
 public class ImageService : IImageService
 {
+    //ToDo: TEST IF INJECTING IConfiguration WORKS!
+
     //ToDo: Try to inject IConfiguration and instead of constants use the appsettings.json file to store the credentials.
-    private static readonly Cloudinary cloudinary 
-        = new Cloudinary(new Account(CloudinaryCloudName, CloudinaryApiKey, CloudinaryApiSecret));
 
     private readonly ApplicationDbContext dbContext;
+    private readonly IConfiguration configuration;
 
-    public ImageService(ApplicationDbContext dbContext)
+    private readonly Cloudinary cloudinary;
+
+    public ImageService(ApplicationDbContext dbContext, IConfiguration configuration)
     {
         this.dbContext = dbContext;
+        this.configuration = configuration;
+
+        this.cloudinary = new Cloudinary(new Account(configuration.GetSection("ExternalConnections:Cloudinary:CloudName").ToString(), configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").ToString(), configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").ToString()));
     }
 
     public async Task UploadImageAsync(string listingId, IFormFile image)
