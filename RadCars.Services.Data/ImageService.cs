@@ -14,6 +14,7 @@ using static Common.ExceptionsErrorMessages;
 
 public class ImageService : IImageService
 {
+    //ToDo: Try to inject IConfiguration and instead of constants use the appsettings.json file to store the credentials.
     private static readonly Cloudinary cloudinary 
         = new Cloudinary(new Account(CloudinaryCloudName, CloudinaryApiKey, CloudinaryApiSecret));
 

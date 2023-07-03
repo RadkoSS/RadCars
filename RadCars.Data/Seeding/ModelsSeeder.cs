@@ -2,12 +2,37 @@
 
 using Models.Entities;
 
+using static CsvData.CarMakeModelCsvReader;
+
 internal static class ModelsSeeder
 {
     internal static CarModel[] SeedModels()
     {
-        var models = new HashSet<CarModel>();
+        var modelEntities = new HashSet<CarModel>();
 
-        return models.ToArray();
+        var makesAndModels = ReadMakesAndModels();
+
+        ushort makeId = 1;
+        ushort modelId = 1;
+
+        foreach (var (makeName, models) in makesAndModels)
+        {
+            foreach (var modelName in models)
+            {
+                var newModel = new CarModel
+                {
+                    Id = modelId,
+                    Name = modelName,
+                    CarMakeId = makeId
+                };
+
+                modelEntities.Add(newModel);
+
+                modelId++;
+            }
+            makeId++;
+        }
+
+        return modelEntities.ToArray();
     }
 }
