@@ -74,10 +74,6 @@ public class Listing
 
     public virtual CarPicture? Thumbnail { get; set; }
 
-    public ushort CountryId { get; set; }
-
-    public virtual Country Country { get; set; } = null!;
-
     public ushort CityId { get; set; }
 
     public virtual City City { get; set; } = null!;
@@ -87,4 +83,9 @@ public class Listing
     public virtual ICollection<UserFavoriteListing> Favorites { get; set; }
 
     public virtual ICollection<CarPicture> Pictures { get; set; }
+
+    //We will support more countries in the future, not only Bulgaria
+    //public ushort CountryId { get; set; }
+
+    //public virtual Country Country { get; set; } = null!;
 }

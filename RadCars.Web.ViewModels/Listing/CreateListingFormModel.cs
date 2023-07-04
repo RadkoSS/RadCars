@@ -1,8 +1,10 @@
 ﻿namespace RadCars.Web.ViewModels.Listing;
 
 using System.ComponentModel.DataAnnotations;
-using City;
+
 using Microsoft.AspNetCore.Http;
+
+using City;
 
 using static Common.EntityValidationConstants.ListingConstants;
 

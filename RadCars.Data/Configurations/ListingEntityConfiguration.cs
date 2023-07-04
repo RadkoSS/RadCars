@@ -39,10 +39,13 @@ internal class ListingEntityConfiguration : IEntityTypeConfiguration<Listing>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder
-            .HasOne(l => l.Country)
-            .WithMany()
-            .OnDelete(DeleteBehavior.Restrict);
+            .Property(l => l.Price)
+            .HasPrecision(10, 2);
 
-        builder.Property(l => l.Price).HasPrecision(10, 2);
+        //When we start supporting other countries we will uncomment this code!
+        //builder
+        //    .HasOne(l => l.Country)
+        //    .WithMany()
+        //    .OnDelete(DeleteBehavior.Restrict);
     }
 }
