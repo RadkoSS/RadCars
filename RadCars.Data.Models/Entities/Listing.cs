@@ -36,6 +36,9 @@ public class Listing
     public string Description { get; set; } = null!;
 
     [Required]
+    public decimal Price { get; set; }
+
+    [Required]
     public ushort Year { get; set; }
 
     [Required]

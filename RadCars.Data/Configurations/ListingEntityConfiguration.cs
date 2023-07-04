@@ -42,5 +42,7 @@ internal class ListingEntityConfiguration : IEntityTypeConfiguration<Listing>
             .HasOne(l => l.Country)
             .WithMany()
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Property(l => l.Price).HasPrecision(10, 2);
     }
 }

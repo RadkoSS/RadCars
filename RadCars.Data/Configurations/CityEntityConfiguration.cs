@@ -19,6 +19,6 @@ internal class CityEntityConfiguration : IEntityTypeConfiguration<City>
         builder.Property(c => c.Latitude).HasPrecision(9, 6);
         builder.Property(c => c.Longitude).HasPrecision(9, 6);
 
-        builder.HasData(SeedCities());
+        builder.HasData(SeedBulgarianCities());
     }
 }

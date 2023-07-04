@@ -61,15 +61,15 @@ public class ListingService : IListingService
         return listingToDisplay;
     }
 
-    public async Task CreateListing(CreateListingInputModel input, string userId)
+    public async Task CreateListing(CreateListingFormModel form, string userId)
     {
-        //ToDo: Add all the required properties to the input model and implement AutoMapper to the application.
+        //ToDo: Add all the required properties to the form model and implement AutoMapper to the application.
 
         var listing = new Listing
         {
-            Title = input.Title,
-            Description = input.Description,
-            Year = input.Year,
+            Title = form.Title,
+            Description = form.Description,
+            Year = form.Year,
             CreatorId = Guid.Parse(userId)
         };
 
@@ -77,6 +77,6 @@ public class ListingService : IListingService
 
         await this.dbContext.SaveChangesAsync();
 
-        await this.imageService.UploadMultipleImagesAsync(listing.Id.ToString(), input.Pictures);
+        await this.imageService.UploadMultipleImagesAsync(listing.Id.ToString(), form.Pictures);
     }
 }

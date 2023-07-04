@@ -25,11 +25,11 @@ public class ListingController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateListingInputModel input)
+    public async Task<IActionResult> Create(CreateListingFormModel form)
     {
         try
         {
-            await this.listingService.CreateListing(input, this.User.GetId()!);
+            await this.listingService.CreateListing(form, this.User.GetId()!);
 
             return RedirectToAction("Index", "Home");
         }

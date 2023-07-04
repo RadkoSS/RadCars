@@ -29,7 +29,7 @@ public class ImageService : IImageService
         this.dbContext = dbContext;
         this.configuration = configuration;
 
-        this.cloudinary = new Cloudinary(new Account(configuration.GetSection("ExternalConnections:Cloudinary:CloudName").ToString(), configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").ToString(), configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").ToString()));
+        this.cloudinary = new Cloudinary(new Account(this.configuration.GetSection("ExternalConnections:Cloudinary:CloudName").ToString(), this.configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").ToString(), this.configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").ToString()));
     }
 
     public async Task UploadImageAsync(string listingId, IFormFile image)

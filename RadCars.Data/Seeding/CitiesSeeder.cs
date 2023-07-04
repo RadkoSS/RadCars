@@ -6,7 +6,7 @@ using static CsvData.BulgariaCitiesCsvReader;
 
 internal class CitiesSeeder
 {
-    internal static City[] SeedCities()
+    internal static City[] SeedBulgarianCities()
     {
         var cities = new HashSet<City>();
         ushort idOfBulgaria = 1;

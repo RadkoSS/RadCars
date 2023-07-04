@@ -6,7 +6,7 @@ public interface IListingService
 {
     Task<ListingViewModel[]> GetAllListingsAsync();
 
-    Task CreateListing(CreateListingInputModel input, string userId);
+    Task CreateListing(CreateListingFormModel form, string userId);
 
     Task<ListingDetailsViewModel> GetListingDetailsAsync(string listingId);
 }
