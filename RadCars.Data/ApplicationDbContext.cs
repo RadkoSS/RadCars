@@ -36,6 +36,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
 
     public DbSet<City> Cities { get; set; } = null!;
 
+    public DbSet<EngineTypes> EngineTypes { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder

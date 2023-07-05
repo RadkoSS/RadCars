@@ -7,9 +7,9 @@ using Models.Entities;
 
 using static Seeding.CarEngineTypesSeeder;
 
-internal class CarEngineTypeEntityConfiguration : IEntityTypeConfiguration<CarEngineType>
+internal class EngineTypeEntityConfiguration : IEntityTypeConfiguration<EngineTypes>
 {
-    public void Configure(EntityTypeBuilder<CarEngineType> builder)
+    public void Configure(EntityTypeBuilder<EngineTypes> builder)
     {
         builder.HasData(SeedEngineTypes());
     }

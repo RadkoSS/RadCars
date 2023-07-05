@@ -19,17 +19,19 @@ public class ListingController : BaseController
     }
 
     [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
-        return View();
+        var formModel = await this.listingService.GetListingCreateAsync();
+
+        return View(formModel);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateListingFormModel form)
+    public async Task<IActionResult> Create(ListingFormModel form)
     {
         try
         {
-            await this.listingService.CreateListing(form, this.User.GetId()!);
+            await this.listingService.CreateListingAsync(form, this.User.GetId()!);
 
             return RedirectToAction("Index", "Home");
         }

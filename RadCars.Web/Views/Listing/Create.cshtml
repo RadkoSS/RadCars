@@ -1,6 +1,10 @@
-﻿@model CreateListingFormModel
+﻿@model ListingFormModel
 
-<form asp-controller="Listing" asp-action="Create" enctype="multipart/form-data" method="post">
+@{
+    ViewData["Title"] = "Създаване на обява";
+}
+
+@*<form asp-controller="Listing" asp-action="Create" enctype="multipart/form-data" method="post">
     <dl>
         <dt>
             <label asp-for="@Model.Images"></label>
@@ -10,5 +14,135 @@
             <span asp-validation-for="@Model.Images"></span>
         </dd>
     </dl>
-    <input class="btn" type="submit" value="Upload" />
+    
+    <div class="input-group">
+        <label asp-for="@Model.Price"></label>
+        <input asp-for="@Model.Price">
+        <span asp-validation-for="@Model.Price"></span>
+    </div>
+
+    <input class="btn btn-success" type="submit" value="Създай обява" />
+</form>*@
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+
+<form id="createListingForm" method="post" enctype="multipart/form-data">
+
+    <div class="form-group">
+        <label asp-for="@Model.Images">Качете снимки</label>
+        <input asp-for="@Model.Images" type="file" name="Изберете" id="images" multiple>
+        <span asp-validation-for="@Model.Images"></span>
+    </div>
+
+    @*<div class="form-group">
+        <label asp-for="@Model">Изберете снимка за началната страница</label>
+        <select id="thumbnail" name="Главна снимка" class="form-control">
+            <option value="">Изберете една от качените снимки</option>
+            <!-- Populate options dynamically with uploaded images -->
+        </select>
+    </div>*@
+
+    <div class="form-group">
+        <label asp-for="@Model.Title"></label>
+        <input asp-for="@Model.Title" type="text" id="title" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Description"></label>
+        <textarea asp-for="@Model.Description" id="description" class="form-control" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Price"></label>
+        <input asp-for="@Model.Price" id="price" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Year"></label>
+        <input asp-for="@Model.Year" type="number" id="year" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Mileage"></label>
+        <input asp-for="@Model.Mileage" id="mileage" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.EngineModel"></label>
+        <input asp-for="@Model.EngineModel" type="text" id="engineModel" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.EngineTypeId"></label>
+        <select asp-for="@Model.EngineTypeId" id="engineTypes" class="form-control" required>
+            <option value="">Изберете вид на двигателя</option>
+            @foreach (var engineType in Model.EngineTypes)
+            {
+                <option value="@engineType.Id">@engineType.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.VinNumber"></label>
+        <input asp-for="@Model.VinNumber" type="text" id="vinNumber" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.CarMakeId"></label>
+        <select asp-for="@Model.CarMakeId" id="carMakes" class="form-control" required>
+            <option value="">Изберете марка автомобил</option>
+            @foreach (var carMake in Model.CarMakes)
+            {
+                <option value="@carMake.Id">@carMake.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.CarModelId"></label>
+        <select asp-for="@Model.CarModelId" id="carModels" class="form-control" required disabled>
+            <option value="">Изберете модел</option>
+            <!-- Populate options dynamically based on selected Car Make -->
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.CityId"></label>
+        <select asp-for="@Model.CityId" id="city" class="form-control" required>
+            <option value="">Изберете град</option>
+            @foreach (var city in Model.Cities)
+            {
+                <option value="@city.Id">@city.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.SelectedFeatures"></label>
+        <div>
+            @foreach (var category in Model.FeatureCategories)
+            {
+                <h4>@category.Name</h4>
+                <div class="form-check">
+                    @foreach (var feature in category.Features)
+                    {
+                        <label class="form-check-label"><input type="checkbox" value="@feature.Id">@feature.Name</label>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Създай обява</button>
 </form>
+
+@section Scripts
+{
+    <script>
+        // Implement JavaScript/jQuery logic for dynamic dropdowns and form submission
+        // ...
+    </script>
+
+    <partial name="_ValidationScriptsPartial"/>
+}

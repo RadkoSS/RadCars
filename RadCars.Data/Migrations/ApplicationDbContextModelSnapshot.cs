@@ -157,53 +157,6 @@ namespace RadCars.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("RadCars.Data.Models.Entities.CarEngineType", b =>
-                {
-                    b.Property<byte>("Id")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CarEngineType", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = (byte)1,
-                            Name = "Бензин"
-                        },
-                        new
-                        {
-                            Id = (byte)2,
-                            Name = "Дизел"
-                        },
-                        new
-                        {
-                            Id = (byte)3,
-                            Name = "Газ / Бензин"
-                        },
-                        new
-                        {
-                            Id = (byte)4,
-                            Name = "Метан / Бензин"
-                        },
-                        new
-                        {
-                            Id = (byte)5,
-                            Name = "Електрически"
-                        },
-                        new
-                        {
-                            Id = (byte)6,
-                            Name = "Хибрид"
-                        });
-                });
-
             modelBuilder.Entity("RadCars.Data.Models.Entities.CarImage", b =>
                 {
                     b.Property<Guid>("Id")
@@ -221,7 +174,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("ListingId");
 
-                    b.ToTable("CarImages", (string)null);
+                    b.ToTable("CarImages");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.CarMake", b =>
@@ -239,7 +192,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarMakes", (string)null);
+                    b.ToTable("CarMakes");
 
                     b.HasData(
                         new
@@ -709,7 +662,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("CarMakeId");
 
-                    b.ToTable("CarModels", (string)null);
+                    b.ToTable("CarModels");
 
                     b.HasData(
                         new
@@ -8739,7 +8692,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -8797,7 +8750,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
 
                     b.HasData(
                         new
@@ -10825,13 +10778,60 @@ namespace RadCars.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Name = "Bulgaria"
+                        });
+                });
+
+            modelBuilder.Entity("RadCars.Data.Models.Entities.EngineTypes", b =>
+                {
+                    b.Property<byte>("Id")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EngineTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (byte)1,
+                            Name = "Бензин"
+                        },
+                        new
+                        {
+                            Id = (byte)2,
+                            Name = "Дизел"
+                        },
+                        new
+                        {
+                            Id = (byte)3,
+                            Name = "Газ / Бензин"
+                        },
+                        new
+                        {
+                            Id = (byte)4,
+                            Name = "Метан / Бензин"
+                        },
+                        new
+                        {
+                            Id = (byte)5,
+                            Name = "Електрически"
+                        },
+                        new
+                        {
+                            Id = (byte)6,
+                            Name = "Хибрид"
                         });
                 });
 
@@ -10855,7 +10855,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Features", (string)null);
+                    b.ToTable("Features");
 
                     b.HasData(
                         new
@@ -11252,7 +11252,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("ThumbnailId");
 
-                    b.ToTable("Listings", (string)null);
+                    b.ToTable("Listings");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.ListingFeature", b =>
@@ -11267,7 +11267,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("FeatureId");
 
-                    b.ToTable("ListingFeatures", (string)null);
+                    b.ToTable("ListingFeatures");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.UserFavoriteListing", b =>
@@ -11282,7 +11282,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("ListingId");
 
-                    b.ToTable("UserFavoriteListings", (string)null);
+                    b.ToTable("UserFavoriteListings");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.User.ApplicationUser", b =>
@@ -11472,7 +11472,7 @@ namespace RadCars.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RadCars.Data.Models.Entities.CarEngineType", "EngineType")
+                    b.HasOne("RadCars.Data.Models.Entities.EngineTypes", "EngineTypes")
                         .WithMany()
                         .HasForeignKey("EngineTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -11490,7 +11490,7 @@ namespace RadCars.Data.Migrations
 
                     b.Navigation("Creator");
 
-                    b.Navigation("EngineType");
+                    b.Navigation("EngineTypes");
 
                     b.Navigation("Thumbnail");
                 });

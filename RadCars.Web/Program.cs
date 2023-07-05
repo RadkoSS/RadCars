@@ -4,6 +4,7 @@ using RadCars.Data;
 using RadCars.Data.Models.User;
 using RadCars.Services.Data.Contracts;
 using RadCars.Web.Infrastructure.Extensions;
+using RadCars.Web.Infrastructure.ModelBinders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
 builder.Services.AddApplicationServices(typeof(IListingService));
 
-builder.Services.AddControllersWithViews();
+builder.Services
+    .AddControllersWithViews()
+    .AddMvcOptions(options =>
+    {
+        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    });
 
 var app = builder.Build();
 

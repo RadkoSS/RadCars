@@ -5,8 +5,15 @@ using Microsoft.EntityFrameworkCore;
 using Contracts;
 using RadCars.Data;
 using Web.ViewModels.Listing;
-using RadCars.Data.Models.Entities;
 using Web.ViewModels.CarImage;
+using RadCars.Data.Models.Entities;
+using Web.ViewModels.CarEngineType;
+using Web.ViewModels.CarMake;
+using Web.ViewModels.CarModel;
+using Web.ViewModels.City;
+using Web.ViewModels.Feature;
+using Web.ViewModels.FeatureCategory;
+using static Common.ExceptionsErrorMessages;
 
 public class ListingService : IListingService
 {
@@ -39,6 +46,44 @@ public class ListingService : IListingService
         return listings;
     }
 
+    public async Task<ListingFormModel> GetListingCreateAsync()
+    {
+        var formModel = new ListingFormModel
+        {
+            CarMakes = await this.dbContext.CarMakes.AsNoTracking().Select(cm => new CarMakeViewModel
+            {
+                Id = cm.Id,
+                Name = cm.Name
+            }).ToArrayAsync(),
+            FeatureCategories = await this.dbContext.Categories.AsNoTracking().Select(c => new FeatureCategoriesViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Features = c.Features.Select(f => new FeatureViewModel
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    CategoryId = f.CategoryId
+                })
+            }).ToArrayAsync(),
+            Cities = await this.dbContext.Cities.AsNoTracking().Select(c => new CityViewModel
+            {
+                Id = c.Id,
+                Name = c.Name
+            }).ToArrayAsync(),
+            EngineTypes = await this.dbContext.EngineTypes.AsNoTracking().Select(et => new CarEngineTypeViewModel
+            {
+                Id = et.Id,
+                Name = et.Name
+            }).ToArrayAsync()
+        };
+
+        //Empty array on initialize - will be dynamically loaded via the API.
+        formModel.CarModels = Array.Empty<CarModelViewModel>();
+
+        return formModel;
+    }
+
     public async Task<ListingDetailsViewModel> GetListingDetailsAsync(string listingId)
     {
         var listingToDisplay = await this.dbContext.Listings.AsNoTracking()
@@ -60,17 +105,35 @@ public class ListingService : IListingService
         return listingToDisplay;
     }
 
-    public async Task CreateListing(CreateListingFormModel form, string userId)
+    public async Task CreateListingAsync(ListingFormModel form, string userId)
     {
         //ToDo: Add all the required properties to the form model and implement AutoMapper to the application.
 
+        //ToDo: add validation!!
         var listing = new Listing
         {
             Title = form.Title,
             Description = form.Description,
+            Price = form.Price,
             Year = form.Year,
-            CreatorId = Guid.Parse(userId)
+            Mileage = form.Mileage,
+            EngineModel = form.EngineModel,
+            EngineTypeId = form.EngineTypeId,
+            VinNumber = form.VinNumber,
+            CreatorId = Guid.Parse(userId),
+            CarMakeId = form.CarMakeId,
+            CarModelId = form.CarModelId,
+            CityId = form.CityId
         };
+
+        foreach (var featureId in form.SelectedFeatures)
+        {
+            listing.ListingFeatures.Add(new ListingFeature
+            {
+                FeatureId = featureId,
+                Listing = listing
+            });
+        }
 
         await this.dbContext.Listings.AddAsync(listing);
 
@@ -81,6 +144,17 @@ public class ListingService : IListingService
 
     public async Task AddThumbnailToListingByIdAsync(string listingId, string imageId)
     {
+        var imageExists = await this.dbContext.CarImages.AsNoTracking().AnyAsync(ci => ci.Id.ToString() == imageId);
 
+        if (!imageExists)
+        {
+            throw new InvalidOperationException(InvalidImageForThumbnailProvided);
+        }
+
+        var listing = await this.dbContext.Listings.FirstAsync(l => l.Id.ToString() == listingId);
+
+        listing.ThumbnailId = Guid.Parse(imageId);
+
+        await this.dbContext.SaveChangesAsync();
     }
 }

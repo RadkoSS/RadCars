@@ -4,36 +4,36 @@ using Models.Entities;
 
 internal static class CarEngineTypesSeeder
 {
-    internal static CarEngineType[] SeedEngineTypes()
+    internal static EngineTypes[] SeedEngineTypes()
     {
-        var engineTypes = new HashSet<CarEngineType>
+        var engineTypes = new HashSet<EngineTypes>
         {
-            new CarEngineType
+            new EngineTypes
             {
                 Id = 1,
                 Name = "Бензин"
             },
-            new CarEngineType
+            new EngineTypes
             {
                 Id = 2,
                 Name = "Дизел"
             },
-            new CarEngineType
+            new EngineTypes
             {
                 Id = 3,
                 Name = "Газ / Бензин"
             },
-            new CarEngineType
+            new EngineTypes
             {
                 Id = 4,
                 Name = "Метан / Бензин"
             },
-            new CarEngineType
+            new EngineTypes
             {
                 Id = 5,
                 Name = "Електрически"
             },
-            new CarEngineType
+            new EngineTypes
             {
                 Id = 6,
                 Name = "Хибрид"
