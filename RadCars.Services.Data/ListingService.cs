@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Contracts;
 using RadCars.Data;
 using Web.ViewModels.Listing;
-using Web.ViewModels.CarPicture;
 using RadCars.Data.Models.Entities;
+using Web.ViewModels.CarImage;
 
 public class ListingService : IListingService
 {
@@ -29,10 +29,10 @@ public class ListingService : IListingService
             Description = l.Description,
             Title = l.Title,
             Year = l.Year,
-            Thumbnail = new PictureViewModel
+            Thumbnail = new ImageViewModel
             {
-                Id = l.ThumbnailId.ToString() == null ? l.Pictures.First().Id.ToString() : l.ThumbnailId.ToString()!,
-                Url = l.Thumbnail == null ? l.Pictures.First().Url : l.Thumbnail.Url
+                Id = l.ThumbnailId.ToString() == null ? l.Images.First().Id.ToString() : l.ThumbnailId.ToString()!,
+                Url = l.Thumbnail == null ? l.Images.First().Url : l.Thumbnail.Url
             }
         }).ToArrayAsync();
 
@@ -50,7 +50,7 @@ public class ListingService : IListingService
                 CreatorName = l.Creator.UserName,
                 Description = l.Description,
                 Year = l.Year,
-                Pictures = l.Pictures.Select(p => new PictureViewModel
+                Pictures = l.Images.Select(p => new ImageViewModel
                 {
                     Id = p.Id.ToString(),
                     Url = p.Url
@@ -76,6 +76,11 @@ public class ListingService : IListingService
 
         await this.dbContext.SaveChangesAsync();
 
-        await this.imageService.UploadMultipleImagesAsync(listing.Id.ToString(), form.Pictures);
+        await this.imageService.UploadMultipleImagesAsync(listing.Id.ToString(), form.Images);
+    }
+
+    public async Task AddThumbnailToListingByIdAsync(string listingId, string imageId)
+    {
+
     }
 }

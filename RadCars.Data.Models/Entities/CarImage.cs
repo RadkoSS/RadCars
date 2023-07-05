@@ -2,9 +2,9 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public class CarPicture
+public class CarImage
 {
-    public CarPicture()
+    public CarImage()
     {
         this.Id = Guid.NewGuid();
     }
@@ -15,6 +15,7 @@ public class CarPicture
     [Required]
     public string Url { get; set; } = null!;
 
+    [Required]
     public Guid ListingId { get; set; }
 
     public virtual Listing Listing { get; set; } = null!;

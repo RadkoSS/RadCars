@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>34a22bb7-881b-4121-9378-8f2f1a0d2a39</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.16" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RadCars.Services.Data\RadCars.Services.Data.csproj" />
+    <ProjectReference Include="..\RadCars.Web.Infrastructure\RadCars.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\RadCars.Web.ViewModels\RadCars.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

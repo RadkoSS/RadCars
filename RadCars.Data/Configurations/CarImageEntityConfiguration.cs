@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using Models.Entities;
 
-internal class CarPictureEntityConfiguration : IEntityTypeConfiguration<CarPicture>
+internal class CarImageEntityConfiguration : IEntityTypeConfiguration<CarImage>
 {
-    public void Configure(EntityTypeBuilder<CarPicture> builder)
+    public void Configure(EntityTypeBuilder<CarImage> builder)
     {
         builder
             .HasOne(cp => cp.Listing)
-            .WithMany(l => l.Pictures)
+            .WithMany(l => l.Images)
             .HasForeignKey(cp => cp.ListingId);
     }
 }

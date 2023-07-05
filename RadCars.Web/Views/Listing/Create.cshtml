@@ -3,11 +3,11 @@
 <form asp-controller="Listing" asp-action="Create" enctype="multipart/form-data" method="post">
     <dl>
         <dt>
-            <label asp-for="@Model.Pictures"></label>
+            <label asp-for="@Model.Images"></label>
         </dt>
         <dd>
-            <input asp-for="@Model.Pictures" type="file" multiple="">
-            <span asp-validation-for="@Model.Pictures"></span>
+            <input asp-for="@Model.Images" type="file" multiple="">
+            <span asp-validation-for="@Model.Images"></span>
         </dd>
     </dl>
     <input class="btn" type="submit" value="Upload" />

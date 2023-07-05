@@ -262,7 +262,7 @@ namespace RadCars.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CarPictures",
+                name: "CarImages",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -374,7 +374,7 @@ namespace RadCars.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_CarPictures_ListingId",
-                table: "CarPictures",
+                table: "CarImages",
                 column: "ListingId");
 
             migrationBuilder.CreateIndex(
@@ -426,7 +426,7 @@ namespace RadCars.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CarPictures");
+                name: "CarImages");
 
             migrationBuilder.DropTable(
                 name: "ListingFeatures");

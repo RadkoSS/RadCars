@@ -169,7 +169,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarEngineType");
+                    b.ToTable("CarEngineType", (string)null);
 
                     b.HasData(
                         new
@@ -204,6 +204,26 @@ namespace RadCars.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("RadCars.Data.Models.Entities.CarImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ListingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ListingId");
+
+                    b.ToTable("CarImages", (string)null);
+                });
+
             modelBuilder.Entity("RadCars.Data.Models.Entities.CarMake", b =>
                 {
                     b.Property<int>("Id")
@@ -219,7 +239,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarMakes");
+                    b.ToTable("CarMakes", (string)null);
 
                     b.HasData(
                         new
@@ -689,7 +709,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("CarMakeId");
 
-                    b.ToTable("CarModels");
+                    b.ToTable("CarModels", (string)null);
 
                     b.HasData(
                         new
@@ -8704,26 +8724,6 @@ namespace RadCars.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("RadCars.Data.Models.Entities.CarPicture", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ListingId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ListingId");
-
-                    b.ToTable("CarPictures");
-                });
-
             modelBuilder.Entity("RadCars.Data.Models.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -8739,7 +8739,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -8797,7 +8797,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
 
                     b.HasData(
                         new
@@ -10825,7 +10825,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
 
                     b.HasData(
                         new
@@ -10855,7 +10855,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Features");
+                    b.ToTable("Features", (string)null);
 
                     b.HasData(
                         new
@@ -11252,7 +11252,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("ThumbnailId");
 
-                    b.ToTable("Listings");
+                    b.ToTable("Listings", (string)null);
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.ListingFeature", b =>
@@ -11267,7 +11267,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("FeatureId");
 
-                    b.ToTable("ListingFeatures");
+                    b.ToTable("ListingFeatures", (string)null);
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.UserFavoriteListing", b =>
@@ -11282,7 +11282,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("ListingId");
 
-                    b.ToTable("UserFavoriteListings");
+                    b.ToTable("UserFavoriteListings", (string)null);
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.User.ApplicationUser", b =>
@@ -11402,6 +11402,17 @@ namespace RadCars.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RadCars.Data.Models.Entities.CarImage", b =>
+                {
+                    b.HasOne("RadCars.Data.Models.Entities.Listing", "Listing")
+                        .WithMany("Images")
+                        .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Listing");
+                });
+
             modelBuilder.Entity("RadCars.Data.Models.Entities.CarModel", b =>
                 {
                     b.HasOne("RadCars.Data.Models.Entities.CarMake", "CarMake")
@@ -11411,17 +11422,6 @@ namespace RadCars.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("CarMake");
-                });
-
-            modelBuilder.Entity("RadCars.Data.Models.Entities.CarPicture", b =>
-                {
-                    b.HasOne("RadCars.Data.Models.Entities.Listing", "Listing")
-                        .WithMany("Pictures")
-                        .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Listing");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.City", b =>
@@ -11478,7 +11478,7 @@ namespace RadCars.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RadCars.Data.Models.Entities.CarPicture", "Thumbnail")
+                    b.HasOne("RadCars.Data.Models.Entities.CarImage", "Thumbnail")
                         .WithMany()
                         .HasForeignKey("ThumbnailId");
 
@@ -11557,9 +11557,9 @@ namespace RadCars.Data.Migrations
                 {
                     b.Navigation("Favorites");
 
-                    b.Navigation("ListingFeatures");
+                    b.Navigation("Images");
 
-                    b.Navigation("Pictures");
+                    b.Navigation("ListingFeatures");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.User.ApplicationUser", b =>

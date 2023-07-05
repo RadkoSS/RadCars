@@ -30,7 +30,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
 
     public DbSet<UserFavoriteListing> UserFavoriteListings { get; set; } = null!;
 
-    public DbSet<CarPicture> CarPictures { get; set; } = null!;
+    public DbSet<CarImage> CarImages { get; set; } = null!;
 
     public DbSet<Country> Countries { get; set; } = null!;
 

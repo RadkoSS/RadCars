@@ -24,7 +24,7 @@ namespace RadCars.Data.Migrations
                 name: "FK_Listings_CarPictures_ThumbnailId",
                 table: "Listings",
                 column: "ThumbnailId",
-                principalTable: "CarPictures",
+                principalTable: "CarImages",
                 principalColumn: "Id");
         }
 

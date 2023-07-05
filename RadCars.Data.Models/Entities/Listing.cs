@@ -15,7 +15,7 @@ public class Listing
 
         this.ListingFeatures = new HashSet<ListingFeature>();
         this.Favorites = new HashSet<UserFavoriteListing>();
-        this.Pictures = new HashSet<CarPicture>();
+        this.Images = new HashSet<CarImage>();
     }
 
     [Key]
@@ -73,7 +73,7 @@ public class Listing
     
     public Guid? ThumbnailId { get; set; }
 
-    public virtual CarPicture? Thumbnail { get; set; }
+    public virtual CarImage? Thumbnail { get; set; }
 
     public ushort CityId { get; set; }
 
@@ -83,7 +83,7 @@ public class Listing
 
     public virtual ICollection<UserFavoriteListing> Favorites { get; set; }
 
-    public virtual ICollection<CarPicture> Pictures { get; set; }
+    public virtual ICollection<CarImage> Images { get; set; }
 
     //We will support more countries in the future, not only Bulgaria
     //public ushort CountryId { get; set; }

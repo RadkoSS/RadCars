@@ -53,14 +53,14 @@ public class ImageService : IImageService
 
         var uploadResult = await cloudinary.UploadAsync(uploadParams);
 
-        var carPicture = new CarPicture
+        var carPicture = new CarImage
         {
             Id = pictureId,
             Url = uploadResult.Url.ToString(),
             ListingId = currentListing.Id
         };
 
-        await this.dbContext.CarPictures.AddAsync(carPicture);
+        await this.dbContext.CarImages.AddAsync(carPicture);
 
         await this.dbContext.SaveChangesAsync();
     }
@@ -75,7 +75,7 @@ public class ImageService : IImageService
 
     public async Task DeleteImageAsync(string listingId, string imageId)
     {
-        var carPicture = await this.dbContext.CarPictures.FirstOrDefaultAsync(cp => cp.ListingId.ToString() == listingId && cp.Id.ToString() == imageId);
+        var carPicture = await this.dbContext.CarImages.FirstOrDefaultAsync(cp => cp.ListingId.ToString() == listingId && cp.Id.ToString() == imageId);
 
         if (carPicture == null)
         {
@@ -91,21 +91,21 @@ public class ImageService : IImageService
             throw new InvalidOperationException(ImageDeleteUnsuccessful);
         }
 
-        this.dbContext.CarPictures.Remove(carPicture);
+        this.dbContext.CarImages.Remove(carPicture);
         await this.dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteAllImagesAsync(string listingId, IEnumerable<string> imagesIds)
     {
-        foreach (var pictureId in imagesIds)
+        foreach (var imageId in imagesIds)
         {
-            await this.DeleteImageAsync(listingId, pictureId);
+            await this.DeleteImageAsync(listingId, imageId);
         }
     }
 
-    private string GetUniqueFileName(string fileName, string pictureId)
+    private string GetUniqueFileName(string fileName, string imageId)
     {
         string fileExtension = Path.GetExtension(fileName);
-        return $"{pictureId}{fileExtension}";
+        return $"{imageId}{fileExtension}";
     }
 }

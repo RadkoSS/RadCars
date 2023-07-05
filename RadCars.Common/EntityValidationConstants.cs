@@ -10,7 +10,10 @@ public static class EntityValidationConstants
         public const int DescriptionMinimumLength = 10;
         public const int DescriptionMaximumLength = 1500;
 
-        public const int MileageMinimum = 0;
+        public const uint MileageMinimum = 0;
+
+        public const string PriceMinimum = "1";
+        public const string PriceMaximum = "9999999999";
 
         public const int EngineTypeMinimum = 1;
         public const int EngineTypeMaximum = 6;

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 
 using City;
 using CarMake;
+using CarModel;
+using CarEngineType;
 using FeatureCategory;
 
 using static Common.EntityValidationConstants.ListingConstants;
@@ -14,10 +16,13 @@ public class CreateListingFormModel
 {
     public CreateListingFormModel()
     {
-        this.Pictures = new HashSet<IFormFile>();
+        this.Images = new HashSet<IFormFile>();
         this.Cities = new HashSet<CityViewModel>();
-        this.FeatureCategories = new HashSet<FeatureCategoriesViewModel>();
+        this.SelectedFeatures = new HashSet<ushort>();
         this.CarMakes = new HashSet<CarMakeViewModel>();
+        this.CarModels = new HashSet<CarModelViewModel>();
+        this.EngineTypes = new HashSet<CarEngineTypeViewModel>();
+        this.FeatureCategories = new HashSet<FeatureCategoriesViewModel>();
     }
 
     [StringLength(TitleMaximumLength, MinimumLength = TitleMinimumLength)]
@@ -30,7 +35,7 @@ public class CreateListingFormModel
     public ushort Year { get; set; }
 
     [Required]
-    //[Range(1, decimal.MaxValue)]
+    [Range(typeof(decimal), PriceMinimum, PriceMaximum)]
     public decimal Price { get; set; }
 
     [Required]
@@ -38,12 +43,18 @@ public class CreateListingFormModel
     public string VinNumber { get; set; } = null!;
 
     [Required]
+    [Range(MileageMinimum, uint.MaxValue)]
     public uint Mileage { get; set; }
 
     [Required]
+    [StringLength(EngineModelMaximumLength, MinimumLength = EngineModelMinimumLength)]
+    public string EngineModel { get; set; } = null!;
+
+    [Required]
     [Range(EngineTypeMinimum, EngineTypeMaximum)]
-    public int EngineTypeId { get; set; }
-    
+    public byte EngineTypeId { get; set; }
+
+    public IEnumerable<CarEngineTypeViewModel> EngineTypes { get; set; }
 
     [Required]
     [Range(1, ushort.MaxValue)]
@@ -52,14 +63,21 @@ public class CreateListingFormModel
     public IEnumerable<CityViewModel> Cities { get; set; }
 
     [Required]
+    [Range(1, ushort.MaxValue)]
     public ushort CarMakeId { get; set; }
 
     public IEnumerable<CarMakeViewModel> CarMakes { get; set; }
 
-    //ToDo: How will we map the choices?
+    [Required]
+    [Range(1, ushort.MaxValue)]
+    public ushort CarModelId { get; set; }
+
+    public IEnumerable<CarModelViewModel> CarModels { get; set; }
+
+    //ToDo: Check if this works!
+    public IEnumerable<ushort> SelectedFeatures { get; set; }
+
     public IEnumerable<FeatureCategoriesViewModel> FeatureCategories { get; set; }
-    
 
-
-    public IEnumerable<IFormFile> Pictures { get; set; }
+    public IEnumerable<IFormFile> Images { get; set; }
 }

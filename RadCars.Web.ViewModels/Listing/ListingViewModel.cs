@@ -1,6 +1,6 @@
 ﻿namespace RadCars.Web.ViewModels.Listing;
 
-using CarPicture;
+using CarImage;
 
 public class ListingViewModel
 {
@@ -14,7 +14,7 @@ public class ListingViewModel
 
     public string CreatorName { get; set; } = null!;
 
-    public PictureViewModel Thumbnail { get; set; } = null!;
+    public ImageViewModel Thumbnail { get; set; } = null!;
 
     //ToDo: add all properties needed!
 }

@@ -1,6 +1,6 @@
-﻿namespace RadCars.Web.ViewModels.CarPicture;
+﻿namespace RadCars.Web.ViewModels.CarImage;
 
-public class PictureViewModel
+public class ImageViewModel
 {
     public string Id { get; set; } = null!;
 
