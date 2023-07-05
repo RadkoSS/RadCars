@@ -1,6 +1,6 @@
-﻿namespace RadCars.Web.ViewModels.Feature;
+﻿namespace RadCars.Web.ViewModels.CarModel;
 
-public class FeatureViewModel
+public class CarModelViewModel
 {
     public ushort Id { get; set; }
 

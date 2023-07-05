@@ -59,4 +59,9 @@ public static class EntityValidationConstants
         public const int NameMinimumLength = 1;
         public const int NameMaximumLength = 85;
     }
+
+    public static class CarEngineTypeConstants
+    {
+        public const int NameMaximumLength = 15;
+    }
 }

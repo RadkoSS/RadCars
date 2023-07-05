@@ -6,7 +6,6 @@ using Contracts;
 using RadCars.Data;
 using Web.ViewModels.Listing;
 using Web.ViewModels.CarPicture;
-using RadCars.Data.Models.Enums;
 using RadCars.Data.Models.Entities;
 
 public class ListingService : IListingService

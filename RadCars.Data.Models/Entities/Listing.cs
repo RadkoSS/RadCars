@@ -3,7 +3,6 @@
 using System.ComponentModel.DataAnnotations;
 
 using User;
-using Enums;
 
 using static Common.EntityValidationConstants.ListingConstants;
 
@@ -49,7 +48,9 @@ public class Listing
     public string EngineModel { get; set; } = null!;
 
     [Required]
-    public EngineType EngineType { get; set; }
+    public byte EngineTypeId { get; set; }
+
+    public virtual CarEngineType EngineType { get; set; } = null!;
 
     [Required]
     [StringLength(VinNumberMaximumLength)]
