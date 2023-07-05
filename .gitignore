@@ -371,3 +371,5 @@ FodyWeavers.xsd
 /RadCars.Web/Properties/serviceDependencies.json
 /RadCars.Web/appsettings.Production.json
 /RadCars.Common/SecretCredentials.cs
+/RadCars.Api/appsettings.json
+/RadCars.Api/appsettings.Development.json
