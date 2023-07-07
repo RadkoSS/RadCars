@@ -50,7 +50,7 @@ public class Listing
     [Required]
     public byte EngineTypeId { get; set; }
 
-    public virtual EngineTypes EngineTypes { get; set; } = null!;
+    public virtual EngineType EngineType { get; set; } = null!;
 
     [Required]
     [StringLength(VinNumberMaximumLength)]

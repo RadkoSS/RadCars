@@ -7,6 +7,8 @@ using ViewModels.Listing;
 using Services.Data.Contracts;
 using Infrastructure.Extensions;
 
+using static Common.EntityValidationConstants.ListingConstants;
+
 public class ListingController : BaseController
 {
     private readonly IListingService listingService;
@@ -22,6 +24,8 @@ public class ListingController : BaseController
     public async Task<IActionResult> Create()
     {
         var formModel = await this.listingService.GetListingCreateAsync();
+
+        ViewData["MinYear"] = YearMinimumValue;
 
         return View(formModel);
     }

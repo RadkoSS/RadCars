@@ -10788,7 +10788,7 @@ namespace RadCars.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("RadCars.Data.Models.Entities.EngineTypes", b =>
+            modelBuilder.Entity("RadCars.Data.Models.Entities.EngineType", b =>
                 {
                     b.Property<byte>("Id")
                         .HasColumnType("tinyint");
@@ -11209,8 +11209,8 @@ namespace RadCars.Data.Migrations
 
                     b.Property<string>("EngineModel")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<byte>("EngineTypeId")
                         .HasColumnType("tinyint");
@@ -11472,7 +11472,7 @@ namespace RadCars.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RadCars.Data.Models.Entities.EngineTypes", "EngineTypes")
+                    b.HasOne("RadCars.Data.Models.Entities.EngineType", "EngineType")
                         .WithMany()
                         .HasForeignKey("EngineTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -11490,7 +11490,7 @@ namespace RadCars.Data.Migrations
 
                     b.Navigation("Creator");
 
-                    b.Navigation("EngineTypes");
+                    b.Navigation("EngineType");
 
                     b.Navigation("Thumbnail");
                 });

@@ -26,7 +26,7 @@ internal class ListingEntityConfiguration : IEntityTypeConfiguration<Listing>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder
-            .HasOne(l => l.EngineTypes)
+            .HasOne(l => l.EngineType)
             .WithMany()
             .HasForeignKey(l => l.EngineTypeId)
             .OnDelete(DeleteBehavior.Restrict);

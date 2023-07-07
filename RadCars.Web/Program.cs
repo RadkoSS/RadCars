@@ -29,14 +29,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddApplicationServices(typeof(IListingService));
+builder.Services.AddMvc(options =>
+{
+    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+});
 
-builder.Services
-    .AddControllersWithViews()
-    .AddMvcOptions(options =>
-    {
-        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-    });
+builder.Services.AddApplicationServices(typeof(IListingService));
 
 var app = builder.Build();
 

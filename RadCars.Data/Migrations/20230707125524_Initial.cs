@@ -292,7 +292,7 @@ namespace RadCars.Data.Migrations
                     Price = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Mileage = table.Column<long>(type: "bigint", nullable: false),
-                    EngineModel = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    EngineModel = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     EngineTypeId = table.Column<byte>(type: "tinyint", nullable: false),
                     VinNumber = table.Column<string>(type: "nvarchar(17)", maxLength: 17, nullable: false),
                     CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),

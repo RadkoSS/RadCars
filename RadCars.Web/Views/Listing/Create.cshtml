@@ -2,27 +2,8 @@
 
 @{
     ViewData["Title"] = "Създаване на обява";
+    var currentYear = DateTime.UtcNow.Year;
 }
-
-@*<form asp-controller="Listing" asp-action="Create" enctype="multipart/form-data" method="post">
-    <dl>
-        <dt>
-            <label asp-for="@Model.Images"></label>
-        </dt>
-        <dd>
-            <input asp-for="@Model.Images" type="file" multiple="">
-            <span asp-validation-for="@Model.Images"></span>
-        </dd>
-    </dl>
-    
-    <div class="input-group">
-        <label asp-for="@Model.Price"></label>
-        <input asp-for="@Model.Price">
-        <span asp-validation-for="@Model.Price"></span>
-    </div>
-
-    <input class="btn btn-success" type="submit" value="Създай обява" />
-</form>*@
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 
@@ -44,32 +25,32 @@
 
     <div class="form-group">
         <label asp-for="@Model.Title"></label>
-        <input asp-for="@Model.Title" type="text" id="title" class="form-control" required>
+        <input asp-for="@Model.Title" type="text" placeholder="Въведете заглавие" id="title" class="form-control" required>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.Description"></label>
-        <textarea asp-for="@Model.Description" id="description" class="form-control" required></textarea>
+        <textarea asp-for="@Model.Description" placeholder="Въведете описание" id="description" class="form-control" required></textarea>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.Price"></label>
-        <input asp-for="@Model.Price" id="price" class="form-control" required>
+        <input asp-for="@Model.Price" value="" placeholder="Въведете цена" id="price" class="form-control" required>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.Year"></label>
-        <input asp-for="@Model.Year" type="number" id="year" class="form-control" required>
+        <input asp-for="@Model.Year" type="number" placeholder="Година на производство" value="@currentYear" min="@ViewData["MinYear"]" max="@currentYear" id="year" class="form-control" required>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.Mileage"></label>
-        <input asp-for="@Model.Mileage" id="mileage" class="form-control" required>
+        <input asp-for="@Model.Mileage" placeholder="Пробег в километри" value="" min="0" id="mileage" class="form-control" required>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.EngineModel"></label>
-        <input asp-for="@Model.EngineModel" type="text" id="engineModel" class="form-control" required>
+        <input asp-for="@Model.EngineModel" type="text" placeholder="Въведете модел на двигател или само кубатура" id="engineModel" class="form-control" required>
     </div>
 
     <div class="form-group">
@@ -85,7 +66,7 @@
 
     <div class="form-group">
         <label asp-for="@Model.VinNumber"></label>
-        <input asp-for="@Model.VinNumber" type="text" id="vinNumber" class="form-control" required>
+        <input asp-for="@Model.VinNumber" placeholder="Въведете VIN номер (пр. KNDPB3A21B7082471)" type="text" id="vinNumber" class="form-control" required>
     </div>
 
     <div class="form-group">
@@ -139,10 +120,7 @@
 
 @section Scripts
 {
-    <script>
-        // Implement JavaScript/jQuery logic for dynamic dropdowns and form submission
-        // ...
-    </script>
+    <script type="module" src="/js/loadCarModels.js"></script>
 
     <partial name="_ValidationScriptsPartial"/>
 }

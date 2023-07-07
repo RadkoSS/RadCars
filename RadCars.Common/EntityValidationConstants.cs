@@ -15,11 +15,8 @@ public static class EntityValidationConstants
         public const string PriceMinimum = "1";
         public const string PriceMaximum = "9999999999";
 
-        public const int EngineTypeMinimum = 1;
-        public const int EngineTypeMaximum = 6;
-
-        public const int EngineModelMinimumLength = 2;
-        public const int EngineModelMaximumLength = 10;
+        public const int EngineModelMinimumLength = 3;
+        public const int EngineModelMaximumLength = 20;
 
         public const int VinNumberMinimumLength = 11;
         public const int VinNumberMaximumLength = 17;

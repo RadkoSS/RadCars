@@ -58,7 +58,6 @@ public class ListingFormModel
     public string EngineModel { get; set; } = null!;
 
     [Required]
-    [Range(EngineTypeMinimum, EngineTypeMaximum)]
     [Display(Name = "Тип двигател")]
     public byte EngineTypeId { get; set; }
 
