@@ -7,21 +7,13 @@
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 
-<form id="createListingForm" method="post" enctype="multipart/form-data">
+<form asp-controller="Listing" asp-action="Create" id="createListingForm" method="post" enctype="multipart/form-data">
 
     <div class="form-group">
         <label asp-for="@Model.Images">Качете снимки</label>
-        <input asp-for="@Model.Images" type="file" name="Изберете" id="images" multiple>
+        <input asp-for="@Model.Images" type="file" name="Images" id="images" multiple>
         <span asp-validation-for="@Model.Images"></span>
     </div>
-
-    @*<div class="form-group">
-        <label asp-for="@Model">Изберете снимка за началната страница</label>
-        <select id="thumbnail" name="Главна снимка" class="form-control">
-            <option value="">Изберете една от качените снимки</option>
-            <!-- Populate options dynamically with uploaded images -->
-        </select>
-    </div>*@
 
     <div class="form-group">
         <label asp-for="@Model.Title"></label>
@@ -84,7 +76,6 @@
         <label asp-for="@Model.CarModelId"></label>
         <select asp-for="@Model.CarModelId" id="carModels" class="form-control" required disabled>
             <option value="">Изберете модел</option>
-            <!-- Populate options dynamically based on selected Car Make -->
         </select>
     </div>
 
@@ -100,7 +91,7 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="@Model.SelectedFeatures"></label>
+        <label asp-for="@Model.SelectedFeatures" class="text-black"></label>
         <div>
             @foreach (var category in Model.FeatureCategories)
             {
@@ -108,7 +99,9 @@
                 <div class="form-check">
                     @foreach (var feature in category.Features)
                     {
-                        <label class="form-check-label"><input type="checkbox" value="@feature.Id">@feature.Name</label>
+                        <label class="form-check-label">
+                            <input type="checkbox" name="SelectedFeatures" value="@feature.Id">@feature.Name
+                        </label>
                     }
                 </div>
             }
@@ -120,7 +113,7 @@
 
 @section Scripts
 {
-    <script type="module" src="/js/loadCarModels.js"></script>
-
     <partial name="_ValidationScriptsPartial"/>
+
+    <script type="module" src="/js/loadCarModels.js"></script>
 }

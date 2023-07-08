@@ -15,10 +15,6 @@ using static Common.ExceptionsErrorMessages;
 
 public class ImageService : IImageService
 {
-    //ToDo: TEST IF INJECTING IConfiguration WORKS!
-
-    //ToDo: Try to inject IConfiguration and instead of constants use the appsettings.json file to store the credentials.
-
     private readonly ApplicationDbContext dbContext;
     private readonly IConfiguration configuration;
 
@@ -29,7 +25,7 @@ public class ImageService : IImageService
         this.dbContext = dbContext;
         this.configuration = configuration;
 
-        this.cloudinary = new Cloudinary(new Account(this.configuration.GetSection("ExternalConnections:Cloudinary:CloudName").ToString(), this.configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").ToString(), this.configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").ToString()));
+        this.cloudinary = new Cloudinary(new Account(this.configuration.GetSection("ExternalConnections:Cloudinary:CloudName").Value, this.configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").Value, this.configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").Value));
     }
 
     public async Task UploadImageAsync(string listingId, IFormFile image)

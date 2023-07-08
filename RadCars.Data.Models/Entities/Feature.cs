@@ -1,7 +1,6 @@
 ﻿namespace RadCars.Data.Models.Entities;
 
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 using static Common.EntityValidationConstants.FeatureConstants;
 

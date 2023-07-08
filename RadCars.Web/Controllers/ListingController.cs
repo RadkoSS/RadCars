@@ -25,7 +25,7 @@ public class ListingController : BaseController
     {
         var formModel = await this.listingService.GetListingCreateAsync();
 
-        ViewData["MinYear"] = YearMinimumValue;
+        this.ViewData["MinYear"] = YearMinimumValue;
 
         return View(formModel);
     }
@@ -41,7 +41,11 @@ public class ListingController : BaseController
         }
         catch (Exception)
         {
-            return View();
+            var formModel = await this.listingService.GetListingCreateAsync();
+
+            this.ViewData["MinYear"] = YearMinimumValue;
+
+            return View(formModel);
         }
     }
 

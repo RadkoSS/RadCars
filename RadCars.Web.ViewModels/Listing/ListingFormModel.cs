@@ -20,7 +20,6 @@ public class ListingFormModel
         this.Cities = new HashSet<CityViewModel>();
         this.SelectedFeatures = new HashSet<ushort>();
         this.CarMakes = new HashSet<CarMakeViewModel>();
-        this.CarModels = new HashSet<CarModelViewModel>();
         this.EngineTypes = new HashSet<CarEngineTypeViewModel>();
         this.FeatureCategories = new HashSet<FeatureCategoriesViewModel>();
     }
@@ -78,18 +77,15 @@ public class ListingFormModel
     public IEnumerable<CarMakeViewModel> CarMakes { get; set; }
 
     [Required]
-    [Range(1, ushort.MaxValue)]
     [Display(Name = "Модел на автомобила")]
     public ushort CarModelId { get; set; }
-
-    public IEnumerable<CarModelViewModel> CarModels { get; set; }
-
-    //ToDo: Check if this works!
+    
     [Display(Name = "Списък на екстрите")]
     public IEnumerable<ushort> SelectedFeatures { get; set; }
 
     public IEnumerable<FeatureCategoriesViewModel> FeatureCategories { get; set; }
 
+    [Required]
     [Display(Name = "Снимки")]
     public IEnumerable<IFormFile> Images { get; set; }
 }

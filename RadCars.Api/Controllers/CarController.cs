@@ -17,7 +17,7 @@ public class CarController : ControllerBase
     }
 
     [HttpGet]
-    [Route("makes/{makeId}")]
+    [Route("models/{makeId}")]
     [ProducesResponseType(typeof(JsonContent), 200)]
     public async Task<IEnumerable<CarModelViewModel>> GetModelsByMakeId(string makeId)
     {

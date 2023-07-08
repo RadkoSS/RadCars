@@ -62,8 +62,7 @@ public class ListingService : IListingService
                 Features = c.Features.Select(f => new FeatureViewModel
                 {
                     Id = f.Id,
-                    Name = f.Name,
-                    CategoryId = f.CategoryId
+                    Name = f.Name
                 })
             }).ToArrayAsync(),
             Cities = await this.dbContext.Cities.AsNoTracking().Select(c => new CityViewModel
@@ -77,9 +76,6 @@ public class ListingService : IListingService
                 Name = et.Name
             }).ToArrayAsync()
         };
-
-        //Empty array on initialize - will be dynamically loaded via the API.
-        formModel.CarModels = Array.Empty<CarModelViewModel>();
 
         return formModel;
     }
@@ -126,11 +122,11 @@ public class ListingService : IListingService
             CityId = form.CityId
         };
 
-        foreach (var featureId in form.SelectedFeatures)
+        foreach (var id in form.SelectedFeatures)
         {
             listing.ListingFeatures.Add(new ListingFeature
             {
-                FeatureId = featureId,
+                FeatureId = id,
                 Listing = listing
             });
         }
@@ -140,6 +136,11 @@ public class ListingService : IListingService
         await this.dbContext.SaveChangesAsync();
 
         await this.imageService.UploadMultipleImagesAsync(listing.Id.ToString(), form.Images);
+
+        //ToDo: We are testing the thumbnail functionality by setting the first uploaded image as thumbnail. This will be changed soon.
+        var firstImageThumbnail = listing.Images.First();
+
+        await this.AddThumbnailToListingByIdAsync(listing.Id.ToString(), firstImageThumbnail.Id.ToString());
     }
 
     public async Task AddThumbnailToListingByIdAsync(string listingId, string imageId)

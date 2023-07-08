@@ -13,6 +13,11 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString).UseLazyLoadingProxies());
 
+builder.Services.AddCors(policy => policy.AddPolicy("WebApp", configuration =>
+{
+    configuration.WithOrigins("https://localhost:7223").AllowAnyMethod().AllowAnyHeader();
+}));
+
 builder.Services.AddApplicationServices(typeof(IListingService));
 
 builder.Services.AddControllers();
@@ -30,6 +35,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("WebApp");
 
 app.UseAuthorization();
 
