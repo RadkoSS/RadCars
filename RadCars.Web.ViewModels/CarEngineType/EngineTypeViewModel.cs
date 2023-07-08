@@ -1,6 +1,6 @@
 ﻿namespace RadCars.Web.ViewModels.CarEngineType;
 
-public class CarEngineTypeViewModel
+public class EngineTypeViewModel
 {
     public byte Id { get; set; }
 

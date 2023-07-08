@@ -11,38 +11,58 @@
 
     <div class="form-group">
         <label asp-for="@Model.Images">Качете снимки</label>
-        <input asp-for="@Model.Images" type="file" name="Images" id="images" multiple>
-        <span asp-validation-for="@Model.Images"></span>
+        <input asp-for="@Model.Images" type="file" name="Images" id="images" class="form-control" multiple>
+        <span asp-validation-for="@Model.Images" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.Title"></label>
         <input asp-for="@Model.Title" type="text" placeholder="Въведете заглавие" id="title" class="form-control" required>
+        <span asp-validation-for="@Model.Title" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.Description"></label>
         <textarea asp-for="@Model.Description" placeholder="Въведете описание" id="description" class="form-control" required></textarea>
+        <span asp-validation-for="@Model.Description" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.Price"></label>
-        <input asp-for="@Model.Price" value="" placeholder="Въведете цена" id="price" class="form-control" required>
+        @if (Model.Price > 0)
+        {
+            <input asp-for="@Model.Price" value="@Model.Price" placeholder="Въведете цена" id="price" class="form-control" required>
+        }
+        else
+        {
+            <input asp-for="@Model.Price" value="" placeholder="Въведете цена" id="price" class="form-control" required>
+        }
+        <span asp-validation-for="@Model.Price" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.Year"></label>
         <input asp-for="@Model.Year" type="number" placeholder="Година на производство" value="@currentYear" min="@ViewData["MinYear"]" max="@currentYear" id="year" class="form-control" required>
+        <span asp-validation-for="@Model.Year" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.Mileage"></label>
-        <input asp-for="@Model.Mileage" placeholder="Пробег в километри" value="" min="0" id="mileage" class="form-control" required>
+        @if (Model.Mileage > 0)
+        {
+            <input asp-for="@Model.Mileage" value="@Model.Mileage" placeholder="Пробег в километри" min="0" id="mileage" class="form-control" required>
+        }
+        else
+        {
+            <input asp-for="@Model.Mileage" value="" placeholder="Пробег в километри" min="0" id="mileage" class="form-control" required>
+        }
+        <span asp-validation-for="@Model.Mileage" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.EngineModel"></label>
         <input asp-for="@Model.EngineModel" type="text" placeholder="Въведете модел на двигател или само кубатура" id="engineModel" class="form-control" required>
+        <span asp-validation-for="@Model.EngineModel" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -54,11 +74,13 @@
                 <option value="@engineType.Id">@engineType.Name</option>
             }
         </select>
+        <span asp-validation-for="@Model.EngineTypeId" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.VinNumber"></label>
         <input asp-for="@Model.VinNumber" placeholder="Въведете VIN номер (пр. KNDPB3A21B7082471)" type="text" id="vinNumber" class="form-control" required>
+        <span asp-validation-for="@Model.VinNumber" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -70,13 +92,28 @@
                 <option value="@carMake.Id">@carMake.Name</option>
             }
         </select>
+        <span asp-validation-for="@Model.CarMakeId" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.CarModelId"></label>
-        <select asp-for="@Model.CarModelId" id="carModels" class="form-control" required disabled>
-            <option value="">Изберете модел</option>
-        </select>
+        @if (Model.CarModels.Any())
+        {
+            <select asp-for="@Model.CarModelId" id="carModels" class="form-control" required>
+                <option value="">Изберете модел</option>
+                @foreach (var carModel in Model.CarModels)
+                {
+                    <option value="@carModel.Id">@carModel.Name</option>
+                }
+            </select>
+        }
+        else
+        {
+            <select asp-for="@Model.CarModelId" id="carModels" class="form-control" required disabled>
+                <option value="">Изберете модел</option>
+            </select>
+        }
+        <span asp-validation-for="@Model.CarModelId" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -88,6 +125,7 @@
                 <option value="@city.Id">@city.Name</option>
             }
         </select>
+        <span asp-validation-for="@Model.CityId" class="small text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -99,9 +137,18 @@
                 <div class="form-check">
                     @foreach (var feature in category.Features)
                     {
-                        <label class="form-check-label">
-                            <input type="checkbox" name="SelectedFeatures" value="@feature.Id">@feature.Name
-                        </label>
+                        @if (feature.IsSelected)
+                        {
+                            <label class="form-check-label">
+                                <input type="checkbox" name="SelectedFeatures" value="@feature.Id" checked="">@feature.Name
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="form-check-label">
+                                <input type="checkbox" name="SelectedFeatures" value="@feature.Id">@feature.Name
+                            </label>
+                        }
                     }
                 </div>
             }

@@ -12,4 +12,7 @@ public static class ExceptionsErrorMessages
     public const string InvalidImageForThumbnailProvided = "Изображението, което избрахте за обложка на обявата не съществува!";
 
     public const string InvalidDataProvidedError = "Данните са невалидни!";
+
+    public const string InvalidDataSubmitted = "Изпращате невалидни данни, качете снимките отново и поправете грешните полета.";
+    public const string ErrorCreatingTheListing = "Получи се грешка, качете снимките отново и опитайте пак.";
 }

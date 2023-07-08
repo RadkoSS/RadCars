@@ -20,7 +20,8 @@ public class ListingFormModel
         this.Cities = new HashSet<CityViewModel>();
         this.SelectedFeatures = new HashSet<ushort>();
         this.CarMakes = new HashSet<CarMakeViewModel>();
-        this.EngineTypes = new HashSet<CarEngineTypeViewModel>();
+        this.CarModels = new HashSet<CarModelViewModel>();
+        this.EngineTypes = new HashSet<EngineTypeViewModel>();
         this.FeatureCategories = new HashSet<FeatureCategoriesViewModel>();
     }
 
@@ -60,7 +61,7 @@ public class ListingFormModel
     [Display(Name = "Тип двигател")]
     public byte EngineTypeId { get; set; }
 
-    public IEnumerable<CarEngineTypeViewModel> EngineTypes { get; set; }
+    public IEnumerable<EngineTypeViewModel> EngineTypes { get; set; }
 
     [Required]
     [Range(1, ushort.MaxValue)]
@@ -79,7 +80,9 @@ public class ListingFormModel
     [Required]
     [Display(Name = "Модел на автомобила")]
     public ushort CarModelId { get; set; }
-    
+
+    public IEnumerable<CarModelViewModel> CarModels { get; set; }
+
     [Display(Name = "Списък на екстрите")]
     public IEnumerable<ushort> SelectedFeatures { get; set; }
 

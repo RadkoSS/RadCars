@@ -9,12 +9,12 @@
     {
         <div class="card">
             <div class="card-body">
-                <img class="card-img" style="width: 200px" src="@listing.Thumbnail.Url"/>
-                <p class="card-title">@listing.Title</p>
+                <p class="card-title text-center text-lg-center">@listing.Title</p>
+                <img class="card-img justify-content-center" style="width: 250px" src="@listing.Thumbnail.Url"/>
                 <div class="card-body">
                     <ul class="list-unstyled">
-                        <li>@listing.Description</li>
-                        <li>@listing.Year</li>
+                        <li class="m-3">Описание: @listing.Description</li>
+                        <li class="m-3">Година на производство: @listing.Year година</li>
                     </ul>
                 </div>
                 @*<form asp-controller="Listing" asp-action="" asp-route-id="@listing.FeatureId" method="post">

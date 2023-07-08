@@ -32,7 +32,8 @@ internal class ListingEntityConfiguration : IEntityTypeConfiguration<Listing>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(l => l.Thumbnail)
-            .WithOne(l => l.Listing);
+            .WithMany()
+            .HasForeignKey(l => l.ThumbnailId);
 
         builder.HasMany(l => l.ListingFeatures)
             .WithOne()

@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 using Contracts;
 using RadCars.Data;
+using Web.ViewModels.City;
+using Web.ViewModels.CarMake;
+using Web.ViewModels.Feature;
 using Web.ViewModels.Listing;
 using Web.ViewModels.CarImage;
 using RadCars.Data.Models.Entities;
 using Web.ViewModels.CarEngineType;
-using Web.ViewModels.CarMake;
-using Web.ViewModels.City;
-using Web.ViewModels.Feature;
 using Web.ViewModels.FeatureCategory;
 
 using static Common.ExceptionsErrorMessages;
@@ -27,7 +27,7 @@ public class ListingService : IListingService
         this.imageService = imageService;
     }
 
-    public async Task<ListingViewModel[]> GetAllListingsAsync()
+    public async Task<IEnumerable<ListingViewModel>> GetAllListingsAsync()
     {
         var listings = await this.dbContext.Listings.AsNoTracking().Select(l => new ListingViewModel
         {
@@ -38,7 +38,7 @@ public class ListingService : IListingService
             Year = l.Year,
             Thumbnail = new ImageViewModel
             {
-                Id = l.ThumbnailId.ToString() == null ? l.Images.First().Id.ToString() : l.ThumbnailId.ToString()!,
+                Id = l.ThumbnailId == null ? l.Images.First().Id.ToString() : l.ThumbnailId.ToString()!,
                 Url = l.Thumbnail == null ? l.Images.First().Url : l.Thumbnail.Url
             }
         }).ToArrayAsync();
@@ -50,35 +50,47 @@ public class ListingService : IListingService
     {
         var formModel = new ListingFormModel
         {
-            CarMakes = await this.dbContext.CarMakes.AsNoTracking().Select(cm => new CarMakeViewModel
-            {
-                Id = cm.Id,
-                Name = cm.Name
-            }).ToArrayAsync(),
-            FeatureCategories = await this.dbContext.Categories.AsNoTracking().Select(c => new FeatureCategoriesViewModel
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Features = c.Features.Select(f => new FeatureViewModel
-                {
-                    Id = f.Id,
-                    Name = f.Name
-                })
-            }).ToArrayAsync(),
-            Cities = await this.dbContext.Cities.AsNoTracking().Select(c => new CityViewModel
-            {
-                Id = c.Id,
-                Name = c.Name
-            }).ToArrayAsync(),
-            EngineTypes = await this.dbContext.EngineTypes.AsNoTracking().Select(et => new CarEngineTypeViewModel
-            {
-                Id = et.Id,
-                Name = et.Name
-            }).ToArrayAsync()
+            CarMakes = await GetCarMakesAsync(),
+            FeatureCategories = await GetFeatureCategoriesAsync(),
+            Cities = await GetCitiesAsync(),
+            EngineTypes = await GetEngineTypesAsync()
         };
 
         return formModel;
     }
+
+    public async Task<IEnumerable<CarMakeViewModel>> GetCarMakesAsync()
+        => await this.dbContext.CarMakes.AsNoTracking().Select(cm => new CarMakeViewModel
+        {
+            Id = cm.Id,
+            Name = cm.Name
+        }).ToArrayAsync();
+
+    public async Task<IEnumerable<FeatureCategoriesViewModel>> GetFeatureCategoriesAsync()
+        => await this.dbContext.Categories.AsNoTracking().Select(c => new FeatureCategoriesViewModel
+        {
+            Id = c.Id,
+            Name = c.Name,
+            Features = c.Features.Select(f => new FeatureViewModel
+            {
+                Id = f.Id,
+                Name = f.Name
+            })
+        }).ToArrayAsync();
+
+    public async Task<IEnumerable<CityViewModel>> GetCitiesAsync()
+        => await this.dbContext.Cities.AsNoTracking().Select(c => new CityViewModel
+        {
+            Id = c.Id,
+            Name = c.Name
+        }).ToArrayAsync();
+
+    public async Task<IEnumerable<EngineTypeViewModel>> GetEngineTypesAsync()
+        => await this.dbContext.EngineTypes.AsNoTracking().Select(et => new EngineTypeViewModel
+        {
+            Id = et.Id,
+            Name = et.Name
+        }).ToArrayAsync();
 
     public async Task<ListingDetailsViewModel> GetListingDetailsAsync(string listingId)
     {
@@ -103,7 +115,6 @@ public class ListingService : IListingService
 
     public async Task CreateListingAsync(ListingFormModel form, string userId)
     {
-
         var engineTypeExists = await this.dbContext.EngineTypes.AnyAsync(t => t.Id == form.EngineTypeId);
         var carMakeExists = await this.dbContext.CarMakes.AnyAsync(m => m.Id == form.CarMakeId);
         var carModelExists = await this.dbContext.CarModels.AnyAsync(m => m.Id == form.CarModelId);
@@ -146,13 +157,16 @@ public class ListingService : IListingService
         }
 
         listing.Images = uploadedImages;
+        
+        await this.dbContext.Listings.AddAsync(listing);
+
+        await this.dbContext.SaveChangesAsync();
 
         //ToDo: We are testing the thumbnail functionality by setting the first uploaded image as thumbnail. This will be changed soon.
+
         var firstImageThumbnail = listing.Images.First();
 
         listing.ThumbnailId = firstImageThumbnail.Id;
-
-        await this.dbContext.Listings.AddAsync(listing);
 
         await this.dbContext.SaveChangesAsync();
     }
