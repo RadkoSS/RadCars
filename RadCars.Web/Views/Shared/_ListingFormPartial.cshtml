@@ -1,0 +1,156 @@
+﻿@model ListingFormModel
+
+@{
+    var currentYear = DateTime.UtcNow.ToLocalTime().Year;
+}
+
+<form asp-controller="Listing" asp-action="Create" id="createListingForm" method="post" enctype="multipart/form-data">
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.Images" class="mb-1">Снимки</label>
+        <input asp-for="@Model.Images" type="file" name="Images" id="images" class="form-control" multiple>
+        <span asp-validation-for="@Model.Images" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.Title" class="mb-1"></label>
+        <input asp-for="@Model.Title" type="text" placeholder="Въведете заглавие" id="title" class="form-control" required>
+        <span asp-validation-for="@Model.Title" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.Description" class="mb-1"></label>
+        <textarea asp-for="@Model.Description" placeholder="Въведете описание" id="description" class="form-control" required></textarea>
+        <span asp-validation-for="@Model.Description" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.Price" class="mb-1"></label>
+        @if (Model.Price > 0)
+        {
+            <input asp-for="@Model.Price" value="@Model.Price" type="number" placeholder="Въведете цена" id="price" class="form-control" required>
+        }
+        else
+        {
+            <input asp-for="@Model.Price" value="" type="number" placeholder="Въведете цена" id="price" class="form-control" required>
+        }
+        <span asp-validation-for="@Model.Price" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.Year" class="mb-1"></label>
+        <input asp-for="@Model.Year" type="number" placeholder="Година на производство" value="@currentYear" min="@ViewData["MinYear"]" max="@currentYear" id="year" class="form-control" required>
+        <span asp-validation-for="@Model.Year" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.Mileage" class="mb-1"></label>
+        @if (Model.Mileage > 0)
+        {
+            <input asp-for="@Model.Mileage" value="@Model.Mileage" type="number" placeholder="Пробег в километри" min="0" id="mileage" class="form-control" required>
+        }
+        else
+        {
+            <input asp-for="@Model.Mileage" value="" type="number" placeholder="Пробег в километри" min="0" id="mileage" class="form-control" required>
+        }
+        <span asp-validation-for="@Model.Mileage" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.EngineModel" class="mb-1"></label>
+        <input asp-for="@Model.EngineModel" type="text" placeholder="Въведете модел на двигател или само кубатура" id="engineModel" class="form-control" required>
+        <span asp-validation-for="@Model.EngineModel" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.EngineTypeId" class="mb-1"></label>
+        <select asp-for="@Model.EngineTypeId" id="engineTypes" class="form-control" required>
+            <option value="">Изберете вид на двигателя</option>
+            @foreach (var engineType in Model.EngineTypes)
+            {
+                <option value="@engineType.Id">@engineType.Name</option>
+            }
+        </select>
+        <span asp-validation-for="@Model.EngineTypeId" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.VinNumber" class="mb-1"></label>
+        <input asp-for="@Model.VinNumber" type="text" placeholder="Въведете VIN номер (пр. KNDPB3A21B7082471)" id="vinNumber" class="form-control" required>
+        <span asp-validation-for="@Model.VinNumber" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.CarMakeId" class="mb-1"></label>
+        <select asp-for="@Model.CarMakeId" id="carMakes" class="form-control" required>
+            <option value="">Изберете марка автомобил</option>
+            @foreach (var carMake in Model.CarMakes)
+            {
+                <option value="@carMake.Id">@carMake.Name</option>
+            }
+        </select>
+        <span asp-validation-for="@Model.CarMakeId" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.CarModelId" class="mb-1"></label>
+        @if (Model.CarModels.Any())
+        {
+            <select asp-for="@Model.CarModelId" id="carModels" class="form-control" required>
+                <option value="">Изберете модел</option>
+                @foreach (var carModel in Model.CarModels)
+                {
+                    <option value="@carModel.Id">@carModel.Name</option>
+                }
+            </select>
+        }
+        else
+        {
+            <select asp-for="@Model.CarModelId" id="carModels" class="form-control" required disabled>
+                <option value="">Изберете модел</option>
+            </select>
+        }
+        <span asp-validation-for="@Model.CarModelId" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.CityId" class="mb-1"></label>
+        <select asp-for="@Model.CityId" id="city" class="form-control" required>
+            <option value="">Изберете град</option>
+            @foreach (var city in Model.Cities)
+            {
+                <option value="@city.Id">@city.Name</option>
+            }
+        </select>
+        <span asp-validation-for="@Model.CityId" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group my-3">
+        <label asp-for="@Model.SelectedFeatures" class="modal-header"></label>
+        <div>
+            @foreach (var category in Model.FeatureCategories)
+            {
+                <h4>@category.Name</h4>
+                <div class="form-check">
+                    @foreach (var feature in category.Features)
+                    {
+                        @if (feature.IsSelected)
+                        {
+                            <label class="form-check-label m-2">
+                                <input type="checkbox" class="form-check-input mx-2" name="SelectedFeatures" value="@feature.Id" checked="">@feature.Name
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="form-check-label m-2">
+                                <input type="checkbox" class="form-check-input mx-2" name="SelectedFeatures" value="@feature.Id">@feature.Name
+                            </label>
+                        }
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Създай обява</button>
+</form>

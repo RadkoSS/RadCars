@@ -115,11 +115,7 @@ public class ListingService : IListingService
 
     public async Task CreateListingAsync(ListingFormModel form, string userId)
     {
-        var engineTypeExists = await this.dbContext.EngineTypes.AnyAsync(t => t.Id == form.EngineTypeId);
-        var carMakeExists = await this.dbContext.CarMakes.AnyAsync(m => m.Id == form.CarMakeId);
-        var carModelExists = await this.dbContext.CarModels.AnyAsync(m => m.Id == form.CarModelId);
-
-        if (!engineTypeExists || !carMakeExists || !carModelExists)
+        if (await ValidateForm(form) == false)
         {
             throw new InvalidDataException(InvalidDataProvidedError);
         }
@@ -185,5 +181,27 @@ public class ListingService : IListingService
         listing.ThumbnailId = Guid.Parse(imageId);
 
         await this.dbContext.SaveChangesAsync();
+    }
+
+    private async Task<bool> ValidateForm(ListingFormModel form)
+    {
+        var engineTypeIdExists = await this.dbContext.EngineTypes.AnyAsync(t => t.Id == form.EngineTypeId);
+        var carMakeIdExists = await this.dbContext.CarMakes.AnyAsync(m => m.Id == form.CarMakeId);
+        var carModelIdExists = await this.dbContext.CarModels.AnyAsync(m => m.Id == form.CarModelId);
+        var cityIdExists = await this.dbContext.Cities.AnyAsync(c => c.Id == form.CityId);
+        bool featureIdsExist = true;
+
+        var features = await this.dbContext.Features.Select(f => f.Id).ToArrayAsync();
+
+        foreach (var featureId in form.SelectedFeatures)
+        {
+            if (!features.Contains(featureId))
+            {
+                featureIdsExist = false;
+                break;
+            }
+        }
+
+        return engineTypeIdExists && carMakeIdExists && carModelIdExists && cityIdExists && featureIdsExist;
     }
 }

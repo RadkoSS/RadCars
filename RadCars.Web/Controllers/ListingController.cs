@@ -50,7 +50,7 @@ public class ListingController : BaseController
         {
             await this.listingService.CreateListingAsync(form, this.User.GetId()!);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("All", "Listing");
         }
         catch (Exception)
         {
