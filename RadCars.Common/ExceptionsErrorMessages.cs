@@ -2,10 +2,14 @@
 
 public static class ExceptionsErrorMessages
 {
-    public const string ListingDoesNotExistError = "Listing does not exist!";
+    public const string ListingDoesNotExistError = "Обявата не същестува.";
 
-    public const string ImageDoesNotExistError = "Image does not exist.";
-    public const string ImageDeleteUnsuccessful = "Failed to delete image from Cloudinary.";
+    public const string ImageDoesNotExistError = "Изображението не същестува.";
+    public const string ImageDeleteUnsuccessful = "Неуспешно изтриване на изображение!";
+    public const string ImageUploadUnsuccessful = "Качването на изображението не беше успешно! Опитайте отново!";
+    public const string ImagesUploadUnsuccessful = "Качването на изображенията не беше успешно! Опитайте отново!";
 
-    public const string InvalidImageForThumbnailProvided = "The image you provided for thumbnail does not exist!";
+    public const string InvalidImageForThumbnailProvided = "Изображението, което избрахте за обложка на обявата не съществува!";
+
+    public const string InvalidDataProvidedError = "Данните са невалидни!";
 }

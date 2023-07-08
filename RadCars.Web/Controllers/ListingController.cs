@@ -35,17 +35,22 @@ public class ListingController : BaseController
     {
         try
         {
+            if (!this.ModelState.IsValid)
+            {
+                this.ViewData["MinYear"] = YearMinimumValue;
+
+                return View(form);
+            }
+
             await this.listingService.CreateListingAsync(form, this.User.GetId()!);
 
             return RedirectToAction("Index", "Home");
         }
-        catch (Exception)
+        catch (Exception е)
         {
-            var formModel = await this.listingService.GetListingCreateAsync();
-
             this.ViewData["MinYear"] = YearMinimumValue;
 
-            return View(formModel);
+            return View(form);
         }
     }
 

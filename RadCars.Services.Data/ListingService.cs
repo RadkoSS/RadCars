@@ -9,10 +9,10 @@ using Web.ViewModels.CarImage;
 using RadCars.Data.Models.Entities;
 using Web.ViewModels.CarEngineType;
 using Web.ViewModels.CarMake;
-using Web.ViewModels.CarModel;
 using Web.ViewModels.City;
 using Web.ViewModels.Feature;
 using Web.ViewModels.FeatureCategory;
+
 using static Common.ExceptionsErrorMessages;
 
 public class ListingService : IListingService
@@ -103,9 +103,16 @@ public class ListingService : IListingService
 
     public async Task CreateListingAsync(ListingFormModel form, string userId)
     {
-        //ToDo: Add all the required properties to the form model and implement AutoMapper to the application.
 
-        //ToDo: add validation!!
+        var engineTypeExists = await this.dbContext.EngineTypes.AnyAsync(t => t.Id == form.EngineTypeId);
+        var carMakeExists = await this.dbContext.CarMakes.AnyAsync(m => m.Id == form.CarMakeId);
+        var carModelExists = await this.dbContext.CarModels.AnyAsync(m => m.Id == form.CarModelId);
+
+        if (!engineTypeExists || !carMakeExists || !carModelExists)
+        {
+            throw new InvalidDataException(InvalidDataProvidedError);
+        }
+
         var listing = new Listing
         {
             Title = form.Title,
@@ -131,16 +138,23 @@ public class ListingService : IListingService
             });
         }
 
-        await this.dbContext.Listings.AddAsync(listing);
+        var uploadedImages = await this.imageService.UploadMultipleImagesAsync(listing.Id.ToString(), form.Images);
 
-        await this.dbContext.SaveChangesAsync();
+        if (!uploadedImages.Any())
+        {
+            throw new ApplicationException(ImagesUploadUnsuccessful);
+        }
 
-        await this.imageService.UploadMultipleImagesAsync(listing.Id.ToString(), form.Images);
+        listing.Images = uploadedImages;
 
         //ToDo: We are testing the thumbnail functionality by setting the first uploaded image as thumbnail. This will be changed soon.
         var firstImageThumbnail = listing.Images.First();
 
-        await this.AddThumbnailToListingByIdAsync(listing.Id.ToString(), firstImageThumbnail.Id.ToString());
+        listing.ThumbnailId = firstImageThumbnail.Id;
+
+        await this.dbContext.Listings.AddAsync(listing);
+
+        await this.dbContext.SaveChangesAsync();
     }
 
     public async Task AddThumbnailToListingByIdAsync(string listingId, string imageId)

@@ -2,11 +2,13 @@
 
 using Microsoft.AspNetCore.Http;
 
+using RadCars.Data.Models.Entities;
+
 public interface IImageService
 {
-    Task UploadMultipleImagesAsync(string listingId, IEnumerable<IFormFile> images);
+    Task<ICollection<CarImage>> UploadMultipleImagesAsync(string listingId, IEnumerable<IFormFile> images);
 
-    Task UploadImageAsync(string listingId, IFormFile image);
+    Task<CarImage> UploadImageAsync(string listingId, IFormFile image);
 
     Task DeleteImageAsync(string listingId, string imageId);
 

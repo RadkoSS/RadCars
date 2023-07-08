@@ -28,20 +28,13 @@ public class ImageService : IImageService
         this.cloudinary = new Cloudinary(new Account(this.configuration.GetSection("ExternalConnections:Cloudinary:CloudName").Value, this.configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").Value, this.configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").Value));
     }
 
-    public async Task UploadImageAsync(string listingId, IFormFile image)
+    public async Task<CarImage> UploadImageAsync(string listingId, IFormFile image)
     {
-        var currentListing = await this.dbContext.Listings.FirstOrDefaultAsync(l => l.Id.ToString() == listingId);
-
-        if (currentListing == null)
-        {
-            throw new InvalidOperationException(ListingDoesNotExistError);
-        }
-
-        var pictureId = Guid.NewGuid();
+        var imageId = Guid.NewGuid();
 
         var uploadParams = new ImageUploadParams
         {
-            File = new FileDescription(GetUniqueFileName(image.FileName, pictureId.ToString()), image.OpenReadStream()),
+            File = new FileDescription(GetUniqueFileName(image.FileName, imageId.ToString()), image.OpenReadStream()),
             Folder = listingId,
             UseFilename = true,
             UniqueFilename = false
@@ -49,31 +42,34 @@ public class ImageService : IImageService
 
         var uploadResult = await cloudinary.UploadAsync(uploadParams);
 
-        var carPicture = new CarImage
+        var uploadedImage = new CarImage
         {
-            Id = pictureId,
-            Url = uploadResult.Url.ToString(),
-            ListingId = currentListing.Id
+            Id = imageId,
+            Url = uploadResult.Url.ToString()
         };
 
-        await this.dbContext.CarImages.AddAsync(carPicture);
-
-        await this.dbContext.SaveChangesAsync();
+        return uploadedImage;
     }
 
-    public async Task UploadMultipleImagesAsync(string listingId, IEnumerable<IFormFile> images)
+    public async Task<ICollection<CarImage>> UploadMultipleImagesAsync(string listingId, IEnumerable<IFormFile> images)
     {
-        foreach (var picture in images)
+        HashSet<CarImage> uploadedImages = new HashSet<CarImage>();
+
+        foreach (var image in images)
         {
-            await this.UploadImageAsync(listingId, picture);
+            var uploadedImage = await UploadImageAsync(listingId, image);
+
+            uploadedImages.Add(uploadedImage);
         }
+
+        return uploadedImages;
     }
 
     public async Task DeleteImageAsync(string listingId, string imageId)
     {
-        var carPicture = await this.dbContext.CarImages.FirstOrDefaultAsync(cp => cp.ListingId.ToString() == listingId && cp.Id.ToString() == imageId);
+        var carImage = await this.dbContext.CarImages.FirstOrDefaultAsync(cp => cp.ListingId.ToString() == listingId && cp.Id.ToString() == imageId);
 
-        if (carPicture == null)
+        if (carImage == null)
         {
             throw new InvalidOperationException(ImageDoesNotExistError);
         }
@@ -87,7 +83,7 @@ public class ImageService : IImageService
             throw new InvalidOperationException(ImageDeleteUnsuccessful);
         }
 
-        this.dbContext.CarImages.Remove(carPicture);
+        this.dbContext.CarImages.Remove(carImage);
         await this.dbContext.SaveChangesAsync();
     }
 
