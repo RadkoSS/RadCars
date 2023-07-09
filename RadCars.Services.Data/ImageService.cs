@@ -95,7 +95,7 @@ public class ImageService : IImageService
         }
     }
 
-    private string GetUniqueFileName(string fileName, string imageId)
+    private static string GetUniqueFileName(string fileName, string imageId)
     {
         string fileExtension = Path.GetExtension(fileName);
         return $"{imageId}{fileExtension}";

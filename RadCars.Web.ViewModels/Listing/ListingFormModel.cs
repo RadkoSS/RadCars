@@ -86,7 +86,7 @@ public class ListingFormModel
 
     public IEnumerable<CarModelViewModel> CarModels { get; set; }
     
-    [Display(Name = "Изберете какви екстри има автомовила")]
+    [Display(Name = "Изберете какви екстри има автомовила:")]
     public IEnumerable<ushort> SelectedFeatures { get; set; }
 
     public IEnumerable<FeatureCategoriesViewModel> FeatureCategories { get; set; }

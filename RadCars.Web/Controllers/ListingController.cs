@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using ViewModels.Listing;
+using ViewModels.Thumbnail;
 using Services.Data.Contracts;
 using Infrastructure.Extensions;
 
 using static Common.ExceptionsErrorMessages;
 using static Common.EntityValidationConstants.ListingConstants;
+using RadCars.Data.Models.Entities;
 
 public class ListingController : BaseController
 {
@@ -26,31 +28,38 @@ public class ListingController : BaseController
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var formModel = await this.listingService.GetListingCreateAsync();
+        try
+        {
+            var formModel = await this.listingService.GetListingCreateAsync();
 
-        this.ViewData["MinYear"] = YearMinimumValue;
+            this.ViewData["MinYear"] = YearMinimumValue;
 
-        return View(formModel);
+            return View(formModel);
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("Index", "Home");
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(ListingFormModel form)
     {
-        if (!this.ModelState.IsValid)
-        {
-            this.ViewData["MinYear"] = YearMinimumValue;
-            this.ModelState.AddModelError("Images", InvalidDataSubmitted);
-
-            form = await this.ReloadForm(form);
-
-            return View(form);
-        }
-
         try
         {
-            await this.listingService.CreateListingAsync(form, this.User.GetId()!);
+            if (!this.ModelState.IsValid)
+            {
+                this.ViewData["MinYear"] = YearMinimumValue;
+                this.ModelState.AddModelError("Images", InvalidDataSubmitted);
 
-            return RedirectToAction("All", "Listing");
+                form = await this.ReloadForm(form);
+
+                return View(form);
+            }
+
+            var listingId = await this.listingService.CreateListingAsync(form, this.User.GetId()!);
+
+            return RedirectToAction("ChooseThumbnail", "Listing", new { listingId });
         }
         catch (Exception)
         {
@@ -66,9 +75,16 @@ public class ListingController : BaseController
     [AllowAnonymous]
     public async Task<IActionResult> All()
     {
-        var listings = await this.listingService.GetAllListingsAsync();
+        try
+        {
+            var listings = await this.listingService.GetAllListingsAsync();
 
-        return View(listings);
+            return View(listings);
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("Index", "Home");
+        }
     }
 
     [AllowAnonymous]
@@ -76,9 +92,9 @@ public class ListingController : BaseController
     {
         try
         {
-            var listing = await this.listingService.GetListingDetailsAsync(listingId);
+            var listingViewModel = await this.listingService.GetListingDetailsAsync(listingId);
 
-            return View(listing);
+            return View(listingViewModel);
         }
         catch (Exception)
         {
@@ -100,6 +116,43 @@ public class ListingController : BaseController
         catch
         {
             return RedirectToAction("Index", "Home");
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ChooseThumbnail(string listingId)
+    {
+        try
+        {
+            var viewModel = await this.listingService.GetChooseThumbnailAsync(listingId, this.User.GetId()!);
+
+            return View(viewModel);
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("Details", "Listing", new { listingId });
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ChooseThumbnail(ChooseThumbnailFormModel form)
+    {
+        try
+        {
+            if (!this.ModelState.IsValid)
+            {
+                var viewModel = await this.listingService.GetChooseThumbnailAsync(form.ListingId, this.User.GetId()!);
+
+                return View(viewModel);
+            }
+
+            await this.listingService.AddThumbnailToListingByIdAsync(form.ListingId, form.SelectedImageId, this.User.GetId()!);
+
+            return RedirectToAction("All", "Listing");
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("Details", "Listing", new { form.ListingId });
         }
     }
 

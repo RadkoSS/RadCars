@@ -5,6 +5,7 @@ using CarImage;
 public class ListingDetailsViewModel : ListingViewModel
 {
     //ToDo: Add all the needed properties to display the details about each car listing!
+    public string CreatorId { get; set; } = null!;
 
     public ICollection<ImageViewModel> Pictures { get; set; } = null!;
 }

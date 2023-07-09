@@ -9,6 +9,7 @@ using Web.ViewModels.CarMake;
 using Web.ViewModels.Feature;
 using Web.ViewModels.Listing;
 using Web.ViewModels.CarImage;
+using Web.ViewModels.Thumbnail;
 using RadCars.Data.Models.Entities;
 using Web.ViewModels.CarEngineType;
 using Web.ViewModels.FeatureCategory;
@@ -100,6 +101,7 @@ public class ListingService : IListingService
             {
                 Id = l.Id.ToString(),
                 Title = l.Title,
+                CreatorId = l.CreatorId.ToString(),
                 CreatorName = l.Creator.UserName,
                 Description = l.Description,
                 Year = l.Year,
@@ -113,7 +115,25 @@ public class ListingService : IListingService
         return listingToDisplay;
     }
 
-    public async Task CreateListingAsync(ListingFormModel form, string userId)
+    public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string creatorId)
+    {
+        var currentListing =
+            await this.dbContext.Listings.FirstAsync(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == creatorId);
+
+        var chooseThumbnailViewModel = new ChooseThumbnailFormModel
+        {
+            ListingId = currentListing.Id.ToString(),
+            Images = currentListing.Images.Select(p => new ImageViewModel
+            {
+                Id = p.Id.ToString(),
+                Url = p.Url
+            }).ToArray()
+        };
+
+        return chooseThumbnailViewModel;
+    }
+
+    public async Task<string> CreateListingAsync(ListingFormModel form, string userId)
     {
         if (await ValidateForm(form) == false)
         {
@@ -153,25 +173,20 @@ public class ListingService : IListingService
         }
 
         listing.Images = uploadedImages;
-        
+
         await this.dbContext.Listings.AddAsync(listing);
 
         await this.dbContext.SaveChangesAsync();
 
-        //ToDo: We are testing the thumbnail functionality by setting the first uploaded image as thumbnail. This will be changed soon.
-
-        var firstImageThumbnail = listing.Images.First();
-
-        listing.ThumbnailId = firstImageThumbnail.Id;
-
-        await this.dbContext.SaveChangesAsync();
+        return listing.Id.ToString();
     }
 
-    public async Task AddThumbnailToListingByIdAsync(string listingId, string imageId)
+    public async Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string creatorId)
     {
-        var imageExists = await this.dbContext.CarImages.AsNoTracking().AnyAsync(ci => ci.Id.ToString() == imageId);
+        var imageAndListingExist = await this.dbContext.CarImages.
+            AnyAsync(ci => ci.Id.ToString() == imageId && ci.ListingId.ToString() == listingId && ci.Listing.CreatorId.ToString() == creatorId);
 
-        if (!imageExists)
+        if (!imageAndListingExist)
         {
             throw new InvalidOperationException(InvalidImageForThumbnailProvided);
         }
@@ -185,13 +200,13 @@ public class ListingService : IListingService
 
     private async Task<bool> ValidateForm(ListingFormModel form)
     {
-        var engineTypeIdExists = await this.dbContext.EngineTypes.AnyAsync(t => t.Id == form.EngineTypeId);
-        var carMakeIdExists = await this.dbContext.CarMakes.AnyAsync(m => m.Id == form.CarMakeId);
-        var carModelIdExists = await this.dbContext.CarModels.AnyAsync(m => m.Id == form.CarModelId);
-        var cityIdExists = await this.dbContext.Cities.AnyAsync(c => c.Id == form.CityId);
+        var engineTypeIdExists = await this.dbContext.EngineTypes.AsNoTracking().AnyAsync(t => t.Id == form.EngineTypeId);
+        var carMakeIdExists = await this.dbContext.CarMakes.AsNoTracking().AnyAsync(m => m.Id == form.CarMakeId);
+        var carModelIdExists = await this.dbContext.CarModels.AsNoTracking().AnyAsync(m => m.Id == form.CarModelId);
+        var cityIdExists = await this.dbContext.Cities.AsNoTracking().AnyAsync(c => c.Id == form.CityId);
         bool featureIdsExist = true;
 
-        var features = await this.dbContext.Features.Select(f => f.Id).ToArrayAsync();
+        var features = await this.dbContext.Features.AsNoTracking().Select(f => f.Id).ToArrayAsync();
 
         foreach (var featureId in form.SelectedFeatures)
         {

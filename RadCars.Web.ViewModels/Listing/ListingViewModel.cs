@@ -16,5 +16,5 @@ public class ListingViewModel
 
     public ImageViewModel Thumbnail { get; set; } = null!;
 
-    //ToDo: add all properties needed!
+    //ToDo: add all properties needed! 
 }

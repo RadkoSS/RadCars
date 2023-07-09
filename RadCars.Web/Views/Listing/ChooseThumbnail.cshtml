@@ -1,0 +1,43 @@
+﻿@model ChooseThumbnailFormModel
+
+@{
+    ViewData["Title"] = "Избор на снимка за обложка";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center">@ViewData["Title"]</h2>
+            <p class="text-center mt-2">Изберете една от снимките като обложка, за да бъде представена добре обявата Ви сред всички останали.</p>
+            
+            <div class="row my-3">
+                <div class="col-12">
+                    <a asp-controller="Listing" asp-action="Details" asp-route-listingId="@Model.ListingId" class="btn btn-close"></a>
+                    <span class="text-decoration-underline">Отказ</span>
+                </div>
+            </div>
+            
+            <span asp-validation-for="@Model.SelectedImageId" class="small text-danger"></span>
+
+            <form asp-controller="Listing" asp-action="ChooseThumbnail" method="post" class="mt-4">
+                <input asp-for="ListingId" type="hidden" name="ListingId" value="@Model.ListingId" />
+
+                <div class="row">
+                    @foreach (var image in Model.Images)
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label class="d-block">
+                                <input type="radio" name="SelectedImageId" value="@image.Id" class="mr-2" />
+                                <img class="img-fluid" src="@image.Url" alt="Снимката не беше заредена правилно..." />
+                            </label>
+                        </div>
+                    }
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Изпрати</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

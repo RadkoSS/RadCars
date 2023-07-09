@@ -3,6 +3,7 @@
 using Web.ViewModels.City;
 using Web.ViewModels.CarMake;
 using Web.ViewModels.Listing;
+using Web.ViewModels.Thumbnail;
 using Web.ViewModels.CarEngineType;
 using Web.ViewModels.FeatureCategory;
 
@@ -10,7 +11,7 @@ public interface IListingService
 {
     Task<IEnumerable<ListingViewModel>> GetAllListingsAsync();
 
-    Task CreateListingAsync(ListingFormModel form, string userId);
+    Task<string> CreateListingAsync(ListingFormModel form, string userId);
 
     Task<IEnumerable<CarMakeViewModel>> GetCarMakesAsync();
 
@@ -24,5 +25,7 @@ public interface IListingService
 
     Task<ListingDetailsViewModel> GetListingDetailsAsync(string listingId);
 
-    Task AddThumbnailToListingByIdAsync(string listingId, string imageId);
+    Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string creatorId);
+
+    Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string creatorId);
 }
