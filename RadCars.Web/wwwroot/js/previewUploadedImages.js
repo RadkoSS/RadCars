@@ -15,9 +15,12 @@ input.addEventListener('change', () => {
             carouselItem.className = 'carousel-item';
         }
 
+        carouselItem.style.height = '40vh';
+
         const img = document.createElement('img');
         img.src = URL.createObjectURL(input.files[i]);
-        img.className = 'd-block object-fit-cover w-100 h-100';
+        img.className = 'd-block w-100 h-100';
+        img.style.objectFit = 'cover';
         img.alt = 'Снимката не беше заредена...';
 
         img.onload = () => {
