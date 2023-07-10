@@ -6,13 +6,13 @@ const modelSelectList = document.getElementById('carModels');
 makeSelectList.addEventListener('change', loadModelsByMakeId);
 
 async function loadModelsByMakeId() {
-    const models = await get(`/api/car/models/${this.value}`);
+    const response = await get(`/api/car/models/${this.value}`);
     modelSelectList.innerHTML = '';
 
-    if (models.length !== 0) {
+    if (response.length !== 0 && response.status !== 204) {
         modelSelectList.disabled = false;
 
-        models.forEach(m => {
+        response.forEach(m => {
             const option = document.createElement('option');
             option.setAttribute('value', m.id);
             option.text = m.name;

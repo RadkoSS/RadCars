@@ -18,9 +18,10 @@ public class CarController : ControllerBase
 
     [HttpGet]
     [Route("models/{makeId}")]
-    [ProducesResponseType(200, Type = typeof(JsonContent))]
-    [ProducesResponseType(404)]
-    public async Task<ActionResult<IEnumerable<CarModelViewModel>>> GetModelsByMakeId(string makeId)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CarModelViewModel>))]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+
+    public async Task<IActionResult> GetModelsByMakeId(string makeId)
     {
         try
         {
@@ -33,11 +34,11 @@ public class CarController : ControllerBase
                 return Ok(makes);
             }
 
-            return NotFound();
+            return NoContent();
         }
         catch
         {
-            return NotFound();
+            return NoContent();
         }
     }
 }
