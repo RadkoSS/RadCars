@@ -6,11 +6,30 @@
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 
-<partial name="_ListingFormPartial" model="@Model"/>
+<div class="align-content-center text-center">
+    <div id="carouselExampleControls" class="carousel slide w-25 visually-hidden" data-bs-interval="false">
+        <div class="carousel-inner">
+            <!--Images are loaded dynamically with JS-->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Предишна</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Следваща</span>
+        </button>
+    </div>
+
+    <button type="button" id="clearImages" class="btn btn-danger mt-3 visually-hidden">Изтрий снимките</button>
+</div>
+
+<partial name="_ListingFormPartial" model="@Model" />
 
 @section Scripts
-{
-    <partial name="_ValidationScriptsPartial"/>
+    {
+    <partial name="_ValidationScriptsPartial" />
 
-    <script type="module" src="/js/loadCarModels.js"></script>
+    <script type="module" src="~/js/loadCarModels.js"></script>
+    <script type="text/javascript" src="~/js/previewUploadedImages.js"></script>
 }
