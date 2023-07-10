@@ -1,7 +1,7 @@
 ﻿namespace RadCars.Web.Controllers;
 
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using ViewModels.Listing;
 using ViewModels.Thumbnail;
@@ -10,7 +10,6 @@ using Infrastructure.Extensions;
 
 using static Common.ExceptionsErrorMessages;
 using static Common.EntityValidationConstants.ListingConstants;
-using RadCars.Data.Models.Entities;
 
 public class ListingController : BaseController
 {
