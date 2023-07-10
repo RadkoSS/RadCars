@@ -20,7 +20,7 @@ public class CarController : ControllerBase
     [Route("models/{makeId}")]
     [ProducesResponseType(200, Type = typeof(JsonContent))]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> GetModelsByMakeId(string makeId)
+    public async Task<ActionResult<IEnumerable<CarModelViewModel>>> GetModelsByMakeId(string makeId)
     {
         try
         {
@@ -28,7 +28,12 @@ public class CarController : ControllerBase
 
             var makes = await this.carService.GetModelsByMakeIdAsync(idAsNumber);
 
-            return Ok(makes);
+            if (makes.Any())
+            {
+                return Ok(makes);
+            }
+
+            return NotFound();
         }
         catch
         {
