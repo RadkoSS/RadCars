@@ -12,24 +12,20 @@ internal class ListingEntityConfiguration : IEntityTypeConfiguration<Listing>
         builder
             .HasOne(l => l.Creator)
             .WithMany(c => c.Listings)
-            .HasForeignKey(l => l.CreatorId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(l => l.CreatorId);
 
         builder.HasOne(l => l.CarMake)
             .WithMany()
-            .HasForeignKey(l => l.CarMakeId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(l => l.CarMakeId);
 
         builder.HasOne(l => l.CarModel)
             .WithMany()
-            .HasForeignKey(l => l.CarModelId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(l => l.CarModelId);
 
         builder
             .HasOne(l => l.EngineType)
             .WithMany()
-            .HasForeignKey(l => l.EngineTypeId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(l => l.EngineTypeId);
 
         builder.HasOne(l => l.Thumbnail)
             .WithMany()
@@ -42,8 +38,7 @@ internal class ListingEntityConfiguration : IEntityTypeConfiguration<Listing>
         builder
             .HasOne(l => l.City)
             .WithMany()
-            .HasForeignKey(l => l.CityId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(l => l.CityId);
 
         builder
             .Property(l => l.Price)

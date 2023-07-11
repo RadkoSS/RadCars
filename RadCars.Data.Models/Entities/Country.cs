@@ -2,17 +2,15 @@
 
 using System.ComponentModel.DataAnnotations;
 
-using static Common.EntityValidationConstants.CountryConstants;
+using Common.Models;
+using static RadCars.Common.EntityValidationConstants.CountryConstants;
 
-public class Country
+public class Country : BaseDeletableModel<int>
 {
     public Country()
     {
         this.Cities = new HashSet<City>();
     }
-
-    [Key]
-    public ushort Id { get; set; }
 
     [Required]
     [StringLength(NameMaximumLength)]

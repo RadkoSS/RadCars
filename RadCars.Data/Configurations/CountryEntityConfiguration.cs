@@ -14,8 +14,7 @@ internal class CountryEntityConfiguration : IEntityTypeConfiguration<Country>
         //There might be cities that are in two different countries.
         builder
             .HasMany(c => c.Cities)
-            .WithOne(c => c.Country)
-            .OnDelete(DeleteBehavior.Restrict);
+            .WithOne(c => c.Country);
 
         builder.HasData(SeedCountries());
     }

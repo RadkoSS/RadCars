@@ -10,7 +10,7 @@ public class ListingViewModel
     
     public string Description { get; set; } = null!;
     
-    public ushort Year { get; set; }
+    public int Year { get; set; }
 
     public string CreatorName { get; set; } = null!;
 

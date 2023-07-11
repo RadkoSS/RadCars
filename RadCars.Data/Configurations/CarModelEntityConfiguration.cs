@@ -12,8 +12,7 @@ internal class CarModelEntityConfiguration : IEntityTypeConfiguration<CarModel>
     {
         builder
             .HasOne(m => m.CarMake)
-            .WithMany(m => m.Models)
-            .OnDelete(DeleteBehavior.Restrict);
+            .WithMany(m => m.Models);
 
         builder.HasData(SeedModels());
     }

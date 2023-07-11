@@ -2,17 +2,15 @@
 
 using System.ComponentModel.DataAnnotations;
 
-using static Common.EntityValidationConstants.MakeConstants;
+using Common.Models;
+using static RadCars.Common.EntityValidationConstants.MakeConstants;
 
-public class CarMake
+public class CarMake : BaseDeletableModel<int>
 {
     public CarMake()
     {
         this.Models = new HashSet<CarModel>();
     }
-
-    [Key]
-    public ushort Id { get; set; }
 
     [Required]
     [StringLength(NameMaximumLength)]

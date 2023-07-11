@@ -2,17 +2,15 @@
 
 using System.ComponentModel.DataAnnotations;
 
-using static Common.EntityValidationConstants.FeatureCategoryConstants;
+using Common.Models;
+using static RadCars.Common.EntityValidationConstants.FeatureCategoryConstants;
 
-public class Category
+public class Category : BaseDeletableModel<int>
 {
     public Category()
     {
         this.Features = new HashSet<Feature>();
     }
-
-    [Key]
-    public ushort Id { get; set; }
 
     [Required]
     [StringLength(NameMaximumLength)]

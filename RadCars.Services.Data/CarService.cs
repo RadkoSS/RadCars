@@ -3,22 +3,22 @@
 using Microsoft.EntityFrameworkCore;
 
 using Contracts;
-using RadCars.Data;
 using Web.ViewModels.CarModel;
+using RadCars.Data.Models.Entities;
+using RadCars.Data.Common.Contracts.Repositories;
 
 public class CarService : ICarService
 {
-    private readonly ApplicationDbContext context;
+    private readonly IDeletableEntityRepository<CarModel> carModelsRepository;
 
-    public CarService(ApplicationDbContext context)
+    public CarService(IDeletableEntityRepository<CarModel> carModelsRepository)
     {
-        this.context = context;
+        this.carModelsRepository = carModelsRepository;
     }
 
-    public async Task<IEnumerable<CarModelViewModel>> GetModelsByMakeIdAsync(ushort makeId)
+    public async Task<IEnumerable<CarModelViewModel>> GetModelsByMakeIdAsync(int makeId)
     {
-        var models = await this.context.CarModels
-            .AsNoTracking()
+        var models = await this.carModelsRepository.AllAsNoTracking()
             .Where(m => m.CarMakeId == makeId)
             .Select(m => new CarModelViewModel
             {

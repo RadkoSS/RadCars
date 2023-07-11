@@ -2,13 +2,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 using Microsoft.AspNetCore.Identity;
 
 using Entities;
+using Common.Contracts;
 
-public class ApplicationUser : IdentityUser<Guid>
+public class ApplicationUser : IdentityUser<Guid>, IAuditInfo, IDeletableEntity
 {
     public ApplicationUser()
     {
@@ -17,8 +17,13 @@ public class ApplicationUser : IdentityUser<Guid>
         this.Favorites = new HashSet<UserFavoriteListing>();
     }
 
-    //[Required]
-    //public string Country { get; set; } = null!;
+    public DateTime CreatedOn { get; set; }
+
+    public DateTime? ModifiedOn { get; set; }
+
+    public bool IsDeleted { get; set; }
+
+    public DateTime? DeletedOn { get; set; }
 
     //[Required]
     //public string FirstName { get; set; } = null!;

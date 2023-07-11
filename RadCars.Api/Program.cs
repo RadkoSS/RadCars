@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 
 using RadCars.Data;
+using RadCars.Data.Common;
+using RadCars.Data.Repositories;
 using RadCars.Services.Data.Contracts;
 using RadCars.Web.Infrastructure.Extensions;
+using RadCars.Data.Common.Contracts.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,12 @@ builder.Services.AddCors(policy => policy.AddPolicy("WebApp", configuration =>
     configuration.WithOrigins("https://localhost:7223").AllowAnyMethod().AllowAnyHeader();
 }));
 
+//Register Data repositories and DbQuery runner
+builder.Services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+builder.Services.AddScoped<IDbQueryRunner, DbQueryRunner>();
+
+//Register all Data services
 builder.Services.AddApplicationServices(typeof(IListingService));
 
 builder.Services.AddControllers();

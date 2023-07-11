@@ -1,10 +1,11 @@
-﻿namespace RadCars.Services.Data.Contracts;
+﻿// ReSharper disable IdentifierTypo
+namespace RadCars.Services.Data.Contracts;
 
 using Microsoft.AspNetCore.Http;
 
 using RadCars.Data.Models.Entities;
 
-public interface IImageService
+public interface ICloudinaryImageService
 {
     Task<ICollection<CarImage>> UploadMultipleImagesAsync(string listingId, IEnumerable<IFormFile> images);
 

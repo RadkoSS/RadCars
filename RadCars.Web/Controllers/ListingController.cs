@@ -14,13 +14,13 @@ using static Common.EntityValidationConstants.ListingConstants;
 public class ListingController : BaseController
 {
     private readonly ICarService carService;
-    private readonly IImageService imageService;
+    private readonly ICloudinaryImageService cloudinaryImageService;
     private readonly IListingService listingService;
 
-    public ListingController(IListingService listingService, IImageService imageService, ICarService carService)
+    public ListingController(IListingService listingService, ICloudinaryImageService cloudinaryImageService, ICarService carService)
     {
         this.carService = carService;
-        this.imageService = imageService;
+        this.cloudinaryImageService = cloudinaryImageService;
         this.listingService = listingService;
     }
 
@@ -108,7 +108,7 @@ public class ListingController : BaseController
 
         try
         {
-            await this.imageService.DeleteImageAsync(id, "");
+            await this.cloudinaryImageService.DeleteImageAsync(id, "");
 
             return RedirectToAction("All", "Listing");
         }

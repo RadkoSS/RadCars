@@ -2,13 +2,11 @@
 
 using System.ComponentModel.DataAnnotations;
 
-using static Common.EntityValidationConstants.CarEngineTypeConstants;
+using Common.Models;
+using static RadCars.Common.EntityValidationConstants.CarEngineTypeConstants;
 
-public class EngineType
+public class EngineType : BaseDeletableModel<int>
 {
-    [Key]
-    public byte Id { get; set; }
-
     [Required]
     [StringLength(NameMaximumLength)]
     public string Name { get; set; } = null!;

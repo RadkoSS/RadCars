@@ -13,8 +13,7 @@ internal class CategoryEntityConfiguration : IEntityTypeConfiguration<Category>
         builder
             .HasMany(fc => fc.Features)
             .WithOne(f => f.Category)
-            .HasForeignKey(fc => fc.CategoryId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(fc => fc.CategoryId);
 
         builder.HasData(SeedFeatureCategories());
     }

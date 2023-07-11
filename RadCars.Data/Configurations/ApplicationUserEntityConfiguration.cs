@@ -12,7 +12,6 @@ internal class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<App
         builder
             .HasMany(u => u.Listings)
             .WithOne(l => l.Creator)
-            .HasForeignKey(l => l.CreatorId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(l => l.CreatorId);
     }
 }

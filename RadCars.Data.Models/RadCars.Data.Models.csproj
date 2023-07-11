@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RadCars.Common\RadCars.Common.csproj" />
+    <ProjectReference Include="..\RadCars.Data.Common\RadCars.Data.Common.csproj" />
   </ItemGroup>
 
 </Project>

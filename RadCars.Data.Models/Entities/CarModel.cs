@@ -2,18 +2,16 @@
 
 using System.ComponentModel.DataAnnotations;
 
-using static Common.EntityValidationConstants.ModelConstants;
+using Common.Models;
+using static RadCars.Common.EntityValidationConstants.ModelConstants;
 
-public class CarModel
+public class CarModel : BaseDeletableModel<int>
 {
-    [Key]
-    public ushort Id { get; set; }
-
     [Required]
     [StringLength(NameMaximumLength)]
     public string Name { get; set; } = null!;
     
-    public ushort CarMakeId { get; set; }
+    public int CarMakeId { get; set; }
 
     public virtual CarMake CarMake { get; set; } = null!;
 }

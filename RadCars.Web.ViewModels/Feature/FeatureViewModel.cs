@@ -7,7 +7,7 @@ public class FeatureViewModel
         this.IsSelected = false;
     }
 
-    public ushort Id { get; set; }
+    public int Id { get; set; }
 
     public bool IsSelected { get; set; }
 

@@ -18,7 +18,7 @@ public class ListingFormModel
     {
         this.Images = new HashSet<IFormFile>();
         this.Cities = new HashSet<CityViewModel>();
-        this.SelectedFeatures = new HashSet<ushort>();
+        this.SelectedFeatures = new HashSet<int>();
         this.CarMakes = new HashSet<CarMakeViewModel>();
         this.CarModels = new HashSet<CarModelViewModel>();
         this.EngineTypes = new HashSet<EngineTypeViewModel>();
@@ -37,8 +37,8 @@ public class ListingFormModel
 
     [Display(Name = "Година на производство")]
     [Required(ErrorMessage = "{0}та е задължително поле.")]
-    [Range(YearMinimumValue, ushort.MaxValue, ErrorMessage = "{0}та трябва да е след {2}.")]
-    public ushort Year { get; set; }
+    [Range(YearMinimumValue, int.MaxValue, ErrorMessage = "{0}та трябва да е след {2}.")]
+    public int Year { get; set; }
 
     [Display(Name = "Цена")]
     [Required(ErrorMessage = "{0}та е задължително поле.")]
@@ -52,8 +52,8 @@ public class ListingFormModel
 
     [Display(Name = "Пробег")]
     [Required(ErrorMessage = "{0}ът е задължително поле.")]
-    [Range(MileageMinimum, uint.MaxValue, ErrorMessage = "{0}ът не трябва да е число по-голямо от {2}.")]
-    public uint Mileage { get; set; }
+    [Range(MileageMinimum, int.MaxValue, ErrorMessage = "{0}ът не трябва да е число по-голямо от {2}.")]
+    public int Mileage { get; set; }
 
     [Display(Name = "Модел на двигателя")]
     [Required(ErrorMessage = "{0} e задъжително поле.")]
@@ -62,32 +62,32 @@ public class ListingFormModel
 
     [Display(Name = "Тип двигател")]
     [Required(ErrorMessage = "{0} е задължително поле.")]
-    public byte EngineTypeId { get; set; }
+    public int EngineTypeId { get; set; }
 
     public IEnumerable<EngineTypeViewModel> EngineTypes { get; set; }
 
     [Display(Name = "Местоположение")]
     [Required(ErrorMessage = "{0}то е задължително поле.")]
-    [Range(1, ushort.MaxValue)]
-    public ushort CityId { get; set; }
+    [Range(1, int.MaxValue)]
+    public int CityId { get; set; }
 
     public IEnumerable<CityViewModel> Cities { get; set; }
 
     [Required(ErrorMessage = "{0} е задължително поле.")]
-    [Range(1, ushort.MaxValue)]
+    [Range(1, int.MaxValue)]
     [Display(Name = "Марка на автомобила")]
-    public ushort CarMakeId { get; set; }
+    public int CarMakeId { get; set; }
 
     public IEnumerable<CarMakeViewModel> CarMakes { get; set; }
 
     [Required(ErrorMessage = "{0} е задължително поле.")]
     [Display(Name = "Модел на автомобила")]
-    public ushort CarModelId { get; set; }
+    public int CarModelId { get; set; }
 
     public IEnumerable<CarModelViewModel> CarModels { get; set; }
     
     [Display(Name = "Изберете какви екстри има автомовила:")]
-    public IEnumerable<ushort> SelectedFeatures { get; set; }
+    public IEnumerable<int> SelectedFeatures { get; set; }
 
     public IEnumerable<FeatureCategoriesViewModel> FeatureCategories { get; set; }
 

@@ -3,28 +3,20 @@
 using System.ComponentModel.DataAnnotations;
 
 using User;
+using Common.Models;
+using static RadCars.Common.EntityValidationConstants.ListingConstants;
 
-using static Common.EntityValidationConstants.ListingConstants;
-
-public class Listing
+public class Listing : BaseDeletableModel<Guid>
 {
     public Listing()
     {
         this.Id = Guid.NewGuid();
-        this.CreatedOn = DateTime.UtcNow;
+        //this.CreatedOn = DateTime.UtcNow;
 
         this.ListingFeatures = new HashSet<ListingFeature>();
         this.Favorites = new HashSet<UserFavoriteListing>();
         this.Images = new HashSet<CarImage>();
     }
-
-    [Key]
-    public Guid Id { get; set; }
-
-    [Required]
-    public DateTime CreatedOn { get; set; }
-
-    public DateTime? EditedOn { get; set; }
 
     [Required]
     [StringLength(TitleMaximumLength)]
@@ -38,17 +30,17 @@ public class Listing
     public decimal Price { get; set; }
 
     [Required]
-    public ushort Year { get; set; }
+    public int Year { get; set; }
 
     [Required]
-    public uint Mileage { get; set; }
+    public int Mileage { get; set; }
 
     [Required]
     [StringLength(EngineModelMaximumLength)]
     public string EngineModel { get; set; } = null!;
 
     [Required]
-    public byte EngineTypeId { get; set; }
+    public int EngineTypeId { get; set; }
 
     public virtual EngineType EngineType { get; set; } = null!;
 
@@ -62,12 +54,12 @@ public class Listing
     public virtual ApplicationUser Creator { get; set; } = null!;
 
     [Required]
-    public ushort CarMakeId { get; set; }
+    public int CarMakeId { get; set; }
 
     public virtual CarMake CarMake { get; set; } = null!;
 
     [Required]
-    public ushort CarModelId { get; set; }
+    public int CarModelId { get; set; }
 
     public virtual CarModel CarModel { get; set; } = null!;
     
@@ -75,7 +67,7 @@ public class Listing
 
     public virtual CarImage? Thumbnail { get; set; }
 
-    public ushort CityId { get; set; }
+    public int CityId { get; set; }
 
     public virtual City City { get; set; } = null!;
 
@@ -86,7 +78,7 @@ public class Listing
     public virtual ICollection<CarImage> Images { get; set; }
 
     //We will support more countries in the future, not only Bulgaria
-    //public ushort CountryId { get; set; }
+    //public int CountryId { get; set; }
 
     //public virtual Country Country { get; set; } = null!;
 }

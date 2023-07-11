@@ -1,4 +1,5 @@
-﻿namespace RadCars.Services.Data;
+﻿// ReSharper disable IdentifierTypo
+namespace RadCars.Services.Data;
 
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
@@ -8,21 +9,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 using Contracts;
-using RadCars.Data;
 using RadCars.Data.Models.Entities;
+using RadCars.Data.Common.Contracts.Repositories;
 
 using static Common.ExceptionsErrorMessages;
 
-public class ImageService : IImageService
+public class CloudinaryImageService : ICloudinaryImageService
 {
-    private readonly ApplicationDbContext dbContext;
+    private readonly IDeletableEntityRepository<CarImage> carImagesRepository;
+
     private readonly IConfiguration configuration;
 
     private readonly Cloudinary cloudinary;
 
-    public ImageService(ApplicationDbContext dbContext, IConfiguration configuration)
+    public CloudinaryImageService(IDeletableEntityRepository<CarImage> carImagesRepository, IConfiguration configuration)
     {
-        this.dbContext = dbContext;
+        this.carImagesRepository = carImagesRepository;
+
         this.configuration = configuration;
 
         this.cloudinary = new Cloudinary(new Account(this.configuration.GetSection("ExternalConnections:Cloudinary:CloudName").Value, this.configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").Value, this.configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").Value));
@@ -53,7 +56,7 @@ public class ImageService : IImageService
 
     public async Task<ICollection<CarImage>> UploadMultipleImagesAsync(string listingId, IEnumerable<IFormFile> images)
     {
-        HashSet<CarImage> uploadedImages = new HashSet<CarImage>();
+        var uploadedImages = new HashSet<CarImage>();
 
         foreach (var image in images)
         {
@@ -67,7 +70,7 @@ public class ImageService : IImageService
 
     public async Task DeleteImageAsync(string listingId, string imageId)
     {
-        var carImage = await this.dbContext.CarImages.FirstOrDefaultAsync(cp => cp.ListingId.ToString() == listingId && cp.Id.ToString() == imageId);
+        var carImage = await this.carImagesRepository.All().FirstOrDefaultAsync(cp => cp.ListingId.ToString() == listingId && cp.Id.ToString() == imageId);
 
         if (carImage == null)
         {
@@ -83,8 +86,8 @@ public class ImageService : IImageService
             throw new InvalidOperationException(ImageDeleteUnsuccessful);
         }
 
-        this.dbContext.CarImages.Remove(carImage);
-        await this.dbContext.SaveChangesAsync();
+        this.carImagesRepository.HardDelete(carImage);
+        await this.carImagesRepository.SaveChangesAsync();
     }
 
     public async Task DeleteAllImagesAsync(string listingId, IEnumerable<string> imagesIds)

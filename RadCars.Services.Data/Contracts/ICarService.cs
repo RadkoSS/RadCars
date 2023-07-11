@@ -4,5 +4,5 @@ using Web.ViewModels.CarModel;
 
 public interface ICarService
 {
-    Task<IEnumerable<CarModelViewModel>> GetModelsByMakeIdAsync(ushort makeId);
+    Task<IEnumerable<CarModelViewModel>> GetModelsByMakeIdAsync(int makeId);
 }

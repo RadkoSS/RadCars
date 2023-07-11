@@ -13,8 +13,7 @@ internal class CityEntityConfiguration : IEntityTypeConfiguration<City>
     {
         builder
             .HasOne(c => c.Country)
-            .WithMany(c => c.Cities)
-            .OnDelete(DeleteBehavior.Restrict);
+            .WithMany(c => c.Cities);
 
         builder.Property(c => c.Latitude).HasPrecision(9, 6);
         builder.Property(c => c.Longitude).HasPrecision(9, 6);

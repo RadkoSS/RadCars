@@ -2,15 +2,14 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public class CarImage
+using Common.Models;
+
+public class CarImage : BaseDeletableModel<Guid>
 {
     public CarImage()
     {
         this.Id = Guid.NewGuid();
     }
-
-    [Key]
-    public Guid Id { get; set; }
 
     [Required]
     public string Url { get; set; } = null!;

@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 
 using RadCars.Data;
+using RadCars.Data.Common;
 using RadCars.Data.Models.User;
+using RadCars.Data.Repositories;
 using RadCars.Services.Data.Contracts;
 using RadCars.Web.Infrastructure.Extensions;
 using RadCars.Web.Infrastructure.ModelBinders;
+using RadCars.Data.Common.Contracts.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +43,12 @@ builder.Services.AddAntiforgery(options =>
     options.HeaderName = "X-CSRF-VERIFICATION-TOKEN";
 });
 
+//Register Data repositories and DbQuery runner
+builder.Services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+builder.Services.AddScoped<IDbQueryRunner, DbQueryRunner>();
+
+//Register all Data services
 builder.Services.AddApplicationServices(typeof(IListingService));
 
 var app = builder.Build();

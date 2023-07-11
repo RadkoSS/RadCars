@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using Models.Entities;
-
 using static Seeding.CarEngineTypesSeeder;
 
 internal class EngineTypeEntityConfiguration : IEntityTypeConfiguration<EngineType>

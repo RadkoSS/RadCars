@@ -2,13 +2,11 @@
 
 using System.ComponentModel.DataAnnotations;
 
-using static Common.EntityValidationConstants.CityConstants;
+using Common.Models;
+using static RadCars.Common.EntityValidationConstants.CityConstants;
 
-public class City
+public class City : BaseDeletableModel<int>
 {
-    [Key]
-    public ushort Id { get; set; }
-
     [Required]
     [StringLength(NameMaximumLength)]
     public string Name { get; set; } = null!;
@@ -18,7 +16,7 @@ public class City
     public decimal Longitude { get; set; }
 
     [Required]
-    public ushort CountryId { get; set; }
+    public int CountryId { get; set; }
 
     public virtual Country Country { get; set; } = null!;
 }
