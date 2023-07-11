@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{AC05A239-49B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.Data.Common", "RadCars.Data.Common\RadCars.Data.Common.csproj", "{46635A92-6916-4B91-98E1-ADBC14A5B9BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.Services.Mapping", "RadCars.Services.Mapping\RadCars.Services.Mapping.csproj", "{90F61726-E39E-48B1-893F-4E70871E2A27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{46635A92-6916-4B91-98E1-ADBC14A5B9BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46635A92-6916-4B91-98E1-ADBC14A5B9BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46635A92-6916-4B91-98E1-ADBC14A5B9BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90F61726-E39E-48B1-893F-4E70871E2A27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90F61726-E39E-48B1-893F-4E70871E2A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90F61726-E39E-48B1-893F-4E70871E2A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90F61726-E39E-48B1-893F-4E70871E2A27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{88740257-5D9D-44B7-973A-8FA24B1466B2} = {A9CDA973-EB2C-425A-9948-73544F1D1109}
 		{54202992-68DA-4873-8159-A1ECBFD6EADA} = {AC05A239-49BE-4736-BBE5-658EE0316822}
 		{46635A92-6916-4B91-98E1-ADBC14A5B9BC} = {DA956BE1-3E57-48D7-8A0B-B7BB8127C478}
+		{90F61726-E39E-48B1-893F-4E70871E2A27} = {A9CDA973-EB2C-425A-9948-73544F1D1109}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09F70478-64A5-4C20-8A93-34DF1347560C}

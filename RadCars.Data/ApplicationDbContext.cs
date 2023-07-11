@@ -99,10 +99,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
         builder.Entity<T>().HasQueryFilter(e => !e.IsDeleted);
     }
 
-    // Applies configurations
-    //private void ConfigureUserIdentityRelations(ModelBuilder builder)
-    //    => builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
-
     private void ApplyAuditInfoRules()
     {
         var changedEntries = this.ChangeTracker

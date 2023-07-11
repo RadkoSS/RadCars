@@ -1,9 +1,13 @@
+using System.Reflection;
+
 using Microsoft.EntityFrameworkCore;
 
 using RadCars.Data;
 using RadCars.Data.Common;
 using RadCars.Data.Models.User;
+using RadCars.Services.Mapping;
 using RadCars.Data.Repositories;
+using RadCars.Web.ViewModels.Home;
 using RadCars.Services.Data.Contracts;
 using RadCars.Web.Infrastructure.Extensions;
 using RadCars.Web.Infrastructure.ModelBinders;
@@ -50,6 +54,9 @@ builder.Services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
 //Register all Data services
 builder.Services.AddApplicationServices(typeof(IListingService));
+
+//Register AutoMapper with all mappings
+AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
 var app = builder.Build();
 
