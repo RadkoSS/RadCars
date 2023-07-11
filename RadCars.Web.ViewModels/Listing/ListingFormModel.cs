@@ -2,6 +2,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 
 using City;
@@ -9,10 +10,12 @@ using CarMake;
 using CarModel;
 using CarEngineType;
 using FeatureCategory;
+using Data.Models.Entities;
+using Services.Mapping.Contracts;
 
 using static Common.EntityValidationConstants.ListingConstants;
 
-public class ListingFormModel
+public class ListingFormModel : IMapTo<Listing>, IMapFrom<Listing>, IHaveCustomMappings
 {
     public ListingFormModel()
     {
@@ -66,8 +69,8 @@ public class ListingFormModel
 
     public IEnumerable<EngineTypeViewModel> EngineTypes { get; set; }
 
-    [Display(Name = "Местоположение")]
-    [Required(ErrorMessage = "{0}то е задължително поле.")]
+    [Display(Name = "Населено място")]
+    [Required(ErrorMessage = "{0} е задължително поле.")]
     [Range(1, int.MaxValue)]
     public int CityId { get; set; }
 
@@ -94,4 +97,12 @@ public class ListingFormModel
     [Required(ErrorMessage = "{0}те са задължително поле.")]
     [Display(Name = "Снимки")]
     public IEnumerable<IFormFile> Images { get; set; }
+
+    public void CreateMappings(IProfileExpression configuration)
+    {
+        configuration.CreateMap<ListingFormModel, Listing>().ForMember(source => source.ListingFeatures, destination => destination.Ignore());
+
+        configuration.CreateMap<ListingFormModel, Listing>()
+            .ForMember(source => source.Images, options => options.Ignore());
+    }
 }

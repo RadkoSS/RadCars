@@ -9,7 +9,7 @@ using Web.ViewModels.FeatureCategory;
 
 public interface IListingService
 {
-    Task<IEnumerable<ListingViewModel>> GetAllListingsAsync();
+    Task<IEnumerable<AllListingViewModel>> GetAllListingsAsync();
 
     Task<string> CreateListingAsync(ListingFormModel form, string userId);
 

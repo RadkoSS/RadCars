@@ -12,22 +12,22 @@
             
             <div class="row my-3">
                 <div class="col-12">
-                    <a asp-controller="Listing" asp-action="Details" asp-route-listingId="@Model.ListingId" class="btn btn-close"></a>
+                    <a asp-controller="Listing" asp-action="Details" asp-route-listingId="@Model.Id" class="btn btn-close"></a>
                     <span class="text-decoration-underline">Отказ</span>
                 </div>
             </div>
             
-            <span asp-validation-for="@Model.SelectedImageId" class="small text-danger"></span>
+            <span asp-validation-for="@Model.ThumbnailId" class="small text-danger"></span>
 
             <form asp-controller="Listing" asp-action="ChooseThumbnail" method="post" class="mt-4">
-                <input asp-for="ListingId" type="hidden" name="ListingId" value="@Model.ListingId" />
+                <input asp-for="Id" type="hidden" name="Id" value="@Model.Id" />
 
                 <div class="row">
                     @foreach (var image in Model.Images)
                     {
                         <div class="col-md-6 mb-3">
                             <label class="d-block">
-                                <input type="radio" name="SelectedImageId" value="@image.Id" class="mr-2" />
+                                <input type="radio" name="ThumbnailId" value="@image.Id" class="mr-2" />
                                 <img class="img-fluid" src="@image.Url" alt="Снимката не беше заредена правилно..." />
                             </label>
                         </div>

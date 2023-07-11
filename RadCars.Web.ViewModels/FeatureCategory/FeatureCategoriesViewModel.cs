@@ -1,8 +1,10 @@
 ﻿namespace RadCars.Web.ViewModels.FeatureCategory;
 
 using Feature;
+using Data.Models.Entities;
+using Services.Mapping.Contracts;
 
-public class FeatureCategoriesViewModel
+public class FeatureCategoriesViewModel : IMapFrom<Category>
 {
     public FeatureCategoriesViewModel()
     {

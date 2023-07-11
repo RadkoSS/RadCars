@@ -1,5 +1,6 @@
 using System.Reflection;
 
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 using RadCars.Data;
@@ -55,8 +56,9 @@ builder.Services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 //Register all Data services
 builder.Services.AddApplicationServices(typeof(IListingService));
 
-//Register AutoMapper with all mappings
+//Register mappings
 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+builder.Services.AddSingleton(typeof(IMapper), AutoMapperConfig.MapperInstance);
 
 var app = builder.Build();
 

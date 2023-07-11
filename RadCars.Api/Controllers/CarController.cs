@@ -25,7 +25,7 @@ public class CarController : ControllerBase
     {
         try
         {
-            var idAsNumber = Convert.ToUInt16(makeId);
+            var idAsNumber = Convert.ToInt32(makeId);
 
             var makes = await this.carService.GetModelsByMakeIdAsync(idAsNumber);
 

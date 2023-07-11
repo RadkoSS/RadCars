@@ -140,18 +140,18 @@ public class ListingController : BaseController
         {
             if (!this.ModelState.IsValid)
             {
-                var viewModel = await this.listingService.GetChooseThumbnailAsync(form.ListingId, this.User.GetId()!);
+                var viewModel = await this.listingService.GetChooseThumbnailAsync(form.Id, this.User.GetId()!);
 
                 return View(viewModel);
             }
 
-            await this.listingService.AddThumbnailToListingByIdAsync(form.ListingId, form.SelectedImageId, this.User.GetId()!);
+            await this.listingService.AddThumbnailToListingByIdAsync(form.Id, form.ThumbnailId, this.User.GetId()!);
 
             return RedirectToAction("All", "Listing");
         }
         catch (Exception)
         {
-            return RedirectToAction("Details", "Listing", new { form.ListingId });
+            return RedirectToAction("Details", "Listing", new { ListingId = form.Id });
         }
     }
 

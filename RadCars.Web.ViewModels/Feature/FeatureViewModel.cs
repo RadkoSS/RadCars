@@ -1,6 +1,9 @@
 ﻿namespace RadCars.Web.ViewModels.Feature;
 
-public class FeatureViewModel
+using Data.Models.Entities;
+using Services.Mapping.Contracts;
+
+public class FeatureViewModel : IMapFrom<Feature>
 {
     public FeatureViewModel()
     {

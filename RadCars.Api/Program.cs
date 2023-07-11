@@ -1,8 +1,13 @@
+using System.Reflection;
+
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 using RadCars.Data;
 using RadCars.Data.Common;
+using RadCars.Services.Mapping;
 using RadCars.Data.Repositories;
+using RadCars.Web.ViewModels.Home;
 using RadCars.Services.Data.Contracts;
 using RadCars.Web.Infrastructure.Extensions;
 using RadCars.Data.Common.Contracts.Repositories;
@@ -26,6 +31,10 @@ builder.Services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
 //Register all Data services
 builder.Services.AddApplicationServices(typeof(IListingService));
+
+//Register mappings
+AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+builder.Services.AddSingleton(typeof(IMapper), AutoMapperConfig.MapperInstance);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

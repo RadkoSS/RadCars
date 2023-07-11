@@ -2,6 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 
+using Mapping;
 using Contracts;
 using Web.ViewModels.CarModel;
 using RadCars.Data.Models.Entities;
@@ -18,13 +19,11 @@ public class CarService : ICarService
 
     public async Task<IEnumerable<CarModelViewModel>> GetModelsByMakeIdAsync(int makeId)
     {
-        var models = await this.carModelsRepository.AllAsNoTracking()
+        var models = await this.carModelsRepository
+            .AllAsNoTracking()
             .Where(m => m.CarMakeId == makeId)
-            .Select(m => new CarModelViewModel
-            {
-                Id = m.Id,
-                Name = m.Name
-            }).ToArrayAsync();
+            .To<CarModelViewModel>()
+            .ToArrayAsync();
 
         return models;
     }

@@ -1,6 +1,9 @@
 ﻿namespace RadCars.Web.ViewModels.CarEngineType;
 
-public class EngineTypeViewModel
+using Data.Models.Entities;
+using Services.Mapping.Contracts;
+
+public class EngineTypeViewModel : IMapFrom<EngineType>
 {
     public int Id { get; set; }
 

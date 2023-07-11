@@ -1,14 +1,14 @@
 ﻿// ReSharper disable IdentifierTypo
 namespace RadCars.Services.Data;
 
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
+using Mapping;
 using Contracts;
 using Web.ViewModels.City;
 using Web.ViewModels.CarMake;
-using Web.ViewModels.Feature;
 using Web.ViewModels.Listing;
-using Web.ViewModels.CarImage;
 using Web.ViewModels.Thumbnail;
 using RadCars.Data.Models.Entities;
 using Web.ViewModels.CarEngineType;
@@ -19,6 +19,7 @@ using static Common.ExceptionsErrorMessages;
 
 public class ListingService : IListingService
 {
+    private readonly IMapper mapper;
     private readonly ICarService carService;
     private readonly ICloudinaryImageService cloudinaryImageService;
 
@@ -29,10 +30,11 @@ public class ListingService : IListingService
     private readonly IDeletableEntityRepository<CarImage> carImagesRepository;
     private readonly IDeletableEntityRepository<Category> categoriesRepository;
     private readonly IDeletableEntityRepository<EngineType> engineTypesRepository;
-
-    //ToDo: Implement AutoMapper
-    public ListingService(ICloudinaryImageService cloudinaryImageService, ICarService carService, IDeletableEntityRepository<Listing> listingsRepository, IDeletableEntityRepository<CarMake> carMakesRepository, IDeletableEntityRepository<Category> categoriesRepository, IDeletableEntityRepository<City> citiesRepository, IDeletableEntityRepository<EngineType> engineTypesRepository, IDeletableEntityRepository<CarImage> carImagesRepository, IDeletableEntityRepository<Feature> featuresRepository)
+    
+    public ListingService(ICloudinaryImageService cloudinaryImageService, ICarService carService, 
+        IDeletableEntityRepository<Listing> listingsRepository, IDeletableEntityRepository<CarMake> carMakesRepository, IDeletableEntityRepository<Category> categoriesRepository, IDeletableEntityRepository<City> citiesRepository, IDeletableEntityRepository<EngineType> engineTypesRepository, IDeletableEntityRepository<CarImage> carImagesRepository, IDeletableEntityRepository<Feature> featuresRepository, IMapper mapper)
     {
+        this.mapper = mapper;
         this.carService = carService;
         this.citiesRepository = citiesRepository;
         this.carMakesRepository = carMakesRepository;
@@ -44,21 +46,14 @@ public class ListingService : IListingService
         this.cloudinaryImageService = cloudinaryImageService;
     }
 
-    public async Task<IEnumerable<ListingViewModel>> GetAllListingsAsync()
+    public async Task<IEnumerable<AllListingViewModel>> GetAllListingsAsync()
     {
-        var listings = await this.listingsRepository.AllAsNoTracking().OrderByDescending(l => l.CreatedOn).Select(l => new ListingViewModel
-        {
-            Id = l.Id.ToString(),
-            CreatorName = l.Creator.UserName,
-            Description = l.Description,
-            Title = l.Title,
-            Year = l.Year,
-            Thumbnail = new ImageViewModel
-            {
-                Id = l.ThumbnailId == null ? l.Images.First().Id.ToString() : l.ThumbnailId.ToString()!,
-                Url = l.Thumbnail == null ? l.Images.First().Url : l.Thumbnail.Url
-            }
-        }).ToArrayAsync();
+        var listings = await this.listingsRepository
+            .AllAsNoTracking()
+            .Where(l => l.ThumbnailId != null)
+            .OrderByDescending(l => l.CreatedOn)
+            .To<AllListingViewModel>()
+            .ToArrayAsync();
 
         return listings;
     }
@@ -77,74 +72,36 @@ public class ListingService : IListingService
     }
 
     public async Task<IEnumerable<CarMakeViewModel>> GetCarMakesAsync()
-        => await this.carMakesRepository.AllAsNoTracking().Select(cm => new CarMakeViewModel
-        {
-            Id = cm.Id,
-            Name = cm.Name
-        }).ToArrayAsync();
+        => await this.carMakesRepository.AllAsNoTracking()
+            .To<CarMakeViewModel>().ToArrayAsync();
 
     public async Task<IEnumerable<FeatureCategoriesViewModel>> GetFeatureCategoriesAsync()
-        => await this.categoriesRepository.AllAsNoTracking().Select(c => new FeatureCategoriesViewModel
-        {
-            Id = c.Id,
-            Name = c.Name,
-            Features = c.Features.Select(f => new FeatureViewModel
-            {
-                Id = f.Id,
-                Name = f.Name
-            })
-        }).ToArrayAsync();
+        => await this.categoriesRepository.AllAsNoTracking().To<FeatureCategoriesViewModel>().ToArrayAsync();
 
     public async Task<IEnumerable<CityViewModel>> GetCitiesAsync()
-        => await this.citiesRepository.AllAsNoTracking().Select(c => new CityViewModel
-        {
-            Id = c.Id,
-            Name = c.Name
-        }).ToArrayAsync();
+        => await this.citiesRepository.AllAsNoTracking().To<CityViewModel>().ToArrayAsync();
 
     public async Task<IEnumerable<EngineTypeViewModel>> GetEngineTypesAsync()
-        => await this.engineTypesRepository.AllAsNoTracking().Select(et => new EngineTypeViewModel
-        {
-            Id = et.Id,
-            Name = et.Name
-        }).ToArrayAsync();
+        => await this.engineTypesRepository.AllAsNoTracking().To<EngineTypeViewModel>().ToArrayAsync();
 
     public async Task<ListingDetailsViewModel> GetListingDetailsAsync(string listingId)
     {
-        var listingToDisplay = await this.listingsRepository.AllAsNoTracking()
+        var listingToDisplay = await this.listingsRepository
+            .AllAsNoTracking()
             .Where(l => l.Id.ToString() == listingId)
-            .Select(l => new ListingDetailsViewModel
-            {
-                Id = l.Id.ToString(),
-                Title = l.Title,
-                CreatorId = l.CreatorId.ToString(),
-                CreatorName = l.Creator.UserName,
-                Description = l.Description,
-                Year = l.Year,
-                Pictures = l.Images.Select(p => new ImageViewModel
-                {
-                    Id = p.Id.ToString(),
-                    Url = p.Url
-                }).ToArray()
-            }).FirstAsync();
+            .To<ListingDetailsViewModel>()
+            .FirstAsync();
 
         return listingToDisplay;
     }
 
     public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId)
     {
-        var currentListing =
-            await this.listingsRepository.All().FirstAsync(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == userId);
-
-        var chooseThumbnailViewModel = new ChooseThumbnailFormModel
-        {
-            ListingId = currentListing.Id.ToString(),
-            Images = currentListing.Images.Select(p => new ImageViewModel
-            {
-                Id = p.Id.ToString(),
-                Url = p.Url
-            }).ToArray()
-        };
+        var chooseThumbnailViewModel =
+             await this.listingsRepository.All()
+                 .Where(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == userId)
+                 .To<ChooseThumbnailFormModel>()
+                 .FirstAsync();
 
         return chooseThumbnailViewModel;
     }
@@ -156,21 +113,8 @@ public class ListingService : IListingService
             throw new InvalidDataException(InvalidDataProvidedError);
         }
 
-        var listing = new Listing
-        {
-            Title = form.Title,
-            Description = form.Description,
-            Price = form.Price,
-            Year = form.Year,
-            Mileage = form.Mileage,
-            EngineModel = form.EngineModel,
-            EngineTypeId = form.EngineTypeId,
-            VinNumber = form.VinNumber,
-            CreatorId = Guid.Parse(userId),
-            CarMakeId = form.CarMakeId,
-            CarModelId = form.CarModelId,
-            CityId = form.CityId
-        };
+        var listing = this.mapper.Map<Listing>(form);
+        listing.CreatorId = Guid.Parse(userId);
 
         foreach (var id in form.SelectedFeatures)
         {
@@ -205,8 +149,9 @@ public class ListingService : IListingService
 
     public async Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string userId)
     {
-        var imageAndListingExist = await this.carImagesRepository.All().
-            AnyAsync(ci => ci.Id.ToString() == imageId && ci.ListingId.ToString() == listingId && ci.Listing.CreatorId.ToString() == userId);
+        var imageAndListingExist = await this.carImagesRepository
+            .All()
+            .AnyAsync(ci => ci.Id.ToString() == imageId && ci.ListingId.ToString() == listingId && ci.Listing.CreatorId.ToString() == userId);
 
         if (!imageAndListingExist)
         {

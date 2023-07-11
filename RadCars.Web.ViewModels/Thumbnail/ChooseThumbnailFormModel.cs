@@ -3,8 +3,10 @@
 using System.ComponentModel.DataAnnotations;
 
 using CarImage;
+using Data.Models.Entities;
+using Services.Mapping.Contracts;
 
-public class ChooseThumbnailFormModel
+public class ChooseThumbnailFormModel : IMapFrom<Listing>
 {
     public ChooseThumbnailFormModel()
     {
@@ -12,10 +14,10 @@ public class ChooseThumbnailFormModel
     }
 
     [Required]
-    public string ListingId { get; set; } = null!;
+    public string Id { get; set; } = null!;
 
     [Required(ErrorMessage = "Изберете една от снимките!")]
-    public string SelectedImageId { get; set; } = null!;
+    public string ThumbnailId { get; set; } = null!;
 
     public ICollection<ImageViewModel> Images { get; set; }
 }

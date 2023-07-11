@@ -11,7 +11,6 @@ public class Listing : BaseDeletableModel<Guid>
     public Listing()
     {
         this.Id = Guid.NewGuid();
-        //this.CreatedOn = DateTime.UtcNow;
 
         this.ListingFeatures = new HashSet<ListingFeature>();
         this.Favorites = new HashSet<UserFavoriteListing>();
