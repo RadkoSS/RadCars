@@ -34,6 +34,12 @@ builder.Services.AddMvc(options =>
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
 });
 
+builder.Services.AddAntiforgery(options =>
+{
+    options.FormFieldName = "__RequestVerificationToken";
+    options.HeaderName = "X-CSRF-VERIFICATION-TOKEN";
+});
+
 builder.Services.AddApplicationServices(typeof(IListingService));
 
 var app = builder.Build();

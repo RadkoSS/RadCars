@@ -25,7 +25,7 @@ public interface IListingService
 
     Task<ListingDetailsViewModel> GetListingDetailsAsync(string listingId);
 
-    Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string creatorId);
+    Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId);
 
-    Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string creatorId);
+    Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string userId);
 }

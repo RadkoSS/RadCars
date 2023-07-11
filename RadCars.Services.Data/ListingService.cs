@@ -115,10 +115,10 @@ public class ListingService : IListingService
         return listingToDisplay;
     }
 
-    public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string creatorId)
+    public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId)
     {
         var currentListing =
-            await this.dbContext.Listings.FirstAsync(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == creatorId);
+            await this.dbContext.Listings.FirstAsync(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == userId);
 
         var chooseThumbnailViewModel = new ChooseThumbnailFormModel
         {
@@ -178,13 +178,19 @@ public class ListingService : IListingService
 
         await this.dbContext.SaveChangesAsync();
 
+        var firstImageThumbnail = listing.Images.First();
+
+        listing.ThumbnailId = firstImageThumbnail.Id;
+
+        await this.dbContext.SaveChangesAsync();
+
         return listing.Id.ToString();
     }
 
-    public async Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string creatorId)
+    public async Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string userId)
     {
         var imageAndListingExist = await this.dbContext.CarImages.
-            AnyAsync(ci => ci.Id.ToString() == imageId && ci.ListingId.ToString() == listingId && ci.Listing.CreatorId.ToString() == creatorId);
+            AnyAsync(ci => ci.Id.ToString() == imageId && ci.ListingId.ToString() == listingId && ci.Listing.CreatorId.ToString() == userId);
 
         if (!imageAndListingExist)
         {
