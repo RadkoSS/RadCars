@@ -16,6 +16,7 @@ using Web.ViewModels.FeatureCategory;
 using RadCars.Data.Common.Contracts.Repositories;
 
 using static Common.ExceptionsErrorMessages;
+using RadCars.Web.ViewModels.Feature;
 
 public class ListingService : IListingService
 {
@@ -86,13 +87,30 @@ public class ListingService : IListingService
 
     public async Task<ListingDetailsViewModel> GetListingDetailsAsync(string listingId)
     {
-        var listingToDisplay = await this.listingsRepository
-            .AllAsNoTracking()
-            .Where(l => l.Id.ToString() == listingId)
-            .To<ListingDetailsViewModel>()
-            .FirstAsync();
+        var detailsViewModel = await this.listingsRepository.AllAsNoTracking()
+            .Where(l => l.Id.ToString() == listingId).To<ListingDetailsViewModel>().FirstAsync();
 
-        return listingToDisplay;
+        var listingFeatures = await this.listingsRepository.All()
+            .Where(l => l.Id.ToString() == listingId).SelectMany(l => l.ListingFeatures).ToArrayAsync();
+
+        foreach (var lf in listingFeatures.DistinctBy(lf => lf.Feature.CategoryId))
+        {
+            var features = listingFeatures.Where(l => l.Feature.CategoryId == lf.Feature.CategoryId);
+
+            detailsViewModel.ListingFeatures.Add(new FeatureCategoriesViewModel
+            {
+                Id = lf.Feature.CategoryId,
+                Name = lf.Feature.Category.Name,
+                Features = features.Select(f => new FeatureViewModel
+                {
+                    Id = f.FeatureId,
+                    Name = f.Feature.Name,
+                    IsSelected = true
+                })
+            });
+        }
+
+        return detailsViewModel;
     }
 
     public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId)

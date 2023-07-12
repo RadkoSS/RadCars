@@ -1,34 +1,39 @@
 ﻿namespace RadCars.Web.ViewModels.Listing;
 
-using CarImage;
+using System.ComponentModel.DataAnnotations;
+
 using AutoMapper;
-using Data.Models.Entities;
-using Services.Mapping.Contracts;
 
-public class ListingDetailsViewModel : IMapFrom<Listing>, IHaveCustomMappings
+using CarImage;
+using RadCars.Data.Models.Entities;
+using RadCars.Services.Mapping.Contracts;
+using RadCars.Web.ViewModels.FeatureCategory;
+
+public class ListingDetailsViewModel : AllListingViewModel, IHaveCustomMappings
 {
-    public string Id { get; set; } = null!;
-
-    public string Title { get; set; } = null!;
-
-    public string Description { get; set; } = null!;
-
-    public int Year { get; set; }
-
-    public string CreatorId { get; set; } = null!;
+    public ListingDetailsViewModel()
+    {
+        this.Images = new HashSet<ImageViewModel>();
+        this.ListingFeatures = new HashSet<FeatureCategoriesViewModel>();
+    }
 
     public string CreatorUserName { get; set; } = null!;
 
-    public ImageViewModel Thumbnail { get; set; } = null!;
+    public string Description { get; set; } = null!;
 
-    public ICollection<ImageViewModel> Images { get; set; } = null!;
+    public string CreatorId { get; set; } = null!;
 
-    //ToDo: Add all the needed properties to display the details about each car listing!
+    public int FavoritesCount { get; set; }
+
+    [Display(Name = "Екстри:")]
+    public ICollection<FeatureCategoriesViewModel> ListingFeatures { get; set; }
+
+    public ICollection<ImageViewModel> Images { get; set; }
 
     public void CreateMappings(IProfileExpression configuration)
     {
-        configuration.CreateMap<Listing, ListingDetailsViewModel>().ForMember(source => source.CreatorUserName, destination => destination.MapFrom(l => l.Creator.UserName));
-
-        configuration.CreateMap<Listing, ListingDetailsViewModel>().ForMember(source => source.CreatorId, destination => destination.MapFrom(l => l.CreatorId));
+        configuration
+            .CreateMap<Listing, ListingDetailsViewModel>()
+            .ForMember(source => source.ListingFeatures, options => options.Ignore());
     }
 }

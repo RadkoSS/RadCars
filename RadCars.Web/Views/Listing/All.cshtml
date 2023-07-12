@@ -8,20 +8,24 @@
     @foreach (var listing in Model)
     {
         <div class="card">
-            <div class="card-body">
+            <div class="card-body w-25">
                 <p class="card-title text-center text-lg-center">@listing.Title</p>
-                <img class="card-img justify-content-center" style="width: 250px" src="@listing.Thumbnail.Url"/>
+                <img class="card-img justify-content-center w-100" src="@listing.Thumbnail.Url" />
                 <div class="card-body">
                     <ul class="list-unstyled">
-                        <li class="m-3">Описание: @listing.Description</li>
-                        <li class="m-3">Година на производство: @listing.Year година</li>
+                        <li class="m-3">@listing.CarMakeName @listing.CarModelName</li>
+                        <li class="m-3">Година на производство: @listing.Year г.</li>
+                        <li class="m-3">Населено място: @listing.City.Name</li>
+                        <li class="m-3">Двигател: @listing.EngineModel</li>
+                        <li class="m-3">Пробег: @listing.Mileage км.</li>
+                        <li class="m-3">Цена: @listing.Price лв.</li>
                     </ul>
                 </div>
                 @*<form asp-controller="Listing" asp-action="" asp-route-id="@listing.FeatureId" method="post">
                     <input type="submit" class="btn btn-danger" value="Изтрий обявата" />
                 </form>*@
                 <form asp-controller="Listing" asp-action="Details" asp-route-listingId="@listing.Id">
-                    <input type="submit" class="btn btn-info" value="Разгледай обявата" />
+                    <input type="submit" class="btn btn-outline-info text-black" value="Разгледай обявата" />
                 </form>
             </div>
         </div>

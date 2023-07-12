@@ -1,27 +1,29 @@
 ﻿namespace RadCars.Web.ViewModels.Listing;
 
 using CarImage;
-using AutoMapper;
 using Data.Models.Entities;
 using Services.Mapping.Contracts;
+using RadCars.Web.ViewModels.City;
 
-public class AllListingViewModel : IMapFrom<Listing>, IHaveCustomMappings
+public class AllListingViewModel : IMapFrom<Listing>
 {
     public string Id { get; set; } = null!;
 
     public string Title { get; set; } = null!;
     
-    public string Description { get; set; } = null!;
-    
+    public decimal Price { get; set; }
+
+    public int Mileage { get; set; }
+
+    public string EngineModel { get; set; } = null!;
+
+    public string CarMakeName { get; set; } = null!;
+
+    public string CarModelName { get; set; } = null!;
+
+    public CityViewModel City { get; set; } = null!;
+
     public int Year { get; set; }
-
-    public string CreatorUserName { get; set; } = null!;
-
+    
     public ImageViewModel Thumbnail { get; set; } = null!;
-
-    //ToDo: add all properties needed! 
-    public void CreateMappings(IProfileExpression configuration)
-    {
-        configuration.CreateMap<Listing, AllListingViewModel>().ForMember(source => source.CreatorUserName, destination => destination.MapFrom(l => l.Creator.UserName));
-    }
 }

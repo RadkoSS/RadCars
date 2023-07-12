@@ -28,6 +28,9 @@ public class ListingFormModel : IMapTo<Listing>, IMapFrom<Listing>, IHaveCustomM
         this.FeatureCategories = new HashSet<FeatureCategoriesViewModel>();
     }
 
+    [Required]
+    public string Id { get; set; } = null!;
+
     [Display(Name = "Заглавие")]
     [Required(ErrorMessage = "{0}то e задължително поле.")]
     [StringLength(TitleMaximumLength, MinimumLength = TitleMinimumLength, ErrorMessage = "{0}то трябва да има дължина между {2} и {1} символа.")]
@@ -100,9 +103,12 @@ public class ListingFormModel : IMapTo<Listing>, IMapFrom<Listing>, IHaveCustomM
 
     public void CreateMappings(IProfileExpression configuration)
     {
-        configuration.CreateMap<ListingFormModel, Listing>().ForMember(source => source.ListingFeatures, destination => destination.Ignore());
+        configuration
+            .CreateMap<ListingFormModel, Listing>()
+            .ForMember(source => source.ListingFeatures, options => options.Ignore());
 
-        configuration.CreateMap<ListingFormModel, Listing>()
+        configuration
+            .CreateMap<ListingFormModel, Listing>()
             .ForMember(source => source.Images, options => options.Ignore());
     }
 }

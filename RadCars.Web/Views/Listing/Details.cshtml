@@ -1,19 +1,22 @@
-﻿@inject SignInManager<ApplicationUser> SignInManager
+﻿@model ListingDetailsViewModel
 
 @using RadCars.Web.Infrastructure.Extensions
-@model ListingDetailsViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Виж обява";
+}
 
 <div class="container">
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-md-12">
             <h1>@Model.Title</h1>
-            <p class="text-muted">Обявата е качена от @Model.CreatorUserName, Година на производство: @Model.Year</p>
-            <hr />
-            <p>@Model.Description</p>
+            <p class="text-muted">Обявата е качена от @Model.CreatorUserName</p>
+            <span class="small">Добавена @Model.FavoritesCount пъти в "Любими"</span>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-3">
         @foreach (var picture in Model.Images)
         {
             <div class="col-lg-4 col-md-6 mb-4">
@@ -26,6 +29,33 @@
         }
     </div>
 
+    <div class="text-wrap">
+        <p>Местоположение: @Model.City.Name</p>
+        <p>Марка: @Model.CarMakeName</p>
+        <p>Модел: @Model.CarModelName</p>
+        <p>Модел двигател: @Model.EngineModel</p>
+        <p>Описание: @Model.Description</p>
+        <p>Цена: @Model.Price лв.</p>
+    </div>
+
+    <div>
+        <label asp-for="@Model.ListingFeatures" class="modal-header"></label>
+
+        @foreach (var category in Model.ListingFeatures)
+        {
+            <span>@category.Name</span>
+
+            <ul>
+                @foreach (var feature in category.Features)
+                {
+                    <li>
+                        <p class="m-2">@feature.Name</p>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
     @if (SignInManager.IsSignedIn(User) && string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase))
     {
         @*<div class="row mt-3">
@@ -34,11 +64,11 @@
                     <input type="submit" value="Деактиварай обявата" class="btn-danger" />
                 </form>
             </div>
-        </div>*@
+         </div>*@
 
         <div class="row mt-3">
             <div class="col-12">
-                <a asp-controller="Listing" asp-action="ChooseThumbnail" asp-route-listingId="@Model.Id" class="btn btn-secondary">Смени снимката на обложката</a>
+                <a asp-controller="Listing" asp-action="ChooseThumbnail" asp-route-listingId="@Model.Id" class="btn btn-outline-secondary text-black">Смени снимката на обложката</a>
             </div>
         </div>
     }
