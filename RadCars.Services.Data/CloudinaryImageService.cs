@@ -29,6 +29,7 @@ public class CloudinaryImageService : ICloudinaryImageService
         this.configuration = configuration;
 
         this.cloudinary = new Cloudinary(new Account(this.configuration.GetSection("ExternalConnections:Cloudinary:CloudName").Value, this.configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").Value, this.configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").Value));
+        this.cloudinary.Api.Secure = true;
     }
 
     public async Task<CarImage> UploadImageAsync(string listingId, IFormFile image)

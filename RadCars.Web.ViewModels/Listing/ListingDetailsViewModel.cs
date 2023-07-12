@@ -17,6 +17,8 @@ public class ListingDetailsViewModel : AllListingViewModel, IHaveCustomMappings
         this.ListingFeatures = new HashSet<FeatureCategoriesViewModel>();
     }
 
+    public string CreatedOn { get; set; } = null!;
+
     public string CreatorUserName { get; set; } = null!;
 
     public string Description { get; set; } = null!;
@@ -32,6 +34,10 @@ public class ListingDetailsViewModel : AllListingViewModel, IHaveCustomMappings
 
     public void CreateMappings(IProfileExpression configuration)
     {
+        configuration
+            .CreateMap<Listing, ListingDetailsViewModel>()
+            .ForMember(source => source.CreatedOn, destination => destination.MapFrom(l => l.CreatedOn.ToLocalTime().ToString("U")));
+
         configuration
             .CreateMap<Listing, ListingDetailsViewModel>()
             .ForMember(source => source.ListingFeatures, options => options.Ignore());

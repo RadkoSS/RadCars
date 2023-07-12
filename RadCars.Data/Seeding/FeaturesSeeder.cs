@@ -439,6 +439,22 @@ internal static class FeaturesSeeder
         };
         features.Add(feature);
 
+        feature = new Feature
+        {
+            Id = 54,
+            CategoryId = 2,
+            Name = "Масаж на предните седалки"
+        };
+        features.Add(feature);
+
+        feature = new Feature
+        {
+            Id = 55,
+            CategoryId = 2,
+            Name = "Масаж на задните седалки"
+        };
+        features.Add(feature);
+
         return features.ToArray();
     }
 }

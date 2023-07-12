@@ -7,21 +7,21 @@
     ViewData["Title"] = "Виж обява";
 }
 
-<div class="container">
+<div class="container mt-5">
     <div class="row mb-4">
         <div class="col-md-12">
-            <h1>@Model.Title</h1>
-            <p class="text-muted">Обявата е качена от @Model.CreatorUserName</p>
+            <h1 class="text-center">@Model.Title</h1>
+            <p class="text-muted text-center">Качена от @Model.CreatorUserName на @Model.CreatedOn</p>
             <span class="small">Добавена @Model.FavoritesCount пъти в "Любими"</span>
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-3 justify-content-center">
         @foreach (var picture in Model.Images)
         {
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100">
-                    <a href="javascript:void(0)">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-img-url="@picture.Url">
                         <img class="card-img-top" src="@picture.Url" alt="Снимката не беше заредена правилно...">
                     </a>
                 </div>
@@ -29,6 +29,17 @@
         }
     </div>
 
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img id="modalImage" src="" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
     <div class="text-wrap">
         <p>Местоположение: @Model.City.Name</p>
         <p>Марка: @Model.CarMakeName</p>
@@ -38,7 +49,7 @@
         <p>Цена: @Model.Price лв.</p>
     </div>
 
-    <div>
+    <div class="mt-4">
         <label asp-for="@Model.ListingFeatures" class="modal-header"></label>
 
         @foreach (var category in Model.ListingFeatures)
@@ -64,12 +75,26 @@
                     <input type="submit" value="Деактиварай обявата" class="btn-danger" />
                 </form>
             </div>
-         </div>*@
+          </div>*@
 
-        <div class="row mt-3">
+        <div class="row mt-3 justify-content-center">
             <div class="col-12">
                 <a asp-controller="Listing" asp-action="ChooseThumbnail" asp-route-listingId="@Model.Id" class="btn btn-outline-secondary text-black">Смени снимката на обложката</a>
             </div>
         </div>
     }
 </div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('[data-bs-toggle="modal"]').forEach(item => {
+            item.addEventListener('click', event => {
+                // Image that triggered the modal
+                const imageUrl = event.currentTarget.getAttribute('data-bs-img-url');
+                // Update the modal's content.
+                const modalImage = document.querySelector('#modalImage');
+                modalImage.src = imageUrl;
+            });
+        });
+    </script>
+}
