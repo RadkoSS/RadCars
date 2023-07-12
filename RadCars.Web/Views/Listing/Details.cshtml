@@ -33,13 +33,14 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
+                    <button id="prevBtn" class="btn btn-primary mb-4">Предишна</button>
                     <img id="modalImage" src="" class="img-fluid" />
+                    <button id="nextBtn" class="btn btn-primary mt-4">Следваща</button>
                 </div>
             </div>
         </div>
     </div>
 
-    
     <div class="text-wrap">
         <p>Местоположение: @Model.City.Name</p>
         <p>Марка: @Model.CarMakeName</p>
@@ -86,15 +87,5 @@
 </div>
 
 @section Scripts {
-    <script>
-        document.querySelectorAll('[data-bs-toggle="modal"]').forEach(item => {
-            item.addEventListener('click', event => {
-                // Image that triggered the modal
-                const imageUrl = event.currentTarget.getAttribute('data-bs-img-url');
-                // Update the modal's content.
-                const modalImage = document.querySelector('#modalImage');
-                modalImage.src = imageUrl;
-            });
-        });
-    </script>
+    <script type="text/javascript" src="~/js/imageViewer.js"></script>
 }
