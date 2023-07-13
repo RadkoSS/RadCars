@@ -7,13 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using Mapping;
 using Contracts;
 using Web.ViewModels.City;
+using Web.ViewModels.Home;
 using Web.ViewModels.CarMake;
+using Web.ViewModels.Feature;
 using Web.ViewModels.Listing;
 using Web.ViewModels.Thumbnail;
 using RadCars.Data.Models.Entities;
 using Web.ViewModels.CarEngineType;
 using Web.ViewModels.FeatureCategory;
-using RadCars.Web.ViewModels.Feature;
 using RadCars.Data.Common.Contracts.Repositories;
 
 using static Common.ExceptionsErrorMessages;
@@ -31,8 +32,8 @@ public class ListingService : IListingService
     private readonly IDeletableEntityRepository<CarImage> carImagesRepository;
     private readonly IDeletableEntityRepository<Category> categoriesRepository;
     private readonly IDeletableEntityRepository<EngineType> engineTypesRepository;
-    
-    public ListingService(ICloudinaryImageService cloudinaryImageService, ICarService carService, 
+
+    public ListingService(ICloudinaryImageService cloudinaryImageService, ICarService carService,
         IDeletableEntityRepository<Listing> listingsRepository, IDeletableEntityRepository<CarMake> carMakesRepository, IDeletableEntityRepository<Category> categoriesRepository, IDeletableEntityRepository<City> citiesRepository, IDeletableEntityRepository<EngineType> engineTypesRepository, IDeletableEntityRepository<CarImage> carImagesRepository, IDeletableEntityRepository<Feature> featuresRepository, IMapper mapper)
     {
         this.mapper = mapper;
@@ -57,6 +58,17 @@ public class ListingService : IListingService
             .ToArrayAsync();
 
         return listings;
+    }
+
+    public async Task<IEnumerable<IndexViewModel>> GetMostRecentListingsAsync()
+    {
+        var mostRecentListings = await this.listingsRepository.All()
+            .OrderByDescending(l => l.CreatedOn)
+            .Take(3)
+            .To<IndexViewModel>()
+            .ToArrayAsync();
+
+        return mostRecentListings;
     }
 
     public async Task<ListingFormModel> GetListingCreateAsync()

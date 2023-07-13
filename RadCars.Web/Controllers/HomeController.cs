@@ -6,20 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using ViewModels.Home;
+using RadCars.Services.Data.Contracts;
 
 public class HomeController : BaseController
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<HomeController> logger;
+    private readonly IListingService listingService;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IListingService listingService)
     {
-        this._logger = logger;
+        this.logger = logger;
+        this.listingService = listingService;
     }
 
     [AllowAnonymous]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var viewModel = await this.listingService.GetMostRecentListingsAsync();
+
+        return View(viewModel);
     }
 
     [AllowAnonymous]

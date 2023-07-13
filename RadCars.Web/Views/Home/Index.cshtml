@@ -1,15 +1,56 @@
-﻿@{
+﻿@model IEnumerable<IndexViewModel>
+
+@{
     ViewData["Title"] = "Начало";
+
+    var listings = Model.ToList();
 }
 
 <div>
-    <div class="text-center">
+    <div class="text-center mb-5">
         <h1 class="display-4">Добре дошли в RadCars!</h1>
-        <p>Добрият сайт за продажба на автомобили. Тук ще намерите сделката, за която винаги сте мечтали!</p>
+        <p class="text-black mt-5">Добрият сайт за продажба на автомобили. Тук ще намерите сделката, за която винаги сте мечтали!</p>
     </div>
 
-    <div>
-        <p>Най-пресните обяви:</p>
-
+    <div class="d-flex flex-column text-center align-items-center container">
+        @if (!listings.Any())
+        {
+            <p>Все още няма обяви в сайта... Направете първата!</p>
+            <a class="btn btn-success" asp-controller="Listing" asp-action="Create">Създай обява</a>
+        }
+        else
+        {
+            <h2 class="mb-5">Вижте най-"пресните" обяви в сайта:</h2>
+        
+            <div id="carouselExampleControls" class="carousel slide w-50" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @for (int i = 0; i < listings.Count; i++)
+                    {
+                        var listing = listings[i];
+                        <div class="carousel-item @(i == 0 ? "active" : string.Empty)" style="height: 40vh">
+                            <img class="d-block w-100 h-100" style="object-fit: cover"
+                                 src="@listing.ThumbnailUrl" alt="@listing.Title">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>
+                                    <a class="btn btn-success" asp-controller="Listing" asp-action="Details"
+                                       asp-route-listingId="@listing.Id">@listing.Title</a>
+                                </h5>
+                                <div class="bg-white w-auto bg-opacity-75 mt-3">
+                                    <p class="text-black text-primary fs-5">@listing.Price лв.</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Предишна</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Следваща</span>
+                </button>
+            </div>
+        }
     </div>
 </div>

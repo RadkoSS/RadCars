@@ -1,6 +1,7 @@
 ﻿namespace RadCars.Services.Data.Contracts;
 
 using Web.ViewModels.City;
+using Web.ViewModels.Home;
 using Web.ViewModels.CarMake;
 using Web.ViewModels.Listing;
 using Web.ViewModels.Thumbnail;
@@ -10,6 +11,8 @@ using Web.ViewModels.FeatureCategory;
 public interface IListingService
 {
     Task<IEnumerable<AllListingViewModel>> GetAllListingsAsync();
+
+    Task<IEnumerable<IndexViewModel>> GetMostRecentListingsAsync();
 
     Task<string> CreateListingAsync(ListingFormModel form, string userId);
 
