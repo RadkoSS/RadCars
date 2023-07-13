@@ -1,10 +1,9 @@
 ﻿@model ListingDetailsViewModel
 
-@using RadCars.Web.Infrastructure.Extensions
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{
-    ViewData["Title"] = "Виж обява";
+    ViewData["Title"] = $"Обява - {Model.CarMakeName} {Model.CarModelName}";
 }
 
 <div class="container mt-4">

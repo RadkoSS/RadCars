@@ -1,24 +1,37 @@
 ﻿@inject SignInManager<ApplicationUser> SignInManager
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравей, @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Изход</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Влез</a>
-    </li>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравей, @User.Identity?.Name!</a>
+        </li>
+        <li class="nav-item mx-3">
+            <div class="dropdown">
+                <button type="button" class="btn btn-success dropdown-toggle-split" data-bs-toggle="dropdown">Моите:</button>
+                <ul class="dropdown-menu">
+                    <li><h5 class="dropdown-header">Обяви</h5></li>
+                    <li><a class="dropdown-item nav-link text-dark" asp-controller="Listing" asp-action="Mine" title="Manage">Активни</a></li>
+                    <li><a class="dropdown-item nav-link text-dark" asp-controller="Listing" asp-action="MineDeactivated" title="Manage">Неактивни</a></li>
+                    <li><h5 class="dropdown-header">Търгове</h5></li>
+                    <li><a class="dropdown-item nav-link text-dark" asp-controller="Auction" asp-action="Mine" title="Manage">Състоящи се</a></li>
+                    <li><a class="dropdown-item nav-link text-dark" asp-controller="Auction" asp-action="MineExpired" title="Manage">Приключили</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="text-decoration-none btn btn-outline-light btn-dark">Изход</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Влез</a>
+        </li>
+    }
 </ul>

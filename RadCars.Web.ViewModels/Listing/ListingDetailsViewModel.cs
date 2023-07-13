@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 
 using CarImage;
-using RadCars.Data.Models.Entities;
-using RadCars.Services.Mapping.Contracts;
-using RadCars.Web.ViewModels.FeatureCategory;
+using FeatureCategory;
+using Data.Models.Entities;
+using Services.Mapping.Contracts;
 
 public class ListingDetailsViewModel : AllListingViewModel, IHaveCustomMappings
 {
@@ -22,8 +22,6 @@ public class ListingDetailsViewModel : AllListingViewModel, IHaveCustomMappings
     public string CreatorUserName { get; set; } = null!;
 
     public string Description { get; set; } = null!;
-
-    public string CreatorId { get; set; } = null!;
 
     public int FavoritesCount { get; set; }
 

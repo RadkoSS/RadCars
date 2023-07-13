@@ -4,4 +4,15 @@
     ViewData["Title"] = "Всички обяви";
 }
 
-<partial name="_AllListingsPartial" model="@Model"></partial>
+@if (!Model.Any())
+{
+    <div class="d-flex flex-column align-items-center">
+        <h1 class="mb-4">@ViewData["Title"]</h1>
+        <p>Все още няма обяви... Бъдете първият създател на обява в RadCars!</p>
+        <a class="btn btn-success" asp-controller="Listing" asp-action="Create">Създай обява</a>
+    </div>
+}
+else
+{
+    <partial name="_AllListingsPartial" model="@Model"></partial>
+}

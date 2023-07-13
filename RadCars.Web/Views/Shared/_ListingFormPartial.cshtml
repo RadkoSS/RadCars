@@ -7,6 +7,7 @@
 <form asp-controller="Listing" asp-action="Create" id="createListingForm" method="post" enctype="multipart/form-data">
     
     <div class="form-group my-3">
+        <input type="hidden" asp-for="@Model.Id"/>
         <label asp-for="@Model.Images" class="mb-1">Снимки</label>
         <input asp-for="@Model.Images" type="file" name="Images" id="images" class="form-control" multiple>
         <span asp-validation-for="@Model.Images" class="small text-danger"></span>

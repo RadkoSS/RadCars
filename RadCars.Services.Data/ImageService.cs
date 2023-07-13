@@ -6,7 +6,6 @@ using CloudinaryDotNet.Actions;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 using Contracts;
 using RadCars.Data.Models.Entities;
@@ -14,22 +13,17 @@ using RadCars.Data.Common.Contracts.Repositories;
 
 using static Common.ExceptionsErrorMessages;
 
-public class CloudinaryImageService : ICloudinaryImageService
+public class ImageService : IImageService
 {
-    private readonly IDeletableEntityRepository<CarImage> carImagesRepository;
-
-    private readonly IConfiguration configuration;
-
     private readonly Cloudinary cloudinary;
 
-    public CloudinaryImageService(IDeletableEntityRepository<CarImage> carImagesRepository, IConfiguration configuration)
+    private readonly IDeletableEntityRepository<CarImage> carImagesRepository;
+
+    public ImageService(Cloudinary cloudinary, IDeletableEntityRepository<CarImage> carImagesRepository)
     {
+        this.cloudinary = cloudinary;
+        
         this.carImagesRepository = carImagesRepository;
-
-        this.configuration = configuration;
-
-        this.cloudinary = new Cloudinary(new Account(this.configuration.GetSection("ExternalConnections:Cloudinary:CloudName").Value, this.configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").Value, this.configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").Value));
-        this.cloudinary.Api.Secure = true;
     }
 
     public async Task<CarImage> UploadImageAsync(string listingId, IFormFile image)

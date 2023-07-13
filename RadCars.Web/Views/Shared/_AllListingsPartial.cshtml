@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<AllListingViewModel>
 
+@inject SignInManager<ApplicationUser> SignInManager
+
 <div class="container">
-    <h2 class="text-center text-black mt-4 mb-5">@ViewData["Title"]</h2>
+    <h1 class="text-center text-black mt-4 mb-5">@ViewData["Title"]</h1>
     <div class="row">
         @foreach (var listing in Model)
         {
@@ -22,8 +24,15 @@
                         </p>
                         <div class="mt-auto">
                             <form asp-controller="Listing" asp-action="Details" asp-route-listingId="@listing.Id">
-                                <input type="submit" class="btn btn-sm btn-outline-info text-black" value="Разгледай обявата" />
+                                <input type="submit" class="btn btn-sm btn-outline-info text-black w-100" value="Разгледай обявата" />
                             </form>
+
+                            @if (SignInManager.IsSignedIn(User) && string.Equals(listing.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                <form asp-controller="Listing" asp-action="Deactivate" asp-route-listingId="@listing.Id" method="post">
+                                    <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай обявата" />
+                                </form>
+                            }
                         </div>
                     </div>
                 </div>

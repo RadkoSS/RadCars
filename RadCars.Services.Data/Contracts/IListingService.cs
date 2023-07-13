@@ -12,6 +12,10 @@ public interface IListingService
 {
     Task<IEnumerable<AllListingViewModel>> GetAllListingsAsync();
 
+    Task<IEnumerable<AllListingViewModel>> GetAllListingsByUserIdAsync(string userId);
+
+    Task<IEnumerable<AllListingViewModel>> GetAllDeactivatedListingsByUserIdAsync(string userId);
+
     Task<IEnumerable<IndexViewModel>> GetMostRecentListingsAsync();
 
     Task<string> CreateListingAsync(ListingFormModel form, string userId);
@@ -31,4 +35,10 @@ public interface IListingService
     Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId);
 
     Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string userId);
+
+    Task DeactivateListingByIdAsync(string listingId, string userId);
+
+    Task ReactivateListingByIdAsync(string listingId, string userId);
+
+    Task HardDeleteListingByIdAsync(string listingId, string userId);
 }

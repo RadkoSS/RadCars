@@ -1,6 +1,7 @@
 using System.Reflection;
 
 using AutoMapper;
+using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 
 using RadCars.Data;
@@ -59,6 +60,18 @@ builder.Services.AddApplicationServices(typeof(IListingService));
 //Register mappings
 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 builder.Services.AddSingleton(typeof(IMapper), AutoMapperConfig.MapperInstance);
+
+//Register CloudinaryAPI
+builder.Services.AddSingleton(new Cloudinary(new Account(
+    builder.Configuration.GetSection("ExternalConnections:Cloudinary:CloudName").Value,
+    builder.Configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").Value,
+    builder.Configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").Value))
+{
+    Api =
+    {
+        Secure = true
+    }
+});
 
 var app = builder.Build();
 

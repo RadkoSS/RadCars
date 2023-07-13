@@ -23,7 +23,7 @@ public class ListingService : IListingService
 {
     private readonly IMapper mapper;
     private readonly ICarService carService;
-    private readonly ICloudinaryImageService cloudinaryImageService;
+    private readonly IImageService imageService;
 
     private readonly IDeletableEntityRepository<City> citiesRepository;
     private readonly IDeletableEntityRepository<Listing> listingsRepository;
@@ -32,12 +32,15 @@ public class ListingService : IListingService
     private readonly IDeletableEntityRepository<CarImage> carImagesRepository;
     private readonly IDeletableEntityRepository<Category> categoriesRepository;
     private readonly IDeletableEntityRepository<EngineType> engineTypesRepository;
+    private readonly IDeletableEntityRepository<ListingFeature> listingFeaturesRepository;
+    private readonly IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepository;
 
-    public ListingService(ICloudinaryImageService cloudinaryImageService, ICarService carService,
-        IDeletableEntityRepository<Listing> listingsRepository, IDeletableEntityRepository<CarMake> carMakesRepository, IDeletableEntityRepository<Category> categoriesRepository, IDeletableEntityRepository<City> citiesRepository, IDeletableEntityRepository<EngineType> engineTypesRepository, IDeletableEntityRepository<CarImage> carImagesRepository, IDeletableEntityRepository<Feature> featuresRepository, IMapper mapper)
+    public ListingService(IImageService imageService, ICarService carService,
+        IDeletableEntityRepository<Listing> listingsRepository, IDeletableEntityRepository<CarMake> carMakesRepository, IDeletableEntityRepository<Category> categoriesRepository, IDeletableEntityRepository<City> citiesRepository, IDeletableEntityRepository<EngineType> engineTypesRepository, IDeletableEntityRepository<CarImage> carImagesRepository, IDeletableEntityRepository<Feature> featuresRepository, IMapper mapper, IDeletableEntityRepository<ListingFeature> listingFeaturesRepository, IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepository)
     {
         this.mapper = mapper;
         this.carService = carService;
+        this.imageService = imageService;
         this.citiesRepository = citiesRepository;
         this.carMakesRepository = carMakesRepository;
         this.featuresRepository = featuresRepository;
@@ -45,7 +48,8 @@ public class ListingService : IListingService
         this.carImagesRepository = carImagesRepository;
         this.categoriesRepository = categoriesRepository;
         this.engineTypesRepository = engineTypesRepository;
-        this.cloudinaryImageService = cloudinaryImageService;
+        this.listingFeaturesRepository = listingFeaturesRepository;
+        this.userFavoriteListingsRepository = userFavoriteListingsRepository;
     }
 
     public async Task<IEnumerable<AllListingViewModel>> GetAllListingsAsync()
@@ -56,13 +60,37 @@ public class ListingService : IListingService
             .OrderByDescending(l => l.CreatedOn)
             .To<AllListingViewModel>()
             .ToArrayAsync();
+        
+        return listings;
+    }
+
+    public async Task<IEnumerable<AllListingViewModel>> GetAllListingsByUserIdAsync(string userId)
+    {
+        var listings = await this.listingsRepository
+            .AllAsNoTracking()
+            .Where(l => l.CreatorId.ToString() == userId)
+            .OrderByDescending(l => l.CreatedOn)
+            .To<AllListingViewModel>()
+            .ToArrayAsync();
 
         return listings;
     }
 
+    public async Task<IEnumerable<AllListingViewModel>> GetAllDeactivatedListingsByUserIdAsync(string userId)
+    {
+        var deactivatedListings = await this.listingsRepository
+            .AllAsNoTrackingWithDeleted()
+            .Where(l => l.CreatorId.ToString() == userId && l.IsDeleted)
+            .OrderByDescending(l => l.CreatedOn)
+            .To<AllListingViewModel>()
+            .ToArrayAsync();
+
+        return deactivatedListings;
+    }
+
     public async Task<IEnumerable<IndexViewModel>> GetMostRecentListingsAsync()
     {
-        var mostRecentListings = await this.listingsRepository.All()
+        var mostRecentListings = await this.listingsRepository.AllAsNoTracking()
             .OrderByDescending(l => l.CreatedOn)
             .Take(3)
             .To<IndexViewModel>()
@@ -103,7 +131,13 @@ public class ListingService : IListingService
             .Where(l => l.Id.ToString() == listingId).To<ListingDetailsViewModel>().FirstAsync();
 
         var listingFeatures = await this.listingsRepository.All()
-            .Where(l => l.Id.ToString() == listingId).SelectMany(l => l.ListingFeatures).ToArrayAsync();
+            .Include(l => l.ListingFeatures)
+            .ThenInclude(lf => lf.Feature)
+            .ThenInclude(f => f.Category)
+            .AsNoTracking()
+            .Where(l => l.Id.ToString() == listingId)
+            .SelectMany(l => l.ListingFeatures)
+            .ToArrayAsync();
 
         foreach (var currentLf in listingFeatures.DistinctBy(lf => lf.Feature.CategoryId))
         {
@@ -118,7 +152,7 @@ public class ListingService : IListingService
                     Id = f.FeatureId,
                     Name = f.Feature.Name,
                     IsSelected = true
-                })
+                }).ToArray()
             });
         }
 
@@ -155,7 +189,7 @@ public class ListingService : IListingService
             });
         }
 
-        var uploadedImages = await this.cloudinaryImageService.UploadMultipleImagesAsync(listing.Id.ToString(), form.Images);
+        var uploadedImages = await this.imageService.UploadMultipleImagesAsync(listing.Id.ToString(), form.Images);
 
         if (!uploadedImages.Any())
         {
@@ -191,6 +225,58 @@ public class ListingService : IListingService
         var listing = await this.listingsRepository.All().FirstAsync(l => l.Id.ToString() == listingId);
 
         listing.ThumbnailId = Guid.Parse(imageId);
+
+        await this.listingsRepository.SaveChangesAsync();
+    }
+
+    public async Task DeactivateListingByIdAsync(string listingId, string userId)
+    {
+        var listingToDeactivate = await this.listingsRepository.All().FirstAsync(l => l.CreatorId.ToString() == userId && l.Id.ToString() == listingId);
+
+        this.listingsRepository.Delete(listingToDeactivate);
+
+        await this.listingsRepository.SaveChangesAsync();
+    }
+
+    public async Task ReactivateListingByIdAsync(string listingId, string userId)
+    {
+        var listingToDeactivate = await this.listingsRepository.AllWithDeleted().FirstAsync(l => l.CreatorId.ToString() == userId && l.Id.ToString() == listingId);
+
+        this.listingsRepository.Undelete(listingToDeactivate);
+
+        await this.listingsRepository.SaveChangesAsync();
+    }
+
+    public async Task HardDeleteListingByIdAsync(string listingId, string userId)
+    {
+        var listingToDelete = await this.listingsRepository.AllWithDeleted().FirstAsync(l => l.CreatorId.ToString() == userId && l.Id.ToString() == listingId);
+
+        var listingFeaturesToDelete = await this.listingFeaturesRepository.AllWithDeleted().Where(lf => lf.ListingId == listingToDelete.Id).ToArrayAsync();
+
+        foreach (var listingFeature in listingFeaturesToDelete)
+        {
+            this.listingFeaturesRepository.HardDelete(listingFeature);
+        }
+        await this.listingFeaturesRepository.SaveChangesAsync();
+
+        var carImagesToDelete =
+            await this.carImagesRepository.AllWithDeleted().Where(ci => ci.ListingId == listingToDelete.Id).ToArrayAsync();
+
+        foreach (var carImage in carImagesToDelete)
+        {
+            this.carImagesRepository.HardDelete(carImage);
+        }
+        await carImagesRepository.SaveChangesAsync();
+
+        var userFavorites = await this.userFavoriteListingsRepository.AllWithDeleted()
+            .Where(ufl => ufl.ListingId == listingToDelete.Id).ToArrayAsync();
+        foreach (var userFavorite in userFavorites)
+        {
+            this.userFavoriteListingsRepository.HardDelete(userFavorite);
+        }
+        await this.userFavoriteListingsRepository.SaveChangesAsync();
+
+        this.listingsRepository.HardDelete(listingToDelete);
 
         await this.listingsRepository.SaveChangesAsync();
     }

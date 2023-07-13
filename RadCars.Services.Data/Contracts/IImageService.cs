@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 using RadCars.Data.Models.Entities;
 
-public interface ICloudinaryImageService
+public interface IImageService
 {
     Task<ICollection<CarImage>> UploadMultipleImagesAsync(string listingId, IEnumerable<IFormFile> images);
 

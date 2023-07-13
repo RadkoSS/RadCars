@@ -28,8 +28,7 @@ public class ListingFormModel : IMapTo<Listing>, IMapFrom<Listing>, IHaveCustomM
         this.FeatureCategories = new HashSet<FeatureCategoriesViewModel>();
     }
 
-    [Required]
-    public string Id { get; set; } = null!;
+    public string? Id { get; set; }
 
     [Display(Name = "Заглавие")]
     [Required(ErrorMessage = "{0}то e задължително поле.")]

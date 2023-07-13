@@ -1,13 +1,15 @@
 ﻿namespace RadCars.Web.ViewModels.Listing;
 
+using City;
 using CarImage;
 using Data.Models.Entities;
 using Services.Mapping.Contracts;
-using RadCars.Web.ViewModels.City;
 
 public class AllListingViewModel : IMapFrom<Listing>
 {
     public string Id { get; set; } = null!;
+
+    public string CreatorId { get; set; } = null!;
 
     public string Title { get; set; } = null!;
     

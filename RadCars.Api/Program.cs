@@ -11,6 +11,7 @@ using RadCars.Web.ViewModels.Home;
 using RadCars.Services.Data.Contracts;
 using RadCars.Web.Infrastructure.Extensions;
 using RadCars.Data.Common.Contracts.Repositories;
+using CloudinaryDotNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,18 @@ builder.Services.AddApplicationServices(typeof(IListingService));
 //Register mappings
 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 builder.Services.AddSingleton(typeof(IMapper), AutoMapperConfig.MapperInstance);
+
+//Register CloudinaryAPI
+builder.Services.AddSingleton(new Cloudinary(new Account(
+    builder.Configuration.GetSection("ExternalConnections:Cloudinary:CloudName").Value,
+    builder.Configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").Value,
+    builder.Configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").Value))
+{
+    Api =
+    {
+        Secure = true
+    }
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

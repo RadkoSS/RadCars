@@ -14,13 +14,13 @@ using static Common.EntityValidationConstants.ListingConstants;
 public class ListingController : BaseController
 {
     private readonly ICarService carService;
-    private readonly ICloudinaryImageService cloudinaryImageService;
+    private readonly IImageService imageService;
     private readonly IListingService listingService;
 
-    public ListingController(IListingService listingService, ICloudinaryImageService cloudinaryImageService, ICarService carService)
+    public ListingController(IListingService listingService, IImageService imageService, ICarService carService)
     {
         this.carService = carService;
-        this.cloudinaryImageService = cloudinaryImageService;
+        this.imageService = imageService;
         this.listingService = listingService;
     }
 
@@ -101,6 +101,89 @@ public class ListingController : BaseController
         }
     }
 
+    public async Task<IActionResult> Mine()
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            var listings = await this.listingService.GetAllListingsByUserIdAsync(userId);
+
+            return View(listings);
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("All", "Listing");
+        }
+    }
+
+    public async Task<IActionResult> MineDeactivated()
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            var deactivatedListings = await this.listingService.GetAllDeactivatedListingsByUserIdAsync(userId);
+
+            return View(deactivatedListings);
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("Mine", "Listing");
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Deactivate(string listingId)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            await this.listingService.DeactivateListingByIdAsync(listingId, userId);
+
+            return RedirectToAction("MineDeactivated", "Listing");
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("All", "Listing");
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Reactivate(string listingId)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            await this.listingService.ReactivateListingByIdAsync(listingId, userId);
+
+            return RedirectToAction("Mine", "Listing");
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("All", "Listing");
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(string listingId)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            await this.listingService.HardDeleteListingByIdAsync(listingId, userId);
+
+            return RedirectToAction("MineDeactivated", "Listing");
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("Mine", "Listing");
+        }
+    }
+
     [HttpPost]
     public async Task<IActionResult> DeletePicture(string id)
     {
@@ -108,7 +191,7 @@ public class ListingController : BaseController
 
         try
         {
-            await this.cloudinaryImageService.DeleteImageAsync(id, "");
+            await this.imageService.DeleteImageAsync(id, "");
 
             return RedirectToAction("All", "Listing");
         }
