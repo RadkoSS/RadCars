@@ -26,11 +26,10 @@
                 </div>
             </div>
         }
-
-        //ToDo: Use fetch api to check if the listing is already being favorited by the current user!
-        @*else if ()
+        //ToDo: use fetch API to check if the user has already added the listing to favorites.
+        @*else
         {
-            <div class="row mt-3 justify-content-center">
+            <div class="row mt-3 justify-content-center visually-hidden">
                 <div class="col-12">
                     <form asp-controller="Listing" asp-action="Favorite" asp-route-listingId="@Model.Id" method="post">
                         <input type="submit" value="Добави в любими" class="btn btn-danger" />

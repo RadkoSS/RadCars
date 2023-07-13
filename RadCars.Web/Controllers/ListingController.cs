@@ -161,7 +161,7 @@ public class ListingController : BaseController
 
             return RedirectToAction("Favorites", "Listing");
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return RedirectToAction("All", "Listing");
         }
