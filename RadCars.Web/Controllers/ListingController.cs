@@ -117,6 +117,56 @@ public class ListingController : BaseController
         }
     }
 
+    public async Task<IActionResult> Favorites()
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            var favoriteListings = await this.listingService.GetFavoriteListingsByUserId(userId);
+
+            return View(favoriteListings);
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("All", "Listing");
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Favorite(string listingId)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            await this.listingService.FavoriteListingByIdAsync(listingId, userId);
+
+            return RedirectToAction("Favorites", "Listing");
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("Details", "Listing", new { listingId });
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UnFavorite(string listingId)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            await this.listingService.UnFavoriteListingByIdAsync(listingId, userId);
+
+            return RedirectToAction("Favorites", "Listing");
+        }
+        catch (Exception e)
+        {
+            return RedirectToAction("All", "Listing");
+        }
+    }
+
     public async Task<IActionResult> MineDeactivated()
     {
         try

@@ -11,6 +11,7 @@ using Web.ViewModels.Home;
 using Web.ViewModels.CarMake;
 using Web.ViewModels.Feature;
 using Web.ViewModels.Listing;
+using Web.ViewModels.CarImage;
 using Web.ViewModels.Thumbnail;
 using RadCars.Data.Models.Entities;
 using Web.ViewModels.CarEngineType;
@@ -24,7 +25,7 @@ public class ListingService : IListingService
     private readonly IMapper mapper;
     private readonly ICarService carService;
     private readonly IImageService imageService;
-
+    
     private readonly IDeletableEntityRepository<City> citiesRepository;
     private readonly IDeletableEntityRepository<Listing> listingsRepository;
     private readonly IDeletableEntityRepository<CarMake> carMakesRepository;
@@ -74,6 +75,75 @@ public class ListingService : IListingService
             .ToArrayAsync();
 
         return listings;
+    }
+
+    public async Task<IEnumerable<AllListingViewModel>> GetFavoriteListingsByUserId(string userId)
+    {
+        var favoriteListings = await this.userFavoriteListingsRepository.All()
+            .Where(ufl => ufl.UserId.ToString() == userId)
+            .Select(ufl => new AllListingViewModel
+                {
+                    Id = ufl.ListingId.ToString(),
+                    CarMakeName = ufl.Listing.CarMake.Name,
+                    CarModelName = ufl.Listing.CarModel.Name,
+                    City = new CityViewModel
+                    {
+                        Id = ufl.Listing.City.Id,
+                        Name = ufl.Listing.City.Name,
+                        Latitude = ufl.Listing.City.Latitude,
+                        Longitude = ufl.Listing.City.Longitude
+                    },
+                    Thumbnail = new ImageViewModel
+                    {
+                        Id = ufl.Listing.ThumbnailId.ToString()!,
+                        Url = ufl.Listing.Thumbnail!.Url
+                    },
+                    CreatorId = userId,
+                    EngineModel = ufl.Listing.EngineModel,
+                    Mileage = ufl.Listing.Mileage,
+                    Title = ufl.Listing.Title,
+                    Price = ufl.Listing.Price,
+                    Year = ufl.Listing.Year
+                }
+            ).ToArrayAsync();
+
+        return favoriteListings;
+    }
+
+    public async Task<bool> IsListingInUserFavoritesById(string listingId, string userId)
+    {
+        var result = await this.userFavoriteListingsRepository.All().AnyAsync(ufl => ufl.ListingId.ToString() == listingId && ufl.UserId.ToString() == userId);
+
+        return result;
+    }
+
+    public async Task FavoriteListingByIdAsync(string listingId, string userId)
+    {
+        var listingToFavorite = await this.listingsRepository.All().FirstAsync(l => l.Id.ToString() == listingId && l.CreatorId.ToString() != userId);
+
+        if (await this.IsListingInUserFavoritesById(listingId, userId))
+        {
+            throw new InvalidOperationException(ListingIsAlreadyInCurrentUserFavorites);
+        }
+
+        var userFavoriteListing = new UserFavoriteListing
+        {
+            UserId = Guid.Parse(userId),
+            ListingId = listingToFavorite.Id
+        };
+
+        await this.userFavoriteListingsRepository.AddAsync(userFavoriteListing);
+
+        await this.userFavoriteListingsRepository.SaveChangesAsync();
+    }
+
+    public async Task UnFavoriteListingByIdAsync(string listingId, string userId)
+    {
+        var listingToUnFavorite = await this.userFavoriteListingsRepository.All().FirstAsync(l => l.ListingId.ToString() == listingId && l.UserId.ToString() == userId);
+
+        this.userFavoriteListingsRepository.HardDelete(listingToUnFavorite);
+
+        await this.userFavoriteListingsRepository.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<AllListingViewModel>> GetAllDeactivatedListingsByUserIdAsync(string userId)

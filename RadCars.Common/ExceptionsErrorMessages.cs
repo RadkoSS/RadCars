@@ -15,4 +15,7 @@ public static class ExceptionsErrorMessages
 
     public const string InvalidDataSubmitted = "Изпращате невалидни данни, качете снимките отново и поправете грешните полета.";
     public const string ErrorCreatingTheListing = "Получи се грешка, качете снимките отново и опитайте пак.";
+
+    public const string ListingIsAlreadyInCurrentUserFavorites = "Обявата вече е била добавена в любимите Ви обяви!";
+    public const string ListingIsNotInCurrentUserFavorites = "Обявата вече не присъства в любимите Ви обяви!";
 }

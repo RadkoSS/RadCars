@@ -14,6 +14,14 @@ public interface IListingService
 
     Task<IEnumerable<AllListingViewModel>> GetAllListingsByUserIdAsync(string userId);
 
+    Task<IEnumerable<AllListingViewModel>> GetFavoriteListingsByUserId(string userId);
+
+    Task<bool> IsListingInUserFavoritesById(string listingId, string userId);
+
+    Task FavoriteListingByIdAsync(string listingId, string userId);
+
+    Task UnFavoriteListingByIdAsync(string listingId, string userId);
+
     Task<IEnumerable<AllListingViewModel>> GetAllDeactivatedListingsByUserIdAsync(string userId);
 
     Task<IEnumerable<IndexViewModel>> GetMostRecentListingsAsync();
