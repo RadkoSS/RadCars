@@ -15,7 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\RadCars.Services.Data\RadCars.Services.Data.csproj" />
     <ProjectReference Include="..\RadCars.Web.Infrastructure\RadCars.Web.Infrastructure.csproj" />
-    <ProjectReference Include="..\RadCars.Web.ViewModels\RadCars.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

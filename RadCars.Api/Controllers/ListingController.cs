@@ -18,6 +18,7 @@ public class ListingController : ControllerBase
 
     [HttpPost]
     [Route("favorites/exists")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
     public async Task<IActionResult> IsListingInFavorites([FromBody] ListingFavoritesInputModel data)
@@ -36,6 +37,7 @@ public class ListingController : ControllerBase
 
     [HttpPost]
     [Route("favorites/count")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
     public async Task<IActionResult> ListingFavoritesCount([FromBody] FavoritesCountInputModel data)
@@ -54,6 +56,7 @@ public class ListingController : ControllerBase
 
     [HttpPost]
     [Route("favorites/add")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
@@ -77,6 +80,7 @@ public class ListingController : ControllerBase
 
     [HttpPost]
     [Route("favorites/remove")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]

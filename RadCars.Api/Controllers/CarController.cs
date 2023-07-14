@@ -18,6 +18,7 @@ public class CarController : ControllerBase
 
     [HttpGet]
     [Route("models/{makeId}")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CarModelViewModel>))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
 

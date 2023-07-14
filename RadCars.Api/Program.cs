@@ -1,6 +1,7 @@
 using System.Reflection;
 
 using AutoMapper;
+using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 
 using RadCars.Data;
@@ -11,7 +12,6 @@ using RadCars.Web.ViewModels.Home;
 using RadCars.Services.Data.Contracts;
 using RadCars.Web.Infrastructure.Extensions;
 using RadCars.Data.Common.Contracts.Repositories;
-using CloudinaryDotNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
