@@ -22,6 +22,7 @@ public class ImageService : IImageService
     public ImageService(Cloudinary cloudinary, IDeletableEntityRepository<CarImage> carImagesRepository)
     {
         this.cloudinary = cloudinary;
+        this.cloudinary.Api.Secure = true;
         
         this.carImagesRepository = carImagesRepository;
     }

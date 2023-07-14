@@ -30,11 +30,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             favoriteButton.classList.add('btn-danger');
             heartIcon.classList.remove('far');
             heartIcon.classList.add('fas');
+            heartIcon.innerText = ' Премахни от Любими';
         } else {
             favoriteButton.classList.remove('btn-danger');
             favoriteButton.classList.add('btn-success');
             heartIcon.classList.remove('fas');
             heartIcon.classList.add('far');
+            heartIcon.innerText = ' Добави в Любими';
         }
 
         return result;

@@ -5,6 +5,8 @@
 
 @{
     ViewData["Title"] = $"Обява - {Model.CarMakeName} {Model.CarModelName}";
+
+    var createdOnDateString = Model.CreatedOn.ToLocalTime().ToString("f");
 }
 
 @if (SignInManager.IsSignedIn(User))
@@ -29,7 +31,7 @@
         }
         else
         {
-            <a id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
+            <a id="favoriteButton" class="btn" href="javascript:void(0)"><i id="heartIcon" class="far fa-heart"></i></a>
 
             <input name="__RequestVerificationToken" type="hidden" value="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
             <input type="hidden" id="listingId" value="@Model.Id"/>
@@ -43,7 +45,7 @@
     <div class="row mb-4">
         <div class="col-md-12">
             <h1 class="text-center">@Model.Title</h1>
-            <p class="text-muted text-center">Качена от @Model.CreatorUserName на @Model.CreatedOn</p>
+            <p class="text-muted text-center">Качена от @Model.CreatorUserName в @createdOnDateString</p>
             @if (Model.FavoritesCount == 1)
             {
                 <span id="favoritesCounter" class="small">Добавена @Model.FavoritesCount път в "Любими"</span>
