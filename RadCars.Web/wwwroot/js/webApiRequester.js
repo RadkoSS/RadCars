@@ -1,12 +1,16 @@
 ﻿const domain = 'https://localhost:7180';
 
-async function requester(method, endPoints, data) {
+async function requester(method, endPoints, data, token) {
     const options = {
         method,
         headers: {}
     }
 
     options.headers['Content-Type'] = 'application/json';
+
+    if (token) {
+        options.headers['X-CSRF-VERIFICATION-TOKEN'] = token;
+    }
 
     if (data) {
         options.body = JSON.stringify(data);
@@ -23,7 +27,12 @@ async function requester(method, endPoints, data) {
         if (request.status === 204) {
             return request;
         } else {
-            return await request.json();
+            const contentType = request.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                return await request.json();
+            } else {
+                return await request.text();
+            }
         }
 
     } catch (error) {

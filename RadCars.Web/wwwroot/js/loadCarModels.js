@@ -1,4 +1,4 @@
-﻿import { get } from './fetchApiRequester.js';
+﻿import { get } from './webApiRequester.js';
 
 const makeSelectList = document.getElementById('carMakes');
 const modelSelectList = document.getElementById('carModels');

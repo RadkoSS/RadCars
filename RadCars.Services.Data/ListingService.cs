@@ -77,7 +77,7 @@ public class ListingService : IListingService
         return listings;
     }
 
-    public async Task<IEnumerable<AllListingViewModel>> GetFavoriteListingsByUserId(string userId)
+    public async Task<IEnumerable<AllListingViewModel>> GetFavoriteListingsByUserIdAsync(string userId)
     {
         var favoriteListings = await this.userFavoriteListingsRepository.All()
             .Where(ufl => ufl.UserId.ToString() == userId)
@@ -110,7 +110,7 @@ public class ListingService : IListingService
         return favoriteListings;
     }
 
-    public async Task<bool> IsListingInUserFavoritesById(string listingId, string userId)
+    public async Task<bool> IsListingInUserFavoritesByIdAsync(string listingId, string userId)
     {
         var result = await this.userFavoriteListingsRepository.All().AnyAsync(ufl => ufl.ListingId.ToString() == listingId && ufl.UserId.ToString() == userId);
 
@@ -121,7 +121,7 @@ public class ListingService : IListingService
     {
         var listingToFavorite = await this.listingsRepository.All().FirstAsync(l => l.Id.ToString() == listingId && l.CreatorId.ToString() != userId);
 
-        if (await this.IsListingInUserFavoritesById(listingId, userId))
+        if (await this.IsListingInUserFavoritesByIdAsync(listingId, userId))
         {
             throw new InvalidOperationException(ListingIsAlreadyInCurrentUserFavorites);
         }
@@ -135,6 +135,14 @@ public class ListingService : IListingService
         await this.userFavoriteListingsRepository.AddAsync(userFavoriteListing);
 
         await this.userFavoriteListingsRepository.SaveChangesAsync();
+    }
+
+    public async Task<int> GetFavoritesCountForListingByIdAsync(string listingId)
+    {
+        var count = await this.userFavoriteListingsRepository.AllAsNoTracking()
+            .CountAsync(ufl => ufl.ListingId.ToString() == listingId);
+
+        return count;
     }
 
     public async Task UnFavoriteListingByIdAsync(string listingId, string userId)
@@ -248,6 +256,8 @@ public class ListingService : IListingService
         }
 
         var listing = this.mapper.Map<Listing>(form);
+
+        listing.Id = Guid.NewGuid();
         listing.CreatorId = Guid.Parse(userId);
 
         foreach (var id in form.SelectedFeatures)

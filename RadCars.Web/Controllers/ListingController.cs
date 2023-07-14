@@ -123,30 +123,13 @@ public class ListingController : BaseController
         {
             var userId = this.User.GetId()!;
 
-            var favoriteListings = await this.listingService.GetFavoriteListingsByUserId(userId);
+            var favoriteListings = await this.listingService.GetFavoriteListingsByUserIdAsync(userId);
 
             return View(favoriteListings);
         }
         catch (Exception)
         {
             return RedirectToAction("All", "Listing");
-        }
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Favorite(string listingId)
-    {
-        try
-        {
-            var userId = this.User.GetId()!;
-
-            await this.listingService.FavoriteListingByIdAsync(listingId, userId);
-
-            return RedirectToAction("Favorites", "Listing");
-        }
-        catch (Exception)
-        {
-            return RedirectToAction("Details", "Listing", new { listingId });
         }
     }
 
