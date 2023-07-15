@@ -339,14 +339,10 @@ public class ListingService : IListingService
         }
         await this.listingFeaturesRepository.SaveChangesAsync();
 
-        var carImagesToDelete =
-            await this.carImagesRepository.AllWithDeleted().Where(ci => ci.ListingId == listingToDelete.Id).ToArrayAsync();
+        var imageIds =
+            await this.carImagesRepository.AllWithDeleted().Where(ci => ci.ListingId == listingToDelete.Id).Select(ci => ci.Id.ToString()).ToArrayAsync();
 
-        foreach (var carImage in carImagesToDelete)
-        {
-            this.carImagesRepository.HardDelete(carImage);
-        }
-        await carImagesRepository.SaveChangesAsync();
+        await this.imageService.DeleteAllImagesAsync(listingId, imageIds);
 
         var userFavorites = await this.userFavoriteListingsRepository.AllWithDeleted()
             .Where(ufl => ufl.ListingId == listingToDelete.Id).ToArrayAsync();

@@ -33,4 +33,8 @@ public static class ExceptionsAndNotificationsMessages
 
     public const string ListingIsAlreadyInCurrentUserFavorites = "Обявата вече е била добавена в любимите Ви обяви!";
     public const string ListingIsNotInCurrentUserFavorites = "Обявата вече не присъства в любимите Ви обяви!";
+
+    public const string LogoutSuccessful = "Излязохте успешно от своя акаунт.";
+    public const string LoginSuccessful = "Влязохте успешно в своя акаунт.";
+    public const string RegistrationSuccessful = "Регистрирахте се успешно!";
 }

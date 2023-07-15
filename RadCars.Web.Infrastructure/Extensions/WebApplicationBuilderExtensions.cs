@@ -10,6 +10,7 @@ public static class WebApplicationBuilderExtensions
     /// This method registers all services with their interfaces and implementations of given assembly.
     /// The assembly is taken from the type of random service interface or implementation provided.
     /// </summary>
+    /// <param name="services"></param>
     /// <param name="serviceType"></param>
     /// <exception cref="InvalidOperationException"></exception>
     /// 

@@ -22,7 +22,6 @@ public class ImageService : IImageService
     public ImageService(Cloudinary cloudinary, IDeletableEntityRepository<CarImage> carImagesRepository)
     {
         this.cloudinary = cloudinary;
-        this.cloudinary.Api.Secure = true;
         
         this.carImagesRepository = carImagesRepository;
     }
@@ -39,12 +38,14 @@ public class ImageService : IImageService
             UniqueFilename = false
         };
 
-        var uploadResult = await cloudinary.UploadAsync(uploadParams);
+        var uploadResult = await this.cloudinary.UploadAsync(uploadParams);
+
+        var secureUrl = this.cloudinary.Api.UrlImgUp.Secure().BuildUrl($"{uploadResult.PublicId}.{uploadResult.Format}");
 
         var uploadedImage = new CarImage
         {
             Id = imageId,
-            Url = uploadResult.Url.ToString()
+            Url = secureUrl
         };
 
         return uploadedImage;
@@ -66,7 +67,7 @@ public class ImageService : IImageService
 
     public async Task DeleteImageAsync(string listingId, string imageId)
     {
-        var carImage = await this.carImagesRepository.All().FirstOrDefaultAsync(cp => cp.ListingId.ToString() == listingId && cp.Id.ToString() == imageId);
+        var carImage = await this.carImagesRepository.All().FirstOrDefaultAsync(ci => ci.ListingId.ToString() == listingId && ci.Id.ToString() == imageId);
 
         if (carImage == null)
         {
@@ -75,7 +76,7 @@ public class ImageService : IImageService
 
         var deletionParams = new DeletionParams($"{listingId}/{imageId}");
 
-        var deletionResult = await cloudinary.DestroyAsync(deletionParams);
+        var deletionResult = await this.cloudinary.DestroyAsync(deletionParams);
 
         if (deletionResult.Result != "ok")
         {
@@ -92,6 +93,8 @@ public class ImageService : IImageService
         {
             await this.DeleteImageAsync(listingId, imageId);
         }
+
+        await this.cloudinary.DeleteFolderAsync(listingId);
     }
 
     private static string GetUniqueFileName(string fileName, string imageId)

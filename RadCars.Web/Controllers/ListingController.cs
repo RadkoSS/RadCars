@@ -244,7 +244,7 @@ public class ListingController : BaseController
         {
             this.TempData[ErrorMessage] = AnErrorOccurred;
 
-            return RedirectToAction("Mine", "Listing");
+            return RedirectToAction("MineDeactivated", "Listing");
         }
     }
 
