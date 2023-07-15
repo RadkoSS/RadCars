@@ -11,7 +11,7 @@ using Contracts;
 using RadCars.Data.Models.Entities;
 using RadCars.Data.Common.Contracts.Repositories;
 
-using static Common.ExceptionsErrorMessages;
+using static Common.ExceptionsAndNotificationsMessages;
 
 public class ImageService : IImageService
 {

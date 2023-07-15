@@ -1,0 +1,26 @@
+﻿@using RadCars.Common
+﻿@using static RadCars.Common.NotificationTypeConstants;
+
+<script>
+    toastr.options.positionClass = 'toast-top-left';
+</script>
+
+@if (TempData.TryGetValue(NotificationTypeConstants.ErrorMessage, out var error))
+{
+    <script>toastr.error('@error');</script>
+}
+
+@if (TempData.TryGetValue(NotificationTypeConstants.WarningMessage, out var warning))
+{
+    <script>toastr.warning('@warning');</script>
+}
+
+@if (TempData.TryGetValue(NotificationTypeConstants.InformationMessage, out var info))
+{
+    <script>toastr.info('@info');</script>
+}
+
+@if (TempData.TryGetValue(NotificationTypeConstants.SuccessMessage, out var success))
+{
+    <script>toastr.success('@success');</script>
+}

@@ -18,7 +18,7 @@ using Web.ViewModels.CarEngineType;
 using Web.ViewModels.FeatureCategory;
 using RadCars.Data.Common.Contracts.Repositories;
 
-using static Common.ExceptionsErrorMessages;
+using static Common.ExceptionsAndNotificationsMessages;
 
 public class ListingService : IListingService
 {

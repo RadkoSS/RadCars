@@ -9,7 +9,8 @@ using ViewModels.Thumbnail;
 using Services.Data.Contracts;
 using Infrastructure.Extensions;
 
-using static Common.ExceptionsErrorMessages;
+using static Common.NotificationTypeConstants;
+using static Common.ExceptionsAndNotificationsMessages;
 using static Common.EntityValidationConstants.ListingConstants;
 
 public class ListingController : BaseController
@@ -51,6 +52,7 @@ public class ListingController : BaseController
             {
                 this.ViewData["MinYear"] = YearMinimumValue;
                 this.ModelState.AddModelError("Images", InvalidDataSubmitted);
+                this.TempData[ErrorMessage] = InvalidDataProvidedError;
 
                 form = await this.ReloadForm(form);
 
@@ -59,12 +61,15 @@ public class ListingController : BaseController
 
             var listingId = await this.listingService.CreateListingAsync(form, this.User.GetId()!);
 
+            this.TempData[SuccessMessage] = ListingCreatedSuccessfully;
+
             return RedirectToAction("ChooseThumbnail", "Listing", new { listingId });
         }
         catch (Exception)
         {
             this.ViewData["MinYear"] = YearMinimumValue;
             this.ModelState.AddModelError("Images", ErrorCreatingTheListing);
+            this.TempData[ErrorMessage] = AnErrorOccurred;
 
             form = await this.ReloadForm(form);
 
@@ -83,6 +88,8 @@ public class ListingController : BaseController
         }
         catch (Exception)
         {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
             return RedirectToAction("Index", "Home");
         }
     }
@@ -98,6 +105,8 @@ public class ListingController : BaseController
         }
         catch (Exception)
         {
+            //ToDo: Implement 404 error page!
+
             return RedirectToAction("All", "Listing");
         }
     }
@@ -114,6 +123,8 @@ public class ListingController : BaseController
         }
         catch (Exception)
         {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
             return RedirectToAction("All", "Listing");
         }
     }
@@ -130,6 +141,8 @@ public class ListingController : BaseController
         }
         catch (Exception)
         {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
             return RedirectToAction("All", "Listing");
         }
     }
@@ -143,14 +156,19 @@ public class ListingController : BaseController
 
             await this.listingService.UnFavoriteListingByIdAsync(listingId, userId);
 
+            this.TempData[WarningMessage] = ListingRemovedFromFavorites;
+
             return RedirectToAction("Favorites", "Listing");
         }
         catch (Exception)
         {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
             return RedirectToAction("All", "Listing");
         }
     }
 
+    [HttpGet]
     public async Task<IActionResult> MineDeactivated()
     {
         try
@@ -176,10 +194,14 @@ public class ListingController : BaseController
 
             await this.listingService.DeactivateListingByIdAsync(listingId, userId);
 
+            this.TempData[WarningMessage] = ListingDeactivated;
+
             return RedirectToAction("MineDeactivated", "Listing");
         }
         catch (Exception)
         {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
             return RedirectToAction("All", "Listing");
         }
     }
@@ -193,10 +215,14 @@ public class ListingController : BaseController
 
             await this.listingService.ReactivateListingByIdAsync(listingId, userId);
 
+            this.TempData[SuccessMessage] = ListingReDeactivated;
+
             return RedirectToAction("Mine", "Listing");
         }
         catch (Exception)
         {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
             return RedirectToAction("All", "Listing");
         }
     }
@@ -210,10 +236,14 @@ public class ListingController : BaseController
 
             await this.listingService.HardDeleteListingByIdAsync(listingId, userId);
 
+            this.TempData[SuccessMessage] = ListingPermanentlyDeleted;
+
             return RedirectToAction("MineDeactivated", "Listing");
         }
         catch (Exception)
         {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
             return RedirectToAction("Mine", "Listing");
         }
     }
@@ -225,11 +255,13 @@ public class ListingController : BaseController
         {
             await this.imageService.DeleteImageAsync(data.ListingId, data.ImageId);
 
-            return RedirectToAction("All", "Listing");
+            this.TempData[SuccessMessage] = ImageDeletedSuccessfully;
+
+            return Ok();
         }
-        catch
+        catch (Exception)
         {
-            return RedirectToAction("Index", "Home");
+            return NotFound();
         }
     }
 
@@ -239,11 +271,13 @@ public class ListingController : BaseController
         try
         {
             var viewModel = await this.listingService.GetChooseThumbnailAsync(listingId, this.User.GetId()!);
-
+            
             return View(viewModel);
         }
         catch (Exception)
         {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
             return RedirectToAction("Details", "Listing", new { listingId });
         }
     }
@@ -257,15 +291,21 @@ public class ListingController : BaseController
             {
                 var viewModel = await this.listingService.GetChooseThumbnailAsync(form.Id, this.User.GetId()!);
 
+                this.TempData[ErrorMessage] = InvalidDataProvidedError;
+
                 return View(viewModel);
             }
 
             await this.listingService.AddThumbnailToListingByIdAsync(form.Id, form.ThumbnailId, this.User.GetId()!);
 
+            this.TempData[SuccessMessage] = ThumbnailSelectedSuccessfully;
+
             return RedirectToAction("All", "Listing");
         }
         catch (Exception)
         {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
             return RedirectToAction("Details", "Listing", new { ListingId = form.Id });
         }
     }

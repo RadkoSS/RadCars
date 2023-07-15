@@ -8,8 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!favoriteButton) {
         return;
     }
-    toastr.options.positionClass = 'toast-top-left';
-    
+
     const userId = document.getElementById('userId').value;
     const listingId = document.getElementById('listingId').value;
 
@@ -57,7 +56,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             await favoriteListing(url);
 
-            toastr.success('Обявата бе добавена в любимите ви обяви.');
+            toastr.options.onclick = function () {
+                window.location.href = favoriteButton.href;
+            }
+
+            toastr.success('Обявата бе добавена в любими. Натиснете тук, за да видите всички любими.');
         }
 
         await updateFavoritesCounter();
