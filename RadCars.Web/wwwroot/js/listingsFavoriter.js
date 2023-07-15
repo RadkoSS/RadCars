@@ -8,10 +8,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!favoriteButton) {
         return;
     }
+    toastr.options.positionClass = 'toast-top-left';
     
     const userId = document.getElementById('userId').value;
     const listingId = document.getElementById('listingId').value;
-    const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
 
     const checkIfListingIsInUserFavoritesUrl = '/api/listing/favorites/exists';
     const checkListingsFavoriteCountUrl = '/api/listing/favorites/count';
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             {
                 userId,
                 listingId
-            }, token);
+            });
 
         if (result === true) {
             favoriteButton.classList.remove('btn-success');
@@ -52,8 +52,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (await updateButtonAndReturnListingIsInFavorites() === true) {
             url = unFavoriteListingUrl;
             await unFavoriteListing(url);
+
+            toastr.warning('Обявата бе премахната от любимите ви обяви.');
         } else {
             await favoriteListing(url);
+
+            toastr.success('Обявата бе добавена в любимите ви обяви.');
         }
 
         await updateFavoritesCounter();
@@ -64,7 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             {
                 userId,
                 listingId
-            }, token);
+            });
 
         await updateButtonAndReturnListingIsInFavorites();
     }
@@ -74,13 +78,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             {
                 userId,
                 listingId
-            }, token);
+            });
 
         await updateButtonAndReturnListingIsInFavorites();
     }
 
     async function updateFavoritesCounter() {
-        const count = await post(checkListingsFavoriteCountUrl, { listingId }, token);
+        const count = await post(checkListingsFavoriteCountUrl, { listingId });
 
         if (count === 1) {
             favoritesCounter.innerText = `Добавена ${count} път в "Любими"`;

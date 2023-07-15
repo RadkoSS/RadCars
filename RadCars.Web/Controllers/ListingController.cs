@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using ViewModels.Listing;
+using ViewModels.CarImage;
 using ViewModels.Thumbnail;
 using Services.Data.Contracts;
 using Infrastructure.Extensions;
@@ -218,13 +219,11 @@ public class ListingController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> DeletePicture(string id)
+    public async Task<IActionResult> DeleteImage([FromBody] ImageInputModel data)
     {
-        //ToDo: Find a way to also get the imageId from the formData!
-
         try
         {
-            await this.imageService.DeleteImageAsync(id, "");
+            await this.imageService.DeleteImageAsync(data.ListingId, data.ImageId);
 
             return RedirectToAction("All", "Listing");
         }

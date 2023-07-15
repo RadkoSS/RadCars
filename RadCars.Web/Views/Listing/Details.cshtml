@@ -1,7 +1,6 @@
 ﻿@model ListingDetailsViewModel
 
 @inject SignInManager<ApplicationUser> SignInManager
-@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 
 @{
     ViewData["Title"] = $"Обява - {Model.CarMakeName} {Model.CarModelName}";
@@ -32,8 +31,7 @@
         else
         {
             <a id="favoriteButton" class="btn" href="javascript:void(0)"><i id="heartIcon" class="far fa-heart"></i></a>
-
-            <input name="__RequestVerificationToken" type="hidden" value="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
+            
             <input type="hidden" id="listingId" value="@Model.Id"/>
             <input type="hidden" id="userId" value="@User.GetId()" />
         }
