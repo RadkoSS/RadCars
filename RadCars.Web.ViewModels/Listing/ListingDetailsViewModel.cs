@@ -19,9 +19,13 @@ public class ListingDetailsViewModel : AllListingViewModel, IHaveCustomMappings
 
     public DateTime CreatedOn { get; set; }
 
+    public DateTime? ModifiedOn { get; set; }
+
     public string CreatorUserName { get; set; } = null!;
 
     public string Description { get; set; } = null!;
+
+    public string VinNumber { get; set; } = null!;
 
     public int FavoritesCount { get; set; }
 
