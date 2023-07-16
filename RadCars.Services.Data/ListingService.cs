@@ -241,6 +241,16 @@ public class ListingService : IListingService
         return detailsViewModel;
     }
 
+    public async Task<ListingDetailsViewModel> GetDeactivatedListingDetailsAsync(string listingId, string userId)
+    {
+        var deactivatedListing = await this.listingsRepository.AllWithDeleted()
+            .Where(l => l.IsDeleted && l.CreatorId.ToString() == userId && l.Id.ToString() == listingId)
+            .To<ListingDetailsViewModel>()
+            .FirstAsync();
+
+        return deactivatedListing;
+    }
+
     public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId)
     {
         var chooseThumbnailViewModel =

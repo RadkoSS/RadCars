@@ -21,6 +21,8 @@ public class ListingDetailsViewModel : AllListingViewModel, IHaveCustomMappings
 
     public DateTime? ModifiedOn { get; set; }
 
+    public bool IsDeleted { get; set; }
+
     public string CreatorUserName { get; set; } = null!;
 
     public string Description { get; set; } = null!;

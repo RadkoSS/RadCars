@@ -5,13 +5,13 @@
 @{
     ViewData["Title"] = $"Обява - {Model.CarMakeName} {Model.CarModelName}";
 
-    string createdOnDateString = Model.CreatedOn.ToLocalTime().ToString("f");
+    string createdOnDateString = Model.CreatedOn.ToLocalTime().ToString("g");
     int featureIndex = 1;
 
     string modifiedOnDateString = string.Empty;
     if (Model.ModifiedOn != null && Model.ModifiedOn > Model.CreatedOn + TimeSpan.FromSeconds(10))
     {
-        modifiedOnDateString = Model.ModifiedOn.Value.ToLocalTime().ToString("f");
+        modifiedOnDateString = Model.ModifiedOn.Value.ToLocalTime().ToString("g");
     }
 }
 
@@ -21,13 +21,34 @@
 
         @if (string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase))
         {
-            <div class="row mt-3 me-2 justify-content-center">
-                <div class="col-12">
-                    <form asp-controller="Listing" asp-action="Deactivate" asp-route-listingId="@Model.Id">
-                        <input type="submit" value="Деактиварай обявата" class="btn btn-danger" />
-                    </form>
+            @if (Model.IsDeleted)
+            {
+                <div class="row mt-3 me-2 justify-content-center">
+                    <div class="col-12">
+                        <form asp-controller="Listing" asp-action="Reactivate" asp-route-listingId="@Model.Id" method="post">
+                            <input type="submit" value="Активарай обявата" class="btn btn-success" />
+                        </form>
+                    </div>
                 </div>
-            </div>
+
+                <div class="row mt-3 me-2 justify-content-center">
+                    <div class="col-12">
+                        <form asp-controller="Listing" asp-action="Delete" asp-route-listingId="@Model.Id" method="post">
+                            <input type="submit" value="Изтрий обявата" class="btn btn-danger" />
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row mt-3 me-2 justify-content-center">
+                    <div class="col-12">
+                        <form asp-controller="Listing" asp-action="Deactivate" asp-route-listingId="@Model.Id" method="post">
+                            <input id="deactivateButton" type="submit" value="Деактиварай обявата" class="btn btn-danger" />
+                        </form>
+                    </div>
+                </div>
+            }
 
             <div class="row mt-3 justify-content-center ml-2">
                 <div class="col-12">
@@ -50,7 +71,7 @@
     <div class="row mb-4">
         <div class="col-md-12">
             <h1 class="text-center">@Model.Title</h1>
-            <p class="text-muted text-center">Качена от @Model.CreatorUserName в @createdOnDateString @(!string.IsNullOrWhiteSpace(modifiedOnDateString) ? $". Последно обновена в {modifiedOnDateString}" : string.Empty)</p>
+            <p class="text-muted text-center">Качена от @Model.CreatorUserName на @createdOnDateString @(!string.IsNullOrWhiteSpace(modifiedOnDateString) ? $". Последно обновена на {modifiedOnDateString}" : string.Empty)</p>
             @if (Model.FavoritesCount == 1)
             {
                 <span id="favoritesCounter" class="small">Добавена @Model.FavoritesCount път в "Любими"</span>

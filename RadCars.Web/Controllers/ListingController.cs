@@ -109,6 +109,22 @@ public class ListingController : BaseController
         }
     }
 
+    public async Task<IActionResult> DeactivatedDetails(string listingId)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            var deactivatedListingModel = await this.listingService.GetDeactivatedListingDetailsAsync(listingId, userId);
+
+            return View("Details", deactivatedListingModel);
+        }
+        catch (Exception)
+        {
+            return NotFound();
+        }
+    }
+
     public async Task<IActionResult> Mine()
     {
         try

@@ -42,6 +42,8 @@ public interface IListingService
 
     Task<ListingDetailsViewModel> GetListingDetailsAsync(string listingId);
 
+    Task<ListingDetailsViewModel> GetDeactivatedListingDetailsAsync(string listingId, string userId);
+
     Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId);
 
     Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string userId);

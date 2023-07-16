@@ -50,9 +50,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (await updateButtonAndReturnListingIsInFavorites() === true) {
             url = unFavoriteListingUrl;
-            await unFavoriteListing(url);
 
-            toastr.warning('Обявата бе премахната от любимите ви обяви.');
+            const swalResult = await  Swal.fire({
+                title: 'Сигурни ли сте, че искате да премахнете обявата от любими?',
+                text: "Няма да бъдете известявани за промяна в цената!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: 'Отказ',
+                confirmButtonText: 'Да.'
+            });
+
+            if (swalResult.isConfirmed) {
+                await unFavoriteListing(url);
+
+                toastr.warning('Обявата бе премахната от любимите ви обяви.');
+            }
         } else {
             await favoriteListing(url);
 
