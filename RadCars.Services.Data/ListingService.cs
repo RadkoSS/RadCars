@@ -1,6 +1,7 @@
 ﻿// ReSharper disable IdentifierTypo
 namespace RadCars.Services.Data;
 
+using Ganss.Xss;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,8 @@ using static Common.ExceptionsAndNotificationsMessages;
 public class ListingService : IListingService
 {
     private readonly IMapper mapper;
+    private readonly IHtmlSanitizer htmlSanitizer;
+
     private readonly ICarService carService;
     private readonly IImageService imageService;
     
@@ -37,11 +40,12 @@ public class ListingService : IListingService
     private readonly IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepository;
 
     public ListingService(IImageService imageService, ICarService carService,
-        IDeletableEntityRepository<Listing> listingsRepository, IDeletableEntityRepository<CarMake> carMakesRepository, IDeletableEntityRepository<Category> categoriesRepository, IDeletableEntityRepository<City> citiesRepository, IDeletableEntityRepository<EngineType> engineTypesRepository, IDeletableEntityRepository<CarImage> carImagesRepository, IDeletableEntityRepository<Feature> featuresRepository, IMapper mapper, IDeletableEntityRepository<ListingFeature> listingFeaturesRepository, IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepository)
+        IDeletableEntityRepository<Listing> listingsRepository, IDeletableEntityRepository<CarMake> carMakesRepository, IDeletableEntityRepository<Category> categoriesRepository, IDeletableEntityRepository<City> citiesRepository, IDeletableEntityRepository<EngineType> engineTypesRepository, IDeletableEntityRepository<CarImage> carImagesRepository, IDeletableEntityRepository<Feature> featuresRepository, IMapper mapper, IDeletableEntityRepository<ListingFeature> listingFeaturesRepository, IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepository, IHtmlSanitizer htmlSanitizer)
     {
         this.mapper = mapper;
         this.carService = carService;
         this.imageService = imageService;
+        this.htmlSanitizer = htmlSanitizer;
         this.citiesRepository = citiesRepository;
         this.carMakesRepository = carMakesRepository;
         this.featuresRepository = featuresRepository;
@@ -255,6 +259,8 @@ public class ListingService : IListingService
             throw new InvalidDataException(InvalidDataProvidedError);
         }
 
+        form = this.SanitizeForm(form);
+
         var listing = this.mapper.Map<Listing>(form);
 
         listing.Id = Guid.NewGuid();
@@ -378,5 +384,15 @@ public class ListingService : IListingService
         }
 
         return engineTypeIdExists && carMakeIdExists && carModelIdExists && cityIdExists && featureIdsExist;
+    }
+
+    private ListingFormModel SanitizeForm(ListingFormModel form)
+    {
+        form.Title = this.htmlSanitizer.Sanitize(form.Title);
+        form.VinNumber = this.htmlSanitizer.Sanitize(form.VinNumber);
+        form.Description = this.htmlSanitizer.Sanitize(form.Description);
+        form.EngineModel = this.htmlSanitizer.Sanitize(form.EngineModel);
+
+        return form;
     }
 }

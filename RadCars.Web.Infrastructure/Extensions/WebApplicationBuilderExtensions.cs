@@ -4,6 +4,8 @@ using System.Reflection;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using Ganss.Xss;
+
 public static class WebApplicationBuilderExtensions
 {
     /// <summary>
@@ -40,5 +42,7 @@ public static class WebApplicationBuilderExtensions
 
             services.AddScoped(interfaceType, implementationType);
         }
+
+        services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();
     }
 }
