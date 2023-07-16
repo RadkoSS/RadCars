@@ -15,4 +15,6 @@ public class FeatureViewModel : IMapFrom<Feature>
     public bool IsSelected { get; set; }
 
     public string Name { get; set; } = null!;
+
+    public int CategoryId { get; set; }
 }

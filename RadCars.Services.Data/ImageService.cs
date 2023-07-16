@@ -45,6 +45,7 @@ public class ImageService : IImageService
         var uploadedImage = new CarImage
         {
             Id = imageId,
+            ListingId = Guid.Parse(listingId),
             Url = secureUrl
         };
 

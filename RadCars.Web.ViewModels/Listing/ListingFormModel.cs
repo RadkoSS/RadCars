@@ -9,6 +9,7 @@ using City;
 using CarMake;
 using CarModel;
 using CarEngineType;
+using CarImage;
 using FeatureCategory;
 using Data.Models.Entities;
 using Services.Mapping.Contracts;
@@ -24,6 +25,7 @@ public class ListingFormModel : IMapTo<Listing>, IMapFrom<Listing>, IHaveCustomM
         this.SelectedFeatures = new HashSet<int>();
         this.CarMakes = new HashSet<CarMakeViewModel>();
         this.CarModels = new HashSet<CarModelViewModel>();
+        this.UploadedImages = new HashSet<ImageViewModel>();
         this.EngineTypes = new HashSet<EngineTypeViewModel>();
         this.FeatureCategories = new HashSet<FeatureCategoriesViewModel>();
     }
@@ -100,14 +102,20 @@ public class ListingFormModel : IMapTo<Listing>, IMapFrom<Listing>, IHaveCustomM
     [Display(Name = "Снимки")]
     public IEnumerable<IFormFile> Images { get; set; }
 
+    public ICollection<ImageViewModel> UploadedImages { get; set; }
+
     public void CreateMappings(IProfileExpression configuration)
     {
         configuration
             .CreateMap<ListingFormModel, Listing>()
-            .ForMember(source => source.ListingFeatures, options => options.Ignore());
+            .ForMember(destination => destination.ListingFeatures, options => options.Ignore());
 
         configuration
             .CreateMap<ListingFormModel, Listing>()
-            .ForMember(source => source.Images, options => options.Ignore());
+            .ForMember(destination => destination.Images, options => options.Ignore());
+
+        configuration
+            .CreateMap<Listing, ListingFormModel>()
+            .ForMember(destination => destination.Images, options => options.Ignore());
     }
 }

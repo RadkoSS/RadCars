@@ -1,10 +1,10 @@
 ﻿@model ListingFormModel
 
 @{
-    ViewData["Title"] = "Създаване на обява";
+    ViewData["Title"] = "Редактиране на обява";
 }
 
-<h2 class="text-center mb-5">@ViewData["Title"]</h2>
+<h1 class="text-center">@ViewData["Title"]</h1>
 
 <div class="d-flex flex-column text-center justify-content-center align-items-center">
     <div id="carouselExampleControls" class="carousel slide w-50 visually-hidden" data-bs-ride="carousel">
@@ -22,15 +22,15 @@
     <button type="button" id="clearImages" class="btn btn-danger mt-3 visually-hidden">Изтрий снимките</button>
 </div>
 
-<form asp-controller="Listing" asp-action="Create" id="createListingForm" method="post" enctype="multipart/form-data">
+<form asp-controller="Listing" asp-action="Edit" id="createListingForm" method="post" enctype="multipart/form-data">
 
     <partial name="_ListingFormPartial" model="@Model" />
 
-    <button type="submit" class="btn btn-primary">Създай обява</button>
+    <button type="submit" class="btn btn-primary">Редактирай обява</button>
 </form>
 
 @section Scripts
-    {
+{
     <partial name="_ValidationScriptsPartial" />
 
     <script type="module" src="~/js/loadCarModels.js"></script>

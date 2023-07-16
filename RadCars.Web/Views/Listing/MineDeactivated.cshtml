@@ -44,6 +44,8 @@ else
                                     <input type="submit" class="btn btn-sm btn-outline-info text-black w-100" value="Разгледай обявата" />
                                 </form>
 
+                                <a asp-controller="Listing" asp-action="Edit" asp-route-listingId="@listing.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай обявата</a>
+
                                 <form asp-controller="Listing" asp-action="Reactivate" asp-route-listingId="@listing.Id" method="post">
                                     <input type="submit" class="btn btn-sm btn-outline-success text-black w-100 mt-2" value="Активирай отново обявата" />
                                 </form>

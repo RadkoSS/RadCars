@@ -40,6 +40,6 @@ public class ListingDetailsViewModel : AllListingViewModel, IHaveCustomMappings
     {
         configuration
             .CreateMap<Listing, ListingDetailsViewModel>()
-            .ForMember(source => source.ListingFeatures, options => options.Ignore());
+            .ForMember(destination => destination.ListingFeatures, options => options.Ignore());
     }
 }

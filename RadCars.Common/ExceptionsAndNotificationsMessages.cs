@@ -22,6 +22,8 @@ public static class ExceptionsAndNotificationsMessages
     public const string ListingReDeactivated =
         "Обявата отново беше активирана и вече е публична.";
 
+    public const string ListingWasUpdatedSuccessfully = "Обявата беше редактирана. Изберете снимка за обложка.";
+
     public const string ThumbnailSelectedSuccessfully = "Обложката беше избрана успешно.";
 
     public const string ImageDeletedSuccessfully = "Снимката беше изтрита успешно!";

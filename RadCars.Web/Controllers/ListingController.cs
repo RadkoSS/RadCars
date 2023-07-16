@@ -77,6 +77,59 @@ public class ListingController : BaseController
         }
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Edit(string listingId)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            var listingFormModel = await this.listingService.GetListingEditAsync(listingId, userId);
+
+            return View(listingFormModel);
+        }
+        catch (InvalidOperationException)
+        {
+            return Unauthorized();
+        }
+        catch (Exception)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(ListingFormModel form)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                this.TempData[ErrorMessage] = InvalidDataProvidedError;
+
+                form = await this.ReloadForm(form);
+
+                return View(form);
+            }
+
+            var userId = this.User.GetId()!;
+
+            var listingId = await this.listingService.EditListingAsync(form, userId);
+
+            this.TempData[SuccessMessage] = ListingWasUpdatedSuccessfully;
+
+            return RedirectToAction("ChooseThumbnail", "Listing", new { listingId });
+        }
+        catch (Exception)
+        {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
+            form = await this.ReloadForm(form);
+
+            return View(form);
+        }
+    }
+
     [AllowAnonymous]
     public async Task<IActionResult> All()
     {

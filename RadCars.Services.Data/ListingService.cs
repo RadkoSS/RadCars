@@ -20,6 +20,7 @@ using Web.ViewModels.FeatureCategory;
 using RadCars.Data.Common.Contracts.Repositories;
 
 using static Common.ExceptionsAndNotificationsMessages;
+using System.Reflection;
 
 public class ListingService : IListingService
 {
@@ -193,6 +194,114 @@ public class ListingService : IListingService
 
         return formModel;
     }
+    public async Task<ListingFormModel> GetListingEditAsync(string listingId, string userId)
+    {
+        var listingToEdit = await this.listingsRepository.AllWithDeleted()
+            .Where(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == userId)
+            .To<ListingFormModel>()
+            .FirstOrDefaultAsync();
+
+        if (listingToEdit == null)
+        {
+            throw new InvalidOperationException(ListingDoesNotExistError);
+        }
+
+        listingToEdit.UploadedImages = await this.carImagesRepository.AllWithDeleted()
+            .Where(ci => ci.ListingId.ToString() == listingId).To<ImageViewModel>().ToArrayAsync();
+        
+        listingToEdit.Cities = await GetCitiesAsync();
+        listingToEdit.CarMakes = await GetCarMakesAsync();
+        listingToEdit.CarModels = await this.carService.GetModelsByMakeIdAsync(listingToEdit.CarMakeId);
+        listingToEdit.EngineTypes = await GetEngineTypesAsync();
+        listingToEdit.FeatureCategories = await GetFeatureCategoriesAsync();
+
+        var selectedFeaturesWithCategories = await GetSelectedFeaturesByListingIdAsync(listingId);
+
+        foreach (var featuresWithCategory in listingToEdit.FeatureCategories)
+        {
+            foreach (var selectedFeaturesWithCategory in selectedFeaturesWithCategories)
+            {
+                foreach (var feature in featuresWithCategory.Features)
+                {
+                    foreach (var selectedFeature in selectedFeaturesWithCategory.Features)
+                    {
+                        if (feature.Id == selectedFeature.Id)
+                        {
+                            feature.IsSelected = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return listingToEdit;
+    }
+
+    public async Task<string> EditListingAsync(ListingFormModel form, string userId)
+    {
+        var listingToEdit = await this.listingsRepository.AllWithDeleted()
+            .Where(l => l.Id.ToString() == form.Id && l.CreatorId.ToString() == userId)
+            .FirstAsync();
+
+        if (form.Images.Any() == false || await this.ValidateForm(form) == false)
+        {
+            throw new ArgumentException(InvalidDataProvidedError);
+        }
+
+        form = this.SanitizeForm(form);
+
+        listingToEdit.Year = form.Year;
+        listingToEdit.Price = form.Price;
+        listingToEdit.Title = form.Title;
+        listingToEdit.CityId = form.CityId;
+        listingToEdit.Mileage = form.Mileage;
+        listingToEdit.CarMakeId = form.CarMakeId;
+        listingToEdit.VinNumber = form.VinNumber;
+        listingToEdit.CarModelId = form.CarModelId;
+        listingToEdit.EngineModel = form.EngineModel;
+        listingToEdit.Description = form.Description;
+        listingToEdit.EngineTypeId = form.EngineTypeId;
+
+        var newSelectedFeatures = new HashSet<ListingFeature>();
+
+        foreach (var id in form.SelectedFeatures)
+        {
+            newSelectedFeatures.Add(new ListingFeature
+            {
+                FeatureId = id,
+                ListingId = listingToEdit.Id
+            });
+        }
+
+        foreach (var listingFeature in listingToEdit.ListingFeatures)
+        {
+            this.listingFeaturesRepository.HardDelete(listingFeature);
+        }
+
+        await this.listingFeaturesRepository.SaveChangesAsync();
+
+        listingToEdit.ListingFeatures = newSelectedFeatures;
+
+        var uploadedImages = await this.imageService.UploadMultipleImagesAsync(listingToEdit.Id.ToString(), form.Images);
+
+        if (!uploadedImages.Any())
+        {
+            throw new ApplicationException(ImagesUploadUnsuccessful);
+        }
+
+        foreach (var image in uploadedImages)
+        {
+            await this.carImagesRepository.AddAsync(image);
+        }
+
+        await this.carImagesRepository.SaveChangesAsync();
+
+        this.listingsRepository.Update(listingToEdit);
+
+        await this.listingsRepository.SaveChangesAsync();
+
+        return listingToEdit.Id.ToString();
+    }
 
     public async Task<IEnumerable<CarMakeViewModel>> GetCarMakesAsync()
         => await this.carMakesRepository.AllAsNoTracking()
@@ -212,7 +321,14 @@ public class ListingService : IListingService
         var detailsViewModel = await this.listingsRepository.AllAsNoTracking()
             .Where(l => l.Id.ToString() == listingId).To<ListingDetailsViewModel>().FirstAsync();
 
-        var listingFeatures = await this.listingsRepository.All()
+        detailsViewModel.ListingFeatures = await this.GetSelectedFeaturesByListingIdAsync(listingId);
+
+        return detailsViewModel;
+    }
+
+    private async Task<ICollection<FeatureCategoriesViewModel>> GetSelectedFeaturesByListingIdAsync(string listingId)
+    {
+        var selectedFeatures = await this.listingsRepository.All()
             .Include(l => l.ListingFeatures)
             .ThenInclude(lf => lf.Feature)
             .ThenInclude(f => f.Category)
@@ -221,11 +337,13 @@ public class ListingService : IListingService
             .SelectMany(l => l.ListingFeatures)
             .ToArrayAsync();
 
-        foreach (var currentLf in listingFeatures.DistinctBy(lf => lf.Feature.CategoryId))
-        {
-            var featuresOfCategory = listingFeatures.Where(l => l.Feature.CategoryId == currentLf.Feature.CategoryId);
+        var listingFeatures = new HashSet<FeatureCategoriesViewModel>();
 
-            detailsViewModel.ListingFeatures.Add(new FeatureCategoriesViewModel
+        foreach (var currentLf in selectedFeatures.DistinctBy(lf => lf.Feature.CategoryId))
+        {
+            var featuresOfCategory = selectedFeatures.Where(l => l.Feature.CategoryId == currentLf.Feature.CategoryId);
+
+            listingFeatures.Add(new FeatureCategoriesViewModel
             {
                 Id = currentLf.Feature.CategoryId,
                 Name = currentLf.Feature.Category.Name,
@@ -238,7 +356,7 @@ public class ListingService : IListingService
             });
         }
 
-        return detailsViewModel;
+        return listingFeatures;
     }
 
     public async Task<ListingDetailsViewModel> GetDeactivatedListingDetailsAsync(string listingId, string userId)

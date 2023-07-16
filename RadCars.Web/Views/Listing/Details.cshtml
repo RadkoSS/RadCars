@@ -50,9 +50,15 @@
                 </div>
             }
 
+            <div class="row mt-3 me-2 justify-content-center">
+                <div class="col-12">
+                    <a asp-controller="Listing" asp-action="Edit" asp-route-listingId="@Model.Id" class="btn btn-outline-primary">Редактирай обявата</a>
+                </div>
+            </div>
+
             <div class="row mt-3 justify-content-center ml-2">
                 <div class="col-12">
-                    <a asp-controller="Listing" asp-action="ChooseThumbnail" asp-route-listingId="@Model.Id" class="btn btn-outline-secondary text-black">Смени снимката на обложката</a>
+                    <a asp-controller="Listing" asp-action="ChooseThumbnail" asp-route-listingId="@Model.Id" class="btn btn-outline-primary">Смени снимката на обложката</a>
                 </div>
             </div>
         }
@@ -70,7 +76,7 @@
 
     <div class="row mb-4">
         <div class="col-md-12">
-            <h1 class="text-center">@Model.Title</h1>
+            <h1 class="text-center mb-4 mt-4">@Model.Title</h1>
             <p class="text-muted text-center">Качена от @Model.CreatorUserName на @createdOnDateString @(!string.IsNullOrWhiteSpace(modifiedOnDateString) ? $". Последно обновена на {modifiedOnDateString}" : string.Empty)</p>
             @if (Model.FavoritesCount == 1)
             {
@@ -99,10 +105,10 @@
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-body">
-                    <button id="prevBtn" class="btn btn-primary mb-4">Предишна</button>
-                    <img id="modalImage" src="" class="img-fluid" />
-                    <button id="nextBtn" class="btn btn-primary mt-4">Следваща</button>
+                <div class="modal-body d-flex flex-column align-items-center">
+                    <button id="prevBtn" class="btn btn-primary mb-4 w-25">Предишна</button>
+                    <img id="modalImage" src="" class="img-fluid m-auto" />
+                    <button id="nextBtn" class="btn btn-primary mt-4 w-25">Следваща</button>
                 </div>
             </div>
         </div>

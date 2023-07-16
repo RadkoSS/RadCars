@@ -30,6 +30,10 @@ public interface IListingService
 
     Task<string> CreateListingAsync(ListingFormModel form, string userId);
 
+    Task<ListingFormModel> GetListingEditAsync(string listingId, string userId);
+
+    Task<string> EditListingAsync(ListingFormModel form, string userId);
+
     Task<IEnumerable<CarMakeViewModel>> GetCarMakesAsync();
 
     Task<IEnumerable<FeatureCategoriesViewModel>> GetFeatureCategoriesAsync();
