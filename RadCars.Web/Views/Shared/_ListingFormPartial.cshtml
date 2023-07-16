@@ -5,7 +5,6 @@
 }
 
 <div class="form-group my-3">
-    <input type="hidden" asp-for="@Model.Id" />
     <label asp-for="@Model.Images" class="mb-1">Снимки</label>
     <input asp-for="@Model.Images" type="file" name="Images" id="images" class="form-control" multiple>
     <span asp-validation-for="@Model.Images" class="small text-danger"></span>
@@ -38,7 +37,14 @@
 
 <div class="form-group my-3">
     <label asp-for="@Model.Year" class="mb-1"></label>
-    <input asp-for="@Model.Year" type="number" placeholder="Година на производство" value="@currentYear" min="@ViewData["MinYear"]" max="@currentYear" id="year" class="form-control" required>
+    @if (Model.Year != currentYear)
+    {
+        <input asp-for="@Model.Year" type="number" placeholder="Година на производство" value="@Model.Year" min="@ViewData["MinYear"]" max="@currentYear" id="year" class="form-control" required>
+    }
+    else
+    {
+        <input asp-for="@Model.Year" type="number" placeholder="Година на производство" value="@currentYear" min="@ViewData["MinYear"]" max="@currentYear" id="year" class="form-control" required>
+    }
     <span asp-validation-for="@Model.Year" class="small text-danger"></span>
 </div>
 

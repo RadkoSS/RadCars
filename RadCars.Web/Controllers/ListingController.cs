@@ -99,7 +99,7 @@ public class ListingController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(ListingFormModel form)
+    public async Task<IActionResult> Edit(ListingEditFormModel form)
     {
         try
         {
@@ -107,7 +107,7 @@ public class ListingController : BaseController
             {
                 this.TempData[ErrorMessage] = InvalidDataProvidedError;
 
-                form = await this.ReloadForm(form);
+                form = await this.ReloadForm(form) as ListingEditFormModel;
 
                 return View(form);
             }
@@ -124,7 +124,7 @@ public class ListingController : BaseController
         {
             this.TempData[ErrorMessage] = AnErrorOccurred;
 
-            form = await this.ReloadForm(form);
+            form = await this.ReloadForm(form) as ListingEditFormModel;
 
             return View(form);
         }

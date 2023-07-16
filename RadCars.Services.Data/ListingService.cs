@@ -20,7 +20,6 @@ using Web.ViewModels.FeatureCategory;
 using RadCars.Data.Common.Contracts.Repositories;
 
 using static Common.ExceptionsAndNotificationsMessages;
-using System.Reflection;
 
 public class ListingService : IListingService
 {
@@ -194,11 +193,11 @@ public class ListingService : IListingService
 
         return formModel;
     }
-    public async Task<ListingFormModel> GetListingEditAsync(string listingId, string userId)
+    public async Task<ListingEditFormModel> GetListingEditAsync(string listingId, string userId)
     {
         var listingToEdit = await this.listingsRepository.AllWithDeleted()
             .Where(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == userId)
-            .To<ListingFormModel>()
+            .To<ListingEditFormModel>()
             .FirstOrDefaultAsync();
 
         if (listingToEdit == null)
@@ -237,7 +236,7 @@ public class ListingService : IListingService
         return listingToEdit;
     }
 
-    public async Task<string> EditListingAsync(ListingFormModel form, string userId)
+    public async Task<string> EditListingAsync(ListingEditFormModel form, string userId)
     {
         var listingToEdit = await this.listingsRepository.AllWithDeleted()
             .Where(l => l.Id.ToString() == form.Id && l.CreatorId.ToString() == userId)
@@ -248,7 +247,7 @@ public class ListingService : IListingService
             throw new ArgumentException(InvalidDataProvidedError);
         }
 
-        form = this.SanitizeForm(form);
+        form = this.SanitizeForm(form) as ListingEditFormModel;
 
         listingToEdit.Year = form.Year;
         listingToEdit.Price = form.Price;
