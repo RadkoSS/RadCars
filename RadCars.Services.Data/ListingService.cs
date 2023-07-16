@@ -163,7 +163,7 @@ public class ListingService : IListingService
         var deactivatedListings = await this.listingsRepository
             .AllAsNoTrackingWithDeleted()
             .Where(l => l.CreatorId.ToString() == userId && l.IsDeleted)
-            .OrderByDescending(l => l.CreatedOn)
+            .OrderByDescending(l => l.ModifiedOn)
             .To<AllListingViewModel>()
             .ToArrayAsync();
 

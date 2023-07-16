@@ -105,9 +105,7 @@ public class ListingController : BaseController
         }
         catch (Exception)
         {
-            //ToDo: Implement 404 error page!
-
-            return RedirectToAction("All", "Listing");
+            return NotFound();
         }
     }
 

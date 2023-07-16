@@ -30,7 +30,7 @@ builder.Services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeleta
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
-//Register all Data services
+//Register all services
 builder.Services.AddApplicationServices(typeof(IListingService));
 
 //Register mappings

@@ -54,7 +54,7 @@ builder.Services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeleta
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
-//Register all Data services
+//Register all services
 builder.Services.AddApplicationServices(typeof(IListingService));
 
 //Register mappings
@@ -82,7 +82,9 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Home/Error/500");
+    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+
     app.UseHsts();
 }
 
