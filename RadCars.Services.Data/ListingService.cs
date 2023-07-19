@@ -3,6 +3,7 @@ namespace RadCars.Services.Data;
 
 using Ganss.Xss;
 using AutoMapper;
+using Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 using Mapping;
@@ -19,6 +20,7 @@ using Web.ViewModels.CarEngineType;
 using Web.ViewModels.FeatureCategory;
 using RadCars.Data.Common.Contracts.Repositories;
 
+using static Common.GeneralApplicationConstants;
 using static Common.ExceptionsAndNotificationsMessages;
 
 public class ListingService : IListingService
@@ -205,8 +207,7 @@ public class ListingService : IListingService
             throw new InvalidOperationException(ListingDoesNotExistError);
         }
 
-        listingToEdit.UploadedImages = await this.carImagesRepository.AllWithDeleted()
-            .Where(ci => ci.ListingId.ToString() == listingId).To<ImageViewModel>().ToArrayAsync();
+        listingToEdit.UploadedImages = await this.GetUploadedImagesForListingByIdAsync(listingId, userId);
         
         listingToEdit.Cities = await GetCitiesAsync();
         listingToEdit.CarMakes = await GetCarMakesAsync();
@@ -242,12 +243,59 @@ public class ListingService : IListingService
             .Where(l => l.Id.ToString() == form.Id && l.CreatorId.ToString() == userId)
             .FirstAsync();
 
-        if (form.Images.Any() == false || await this.ValidateForm(form) == false)
+        if (form.Images.Any() == false && form.DeletedImages.Count() >= listingToEdit.Images.Count)
         {
-            throw new ArgumentException(InvalidDataProvidedError);
+            throw new InvalidDataException(InvalidDataProvidedError);
         }
 
-        form = this.SanitizeForm(form) as ListingEditFormModel;
+        if (listingToEdit.Images.Count - form.DeletedImages.Count() + form.Images.Count() <= 0)
+        {
+            throw new InvalidDataException(InvalidDataProvidedError);
+        }
+
+        if (this.ValidateUploadedImages(form) == false)
+        {
+            throw new InvalidImagesException(ListingUploadedImagesAreInvalid);
+        }
+
+        if (await this.ValidateForm(form) == false)
+        {
+            throw new InvalidDataException(InvalidDataProvidedError);
+        }
+
+        if (form.Images.Any())
+        {
+            var uploadedImages = await this.imageService.UploadMultipleImagesAsync(listingToEdit.Id.ToString(), form.Images);
+
+            if (!uploadedImages.Any())
+            {
+                throw new InvalidDataException(ImagesUploadUnsuccessful);
+            }
+
+            foreach (var image in uploadedImages)
+            {
+                await this.carImagesRepository.AddAsync(image);
+            }
+
+            await this.carImagesRepository.SaveChangesAsync();
+        }
+
+        foreach (var deletedImgId in form.DeletedImages)
+        {
+            if (listingToEdit.Images.Any(img => img.Id.ToString() == deletedImgId && img.ListingId.ToString() == form.Id.ToLower() && img.Listing.CreatorId.ToString() == userId) == false)
+            {
+                throw new InvalidDataException(InvalidDataProvidedError);
+            }
+
+            if (listingToEdit.ThumbnailId.ToString() == deletedImgId)
+            {
+                listingToEdit.ThumbnailId = null;
+            }
+
+            await this.imageService.DeleteImageAsync(form.Id, deletedImgId);
+        }
+
+        form = (this.SanitizeForm(form) as ListingEditFormModel)!;
 
         listingToEdit.Year = form.Year;
         listingToEdit.Price = form.Price;
@@ -281,23 +329,12 @@ public class ListingService : IListingService
 
         listingToEdit.ListingFeatures = newSelectedFeatures;
 
-        var uploadedImages = await this.imageService.UploadMultipleImagesAsync(listingToEdit.Id.ToString(), form.Images);
-
-        if (!uploadedImages.Any())
-        {
-            throw new ApplicationException(ImagesUploadUnsuccessful);
-        }
-
-        foreach (var image in uploadedImages)
-        {
-            await this.carImagesRepository.AddAsync(image);
-        }
-
-        await this.carImagesRepository.SaveChangesAsync();
+        var firstImageId = listingToEdit.Images.First().Id.ToString();
 
         this.listingsRepository.Update(listingToEdit);
-
         await this.listingsRepository.SaveChangesAsync();
+
+        await this.AddThumbnailToListingByIdAsync(listingToEdit.Id.ToString(), firstImageId, userId);
 
         return listingToEdit.Id.ToString();
     }
@@ -314,6 +351,14 @@ public class ListingService : IListingService
 
     public async Task<IEnumerable<EngineTypeViewModel>> GetEngineTypesAsync()
         => await this.engineTypesRepository.AllAsNoTracking().To<EngineTypeViewModel>().ToArrayAsync();
+
+    public async Task<IEnumerable<ImageViewModel>> GetUploadedImagesForListingByIdAsync(string listingId, string userId)
+    => await this.carImagesRepository.AllWithDeleted()
+        .Where(ci => ci.ListingId.ToString() == listingId && ci.Listing.CreatorId.ToString() == userId).To<ImageViewModel>().ToArrayAsync();
+
+    public async Task<int> GetUploadedImagesCountForListingByIdAsync(string listingId)
+        => await this.carImagesRepository.AllWithDeleted()
+            .Where(ci => ci.ListingId.ToString() == listingId).CountAsync();
 
     public async Task<ListingDetailsViewModel> GetListingDetailsAsync(string listingId)
     {
@@ -386,6 +431,11 @@ public class ListingService : IListingService
             throw new InvalidDataException(InvalidDataProvidedError);
         }
 
+        if (this.ValidateUploadedImages(form) == false)
+        {
+            throw new InvalidImagesException(ListingUploadedImagesAreInvalid);
+        }
+
         form = this.SanitizeForm(form);
 
         var listing = this.mapper.Map<Listing>(form);
@@ -406,7 +456,7 @@ public class ListingService : IListingService
 
         if (!uploadedImages.Any())
         {
-            throw new ApplicationException(ImagesUploadUnsuccessful);
+            throw new InvalidDataException(ImagesUploadUnsuccessful);
         }
 
         listing.Images = uploadedImages;
@@ -415,11 +465,9 @@ public class ListingService : IListingService
 
         await this.listingsRepository.SaveChangesAsync();
 
-        var firstImageThumbnail = listing.Images.First();
+        var firstImageId = listing.Images.First().Id.ToString();
 
-        listing.ThumbnailId = firstImageThumbnail.Id;
-
-        await this.listingsRepository.SaveChangesAsync();
+        await this.AddThumbnailToListingByIdAsync(listing.Id.ToString(), firstImageId, userId);
 
         return listing.Id.ToString();
     }
@@ -427,7 +475,7 @@ public class ListingService : IListingService
     public async Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string userId)
     {
         var imageAndListingExist = await this.carImagesRepository
-            .All()
+            .AllWithDeleted()
             .AnyAsync(ci => ci.Id.ToString() == imageId && ci.ListingId.ToString() == listingId && ci.Listing.CreatorId.ToString() == userId);
 
         if (!imageAndListingExist)
@@ -435,7 +483,7 @@ public class ListingService : IListingService
             throw new InvalidOperationException(InvalidImageForThumbnailProvided);
         }
 
-        var listing = await this.listingsRepository.All().FirstAsync(l => l.Id.ToString() == listingId);
+        var listing = await this.listingsRepository.AllWithDeleted().FirstAsync(l => l.Id.ToString() == listingId);
 
         listing.ThumbnailId = Guid.Parse(imageId);
 
@@ -521,5 +569,23 @@ public class ListingService : IListingService
         form.EngineModel = this.htmlSanitizer.Sanitize(form.EngineModel);
 
         return form;
+    }
+
+    private bool ValidateUploadedImages(ListingFormModel form)
+    {
+        foreach (var image in form.Images)
+        {
+            if (image.Length > ImageMaximumSizeInBytes)
+            {
+                return false;
+            }
+
+            if (!image.ContentType.StartsWith("image/"))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

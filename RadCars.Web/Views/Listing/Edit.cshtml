@@ -6,6 +6,18 @@
 
 <h1 class="text-center mt-3 mb-3">@ViewData["Title"]</h1>
 
+<div class="image-grid">
+    @foreach (var image in Model.UploadedImages)
+    {
+        <div class="image-container">
+            <img src="@image.Url" alt="Image">
+            <button class="delete-button" id="@image.Id">
+                <i class="fa fa-trash w-100 h-100"></i>
+            </button>
+        </div>
+    }
+</div>
+
 <div class="d-flex flex-column text-center justify-content-center align-items-center">
     <div id="carouselExampleControls" class="carousel slide w-50 visually-hidden" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -24,17 +36,18 @@
 
 <form asp-controller="Listing" asp-action="Edit" id="createListingForm" method="post" enctype="multipart/form-data">
 
-    <input type="hidden" asp-for="@Model.Id" />
+    <input type="hidden" asp-for="@Model.Id" id="listingId"/>
 
     <partial name="_ListingFormPartial" model="@Model" />
-    
+
     <button type="submit" class="btn btn-primary">Редактирай обява</button>
 </form>
 
 @section Scripts
-{
+    {
     <partial name="_ValidationScriptsPartial" />
 
     <script type="module" src="~/js/loadCarModels.js"></script>
+    <script type="module" src="~/js/editListingImages.js"></script>
     <script type="text/javascript" src="~/js/previewUploadedImages.js"></script>
 }

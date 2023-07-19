@@ -1,5 +1,6 @@
 ﻿namespace RadCars.Web.Controllers;
 
+using Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
@@ -65,14 +66,30 @@ public class ListingController : BaseController
 
             return RedirectToAction("ChooseThumbnail", "Listing", new { listingId });
         }
+        catch (InvalidImagesException e)
+        {
+            this.ViewData["MinYear"] = YearMinimumValue;
+
+            form = await this.ReloadForm(form);
+            this.TempData[ErrorMessage] = InvalidDataProvidedError;
+            this.ModelState.AddModelError(nameof(form.Images), e.Message);
+            return View(form);
+        }
+        catch (InvalidDataException e)
+        {
+            this.ViewData["MinYear"] = YearMinimumValue;
+
+            form = await this.ReloadForm(form);
+            this.TempData[ErrorMessage] = InvalidDataProvidedError;
+            this.ModelState.AddModelError(nameof(form.Images), e.Message);
+            return View(form);
+        }
         catch (Exception)
         {
             this.ViewData["MinYear"] = YearMinimumValue;
-            this.ModelState.AddModelError("Images", ErrorCreatingTheListing);
-            this.TempData[ErrorMessage] = AnErrorOccurred;
 
             form = await this.ReloadForm(form);
-
+            this.TempData[ErrorMessage] = ErrorCreatingTheListing;
             return View(form);
         }
     }
@@ -101,18 +118,18 @@ public class ListingController : BaseController
     [HttpPost]
     public async Task<IActionResult> Edit(ListingEditFormModel form)
     {
+        var userId = this.User.GetId()!;
+
         try
         {
             if (!ModelState.IsValid)
             {
                 this.TempData[ErrorMessage] = InvalidDataProvidedError;
 
-                form = await this.ReloadForm(form) as ListingEditFormModel;
+                form = await this.ReloadEditForm(form, userId);
 
                 return View(form);
             }
-
-            var userId = this.User.GetId()!;
 
             var listingId = await this.listingService.EditListingAsync(form, userId);
 
@@ -120,12 +137,24 @@ public class ListingController : BaseController
 
             return RedirectToAction("ChooseThumbnail", "Listing", new { listingId });
         }
+        catch(InvalidImagesException e)
+        {
+            form = await this.ReloadEditForm(form, userId);
+            this.TempData[ErrorMessage] = InvalidDataProvidedError;
+            ModelState.AddModelError(nameof(form.Images), e.Message);
+            return View(form);
+        }
+        catch (InvalidDataException e)
+        {
+            form = await this.ReloadEditForm(form, userId);
+            this.TempData[ErrorMessage] = InvalidDataProvidedError;
+            ModelState.AddModelError(nameof(form.Images), e.Message);
+            return View(form);
+        }
         catch (Exception)
         {
-            this.TempData[ErrorMessage] = AnErrorOccurred;
-
-            form = await this.ReloadForm(form) as ListingEditFormModel;
-
+            form = await this.ReloadEditForm(form, userId);
+            this.TempData[ErrorMessage] = ErrorCreatingTheListing;
             return View(form);
         }
     }
@@ -338,7 +367,7 @@ public class ListingController : BaseController
         try
         {
             var viewModel = await this.listingService.GetChooseThumbnailAsync(listingId, this.User.GetId()!);
-            
+
             return View(viewModel);
         }
         catch (Exception)
@@ -397,5 +426,14 @@ public class ListingController : BaseController
         }
 
         return form;
+    }
+
+    private async Task<ListingEditFormModel> ReloadEditForm(ListingEditFormModel editForm, string userId)
+    {
+        editForm = (await this.ReloadForm(editForm) as ListingEditFormModel)!;
+
+        editForm.UploadedImages = await this.listingService.GetUploadedImagesForListingByIdAsync(editForm.Id, userId);
+
+        return editForm;
     }
 }

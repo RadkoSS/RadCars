@@ -4,6 +4,7 @@ using Web.ViewModels.City;
 using Web.ViewModels.Home;
 using Web.ViewModels.CarMake;
 using Web.ViewModels.Listing;
+using Web.ViewModels.CarImage;
 using Web.ViewModels.Thumbnail;
 using Web.ViewModels.CarEngineType;
 using Web.ViewModels.FeatureCategory;
@@ -43,6 +44,10 @@ public interface IListingService
     Task<IEnumerable<EngineTypeViewModel>> GetEngineTypesAsync();
 
     Task<ListingFormModel> GetListingCreateAsync();
+
+    Task<IEnumerable<ImageViewModel>> GetUploadedImagesForListingByIdAsync(string listingId, string userId);
+
+    Task<int> GetUploadedImagesCountForListingByIdAsync(string listingId);
 
     Task<ListingDetailsViewModel> GetListingDetailsAsync(string listingId);
 

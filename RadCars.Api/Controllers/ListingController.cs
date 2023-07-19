@@ -55,6 +55,25 @@ public class ListingController : ControllerBase
     }
 
     [HttpPost]
+    [Route("uploadedImages/count")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+    [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+    public async Task<IActionResult> ListingUploadedImagesCount([FromBody] string listingId)
+    {
+        try
+        {
+            var result = await this.listingService.GetUploadedImagesCountForListingByIdAsync(listingId);
+
+            return Ok(result);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status503ServiceUnavailable);
+        }
+    }
+
+    [HttpPost]
     [Route("favorites/add")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]

@@ -23,6 +23,7 @@ public static class ExceptionsAndNotificationsMessages
         "Обявата отново беше активирана и вече е публична.";
 
     public const string ListingWasUpdatedSuccessfully = "Обявата беше редактирана. Изберете снимка за обложка.";
+    public const string ListingUploadedImagesAreInvalid = "Можете да качвате само снимки с размер до 10 MB!";
 
     public const string ThumbnailSelectedSuccessfully = "Обложката беше избрана успешно.";
 
