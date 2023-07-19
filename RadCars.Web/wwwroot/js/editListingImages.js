@@ -1,6 +1,7 @@
 ﻿import { post } from './webApiRequester.js';
 
 const form = document.getElementById('createListingForm');
+const undoButton = document.getElementById('undo-btn');
 const imagesInput = document.getElementById('images');
 imagesInput.setAttribute('data-val', 'false');
 const listingId = document.getElementById('listingId').value;
@@ -50,4 +51,23 @@ document.querySelectorAll('.delete-button').forEach(button => {
             }
         }
     });
+});
+
+undoButton.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    const swalResult = await Swal.fire({
+        title: 'Сигурни ли сте, че искате да върнете промените?',
+        text: "Всичките промени ще бъдат премахнати.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Не'
+    });
+
+    if (swalResult.isConfirmed) {
+        window.location.replace(e.target.href);
+    }
 });

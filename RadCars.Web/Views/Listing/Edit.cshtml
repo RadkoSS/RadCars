@@ -6,6 +6,8 @@
 
 <h1 class="text-center mt-3 mb-3">@ViewData["Title"]</h1>
 
+<a asp-controller="Listing" asp-action="Edit" asp-route-listingId="@Model.Id" id="undo-btn" class="btn btn-sm btn-outline-danger text-black mt-4 mb-2">Върни промените</a>
+
 <div class="image-grid mb-2">
     @foreach (var image in Model.UploadedImages)
     {
