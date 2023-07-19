@@ -6,8 +6,8 @@
 
 <h2 class="text-center mb-5">@ViewData["Title"]</h2>
 
-<div class="d-flex flex-column text-center justify-content-center align-items-center">
-    <div id="carouselExampleControls" class="carousel slide w-50 visually-hidden" data-bs-ride="carousel">
+<div id="carouselContainer" class="d-flex flex-column text-center justify-content-center align-items-center visually-hidden">
+    <div class="carousel slide w-50" data-bs-ride="carousel">
         <div class="carousel-inner">
             <!--Images are loaded dynamically with JS-->
         </div>
@@ -19,7 +19,7 @@
         </button>
     </div>
 
-    <button type="button" id="clearImages" class="btn btn-danger mt-3 visually-hidden">Изтрий снимките</button>
+    <button type="button" id="clearImages" class="btn btn-danger mt-3 visually-hidden">Изтрий качените снимки</button>
 </div>
 
 <form asp-controller="Listing" asp-action="Create" id="createListingForm" method="post" enctype="multipart/form-data">

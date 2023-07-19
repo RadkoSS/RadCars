@@ -1,10 +1,10 @@
 ﻿const input = document.getElementById('images');
 const removeImagesBtn = document.getElementById('clearImages');
-const carouselContainer = document.querySelector('.carousel-inner');
-const carouselWrap = document.getElementById('carouselExampleControls');
+const carousel = document.querySelector('.carousel-inner');
+const carouselWrap = document.getElementById('carouselContainer');
 
 input.addEventListener('change', () => {
-    carouselContainer.innerHTML = '';
+    carousel.innerHTML = '';
 
     try {
         for (let i = 0; i < input.files.length; i++) {
@@ -38,20 +38,20 @@ input.addEventListener('change', () => {
             }
 
             carouselItem.appendChild(img);
-            carouselContainer.appendChild(carouselItem);
+            carousel.appendChild(carouselItem);
         }
 
         carouselWrap.classList.remove('visually-hidden');
         removeImagesBtn.classList.remove('visually-hidden');
     } catch (e) {
         input.value = '';
-        carouselContainer.innerHTML = '';
+        carousel.innerHTML = '';
     }
 });
 
 removeImagesBtn.addEventListener('click', () => {
     input.value = '';
-    carouselContainer.innerHTML = '';
+    carousel.innerHTML = '';
     carouselWrap.classList.add('visually-hidden');
     removeImagesBtn.classList.add('visually-hidden');
 });
