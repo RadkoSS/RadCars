@@ -160,13 +160,25 @@ public class ListingController : BaseController
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> All()
+    public async Task<IActionResult> All([FromQuery] AllListingsQueryModel queryModel)
     {
         try
         {
-            var listings = await this.listingService.GetAllListingsAsync();
+            var serviceModel = await this.listingService.GetAllListingsAsync(queryModel);
 
-            return View(listings);
+            queryModel.Listings = serviceModel.Listings;
+            queryModel.TotalListings = serviceModel.TotalListingsCount;
+            queryModel.CarMakes = await this.listingService.GetCarMakesAsync();
+
+            if (queryModel.CarModelId.HasValue && queryModel.CarMakeId.HasValue)
+            {
+                queryModel.CarModels = await this.carService.GetModelsByMakeIdAsync(queryModel.CarMakeId.Value);
+            }
+
+            queryModel.Cities = await this.listingService.GetCitiesAsync();
+            queryModel.EngineTypes = await this.listingService.GetEngineTypesAsync();
+
+            return View(queryModel);
         }
         catch (Exception)
         {

@@ -1,5 +1,6 @@
 ﻿namespace RadCars.Services.Data.Contracts;
 
+using Models.Listing;
 using Web.ViewModels.City;
 using Web.ViewModels.Home;
 using Web.ViewModels.CarMake;
@@ -11,7 +12,7 @@ using Web.ViewModels.FeatureCategory;
 
 public interface IListingService
 {
-    Task<IEnumerable<AllListingViewModel>> GetAllListingsAsync();
+    Task<AllListingsFilteredAndPagedServiceModel> GetAllListingsAsync(AllListingsQueryModel queryModel);
 
     Task<IEnumerable<AllListingViewModel>> GetAllListingsByUserIdAsync(string userId);
 

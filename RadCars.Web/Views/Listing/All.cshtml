@@ -1,18 +1,144 @@
-﻿@model IEnumerable<AllListingViewModel>
+﻿@model AllListingsQueryModel
 
 @{
-    ViewData["Title"] = "Всички обяви";
+    ViewData["Title"] = "Обяви";
 }
 
-@if (!Model.Any())
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label asp-for="@Model.SearchString"></label>
+            <input asp-for="@Model.SearchString" class="form-control" placeholder="Търсене...">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="@Model.CarMakeId"></label>
+            <select asp-for="@Model.CarMakeId" id="carMakes" class="form-control">
+                <option>Всички</option>
+                @foreach (var carMake in Model.CarMakes)
+                {
+                    <option value="@carMake.Id">@carMake.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="@Model.CarModelId"></label>
+            <select asp-for="@Model.CarModelId" id="carModels" class="form-control">
+                <option>Всички</option>
+                @foreach (var carModel in Model.CarModels)
+                {
+                    <option value="@carModel.Id">@carModel.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="@Model.EngineTypeId"></label>
+            <select asp-for="@Model.EngineTypeId" class="form-control">
+                <option>Всички</option>
+                @foreach (var engineType in Model.EngineTypes)
+                {
+                    <option value="@engineType.Id">@engineType.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="@Model.CityId"></label>
+            <select asp-for="@Model.CityId" class="form-control">
+                <option>Всички</option>
+                @foreach (var city in Model.Cities)
+                {
+                    <option value="@city.Id">@city.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="@Model.ListingsPerPage"></label>
+            <select asp-for="@Model.ListingsPerPage" class="form-control">
+                <option value="3">3</option>
+                <option value="6">6</option>
+                <option value="9">9</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="@Model.ListingSorting"></label>
+            <select asp-for="@Model.ListingSorting" class="form-control">
+                <option value="0">Най-нови обяви</option>
+                <option value="1">Най-стари обяви</option>
+                <option value="2">Цена възходящ ред</option>
+                <option value="3">Цена низходящ ред</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Търсене" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@{
+    int previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    int maxPage = (int)Math.Ceiling((double)Model.TotalListings /
+        Model.ListingsPerPage);
+}
+
+<div class="row mb-5">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="Listing"
+           asp-action="All"
+           asp-route-currentPage="@previousPage"
+           asp-route-carMake="@Model.CarMakeId"
+           asp-route-carModel="@Model.CarModelId"
+           asp-route-city="@Model.CityId"
+           asp-route-engineType="@Model.EngineTypeId"
+           asp-route-searchTerm="@Model.SearchString"
+           asp-route-sorting="@((int)Model.ListingSorting)"><<</a>
+    </div>
+
+    @{
+        bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage ||
+                                        !Model.Listings.Any();
+    }
+
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary 
+           @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
+           asp-controller="Listing"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-carMake="@Model.CarMakeId"
+           asp-route-carModel="@Model.CarModelId"
+           asp-route-city="@Model.CityId"
+           asp-route-engineType="@Model.EngineTypeId"
+           asp-route-searchTerm="@Model.SearchString"
+           asp-route-sorting="@((int)Model.ListingSorting)">>></a>
+    </div>
+</div>
+
+@if (!Model.Listings.Any())
 {
     <div class="d-flex flex-column align-items-center">
-        <h1 class="mb-4">@ViewData["Title"]</h1>
-        <p>Все още няма обяви... Бъдете първият създател на обява в RadCars!</p>
-        <a class="btn btn-success" asp-controller="Listing" asp-action="Create">Създай обява</a>
+        <p class="text-center fs-2">Няма намерени обяви.</p>
     </div>
 }
 else
 {
-    <partial name="_AllListingsPartial" model="@Model"></partial>
+    <partial name="_AllListingsPartial" model="@Model.Listings"></partial>
+}
+
+@section Scripts
+{
+    <script type="module" src="~/js/loadCarModels.js"></script>
 }

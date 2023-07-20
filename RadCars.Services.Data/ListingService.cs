@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Mapping;
 using Contracts;
+using Models.Listing;
 using Web.ViewModels.City;
 using Web.ViewModels.Home;
 using Web.ViewModels.CarMake;
@@ -19,7 +20,7 @@ using RadCars.Data.Models.Entities;
 using Web.ViewModels.CarEngineType;
 using Web.ViewModels.FeatureCategory;
 using RadCars.Data.Common.Contracts.Repositories;
-
+using Web.ViewModels.Listing.Enums;
 using static Common.GeneralApplicationConstants;
 using static Common.ExceptionsAndNotificationsMessages;
 
@@ -59,16 +60,67 @@ public class ListingService : IListingService
         this.userFavoriteListingsRepository = userFavoriteListingsRepository;
     }
 
-    public async Task<IEnumerable<AllListingViewModel>> GetAllListingsAsync()
+    public async Task<AllListingsFilteredAndPagedServiceModel> GetAllListingsAsync(AllListingsQueryModel queryModel)
     {
-        var listings = await this.listingsRepository
-            .AllAsNoTracking()
-            .Where(l => l.ThumbnailId != null)
-            .OrderByDescending(l => l.CreatedOn)
+        //ToDo: Implement elastic search!!
+        var listingsQuery = this.listingsRepository.All().AsQueryable().Where(l => l.ThumbnailId != null);
+
+        if (queryModel.CarMakeId.HasValue)
+        {
+            listingsQuery = listingsQuery.Where(l => l.CarMakeId == queryModel.CarMakeId.Value);
+        }
+
+        if (queryModel.CarModelId.HasValue)
+        {
+            listingsQuery = listingsQuery.Where(l => l.CarModelId == queryModel.CarModelId.Value);
+        }
+
+        if (queryModel.CityId.HasValue)
+        {
+            listingsQuery = listingsQuery.Where(l => l.CityId == queryModel.CityId.Value);
+        }
+
+        if (queryModel.EngineTypeId.HasValue)
+        {
+            listingsQuery = listingsQuery.Where(l => l.EngineTypeId == queryModel.EngineTypeId.Value);
+        }
+
+        if (string.IsNullOrWhiteSpace(queryModel.SearchString) == false)
+        {
+            var wildCard = $"%{queryModel.SearchString.ToLower()}%";
+
+            listingsQuery = listingsQuery.Where(l => EF.Functions.Like(l.Title, wildCard) || EF.Functions.Like(l.Description, wildCard) || EF.Functions.Like(l.EngineModel, wildCard));
+        }
+
+        listingsQuery = queryModel.ListingSorting switch
+        {
+            ListingSorting.Newest => listingsQuery
+                .OrderByDescending(h => h.CreatedOn),
+            ListingSorting.Oldest => listingsQuery
+                .OrderBy(h => h.CreatedOn),
+            ListingSorting.PriceAscending => listingsQuery
+                .OrderBy(h => h.Price),
+            ListingSorting.PriceDescending => listingsQuery
+                .OrderByDescending(h => h.Price),
+            _ => listingsQuery
+                .OrderByDescending(h => h.CreatedOn)
+        };
+
+        var listings = await listingsQuery
+            .Skip((queryModel.CurrentPage - 1) * queryModel.ListingsPerPage)
+            .Take(queryModel.ListingsPerPage)
             .To<AllListingViewModel>()
             .ToArrayAsync();
+
+        var count = listingsQuery.Count();
+
+        var listingsQueryModel = new AllListingsFilteredAndPagedServiceModel
+        {
+            TotalListingsCount = count,
+            Listings = listings
+        };
         
-        return listings;
+        return listingsQueryModel;
     }
 
     public async Task<IEnumerable<AllListingViewModel>> GetAllListingsByUserIdAsync(string userId)
@@ -96,8 +148,6 @@ public class ListingService : IListingService
                     {
                         Id = ufl.Listing.City.Id,
                         Name = ufl.Listing.City.Name,
-                        Latitude = ufl.Listing.City.Latitude,
-                        Longitude = ufl.Listing.City.Longitude
                     },
                     Thumbnail = new ImageViewModel
                     {
