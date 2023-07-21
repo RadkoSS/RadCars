@@ -3,12 +3,12 @@ namespace RadCars.Services.Data;
 
 using Ganss.Xss;
 using AutoMapper;
-using Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 using Mapping;
 using Contracts;
 using Models.Listing;
+using Common.Exceptions;
 using Web.ViewModels.City;
 using Web.ViewModels.Home;
 using Web.ViewModels.CarMake;
@@ -16,11 +16,12 @@ using Web.ViewModels.Feature;
 using Web.ViewModels.Listing;
 using Web.ViewModels.CarImage;
 using Web.ViewModels.Thumbnail;
+using Web.ViewModels.Listing.Enums;
 using RadCars.Data.Models.Entities;
 using Web.ViewModels.CarEngineType;
 using Web.ViewModels.FeatureCategory;
 using RadCars.Data.Common.Contracts.Repositories;
-using Web.ViewModels.Listing.Enums;
+
 using static Common.GeneralApplicationConstants;
 using static Common.ExceptionsAndNotificationsMessages;
 
@@ -62,7 +63,6 @@ public class ListingService : IListingService
 
     public async Task<AllListingsFilteredAndPagedServiceModel> GetAllListingsAsync(AllListingsQueryModel queryModel)
     {
-        //ToDo: Implement elastic search!!
         var listingsQuery = this.listingsRepository.All().AsQueryable().Where(l => l.ThumbnailId != null);
 
         if (queryModel.CarMakeId.HasValue)
@@ -78,6 +78,16 @@ public class ListingService : IListingService
         if (queryModel.CityId.HasValue)
         {
             listingsQuery = listingsQuery.Where(l => l.CityId == queryModel.CityId.Value);
+        }
+
+        if (queryModel.MaximumMileage > 0)
+        {
+            listingsQuery = listingsQuery.Where(l => l.Mileage <= queryModel.MaximumMileage);
+        }
+
+        if (queryModel.MaximumPrice > 0)
+        {
+            listingsQuery = listingsQuery.Where(l => l.Price <= queryModel.MaximumPrice);
         }
 
         if (queryModel.EngineTypeId.HasValue)

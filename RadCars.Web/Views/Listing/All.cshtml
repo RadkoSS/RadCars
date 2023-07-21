@@ -2,78 +2,128 @@
 
 @{
     ViewData["Title"] = "Обяви";
+
+    var previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    var maxPage = (int) Math.Ceiling((double) Model.TotalListings / Model.ListingsPerPage);
+
+    var shouldNextPageBeDisabled = Model.CurrentPage == maxPage || !Model.Listings.Any();
 }
 
 <form method="get">
     <div class="row">
-        <div class="form-group col-md-6">
-            <label asp-for="@Model.SearchString"></label>
-            <input asp-for="@Model.SearchString" class="form-control" placeholder="Търсене...">
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label asp-for="@Model.SearchString" class="form-label"></label>
+                <input asp-for="@Model.SearchString" class="form-control" placeholder="Търсене...">
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.CarMakeId" class="form-label"></label>
+                <select asp-for="@Model.CarMakeId" id="carMakes" class="form-control">
+                    <option>Всички</option>
+                    @foreach (var carMake in Model.CarMakes)
+                    {
+                        <option value="@carMake.Id">@carMake.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.CarModelId" class="form-label"></label>
+                <select asp-for="@Model.CarModelId" id="carModels" class="form-control">
+                    <option>Всички</option>
+                    @foreach (var carModel in Model.CarModels)
+                    {
+                        <option value="@carModel.Id">@carModel.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="@Model.EngineTypeId" class="form-label"></label>
+                <select asp-for="@Model.EngineTypeId" class="form-control">
+                    <option>Всички</option>
+                    @foreach (var engineType in Model.EngineTypes)
+                    {
+                        <option value="@engineType.Id">@engineType.Name</option>
+                    }
+                </select>
+            </div>
         </div>
 
-        <div class="form-group col-md-6">
-            <label asp-for="@Model.CarMakeId"></label>
-            <select asp-for="@Model.CarMakeId" id="carMakes" class="form-control">
-                <option>Всички</option>
-                @foreach (var carMake in Model.CarMakes)
-                {
-                    <option value="@carMake.Id">@carMake.Name</option>
-                }
-            </select>
-        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label asp-for="@Model.CityId" class="form-label"></label>
+                <select asp-for="@Model.CityId" class="form-control">
+                    <option>Всички</option>
+                    @foreach (var city in Model.Cities)
+                    {
+                        <option value="@city.Id">@city.Name</option>
+                    }
+                </select>
+            </div>
 
-        <div class="form-group col-md-6">
-            <label asp-for="@Model.CarModelId"></label>
-            <select asp-for="@Model.CarModelId" id="carModels" class="form-control">
-                <option>Всички</option>
-                @foreach (var carModel in Model.CarModels)
-                {
-                    <option value="@carModel.Id">@carModel.Name</option>
-                }
-            </select>
-        </div>
+            <div class="form-group mb-3">
+                <label asp-for="@Model.ListingsPerPage" class="form-label"></label>
+                <select asp-for="@Model.ListingsPerPage" class="form-control">
+                    <option value="3">3</option>
+                    <option value="6">6</option>
+                    <option value="9">9</option>
+                </select>
+            </div>
 
-        <div class="form-group col-md-6">
-            <label asp-for="@Model.EngineTypeId"></label>
-            <select asp-for="@Model.EngineTypeId" class="form-control">
-                <option>Всички</option>
-                @foreach (var engineType in Model.EngineTypes)
-                {
-                    <option value="@engineType.Id">@engineType.Name</option>
-                }
-            </select>
-        </div>
+            <div class="form-group mb-3">
+                <label asp-for="@Model.ListingSorting" class="form-label"></label>
+                <select asp-for="@Model.ListingSorting" class="form-control">
+                    <option value="0">Най-нови обяви</option>
+                    <option value="1">Най-стари обяви</option>
+                    <option value="2">Цена възходящ ред</option>
+                    <option value="3">Цена низходящ ред</option>
+                </select>
+            </div>
 
-        <div class="form-group col-md-6">
-            <label asp-for="@Model.CityId"></label>
-            <select asp-for="@Model.CityId" class="form-control">
-                <option>Всички</option>
-                @foreach (var city in Model.Cities)
-                {
-                    <option value="@city.Id">@city.Name</option>
-                }
-            </select>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="@Model.MaximumPrice" class="form-label"></label>
+                        <div class="d-flex align-items-center">
+                            @if (Model.MaximumPrice > 0)
+                            {
+                                <input asp-for="@Model.MaximumPrice" type="range" id="priceRange" min="0" max="100000" step="250" value="@Model.MaximumPrice" class="me-2">
+                            }
+                            else
+                            {
+                                <input asp-for="@Model.MaximumPrice" type="range" id="priceRange" min="0" max="100000" step="250" value="0" class="me-2">
+                            }
+                            <span id="priceRangeValue"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="@Model.MaximumMileage" class="form-label"></label>
+                        <div class="d-flex align-items-center">
+                            @if (Model.MaximumMileage > 0)
+                            {
+                                <input asp-for="@Model.MaximumMileage" type="range" id="mileageRange" min="0" max="500000" step="1000" value="@Model.MaximumMileage" class="me-2">
+                            }
+                            else
+                            {
+                                <input asp-for="@Model.MaximumMileage" type="range" id="mileageRange" min="0" max="500000" step="1000" value="0" class="me-2">
+                            }
+                            <span id="mileageRangeValue"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="form-group col-md-6">
-            <label asp-for="@Model.ListingsPerPage"></label>
-            <select asp-for="@Model.ListingsPerPage" class="form-control">
-                <option value="3">3</option>
-                <option value="6">6</option>
-                <option value="9">9</option>
-            </select>
-        </div>
-
-        <div class="form-group col-md-6">
-            <label asp-for="@Model.ListingSorting"></label>
-            <select asp-for="@Model.ListingSorting" class="form-control">
-                <option value="0">Най-нови обяви</option>
-                <option value="1">Най-стари обяви</option>
-                <option value="2">Цена възходящ ред</option>
-                <option value="3">Цена низходящ ред</option>
-            </select>
-        </div>
-
+    </div>
+    <div class="row mb-4">
         <div class="col-md-6">
             <div class="form-group mt-4 p-2">
                 <input type="submit" value="Търсене" class="btn btn-primary" />
@@ -82,50 +132,6 @@
     </div>
 </form>
 
-@{
-    int previousPage = Model.CurrentPage - 1;
-    if (previousPage < 1)
-    {
-        previousPage = 1;
-    }
-
-    int maxPage = (int)Math.Ceiling((double)Model.TotalListings /
-        Model.ListingsPerPage);
-}
-
-<div class="row mb-5">
-    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
-        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
-           asp-controller="Listing"
-           asp-action="All"
-           asp-route-currentPage="@previousPage"
-           asp-route-carMake="@Model.CarMakeId"
-           asp-route-carModel="@Model.CarModelId"
-           asp-route-city="@Model.CityId"
-           asp-route-engineType="@Model.EngineTypeId"
-           asp-route-searchTerm="@Model.SearchString"
-           asp-route-sorting="@((int)Model.ListingSorting)"><<</a>
-    </div>
-
-    @{
-        bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage ||
-                                        !Model.Listings.Any();
-    }
-
-    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-        <a class="btn btn-primary 
-           @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
-           asp-controller="Listing"
-           asp-action="All"
-           asp-route-currentPage="@(Model.CurrentPage + 1)"
-           asp-route-carMake="@Model.CarMakeId"
-           asp-route-carModel="@Model.CarModelId"
-           asp-route-city="@Model.CityId"
-           asp-route-engineType="@Model.EngineTypeId"
-           asp-route-searchTerm="@Model.SearchString"
-           asp-route-sorting="@((int)Model.ListingSorting)">>></a>
-    </div>
-</div>
 
 @if (!Model.Listings.Any())
 {
@@ -138,7 +144,60 @@ else
     <partial name="_AllListingsPartial" model="@Model.Listings"></partial>
 }
 
+<div class="row mb-5">
+    <div class="col-md-12 d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : string.Empty)">
+                    <a class="page-link"
+                       asp-controller="Listing"
+                       asp-action="All"
+                       asp-route-currentPage="@previousPage"
+                       asp-route-carMake="@Model.CarMakeId"
+                       asp-route-carModel="@Model.CarModelId"
+                       asp-route-city="@Model.CityId"
+                       asp-route-engineType="@Model.EngineTypeId"
+                       asp-route-searchTerm="@Model.SearchString"
+                       asp-route-sorting="@((int)Model.ListingSorting)"
+                       asp-route-listingsPerPage="@Model.ListingsPerPage">Предишна страница</a>
+                </li>
+                @for (var i = 1; i <= maxPage; i++)
+                {
+                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                        <a class="page-link"
+                           asp-controller="Listing"
+                           asp-action="All"
+                           asp-route-currentPage="@i"
+                           asp-route-carMake="@Model.CarMakeId"
+                           asp-route-carModel="@Model.CarModelId"
+                           asp-route-city="@Model.CityId"
+                           asp-route-engineType="@Model.EngineTypeId"
+                           asp-route-searchTerm="@Model.SearchString"
+                           asp-route-sorting="@((int)Model.ListingSorting)"
+                           asp-route-listingsPerPage="@Model.ListingsPerPage">@i</a>
+                    </li>
+                }
+                <li class="page-item @(shouldNextPageBeDisabled ? "disabled" : string.Empty)">
+                    <a class="page-link"
+                       asp-controller="Listing"
+                       asp-action="All"
+                       asp-route-currentPage="@(Model.CurrentPage + 1)"
+                       asp-route-carMake="@Model.CarMakeId"
+                       asp-route-carModel="@Model.CarModelId"
+                       asp-route-city="@Model.CityId"
+                       asp-route-engineType="@Model.EngineTypeId"
+                       asp-route-searchTerm="@Model.SearchString"
+                       asp-route-sorting="@((int)Model.ListingSorting)"
+                       asp-route-listingsPerPage="@Model.ListingsPerPage">Следваща страница</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
 @section Scripts
 {
     <script type="module" src="~/js/loadCarModels.js"></script>
+    <script type="text/javascript" src="~/js/rangeSliders.js"></script>
 }

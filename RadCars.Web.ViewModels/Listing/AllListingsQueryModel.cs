@@ -23,7 +23,7 @@ public class AllListingsQueryModel
         this.EngineTypes = new HashSet<EngineTypeViewModel>();
     }
 
-    [Display(Name = "Търсене")]
+    [Display(Name = "Търсене по заглавие и описание:")]
     public string? SearchString { get; set; }
 
     [Display(Name = "Сортиране:")]
@@ -47,6 +47,12 @@ public class AllListingsQueryModel
 
     [Display(Name = "Вид двигател:")]
     public int? EngineTypeId { get; set; }
+
+    [Display(Name = "Максимален пробег:")]
+    public int MaximumMileage { get; set; }
+
+    [Display(Name = "Диапазон на цената:")]
+    public int MaximumPrice { get; set; }
 
     public IEnumerable<CityViewModel> Cities { get; set; }
 
