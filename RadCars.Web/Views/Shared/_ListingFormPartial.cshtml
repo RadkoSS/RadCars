@@ -37,7 +37,7 @@
 
 <div class="form-group my-3">
     <label asp-for="@Model.Year" class="mb-1"></label>
-    @if (Model.Year != currentYear)
+    @if (Model.Year > 0)
     {
         <input asp-for="@Model.Year" type="number" placeholder="Година на производство" value="@Model.Year" min="@ViewData["MinYear"]" max="@currentYear" id="year" class="form-control" required>
     }
