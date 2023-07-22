@@ -14,9 +14,9 @@ public interface IListingService
 {
     Task<AllListingsFilteredAndPagedServiceModel> GetAllListingsAsync(AllListingsQueryModel queryModel);
 
-    Task<IEnumerable<AllListingViewModel>> GetAllListingsByUserIdAsync(string userId);
+    Task<IEnumerable<AllListingsViewModel>> GetAllListingsByUserIdAsync(string userId);
 
-    Task<IEnumerable<AllListingViewModel>> GetFavoriteListingsByUserIdAsync(string userId);
+    Task<IEnumerable<AllListingsViewModel>> GetFavoriteListingsByUserIdAsync(string userId);
 
     Task<bool> IsListingInUserFavoritesByIdAsync(string listingId, string userId);
 
@@ -26,7 +26,7 @@ public interface IListingService
 
     Task UnFavoriteListingByIdAsync(string listingId, string userId);
 
-    Task<IEnumerable<AllListingViewModel>> GetAllDeactivatedListingsByUserIdAsync(string userId);
+    Task<IEnumerable<AllListingsViewModel>> GetAllDeactivatedListingsByUserIdAsync(string userId);
 
     Task<IEnumerable<IndexViewModel>> GetMostRecentListingsAsync();
 

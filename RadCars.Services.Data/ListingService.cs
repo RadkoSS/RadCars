@@ -119,7 +119,7 @@ public class ListingService : IListingService
         var listings = await listingsQuery
             .Skip((queryModel.CurrentPage - 1) * queryModel.ListingsPerPage)
             .Take(queryModel.ListingsPerPage)
-            .To<AllListingViewModel>()
+            .To<AllListingsViewModel>()
             .ToArrayAsync();
 
         var count = listingsQuery.Count();
@@ -133,45 +133,23 @@ public class ListingService : IListingService
         return listingsQueryModel;
     }
 
-    public async Task<IEnumerable<AllListingViewModel>> GetAllListingsByUserIdAsync(string userId)
+    public async Task<IEnumerable<AllListingsViewModel>> GetAllListingsByUserIdAsync(string userId)
     {
         var listings = await this.listingsRepository
             .AllAsNoTracking()
             .Where(l => l.CreatorId.ToString() == userId)
             .OrderByDescending(l => l.CreatedOn)
-            .To<AllListingViewModel>()
+            .To<AllListingsViewModel>()
             .ToArrayAsync();
 
         return listings;
     }
 
-    public async Task<IEnumerable<AllListingViewModel>> GetFavoriteListingsByUserIdAsync(string userId)
+    public async Task<IEnumerable<AllListingsViewModel>> GetFavoriteListingsByUserIdAsync(string userId)
     {
         var favoriteListings = await this.userFavoriteListingsRepository.All()
             .Where(ufl => ufl.UserId.ToString() == userId)
-            .Select(ufl => new AllListingViewModel
-                {
-                    Id = ufl.ListingId.ToString(),
-                    CarMakeName = ufl.Listing.CarMake.Name,
-                    CarModelName = ufl.Listing.CarModel.Name,
-                    City = new CityViewModel
-                    {
-                        Id = ufl.Listing.City.Id,
-                        Name = ufl.Listing.City.Name,
-                    },
-                    Thumbnail = new ImageViewModel
-                    {
-                        Id = ufl.Listing.ThumbnailId.ToString()!,
-                        Url = ufl.Listing.Thumbnail!.Url
-                    },
-                    CreatorId = userId,
-                    EngineModel = ufl.Listing.EngineModel,
-                    Mileage = ufl.Listing.Mileage,
-                    Title = ufl.Listing.Title,
-                    Price = ufl.Listing.Price,
-                    Year = ufl.Listing.Year
-                }
-            ).ToArrayAsync();
+            .To<AllListingsViewModel>().ToArrayAsync();
 
         return favoriteListings;
     }
@@ -220,13 +198,13 @@ public class ListingService : IListingService
         await this.userFavoriteListingsRepository.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<AllListingViewModel>> GetAllDeactivatedListingsByUserIdAsync(string userId)
+    public async Task<IEnumerable<AllListingsViewModel>> GetAllDeactivatedListingsByUserIdAsync(string userId)
     {
         var deactivatedListings = await this.listingsRepository
             .AllAsNoTrackingWithDeleted()
             .Where(l => l.CreatorId.ToString() == userId && l.IsDeleted)
             .OrderByDescending(l => l.ModifiedOn)
-            .To<AllListingViewModel>()
+            .To<AllListingsViewModel>()
             .ToArrayAsync();
 
         return deactivatedListings;

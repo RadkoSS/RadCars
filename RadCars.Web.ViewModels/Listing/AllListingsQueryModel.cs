@@ -19,7 +19,7 @@ public class AllListingsQueryModel
         this.Cities = new HashSet<CityViewModel>();
         this.CarMakes = new HashSet<CarMakeViewModel>();
         this.CarModels = new HashSet<CarModelViewModel>();
-        this.Listings = new HashSet<AllListingViewModel>();
+        this.Listings = new HashSet<AllListingsViewModel>();
         this.EngineTypes = new HashSet<EngineTypeViewModel>();
     }
 
@@ -62,5 +62,5 @@ public class AllListingsQueryModel
 
     public IEnumerable<EngineTypeViewModel> EngineTypes { get; set; }
 
-    public IEnumerable<AllListingViewModel> Listings { get; set; }
+    public IEnumerable<AllListingsViewModel> Listings { get; set; }
 }

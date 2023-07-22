@@ -7,9 +7,8 @@ using AutoMapper;
 using CarImage;
 using FeatureCategory;
 using Data.Models.Entities;
-using Services.Mapping.Contracts;
 
-public class ListingDetailsViewModel : AllListingViewModel, IHaveCustomMappings
+public class ListingDetailsViewModel : AllListingsViewModel
 {
     public ListingDetailsViewModel()
     {
@@ -36,7 +35,7 @@ public class ListingDetailsViewModel : AllListingViewModel, IHaveCustomMappings
 
     public ICollection<ImageViewModel> Images { get; set; }
 
-    public void CreateMappings(IProfileExpression configuration)
+    public override void CreateMappings(IProfileExpression configuration)
     {
         configuration
             .CreateMap<Listing, ListingDetailsViewModel>()

@@ -6,10 +6,10 @@ public class AllListingsFilteredAndPagedServiceModel
 {
     public AllListingsFilteredAndPagedServiceModel()
     {
-        this.Listings = new HashSet<AllListingViewModel>();
+        this.Listings = new HashSet<AllListingsViewModel>();
     }
 
     public int TotalListingsCount { get; set; }
 
-    public IEnumerable<AllListingViewModel> Listings { get; set; }
+    public IEnumerable<AllListingsViewModel> Listings { get; set; }
 }

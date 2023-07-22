@@ -89,7 +89,7 @@ public class ListingFormModel : IMapTo<Listing>, IMapFrom<Listing>, IHaveCustomM
     public int CarModelId { get; set; }
 
     public IEnumerable<CarModelViewModel> CarModels { get; set; }
-    
+
     [Display(Name = "Изберете какви екстри има автомовила:")]
     public IEnumerable<int> SelectedFeatures { get; set; }
 
@@ -103,10 +103,7 @@ public class ListingFormModel : IMapTo<Listing>, IMapFrom<Listing>, IHaveCustomM
     {
         configuration
             .CreateMap<ListingFormModel, Listing>()
-            .ForMember(destination => destination.ListingFeatures, options => options.Ignore());
-
-        configuration
-            .CreateMap<ListingFormModel, Listing>()
+            .ForMember(destination => destination.ListingFeatures, options => options.Ignore())
             .ForMember(destination => destination.Images, options => options.Ignore());
     }
 }
