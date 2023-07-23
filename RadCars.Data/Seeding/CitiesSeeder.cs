@@ -9,8 +9,8 @@ internal class CitiesSeeder
     internal static City[] SeedBulgarianCities()
     {
         var cities = new HashSet<City>();
-        ushort idOfBulgaria = 1;
-        ushort cityId = 1;
+        var idOfBulgaria = 1;
+        var cityId = 1;
 
         var bulgarianCitiesCsvData = ReadBulgarianCities();
 

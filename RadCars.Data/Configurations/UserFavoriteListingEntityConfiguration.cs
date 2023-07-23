@@ -14,7 +14,7 @@ internal class UserFavoriteListingEntityConfiguration : IEntityTypeConfiguration
 
         builder
             .HasOne(f => f.User)
-            .WithMany(u => u.Favorites)
+            .WithMany(u => u.FavoriteListings)
             .HasForeignKey(f => f.UserId);
 
         builder

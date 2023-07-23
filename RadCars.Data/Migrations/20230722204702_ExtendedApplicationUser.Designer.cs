@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RadCars.Data;
 
@@ -11,9 +12,10 @@ using RadCars.Data;
 namespace RadCars.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230722204702_ExtendedApplicationUser")]
+    partial class ExtendedApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,34 @@ namespace RadCars.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
@@ -198,623 +228,623 @@ namespace RadCars.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9226),
                             IsDeleted = false,
                             Name = "Acura"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9237),
                             IsDeleted = false,
                             Name = "Alfa Romeo"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9239),
                             IsDeleted = false,
                             Name = "Aston Martin"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9241),
                             IsDeleted = false,
                             Name = "Audi"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9243),
                             IsDeleted = false,
                             Name = "Bentley"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9245),
                             IsDeleted = false,
                             Name = "BMW"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9247),
                             IsDeleted = false,
                             Name = "Brilliance"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9249),
                             IsDeleted = false,
                             Name = "Bugatti"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9251),
                             IsDeleted = false,
                             Name = "Buick"
                         },
                         new
                         {
                             Id = 10,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9253),
                             IsDeleted = false,
                             Name = "BYD"
                         },
                         new
                         {
                             Id = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9255),
                             IsDeleted = false,
                             Name = "Cadillac"
                         },
                         new
                         {
                             Id = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9256),
                             IsDeleted = false,
                             Name = "Changan"
                         },
                         new
                         {
                             Id = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9258),
                             IsDeleted = false,
                             Name = "Chery"
                         },
                         new
                         {
                             Id = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9260),
                             IsDeleted = false,
                             Name = "Chevrolet"
                         },
                         new
                         {
                             Id = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9261),
                             IsDeleted = false,
                             Name = "Chrysler"
                         },
                         new
                         {
                             Id = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9264),
                             IsDeleted = false,
                             Name = "Citroen"
                         },
                         new
                         {
                             Id = 17,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9265),
                             IsDeleted = false,
                             Name = "Dacia"
                         },
                         new
                         {
                             Id = 18,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9267),
                             IsDeleted = false,
                             Name = "Daewoo"
                         },
                         new
                         {
                             Id = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9270),
                             IsDeleted = false,
                             Name = "Daihatsu"
                         },
                         new
                         {
                             Id = 20,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9271),
                             IsDeleted = false,
                             Name = "Datsun"
                         },
                         new
                         {
                             Id = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9273),
                             IsDeleted = false,
                             Name = "Dodge"
                         },
                         new
                         {
                             Id = 22,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9275),
                             IsDeleted = false,
                             Name = "Dongfeng"
                         },
                         new
                         {
                             Id = 23,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9276),
                             IsDeleted = false,
                             Name = "Exeed"
                         },
                         new
                         {
                             Id = 24,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9278),
                             IsDeleted = false,
                             Name = "FAW"
                         },
                         new
                         {
                             Id = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9279),
                             IsDeleted = false,
                             Name = "Ferrari"
                         },
                         new
                         {
                             Id = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9281),
                             IsDeleted = false,
                             Name = "Fiat"
                         },
                         new
                         {
                             Id = 27,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9283),
                             IsDeleted = false,
                             Name = "Fisker"
                         },
                         new
                         {
                             Id = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9284),
                             IsDeleted = false,
                             Name = "Ford"
                         },
                         new
                         {
                             Id = 29,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9286),
                             IsDeleted = false,
                             Name = "Foton"
                         },
                         new
                         {
                             Id = 30,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9287),
                             IsDeleted = false,
                             Name = "GAC"
                         },
                         new
                         {
                             Id = 31,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9289),
                             IsDeleted = false,
                             Name = "GAZ"
                         },
                         new
                         {
                             Id = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9291),
                             IsDeleted = false,
                             Name = "Geely"
                         },
                         new
                         {
                             Id = 33,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9293),
                             IsDeleted = false,
                             Name = "Genesis"
                         },
                         new
                         {
                             Id = 34,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9294),
                             IsDeleted = false,
                             Name = "GMC"
                         },
                         new
                         {
                             Id = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9296),
                             IsDeleted = false,
                             Name = "Great Wall"
                         },
                         new
                         {
                             Id = 36,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9298),
                             IsDeleted = false,
                             Name = "Haval"
                         },
                         new
                         {
                             Id = 37,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9299),
                             IsDeleted = false,
                             Name = "Holden"
                         },
                         new
                         {
                             Id = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9301),
                             IsDeleted = false,
                             Name = "Honda"
                         },
                         new
                         {
                             Id = 39,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9330),
                             IsDeleted = false,
                             Name = "Hummer"
                         },
                         new
                         {
                             Id = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9333),
                             IsDeleted = false,
                             Name = "Hyundai"
                         },
                         new
                         {
                             Id = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9334),
                             IsDeleted = false,
                             Name = "Infiniti"
                         },
                         new
                         {
                             Id = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9336),
                             IsDeleted = false,
                             Name = "Isuzu"
                         },
                         new
                         {
                             Id = 43,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9337),
                             IsDeleted = false,
                             Name = "Iveco"
                         },
                         new
                         {
                             Id = 44,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9339),
                             IsDeleted = false,
                             Name = "Jac"
                         },
                         new
                         {
                             Id = 45,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9340),
                             IsDeleted = false,
                             Name = "Jaguar"
                         },
                         new
                         {
                             Id = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9342),
                             IsDeleted = false,
                             Name = "Jeep"
                         },
                         new
                         {
                             Id = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9343),
                             IsDeleted = false,
                             Name = "Kia"
                         },
                         new
                         {
                             Id = 48,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9345),
                             IsDeleted = false,
                             Name = "Lamborghini"
                         },
                         new
                         {
                             Id = 49,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9347),
                             IsDeleted = false,
                             Name = "Lancia"
                         },
                         new
                         {
                             Id = 50,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9349),
                             IsDeleted = false,
                             Name = "Land Rover"
                         },
                         new
                         {
                             Id = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9350),
                             IsDeleted = false,
                             Name = "Lexus"
                         },
                         new
                         {
                             Id = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9352),
                             IsDeleted = false,
                             Name = "Lifan"
                         },
                         new
                         {
                             Id = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9353),
                             IsDeleted = false,
                             Name = "Lincoln"
                         },
                         new
                         {
                             Id = 54,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9355),
                             IsDeleted = false,
                             Name = "Lotus"
                         },
                         new
                         {
                             Id = 55,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9356),
                             IsDeleted = false,
                             Name = "Marussia"
                         },
                         new
                         {
                             Id = 56,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9358),
                             IsDeleted = false,
                             Name = "Maserati"
                         },
                         new
                         {
                             Id = 57,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9360),
                             IsDeleted = false,
                             Name = "Maybach"
                         },
                         new
                         {
                             Id = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9361),
                             IsDeleted = false,
                             Name = "Mazda"
                         },
                         new
                         {
                             Id = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9363),
                             IsDeleted = false,
                             Name = "McLaren"
                         },
                         new
                         {
                             Id = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9365),
                             IsDeleted = false,
                             Name = "Mercedes"
                         },
                         new
                         {
                             Id = 61,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9366),
                             IsDeleted = false,
                             Name = "Mercury"
                         },
                         new
                         {
                             Id = 62,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9368),
                             IsDeleted = false,
                             Name = "MG"
                         },
                         new
                         {
                             Id = 63,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9369),
                             IsDeleted = false,
                             Name = "Mini"
                         },
                         new
                         {
                             Id = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9371),
                             IsDeleted = false,
                             Name = "Mitsubishi"
                         },
                         new
                         {
                             Id = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9373),
                             IsDeleted = false,
                             Name = "Nissan"
                         },
                         new
                         {
                             Id = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9375),
                             IsDeleted = false,
                             Name = "Opel"
                         },
                         new
                         {
                             Id = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9376),
                             IsDeleted = false,
                             Name = "Peugeot"
                         },
                         new
                         {
                             Id = 68,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9378),
                             IsDeleted = false,
                             Name = "Plymouth"
                         },
                         new
                         {
                             Id = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9380),
                             IsDeleted = false,
                             Name = "Pontiac"
                         },
                         new
                         {
                             Id = 70,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9381),
                             IsDeleted = false,
                             Name = "Porsche"
                         },
                         new
                         {
                             Id = 71,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9383),
                             IsDeleted = false,
                             Name = "Ravon"
                         },
                         new
                         {
                             Id = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9385),
                             IsDeleted = false,
                             Name = "Renault"
                         },
                         new
                         {
                             Id = 73,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9386),
                             IsDeleted = false,
                             Name = "Rolls-Royce"
                         },
                         new
                         {
                             Id = 74,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9388),
                             IsDeleted = false,
                             Name = "Rover"
                         },
                         new
                         {
                             Id = 75,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9389),
                             IsDeleted = false,
                             Name = "Saab"
                         },
                         new
                         {
                             Id = 76,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9391),
                             IsDeleted = false,
                             Name = "Saturn"
                         },
                         new
                         {
                             Id = 77,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9392),
                             IsDeleted = false,
                             Name = "Scion"
                         },
                         new
                         {
                             Id = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9394),
                             IsDeleted = false,
                             Name = "Seat"
                         },
                         new
                         {
                             Id = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9395),
                             IsDeleted = false,
                             Name = "Skoda"
                         },
                         new
                         {
                             Id = 80,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9397),
                             IsDeleted = false,
                             Name = "Smart"
                         },
                         new
                         {
                             Id = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9399),
                             IsDeleted = false,
                             Name = "Ssang Yong"
                         },
                         new
                         {
                             Id = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9400),
                             IsDeleted = false,
                             Name = "Subaru"
                         },
                         new
                         {
                             Id = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9402),
                             IsDeleted = false,
                             Name = "Suzuki"
                         },
                         new
                         {
                             Id = 84,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9440),
                             IsDeleted = false,
                             Name = "Tesla"
                         },
                         new
                         {
                             Id = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9443),
                             IsDeleted = false,
                             Name = "Toyota"
                         },
                         new
                         {
                             Id = 86,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9444),
                             IsDeleted = false,
                             Name = "UAZ"
                         },
                         new
                         {
                             Id = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9446),
                             IsDeleted = false,
                             Name = "VAZ"
                         },
                         new
                         {
                             Id = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9447),
                             IsDeleted = false,
                             Name = "Volkswagen"
                         },
                         new
                         {
                             Id = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 590, DateTimeKind.Utc).AddTicks(9449),
                             IsDeleted = false,
                             Name = "Volvo"
                         });
@@ -861,7 +891,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8572),
                             IsDeleted = false,
                             Name = "CDX"
                         },
@@ -869,7 +899,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 2,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8581),
                             IsDeleted = false,
                             Name = "CL"
                         },
@@ -877,7 +907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 3,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8583),
                             IsDeleted = false,
                             Name = "EL"
                         },
@@ -885,7 +915,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 4,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8584),
                             IsDeleted = false,
                             Name = "ILX"
                         },
@@ -893,7 +923,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 5,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8587),
                             IsDeleted = false,
                             Name = "Integra"
                         },
@@ -901,7 +931,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 6,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8589),
                             IsDeleted = false,
                             Name = "MDX"
                         },
@@ -909,7 +939,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 7,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8591),
                             IsDeleted = false,
                             Name = "NSX"
                         },
@@ -917,7 +947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 8,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8592),
                             IsDeleted = false,
                             Name = "RDX"
                         },
@@ -925,7 +955,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 9,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8595),
                             IsDeleted = false,
                             Name = "RL"
                         },
@@ -933,7 +963,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 10,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8596),
                             IsDeleted = false,
                             Name = "RLX"
                         },
@@ -941,7 +971,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 11,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8598),
                             IsDeleted = false,
                             Name = "RSX"
                         },
@@ -949,7 +979,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 12,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8599),
                             IsDeleted = false,
                             Name = "TL"
                         },
@@ -957,7 +987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 13,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8601),
                             IsDeleted = false,
                             Name = "TLX"
                         },
@@ -965,7 +995,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 14,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8602),
                             IsDeleted = false,
                             Name = "TLX-L"
                         },
@@ -973,7 +1003,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 15,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8604),
                             IsDeleted = false,
                             Name = "TSX"
                         },
@@ -981,7 +1011,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 16,
                             CarMakeId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8605),
                             IsDeleted = false,
                             Name = "ZDX"
                         },
@@ -989,7 +1019,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 17,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8609),
                             IsDeleted = false,
                             Name = "146"
                         },
@@ -997,7 +1027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 18,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8611),
                             IsDeleted = false,
                             Name = "147"
                         },
@@ -1005,7 +1035,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 19,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8614),
                             IsDeleted = false,
                             Name = "147 GTA"
                         },
@@ -1013,7 +1043,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 20,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8616),
                             IsDeleted = false,
                             Name = "156"
                         },
@@ -1021,7 +1051,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 21,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8617),
                             IsDeleted = false,
                             Name = "156 GTA"
                         },
@@ -1029,7 +1059,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 22,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8619),
                             IsDeleted = false,
                             Name = "159"
                         },
@@ -1037,7 +1067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 23,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8620),
                             IsDeleted = false,
                             Name = "166"
                         },
@@ -1045,7 +1075,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 24,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8622),
                             IsDeleted = false,
                             Name = "4C"
                         },
@@ -1053,7 +1083,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 25,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8623),
                             IsDeleted = false,
                             Name = "8C Competizione"
                         },
@@ -1061,7 +1091,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 26,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8625),
                             IsDeleted = false,
                             Name = "Brera"
                         },
@@ -1069,7 +1099,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 27,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8626),
                             IsDeleted = false,
                             Name = "Giulia"
                         },
@@ -1077,7 +1107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 28,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8628),
                             IsDeleted = false,
                             Name = "Giulietta"
                         },
@@ -1085,7 +1115,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 29,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8629),
                             IsDeleted = false,
                             Name = "GT"
                         },
@@ -1093,7 +1123,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 30,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8630),
                             IsDeleted = false,
                             Name = "GTV"
                         },
@@ -1101,7 +1131,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 31,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8632),
                             IsDeleted = false,
                             Name = "MiTo"
                         },
@@ -1109,7 +1139,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 32,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8633),
                             IsDeleted = false,
                             Name = "Spider"
                         },
@@ -1117,7 +1147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 33,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8634),
                             IsDeleted = false,
                             Name = "Stelvio"
                         },
@@ -1125,7 +1155,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 34,
                             CarMakeId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8636),
                             IsDeleted = false,
                             Name = "Tonale"
                         },
@@ -1133,7 +1163,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 35,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8638),
                             IsDeleted = false,
                             Name = "Cygnet"
                         },
@@ -1141,7 +1171,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 36,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8640),
                             IsDeleted = false,
                             Name = "DB11"
                         },
@@ -1149,7 +1179,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 37,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8642),
                             IsDeleted = false,
                             Name = "DB9"
                         },
@@ -1157,7 +1187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 38,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8643),
                             IsDeleted = false,
                             Name = "DBS"
                         },
@@ -1165,7 +1195,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 39,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8677),
                             IsDeleted = false,
                             Name = "DBS Superleggera"
                         },
@@ -1173,7 +1203,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 40,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8678),
                             IsDeleted = false,
                             Name = "DBS Violante"
                         },
@@ -1181,7 +1211,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 41,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8680),
                             IsDeleted = false,
                             Name = "DBX"
                         },
@@ -1189,7 +1219,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 42,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8681),
                             IsDeleted = false,
                             Name = "Rapide"
                         },
@@ -1197,7 +1227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 43,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8683),
                             IsDeleted = false,
                             Name = "V12 Vanquish"
                         },
@@ -1205,7 +1235,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 44,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8684),
                             IsDeleted = false,
                             Name = "V12 Vantage"
                         },
@@ -1213,7 +1243,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 45,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8686),
                             IsDeleted = false,
                             Name = "V8 Vantage"
                         },
@@ -1221,7 +1251,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 46,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8687),
                             IsDeleted = false,
                             Name = "Valkyrie"
                         },
@@ -1229,7 +1259,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 47,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8688),
                             IsDeleted = false,
                             Name = "Vanquish"
                         },
@@ -1237,7 +1267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 48,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8690),
                             IsDeleted = false,
                             Name = "Vantage"
                         },
@@ -1245,7 +1275,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 49,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8691),
                             IsDeleted = false,
                             Name = "Virage"
                         },
@@ -1253,7 +1283,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 50,
                             CarMakeId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8693),
                             IsDeleted = false,
                             Name = "Zagato Coupe"
                         },
@@ -1261,7 +1291,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 51,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8698),
                             IsDeleted = false,
                             Name = "A1"
                         },
@@ -1269,7 +1299,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 52,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8699),
                             IsDeleted = false,
                             Name = "A2"
                         },
@@ -1277,7 +1307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 53,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8700),
                             IsDeleted = false,
                             Name = "A3"
                         },
@@ -1285,7 +1315,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 54,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8702),
                             IsDeleted = false,
                             Name = "A4"
                         },
@@ -1293,7 +1323,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 55,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8703),
                             IsDeleted = false,
                             Name = "A4 Allroad Quattro"
                         },
@@ -1301,7 +1331,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 56,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8705),
                             IsDeleted = false,
                             Name = "A5"
                         },
@@ -1309,7 +1339,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 57,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8706),
                             IsDeleted = false,
                             Name = "A6"
                         },
@@ -1317,7 +1347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 58,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8708),
                             IsDeleted = false,
                             Name = "A7"
                         },
@@ -1325,7 +1355,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 59,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8709),
                             IsDeleted = false,
                             Name = "A8"
                         },
@@ -1333,7 +1363,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 60,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8711),
                             IsDeleted = false,
                             Name = "Allroad"
                         },
@@ -1341,7 +1371,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 61,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8712),
                             IsDeleted = false,
                             Name = "e-tron"
                         },
@@ -1349,7 +1379,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 62,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8713),
                             IsDeleted = false,
                             Name = "e-tron GT"
                         },
@@ -1357,7 +1387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 63,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8715),
                             IsDeleted = false,
                             Name = "e-tron Sportback"
                         },
@@ -1365,7 +1395,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 64,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8717),
                             IsDeleted = false,
                             Name = "Q2"
                         },
@@ -1373,7 +1403,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 65,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8718),
                             IsDeleted = false,
                             Name = "Q3"
                         },
@@ -1381,7 +1411,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 66,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8719),
                             IsDeleted = false,
                             Name = "Q3 Sportback"
                         },
@@ -1389,7 +1419,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 67,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8721),
                             IsDeleted = false,
                             Name = "Q4"
                         },
@@ -1397,7 +1427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 68,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8722),
                             IsDeleted = false,
                             Name = "Q4 Sportback"
                         },
@@ -1405,7 +1435,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 69,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8724),
                             IsDeleted = false,
                             Name = "Q5"
                         },
@@ -1413,7 +1443,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 70,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8725),
                             IsDeleted = false,
                             Name = "Q5 Sportback"
                         },
@@ -1421,7 +1451,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 71,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8727),
                             IsDeleted = false,
                             Name = "Q7"
                         },
@@ -1429,7 +1459,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 72,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8729),
                             IsDeleted = false,
                             Name = "Q8"
                         },
@@ -1437,7 +1467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 73,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8730),
                             IsDeleted = false,
                             Name = "R8"
                         },
@@ -1445,7 +1475,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 74,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8731),
                             IsDeleted = false,
                             Name = "RS e-tron GT"
                         },
@@ -1453,7 +1483,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 75,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8733),
                             IsDeleted = false,
                             Name = "RS Q3"
                         },
@@ -1461,7 +1491,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 76,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8734),
                             IsDeleted = false,
                             Name = "RS Q3 Sportback"
                         },
@@ -1469,7 +1499,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 77,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8736),
                             IsDeleted = false,
                             Name = "RS Q7"
                         },
@@ -1477,7 +1507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 78,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8737),
                             IsDeleted = false,
                             Name = "RS Q8"
                         },
@@ -1485,7 +1515,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 79,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8738),
                             IsDeleted = false,
                             Name = "RS3"
                         },
@@ -1493,7 +1523,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 80,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8740),
                             IsDeleted = false,
                             Name = "RS4"
                         },
@@ -1501,7 +1531,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 81,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8741),
                             IsDeleted = false,
                             Name = "RS5"
                         },
@@ -1509,7 +1539,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 82,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8743),
                             IsDeleted = false,
                             Name = "RS6"
                         },
@@ -1517,7 +1547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 83,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8744),
                             IsDeleted = false,
                             Name = "RS7"
                         },
@@ -1525,7 +1555,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 84,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8746),
                             IsDeleted = false,
                             Name = "S1"
                         },
@@ -1533,7 +1563,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 85,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8747),
                             IsDeleted = false,
                             Name = "S3"
                         },
@@ -1541,7 +1571,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 86,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8749),
                             IsDeleted = false,
                             Name = "S4"
                         },
@@ -1549,7 +1579,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 87,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8750),
                             IsDeleted = false,
                             Name = "S5"
                         },
@@ -1557,7 +1587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 88,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8752),
                             IsDeleted = false,
                             Name = "S6"
                         },
@@ -1565,7 +1595,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 89,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8753),
                             IsDeleted = false,
                             Name = "S7"
                         },
@@ -1573,7 +1603,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 90,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8754),
                             IsDeleted = false,
                             Name = "S8"
                         },
@@ -1581,7 +1611,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 91,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8811),
                             IsDeleted = false,
                             Name = "SQ2"
                         },
@@ -1589,7 +1619,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 92,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8813),
                             IsDeleted = false,
                             Name = "SQ5"
                         },
@@ -1597,7 +1627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 93,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8814),
                             IsDeleted = false,
                             Name = "SQ5 Sportback"
                         },
@@ -1605,7 +1635,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 94,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8815),
                             IsDeleted = false,
                             Name = "SQ7"
                         },
@@ -1613,7 +1643,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 95,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8817),
                             IsDeleted = false,
                             Name = "SQ8"
                         },
@@ -1621,7 +1651,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 96,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8818),
                             IsDeleted = false,
                             Name = "TT"
                         },
@@ -1629,7 +1659,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 97,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8819),
                             IsDeleted = false,
                             Name = "TT RS"
                         },
@@ -1637,7 +1667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 98,
                             CarMakeId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8820),
                             IsDeleted = false,
                             Name = "TTS"
                         },
@@ -1645,7 +1675,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 99,
                             CarMakeId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8826),
                             IsDeleted = false,
                             Name = "Arnage"
                         },
@@ -1653,7 +1683,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 100,
                             CarMakeId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8827),
                             IsDeleted = false,
                             Name = "Azure"
                         },
@@ -1661,7 +1691,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 101,
                             CarMakeId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8828),
                             IsDeleted = false,
                             Name = "Bentayga"
                         },
@@ -1669,7 +1699,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 102,
                             CarMakeId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8830),
                             IsDeleted = false,
                             Name = "Brooklands"
                         },
@@ -1677,7 +1707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 103,
                             CarMakeId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8831),
                             IsDeleted = false,
                             Name = "Continental"
                         },
@@ -1685,7 +1715,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 104,
                             CarMakeId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8832),
                             IsDeleted = false,
                             Name = "Continental Flying Spur"
                         },
@@ -1693,7 +1723,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 105,
                             CarMakeId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8834),
                             IsDeleted = false,
                             Name = "Continental GT"
                         },
@@ -1701,7 +1731,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 106,
                             CarMakeId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8835),
                             IsDeleted = false,
                             Name = "Flying Spur"
                         },
@@ -1709,7 +1739,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 107,
                             CarMakeId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8836),
                             IsDeleted = false,
                             Name = "Mulsanne"
                         },
@@ -1717,7 +1747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 108,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8840),
                             IsDeleted = false,
                             Name = "1 series"
                         },
@@ -1725,7 +1755,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 109,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8841),
                             IsDeleted = false,
                             Name = "2 series"
                         },
@@ -1733,7 +1763,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 110,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8842),
                             IsDeleted = false,
                             Name = "3 series"
                         },
@@ -1741,7 +1771,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 111,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8844),
                             IsDeleted = false,
                             Name = "4 series"
                         },
@@ -1749,7 +1779,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 112,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8845),
                             IsDeleted = false,
                             Name = "5 series"
                         },
@@ -1757,7 +1787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 113,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8846),
                             IsDeleted = false,
                             Name = "6 series"
                         },
@@ -1765,7 +1795,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 114,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8848),
                             IsDeleted = false,
                             Name = "7 series"
                         },
@@ -1773,7 +1803,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 115,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8849),
                             IsDeleted = false,
                             Name = "8 series"
                         },
@@ -1781,7 +1811,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 116,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8850),
                             IsDeleted = false,
                             Name = "i3"
                         },
@@ -1789,7 +1819,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 117,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8852),
                             IsDeleted = false,
                             Name = "i4"
                         },
@@ -1797,7 +1827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 118,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8853),
                             IsDeleted = false,
                             Name = "i8"
                         },
@@ -1805,7 +1835,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 119,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8854),
                             IsDeleted = false,
                             Name = "iX"
                         },
@@ -1813,7 +1843,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 120,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8856),
                             IsDeleted = false,
                             Name = "iX3"
                         },
@@ -1821,7 +1851,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 121,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8857),
                             IsDeleted = false,
                             Name = "M2"
                         },
@@ -1829,7 +1859,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 122,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8858),
                             IsDeleted = false,
                             Name = "M3"
                         },
@@ -1837,7 +1867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 123,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8859),
                             IsDeleted = false,
                             Name = "M4"
                         },
@@ -1845,7 +1875,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 124,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8861),
                             IsDeleted = false,
                             Name = "M5"
                         },
@@ -1853,7 +1883,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 125,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8862),
                             IsDeleted = false,
                             Name = "M6"
                         },
@@ -1861,7 +1891,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 126,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8864),
                             IsDeleted = false,
                             Name = "M8"
                         },
@@ -1869,7 +1899,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 127,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8865),
                             IsDeleted = false,
                             Name = "X1"
                         },
@@ -1877,7 +1907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 128,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8866),
                             IsDeleted = false,
                             Name = "X2"
                         },
@@ -1885,7 +1915,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 129,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8867),
                             IsDeleted = false,
                             Name = "X3"
                         },
@@ -1893,7 +1923,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 130,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8869),
                             IsDeleted = false,
                             Name = "X3 M"
                         },
@@ -1901,7 +1931,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 131,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8870),
                             IsDeleted = false,
                             Name = "X4"
                         },
@@ -1909,7 +1939,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 132,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8871),
                             IsDeleted = false,
                             Name = "X4 M"
                         },
@@ -1917,7 +1947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 133,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8873),
                             IsDeleted = false,
                             Name = "X5"
                         },
@@ -1925,7 +1955,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 134,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8874),
                             IsDeleted = false,
                             Name = "X5 M"
                         },
@@ -1933,7 +1963,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 135,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8875),
                             IsDeleted = false,
                             Name = "X6"
                         },
@@ -1941,7 +1971,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 136,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8877),
                             IsDeleted = false,
                             Name = "X6 M"
                         },
@@ -1949,7 +1979,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 137,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8878),
                             IsDeleted = false,
                             Name = "X7"
                         },
@@ -1957,7 +1987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 138,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8880),
                             IsDeleted = false,
                             Name = "Z3"
                         },
@@ -1965,7 +1995,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 139,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8881),
                             IsDeleted = false,
                             Name = "Z4"
                         },
@@ -1973,7 +2003,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 140,
                             CarMakeId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8882),
                             IsDeleted = false,
                             Name = "Z8"
                         },
@@ -1981,7 +2011,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 141,
                             CarMakeId = 7,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8886),
                             IsDeleted = false,
                             Name = "H230"
                         },
@@ -1989,7 +2019,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 142,
                             CarMakeId = 7,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8887),
                             IsDeleted = false,
                             Name = "V3"
                         },
@@ -1997,7 +2027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 143,
                             CarMakeId = 7,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8888),
                             IsDeleted = false,
                             Name = "V5"
                         },
@@ -2005,7 +2035,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 144,
                             CarMakeId = 8,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8891),
                             IsDeleted = false,
                             Name = "Chiron"
                         },
@@ -2013,7 +2043,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 145,
                             CarMakeId = 8,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8893),
                             IsDeleted = false,
                             Name = "Divo"
                         },
@@ -2021,7 +2051,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 146,
                             CarMakeId = 8,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8894),
                             IsDeleted = false,
                             Name = "Veyron"
                         },
@@ -2029,7 +2059,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 147,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8899),
                             IsDeleted = false,
                             Name = "Century"
                         },
@@ -2037,7 +2067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 148,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8900),
                             IsDeleted = false,
                             Name = "Enclave"
                         },
@@ -2045,7 +2075,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 149,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8902),
                             IsDeleted = false,
                             Name = "Encore"
                         },
@@ -2053,7 +2083,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 150,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8903),
                             IsDeleted = false,
                             Name = "Envision"
                         },
@@ -2061,7 +2091,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 151,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8904),
                             IsDeleted = false,
                             Name = "GL8 ES"
                         },
@@ -2069,7 +2099,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 152,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8905),
                             IsDeleted = false,
                             Name = "La Crosse"
                         },
@@ -2077,7 +2107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 153,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8907),
                             IsDeleted = false,
                             Name = "LaCrosse"
                         },
@@ -2085,7 +2115,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 154,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8908),
                             IsDeleted = false,
                             Name = "Le Sabre"
                         },
@@ -2093,7 +2123,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 155,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8910),
                             IsDeleted = false,
                             Name = "Lucerne"
                         },
@@ -2101,7 +2131,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 156,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8912),
                             IsDeleted = false,
                             Name = "Park Avenue"
                         },
@@ -2109,7 +2139,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 157,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8913),
                             IsDeleted = false,
                             Name = "Rainier"
                         },
@@ -2117,7 +2147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 158,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8914),
                             IsDeleted = false,
                             Name = "Regal"
                         },
@@ -2125,7 +2155,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 159,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8915),
                             IsDeleted = false,
                             Name = "Rendezvouz"
                         },
@@ -2133,7 +2163,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 160,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8917),
                             IsDeleted = false,
                             Name = "Terraza"
                         },
@@ -2141,7 +2171,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 161,
                             CarMakeId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8918),
                             IsDeleted = false,
                             Name = "Verano"
                         },
@@ -2149,7 +2179,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 162,
                             CarMakeId = 10,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8921),
                             IsDeleted = false,
                             Name = "Qin"
                         },
@@ -2157,7 +2187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 163,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8924),
                             IsDeleted = false,
                             Name = "ATS"
                         },
@@ -2165,7 +2195,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 164,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8925),
                             IsDeleted = false,
                             Name = "ATS-V"
                         },
@@ -2173,7 +2203,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 165,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8957),
                             IsDeleted = false,
                             Name = "BLS"
                         },
@@ -2181,7 +2211,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 166,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8959),
                             IsDeleted = false,
                             Name = "CT4"
                         },
@@ -2189,7 +2219,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 167,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8961),
                             IsDeleted = false,
                             Name = "CT4-V"
                         },
@@ -2197,7 +2227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 168,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8962),
                             IsDeleted = false,
                             Name = "CT5"
                         },
@@ -2205,7 +2235,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 169,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8963),
                             IsDeleted = false,
                             Name = "CT5-V"
                         },
@@ -2213,7 +2243,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 170,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8965),
                             IsDeleted = false,
                             Name = "CT6"
                         },
@@ -2221,7 +2251,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 171,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8966),
                             IsDeleted = false,
                             Name = "CTS"
                         },
@@ -2229,7 +2259,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 172,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8968),
                             IsDeleted = false,
                             Name = "De Ville"
                         },
@@ -2237,7 +2267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 173,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8969),
                             IsDeleted = false,
                             Name = "DTS"
                         },
@@ -2245,7 +2275,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 174,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8971),
                             IsDeleted = false,
                             Name = "Eldorado"
                         },
@@ -2253,7 +2283,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 175,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8972),
                             IsDeleted = false,
                             Name = "ELR"
                         },
@@ -2261,7 +2291,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 176,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8974),
                             IsDeleted = false,
                             Name = "Escalade"
                         },
@@ -2269,7 +2299,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 177,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8975),
                             IsDeleted = false,
                             Name = "Seville"
                         },
@@ -2277,7 +2307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 178,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8976),
                             IsDeleted = false,
                             Name = "SRX"
                         },
@@ -2285,7 +2315,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 179,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8978),
                             IsDeleted = false,
                             Name = "STS"
                         },
@@ -2293,7 +2323,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 180,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8979),
                             IsDeleted = false,
                             Name = "XLR"
                         },
@@ -2301,7 +2331,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 181,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8980),
                             IsDeleted = false,
                             Name = "XT4"
                         },
@@ -2309,7 +2339,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 182,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8982),
                             IsDeleted = false,
                             Name = "XT5"
                         },
@@ -2317,7 +2347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 183,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8983),
                             IsDeleted = false,
                             Name = "XT6"
                         },
@@ -2325,7 +2355,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 184,
                             CarMakeId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8984),
                             IsDeleted = false,
                             Name = "XTS"
                         },
@@ -2333,7 +2363,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 185,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8989),
                             IsDeleted = false,
                             Name = "CS35"
                         },
@@ -2341,7 +2371,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 186,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8990),
                             IsDeleted = false,
                             Name = "CS35 Plus"
                         },
@@ -2349,7 +2379,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 187,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8992),
                             IsDeleted = false,
                             Name = "CS55"
                         },
@@ -2357,7 +2387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 188,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8993),
                             IsDeleted = false,
                             Name = "CS55 Plus"
                         },
@@ -2365,7 +2395,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 189,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8995),
                             IsDeleted = false,
                             Name = "CS75"
                         },
@@ -2373,7 +2403,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 190,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8996),
                             IsDeleted = false,
                             Name = "CS75 Plus"
                         },
@@ -2381,7 +2411,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 191,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8997),
                             IsDeleted = false,
                             Name = "CS95"
                         },
@@ -2389,7 +2419,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 192,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(8999),
                             IsDeleted = false,
                             Name = "Eado"
                         },
@@ -2397,7 +2427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 193,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9000),
                             IsDeleted = false,
                             Name = "Raeton"
                         },
@@ -2405,7 +2435,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 194,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9001),
                             IsDeleted = false,
                             Name = "Raeton CC"
                         },
@@ -2413,7 +2443,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 195,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9003),
                             IsDeleted = false,
                             Name = "Uni-K"
                         },
@@ -2421,7 +2451,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 196,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9004),
                             IsDeleted = false,
                             Name = "Uni-T"
                         },
@@ -2429,7 +2459,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 197,
                             CarMakeId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9005),
                             IsDeleted = false,
                             Name = "Uni-V"
                         },
@@ -2437,7 +2467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 198,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9008),
                             IsDeleted = false,
                             Name = "Amulet"
                         },
@@ -2445,7 +2475,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 199,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9043),
                             IsDeleted = false,
                             Name = "Arrizo 5 Plus"
                         },
@@ -2453,7 +2483,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 200,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9044),
                             IsDeleted = false,
                             Name = "Arrizo 6"
                         },
@@ -2461,7 +2491,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 201,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9045),
                             IsDeleted = false,
                             Name = "Arrizo 6 Pro"
                         },
@@ -2469,7 +2499,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 202,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9046),
                             IsDeleted = false,
                             Name = "Arrizo 7"
                         },
@@ -2477,7 +2507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 203,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9047),
                             IsDeleted = false,
                             Name = "Arrizo 8"
                         },
@@ -2485,7 +2515,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 204,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9048),
                             IsDeleted = false,
                             Name = "Bonus"
                         },
@@ -2493,7 +2523,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 205,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9048),
                             IsDeleted = false,
                             Name = "Bonus 3"
                         },
@@ -2501,7 +2531,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 206,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9049),
                             IsDeleted = false,
                             Name = "CrossEastar"
                         },
@@ -2509,7 +2539,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 207,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9050),
                             IsDeleted = false,
                             Name = "Eastar"
                         },
@@ -2517,7 +2547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 208,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9051),
                             IsDeleted = false,
                             Name = "eQ"
                         },
@@ -2525,7 +2555,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 209,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9052),
                             IsDeleted = false,
                             Name = "eQ1"
                         },
@@ -2533,7 +2563,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 210,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9053),
                             IsDeleted = false,
                             Name = "eQ5"
                         },
@@ -2541,7 +2571,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 211,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9054),
                             IsDeleted = false,
                             Name = "Fora"
                         },
@@ -2549,7 +2579,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 212,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9055),
                             IsDeleted = false,
                             Name = "IndiS"
                         },
@@ -2557,7 +2587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 213,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9056),
                             IsDeleted = false,
                             Name = "Kimo"
                         },
@@ -2565,7 +2595,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 214,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9056),
                             IsDeleted = false,
                             Name = "M11"
                         },
@@ -2573,7 +2603,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 215,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9057),
                             IsDeleted = false,
                             Name = "Omoda 5"
                         },
@@ -2581,7 +2611,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 216,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9058),
                             IsDeleted = false,
                             Name = "QQ"
                         },
@@ -2589,7 +2619,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 217,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9059),
                             IsDeleted = false,
                             Name = "QQ3"
                         },
@@ -2597,7 +2627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 218,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9060),
                             IsDeleted = false,
                             Name = "QQ6"
                         },
@@ -2605,7 +2635,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 219,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9061),
                             IsDeleted = false,
                             Name = "Tiggo"
                         },
@@ -2613,7 +2643,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 220,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9062),
                             IsDeleted = false,
                             Name = "Tiggo 3"
                         },
@@ -2621,7 +2651,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 221,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9063),
                             IsDeleted = false,
                             Name = "Tiggo 4"
                         },
@@ -2629,7 +2659,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 222,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9064),
                             IsDeleted = false,
                             Name = "Tiggo 4 Pro"
                         },
@@ -2637,7 +2667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 223,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9064),
                             IsDeleted = false,
                             Name = "Tiggo 5"
                         },
@@ -2645,7 +2675,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 224,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9065),
                             IsDeleted = false,
                             Name = "Tiggo 7"
                         },
@@ -2653,7 +2683,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 225,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9066),
                             IsDeleted = false,
                             Name = "Tiggo 7 Pro"
                         },
@@ -2661,7 +2691,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 226,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9067),
                             IsDeleted = false,
                             Name = "Tiggo 8"
                         },
@@ -2669,7 +2699,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 227,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9068),
                             IsDeleted = false,
                             Name = "Tiggo 8 Plus"
                         },
@@ -2677,7 +2707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 228,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9069),
                             IsDeleted = false,
                             Name = "Tiggo 8 Pro"
                         },
@@ -2685,7 +2715,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 229,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9070),
                             IsDeleted = false,
                             Name = "Tiggo 8 Pro Max"
                         },
@@ -2693,7 +2723,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 230,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9071),
                             IsDeleted = false,
                             Name = "Tiggo e"
                         },
@@ -2701,7 +2731,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 231,
                             CarMakeId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9072),
                             IsDeleted = false,
                             Name = "Very"
                         },
@@ -2709,7 +2739,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 232,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9075),
                             IsDeleted = false,
                             Name = "Astro"
                         },
@@ -2717,7 +2747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 233,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9076),
                             IsDeleted = false,
                             Name = "Avalanche"
                         },
@@ -2725,7 +2755,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 234,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9076),
                             IsDeleted = false,
                             Name = "Aveo"
                         },
@@ -2733,7 +2763,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 235,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9077),
                             IsDeleted = false,
                             Name = "Beat"
                         },
@@ -2741,7 +2771,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 236,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9078),
                             IsDeleted = false,
                             Name = "Blazer"
                         },
@@ -2749,7 +2779,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 237,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9079),
                             IsDeleted = false,
                             Name = "Bolt"
                         },
@@ -2757,7 +2787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 238,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9080),
                             IsDeleted = false,
                             Name = "Bolt EUV"
                         },
@@ -2765,7 +2795,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 239,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9081),
                             IsDeleted = false,
                             Name = "Camaro"
                         },
@@ -2773,7 +2803,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 240,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9082),
                             IsDeleted = false,
                             Name = "Captiva"
                         },
@@ -2781,7 +2811,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 241,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9083),
                             IsDeleted = false,
                             Name = "Cavalier"
                         },
@@ -2789,7 +2819,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 242,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9084),
                             IsDeleted = false,
                             Name = "Cobalt"
                         },
@@ -2797,7 +2827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 243,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9085),
                             IsDeleted = false,
                             Name = "Colorado"
                         },
@@ -2805,7 +2835,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 244,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9086),
                             IsDeleted = false,
                             Name = "Corvette"
                         },
@@ -2813,7 +2843,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 245,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9108),
                             IsDeleted = false,
                             Name = "Cruze"
                         },
@@ -2821,7 +2851,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 246,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9109),
                             IsDeleted = false,
                             Name = "Epica"
                         },
@@ -2829,7 +2859,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 247,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9110),
                             IsDeleted = false,
                             Name = "Equinox"
                         },
@@ -2837,7 +2867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 248,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9111),
                             IsDeleted = false,
                             Name = "Express"
                         },
@@ -2845,7 +2875,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 249,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9112),
                             IsDeleted = false,
                             Name = "HHR"
                         },
@@ -2853,7 +2883,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 250,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9112),
                             IsDeleted = false,
                             Name = "Impala"
                         },
@@ -2861,7 +2891,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 251,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9113),
                             IsDeleted = false,
                             Name = "Lacetti"
                         },
@@ -2869,7 +2899,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 252,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9114),
                             IsDeleted = false,
                             Name = "Lanos"
                         },
@@ -2877,7 +2907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 253,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9115),
                             IsDeleted = false,
                             Name = "Malibu"
                         },
@@ -2885,7 +2915,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 254,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9116),
                             IsDeleted = false,
                             Name = "Monte Carlo"
                         },
@@ -2893,7 +2923,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 255,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9117),
                             IsDeleted = false,
                             Name = "Niva"
                         },
@@ -2901,7 +2931,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 256,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9118),
                             IsDeleted = false,
                             Name = "Orlando"
                         },
@@ -2909,7 +2939,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 257,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9119),
                             IsDeleted = false,
                             Name = "Rezzo"
                         },
@@ -2917,7 +2947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 258,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9120),
                             IsDeleted = false,
                             Name = "Silverado"
                         },
@@ -2925,7 +2955,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 259,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9120),
                             IsDeleted = false,
                             Name = "Silverado 1500"
                         },
@@ -2933,7 +2963,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 260,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9121),
                             IsDeleted = false,
                             Name = "Silverado 2500 HD"
                         },
@@ -2941,7 +2971,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 261,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9122),
                             IsDeleted = false,
                             Name = "Spark"
                         },
@@ -2949,7 +2979,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 262,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9123),
                             IsDeleted = false,
                             Name = "SSR"
                         },
@@ -2957,7 +2987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 263,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9124),
                             IsDeleted = false,
                             Name = "Suburban"
                         },
@@ -2965,7 +2995,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 264,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9125),
                             IsDeleted = false,
                             Name = "Tahoe"
                         },
@@ -2973,7 +3003,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 265,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9126),
                             IsDeleted = false,
                             Name = "TrailBlazer"
                         },
@@ -2981,7 +3011,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 266,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9127),
                             IsDeleted = false,
                             Name = "Traverse"
                         },
@@ -2989,7 +3019,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 267,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9128),
                             IsDeleted = false,
                             Name = "Trax"
                         },
@@ -2997,7 +3027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 268,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9129),
                             IsDeleted = false,
                             Name = "Uplander"
                         },
@@ -3005,7 +3035,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 269,
                             CarMakeId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9130),
                             IsDeleted = false,
                             Name = "Venture"
                         },
@@ -3013,7 +3043,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 270,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9132),
                             IsDeleted = false,
                             Name = "200"
                         },
@@ -3021,7 +3051,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 271,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9133),
                             IsDeleted = false,
                             Name = "300"
                         },
@@ -3029,7 +3059,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 272,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9134),
                             IsDeleted = false,
                             Name = "300M"
                         },
@@ -3037,7 +3067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 273,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9135),
                             IsDeleted = false,
                             Name = "Aspen"
                         },
@@ -3045,7 +3075,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 274,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9136),
                             IsDeleted = false,
                             Name = "Concorde"
                         },
@@ -3053,7 +3083,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 275,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9137),
                             IsDeleted = false,
                             Name = "Crossfire"
                         },
@@ -3061,7 +3091,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 276,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9138),
                             IsDeleted = false,
                             Name = "Grand Caravan"
                         },
@@ -3069,7 +3099,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 277,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9139),
                             IsDeleted = false,
                             Name = "Grand Voyager"
                         },
@@ -3077,7 +3107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 278,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9140),
                             IsDeleted = false,
                             Name = "Pacifica"
                         },
@@ -3085,7 +3115,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 279,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9141),
                             IsDeleted = false,
                             Name = "PT Cruiser"
                         },
@@ -3093,7 +3123,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 280,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9142),
                             IsDeleted = false,
                             Name = "Sebring"
                         },
@@ -3101,7 +3131,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 281,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9143),
                             IsDeleted = false,
                             Name = "Town & Country"
                         },
@@ -3109,7 +3139,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 282,
                             CarMakeId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9144),
                             IsDeleted = false,
                             Name = "Voyager"
                         },
@@ -3117,7 +3147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 283,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9147),
                             IsDeleted = false,
                             Name = "Berlingo"
                         },
@@ -3125,7 +3155,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 284,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9148),
                             IsDeleted = false,
                             Name = "C-Crosser"
                         },
@@ -3133,7 +3163,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 285,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9148),
                             IsDeleted = false,
                             Name = "C-Elysee"
                         },
@@ -3141,7 +3171,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 286,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9149),
                             IsDeleted = false,
                             Name = "C1"
                         },
@@ -3149,7 +3179,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 287,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9150),
                             IsDeleted = false,
                             Name = "C2"
                         },
@@ -3157,7 +3187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 288,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9151),
                             IsDeleted = false,
                             Name = "C3"
                         },
@@ -3165,7 +3195,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 289,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9152),
                             IsDeleted = false,
                             Name = "C3 Aircross"
                         },
@@ -3173,7 +3203,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 290,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9153),
                             IsDeleted = false,
                             Name = "C3 Picasso"
                         },
@@ -3181,7 +3211,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 291,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9154),
                             IsDeleted = false,
                             Name = "C3 Pluriel"
                         },
@@ -3189,7 +3219,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 292,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9155),
                             IsDeleted = false,
                             Name = "C4"
                         },
@@ -3197,7 +3227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 293,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9156),
                             IsDeleted = false,
                             Name = "C4 Aircross"
                         },
@@ -3205,7 +3235,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 294,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9157),
                             IsDeleted = false,
                             Name = "C4 Cactus"
                         },
@@ -3213,7 +3243,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 295,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9158),
                             IsDeleted = false,
                             Name = "C4 Picasso"
                         },
@@ -3221,7 +3251,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 296,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9159),
                             IsDeleted = false,
                             Name = "C4 SpaceTourer"
                         },
@@ -3229,7 +3259,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 297,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9160),
                             IsDeleted = false,
                             Name = "C5"
                         },
@@ -3237,7 +3267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 298,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9161),
                             IsDeleted = false,
                             Name = "C5 Aircross"
                         },
@@ -3245,7 +3275,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 299,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9161),
                             IsDeleted = false,
                             Name = "C6"
                         },
@@ -3253,7 +3283,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 300,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9162),
                             IsDeleted = false,
                             Name = "C8"
                         },
@@ -3261,7 +3291,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 301,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9163),
                             IsDeleted = false,
                             Name = "DS 7 Crossback"
                         },
@@ -3269,7 +3299,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 302,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9164),
                             IsDeleted = false,
                             Name = "DS3"
                         },
@@ -3277,7 +3307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 303,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9165),
                             IsDeleted = false,
                             Name = "DS4"
                         },
@@ -3285,7 +3315,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 304,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9166),
                             IsDeleted = false,
                             Name = "DS5"
                         },
@@ -3293,7 +3323,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 305,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9167),
                             IsDeleted = false,
                             Name = "Grand C4 Picasso"
                         },
@@ -3301,7 +3331,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 306,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9168),
                             IsDeleted = false,
                             Name = "Grand C4 SpaceTourer"
                         },
@@ -3309,7 +3339,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 307,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9168),
                             IsDeleted = false,
                             Name = "Jumper"
                         },
@@ -3317,7 +3347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 308,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9169),
                             IsDeleted = false,
                             Name = "Jumpy"
                         },
@@ -3325,7 +3355,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 309,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9170),
                             IsDeleted = false,
                             Name = "Nemo"
                         },
@@ -3333,7 +3363,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 310,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9171),
                             IsDeleted = false,
                             Name = "Saxo"
                         },
@@ -3341,7 +3371,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 311,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9172),
                             IsDeleted = false,
                             Name = "Spacetourer"
                         },
@@ -3349,7 +3379,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 312,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9173),
                             IsDeleted = false,
                             Name = "Xsara"
                         },
@@ -3357,7 +3387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 313,
                             CarMakeId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9174),
                             IsDeleted = false,
                             Name = "Xsara Picasso"
                         },
@@ -3365,7 +3395,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 314,
                             CarMakeId = 17,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9176),
                             IsDeleted = false,
                             Name = "Dokker"
                         },
@@ -3373,7 +3403,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 315,
                             CarMakeId = 17,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9177),
                             IsDeleted = false,
                             Name = "Lodgy"
                         },
@@ -3381,7 +3411,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 316,
                             CarMakeId = 17,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9178),
                             IsDeleted = false,
                             Name = "Solenza"
                         },
@@ -3389,7 +3419,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 317,
                             CarMakeId = 17,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9179),
                             IsDeleted = false,
                             Name = "Spring"
                         },
@@ -3397,7 +3427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 318,
                             CarMakeId = 17,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9179),
                             IsDeleted = false,
                             Name = "SupeRNova"
                         },
@@ -3405,7 +3435,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 319,
                             CarMakeId = 18,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9182),
                             IsDeleted = false,
                             Name = "Evanda"
                         },
@@ -3413,7 +3443,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 320,
                             CarMakeId = 18,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9183),
                             IsDeleted = false,
                             Name = "Kalos"
                         },
@@ -3421,7 +3451,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 321,
                             CarMakeId = 18,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9184),
                             IsDeleted = false,
                             Name = "Leganza"
                         },
@@ -3429,7 +3459,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 322,
                             CarMakeId = 18,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9185),
                             IsDeleted = false,
                             Name = "Magnus"
                         },
@@ -3437,7 +3467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 323,
                             CarMakeId = 18,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9186),
                             IsDeleted = false,
                             Name = "Matiz"
                         },
@@ -3445,7 +3475,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 324,
                             CarMakeId = 18,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9186),
                             IsDeleted = false,
                             Name = "Nexia"
                         },
@@ -3453,7 +3483,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 325,
                             CarMakeId = 18,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9187),
                             IsDeleted = false,
                             Name = "Nubira"
                         },
@@ -3461,7 +3491,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 326,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9191),
                             IsDeleted = false,
                             Name = "Applause"
                         },
@@ -3469,7 +3499,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 327,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9192),
                             IsDeleted = false,
                             Name = "Cast"
                         },
@@ -3477,7 +3507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 328,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9193),
                             IsDeleted = false,
                             Name = "Copen"
                         },
@@ -3485,7 +3515,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 329,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9194),
                             IsDeleted = false,
                             Name = "Cuore"
                         },
@@ -3493,7 +3523,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 330,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9215),
                             IsDeleted = false,
                             Name = "Gran Move"
                         },
@@ -3501,7 +3531,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 331,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9216),
                             IsDeleted = false,
                             Name = "Luxio"
                         },
@@ -3509,7 +3539,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 332,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9217),
                             IsDeleted = false,
                             Name = "Materia"
                         },
@@ -3517,7 +3547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 333,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9218),
                             IsDeleted = false,
                             Name = "Mebius"
                         },
@@ -3525,7 +3555,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 334,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9219),
                             IsDeleted = false,
                             Name = "Move"
                         },
@@ -3533,7 +3563,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 335,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9220),
                             IsDeleted = false,
                             Name = "Rocky"
                         },
@@ -3541,7 +3571,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 336,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9221),
                             IsDeleted = false,
                             Name = "Sirion"
                         },
@@ -3549,7 +3579,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 337,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9222),
                             IsDeleted = false,
                             Name = "Terios"
                         },
@@ -3557,7 +3587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 338,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9223),
                             IsDeleted = false,
                             Name = "Trevis"
                         },
@@ -3565,7 +3595,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 339,
                             CarMakeId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9224),
                             IsDeleted = false,
                             Name = "YRV"
                         },
@@ -3573,7 +3603,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 340,
                             CarMakeId = 20,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9226),
                             IsDeleted = false,
                             Name = "mi-DO"
                         },
@@ -3581,7 +3611,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 341,
                             CarMakeId = 20,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9227),
                             IsDeleted = false,
                             Name = "on-DO"
                         },
@@ -3589,7 +3619,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 342,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9228),
                             IsDeleted = false,
                             Name = "Avenger"
                         },
@@ -3597,7 +3627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 343,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9229),
                             IsDeleted = false,
                             Name = "Caliber"
                         },
@@ -3605,7 +3635,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 344,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9230),
                             IsDeleted = false,
                             Name = "Caliber SRT4"
                         },
@@ -3613,7 +3643,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 345,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9231),
                             IsDeleted = false,
                             Name = "Caravan"
                         },
@@ -3621,7 +3651,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 346,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9232),
                             IsDeleted = false,
                             Name = "Challenger"
                         },
@@ -3629,7 +3659,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 347,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9233),
                             IsDeleted = false,
                             Name = "Charger"
                         },
@@ -3637,7 +3667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 348,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9234),
                             IsDeleted = false,
                             Name = "Dakota"
                         },
@@ -3645,7 +3675,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 349,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9235),
                             IsDeleted = false,
                             Name = "Dart"
                         },
@@ -3653,7 +3683,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 350,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9235),
                             IsDeleted = false,
                             Name = "Durango"
                         },
@@ -3661,7 +3691,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 351,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9236),
                             IsDeleted = false,
                             Name = "Intrepid"
                         },
@@ -3669,7 +3699,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 352,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9237),
                             IsDeleted = false,
                             Name = "Journey"
                         },
@@ -3677,7 +3707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 353,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9238),
                             IsDeleted = false,
                             Name = "Magnum"
                         },
@@ -3685,7 +3715,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 354,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9239),
                             IsDeleted = false,
                             Name = "Neon"
                         },
@@ -3693,7 +3723,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 355,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9240),
                             IsDeleted = false,
                             Name = "Nitro"
                         },
@@ -3701,7 +3731,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 356,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9241),
                             IsDeleted = false,
                             Name = "Ram 1500"
                         },
@@ -3709,7 +3739,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 357,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9242),
                             IsDeleted = false,
                             Name = "Ram 2500"
                         },
@@ -3717,7 +3747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 358,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9242),
                             IsDeleted = false,
                             Name = "Ram 3500"
                         },
@@ -3725,7 +3755,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 359,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9243),
                             IsDeleted = false,
                             Name = "Ram SRT10"
                         },
@@ -3733,7 +3763,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 360,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9244),
                             IsDeleted = false,
                             Name = "Stratus"
                         },
@@ -3741,7 +3771,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 361,
                             CarMakeId = 21,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9245),
                             IsDeleted = false,
                             Name = "Viper"
                         },
@@ -3749,7 +3779,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 362,
                             CarMakeId = 22,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9248),
                             IsDeleted = false,
                             Name = "580"
                         },
@@ -3757,7 +3787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 363,
                             CarMakeId = 22,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9249),
                             IsDeleted = false,
                             Name = "A30"
                         },
@@ -3765,7 +3795,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 364,
                             CarMakeId = 22,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9250),
                             IsDeleted = false,
                             Name = "AX7"
                         },
@@ -3773,7 +3803,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 365,
                             CarMakeId = 22,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9250),
                             IsDeleted = false,
                             Name = "H30 Cross"
                         },
@@ -3781,7 +3811,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 366,
                             CarMakeId = 23,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9252),
                             IsDeleted = false,
                             Name = "TXL"
                         },
@@ -3789,7 +3819,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 367,
                             CarMakeId = 23,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9253),
                             IsDeleted = false,
                             Name = "VX"
                         },
@@ -3797,7 +3827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 368,
                             CarMakeId = 24,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9256),
                             IsDeleted = false,
                             Name = "Bestune T77"
                         },
@@ -3805,7 +3835,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 369,
                             CarMakeId = 24,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9257),
                             IsDeleted = false,
                             Name = "Besturn B30"
                         },
@@ -3813,7 +3843,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 370,
                             CarMakeId = 24,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9258),
                             IsDeleted = false,
                             Name = "Besturn B50"
                         },
@@ -3821,7 +3851,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 371,
                             CarMakeId = 24,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9259),
                             IsDeleted = false,
                             Name = "Besturn B70"
                         },
@@ -3829,7 +3859,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 372,
                             CarMakeId = 24,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9260),
                             IsDeleted = false,
                             Name = "Besturn X40"
                         },
@@ -3837,7 +3867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 373,
                             CarMakeId = 24,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9261),
                             IsDeleted = false,
                             Name = "Besturn X80"
                         },
@@ -3845,7 +3875,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 374,
                             CarMakeId = 24,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9262),
                             IsDeleted = false,
                             Name = "Oley"
                         },
@@ -3853,7 +3883,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 375,
                             CarMakeId = 24,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9263),
                             IsDeleted = false,
                             Name = "Vita"
                         },
@@ -3861,7 +3891,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 376,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9268),
                             IsDeleted = false,
                             Name = "296"
                         },
@@ -3869,7 +3899,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 377,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9269),
                             IsDeleted = false,
                             Name = "348"
                         },
@@ -3877,7 +3907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 378,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9270),
                             IsDeleted = false,
                             Name = "360"
                         },
@@ -3885,7 +3915,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 379,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9271),
                             IsDeleted = false,
                             Name = "456"
                         },
@@ -3893,7 +3923,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 380,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9272),
                             IsDeleted = false,
                             Name = "458"
                         },
@@ -3901,7 +3931,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 381,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9272),
                             IsDeleted = false,
                             Name = "488"
                         },
@@ -3909,7 +3939,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 382,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9273),
                             IsDeleted = false,
                             Name = "512"
                         },
@@ -3917,7 +3947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 383,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9274),
                             IsDeleted = false,
                             Name = "550"
                         },
@@ -3925,7 +3955,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 384,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9275),
                             IsDeleted = false,
                             Name = "575 M"
                         },
@@ -3933,7 +3963,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 385,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9276),
                             IsDeleted = false,
                             Name = "599 GTB Fiorano"
                         },
@@ -3941,7 +3971,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 386,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9277),
                             IsDeleted = false,
                             Name = "599 GTO"
                         },
@@ -3949,7 +3979,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 387,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9278),
                             IsDeleted = false,
                             Name = "612"
                         },
@@ -3957,7 +3987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 388,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9279),
                             IsDeleted = false,
                             Name = "812"
                         },
@@ -3965,7 +3995,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 389,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9280),
                             IsDeleted = false,
                             Name = "California"
                         },
@@ -3973,7 +4003,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 390,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9281),
                             IsDeleted = false,
                             Name = "California T"
                         },
@@ -3981,7 +4011,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 391,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9282),
                             IsDeleted = false,
                             Name = "Challenge Stradale"
                         },
@@ -3989,7 +4019,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 392,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9283),
                             IsDeleted = false,
                             Name = "Enzo"
                         },
@@ -3997,7 +4027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 393,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9284),
                             IsDeleted = false,
                             Name = "F12"
                         },
@@ -4005,7 +4035,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 394,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9285),
                             IsDeleted = false,
                             Name = "F355"
                         },
@@ -4013,7 +4043,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 395,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9285),
                             IsDeleted = false,
                             Name = "F430"
                         },
@@ -4021,7 +4051,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 396,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9286),
                             IsDeleted = false,
                             Name = "F50"
                         },
@@ -4029,7 +4059,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 397,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9287),
                             IsDeleted = false,
                             Name = "F512 M"
                         },
@@ -4037,7 +4067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 398,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9288),
                             IsDeleted = false,
                             Name = "F8 Spider"
                         },
@@ -4045,7 +4075,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 399,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9289),
                             IsDeleted = false,
                             Name = "F8 Tributo"
                         },
@@ -4053,7 +4083,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 400,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9290),
                             IsDeleted = false,
                             Name = "FF"
                         },
@@ -4061,7 +4091,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 401,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9291),
                             IsDeleted = false,
                             Name = "GTC4 Lusso"
                         },
@@ -4069,7 +4099,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 402,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9292),
                             IsDeleted = false,
                             Name = "LaFerrari"
                         },
@@ -4077,7 +4107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 403,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9293),
                             IsDeleted = false,
                             Name = "Portofino"
                         },
@@ -4085,7 +4115,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 404,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9294),
                             IsDeleted = false,
                             Name = "Portofino M"
                         },
@@ -4093,7 +4123,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 405,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9295),
                             IsDeleted = false,
                             Name = "Roma"
                         },
@@ -4101,7 +4131,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 406,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9296),
                             IsDeleted = false,
                             Name = "SF90 Spider"
                         },
@@ -4109,7 +4139,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 407,
                             CarMakeId = 25,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9296),
                             IsDeleted = false,
                             Name = "SF90 Stradale"
                         },
@@ -4117,7 +4147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 408,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9300),
                             IsDeleted = false,
                             Name = "124 Spider"
                         },
@@ -4125,7 +4155,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 409,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9301),
                             IsDeleted = false,
                             Name = "500"
                         },
@@ -4133,7 +4163,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 410,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9301),
                             IsDeleted = false,
                             Name = "500L"
                         },
@@ -4141,7 +4171,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 411,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9302),
                             IsDeleted = false,
                             Name = "500X"
                         },
@@ -4149,7 +4179,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 412,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9303),
                             IsDeleted = false,
                             Name = "Albea"
                         },
@@ -4157,7 +4187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 413,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9304),
                             IsDeleted = false,
                             Name = "Brava"
                         },
@@ -4165,7 +4195,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 414,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9305),
                             IsDeleted = false,
                             Name = "Bravo"
                         },
@@ -4173,7 +4203,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 415,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9327),
                             IsDeleted = false,
                             Name = "Coupe"
                         },
@@ -4181,7 +4211,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 416,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9328),
                             IsDeleted = false,
                             Name = "Croma"
                         },
@@ -4189,7 +4219,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 417,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9329),
                             IsDeleted = false,
                             Name = "Doblo"
                         },
@@ -4197,7 +4227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 418,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9330),
                             IsDeleted = false,
                             Name = "Ducato"
                         },
@@ -4205,7 +4235,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 419,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9331),
                             IsDeleted = false,
                             Name = "Freemont"
                         },
@@ -4213,7 +4243,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 420,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9331),
                             IsDeleted = false,
                             Name = "Grande Punto"
                         },
@@ -4221,7 +4251,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 421,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9332),
                             IsDeleted = false,
                             Name = "Idea"
                         },
@@ -4229,7 +4259,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 422,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9333),
                             IsDeleted = false,
                             Name = "Linea"
                         },
@@ -4237,7 +4267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 423,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9334),
                             IsDeleted = false,
                             Name = "Marea"
                         },
@@ -4245,7 +4275,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 424,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9335),
                             IsDeleted = false,
                             Name = "Multipla"
                         },
@@ -4253,7 +4283,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 425,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9336),
                             IsDeleted = false,
                             Name = "Palio"
                         },
@@ -4261,7 +4291,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 426,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9337),
                             IsDeleted = false,
                             Name = "Panda"
                         },
@@ -4269,7 +4299,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 427,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9338),
                             IsDeleted = false,
                             Name = "Panda 4x4"
                         },
@@ -4277,7 +4307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 428,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9339),
                             IsDeleted = false,
                             Name = "Punto"
                         },
@@ -4285,7 +4315,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 429,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9340),
                             IsDeleted = false,
                             Name = "Qubo"
                         },
@@ -4293,7 +4323,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 430,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9341),
                             IsDeleted = false,
                             Name = "Sedici"
                         },
@@ -4301,7 +4331,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 431,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9342),
                             IsDeleted = false,
                             Name = "Siena"
                         },
@@ -4309,7 +4339,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 432,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9343),
                             IsDeleted = false,
                             Name = "Stilo"
                         },
@@ -4317,7 +4347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 433,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9391),
                             IsDeleted = false,
                             Name = "Strada"
                         },
@@ -4325,7 +4355,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 434,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9393),
                             IsDeleted = false,
                             Name = "Tipo"
                         },
@@ -4333,7 +4363,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 435,
                             CarMakeId = 26,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9393),
                             IsDeleted = false,
                             Name = "Ulysse"
                         },
@@ -4341,7 +4371,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 436,
                             CarMakeId = 27,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9395),
                             IsDeleted = false,
                             Name = "Karma"
                         },
@@ -4349,7 +4379,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 437,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9398),
                             IsDeleted = false,
                             Name = "B-Max"
                         },
@@ -4357,7 +4387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 438,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9399),
                             IsDeleted = false,
                             Name = "Bronco"
                         },
@@ -4365,7 +4395,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 439,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9400),
                             IsDeleted = false,
                             Name = "Bronco Sport"
                         },
@@ -4373,7 +4403,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 440,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9401),
                             IsDeleted = false,
                             Name = "C-Max"
                         },
@@ -4381,7 +4411,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 441,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9402),
                             IsDeleted = false,
                             Name = "Cougar"
                         },
@@ -4389,7 +4419,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 442,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9403),
                             IsDeleted = false,
                             Name = "Crown Victoria"
                         },
@@ -4397,7 +4427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 443,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9404),
                             IsDeleted = false,
                             Name = "EcoSport"
                         },
@@ -4405,7 +4435,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 444,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9405),
                             IsDeleted = false,
                             Name = "Edge"
                         },
@@ -4413,7 +4443,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 445,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9406),
                             IsDeleted = false,
                             Name = "Endura"
                         },
@@ -4421,7 +4451,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 446,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9407),
                             IsDeleted = false,
                             Name = "Equator"
                         },
@@ -4429,7 +4459,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 447,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9408),
                             IsDeleted = false,
                             Name = "Escape"
                         },
@@ -4437,7 +4467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 448,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9409),
                             IsDeleted = false,
                             Name = "Excursion"
                         },
@@ -4445,7 +4475,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 449,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9410),
                             IsDeleted = false,
                             Name = "Expedition"
                         },
@@ -4453,7 +4483,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 450,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9411),
                             IsDeleted = false,
                             Name = "Explorer"
                         },
@@ -4461,7 +4491,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 451,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9412),
                             IsDeleted = false,
                             Name = "Explorer Sport Trac"
                         },
@@ -4469,7 +4499,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 452,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9413),
                             IsDeleted = false,
                             Name = "F-150"
                         },
@@ -4477,7 +4507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 453,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9414),
                             IsDeleted = false,
                             Name = "F-250"
                         },
@@ -4485,7 +4515,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 454,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9414),
                             IsDeleted = false,
                             Name = "F-350"
                         },
@@ -4493,7 +4523,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 455,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9415),
                             IsDeleted = false,
                             Name = "Falcon"
                         },
@@ -4501,7 +4531,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 456,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9416),
                             IsDeleted = false,
                             Name = "Fiesta"
                         },
@@ -4509,7 +4539,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 457,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9417),
                             IsDeleted = false,
                             Name = "Five Hundred"
                         },
@@ -4517,7 +4547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 458,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9418),
                             IsDeleted = false,
                             Name = "Flex"
                         },
@@ -4525,7 +4555,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 459,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9419),
                             IsDeleted = false,
                             Name = "Focus"
                         },
@@ -4533,7 +4563,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 460,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9420),
                             IsDeleted = false,
                             Name = "Focus Active"
                         },
@@ -4541,7 +4571,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 461,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9420),
                             IsDeleted = false,
                             Name = "Focus Electric"
                         },
@@ -4549,7 +4579,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 462,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9423),
                             IsDeleted = false,
                             Name = "Freestar"
                         },
@@ -4557,7 +4587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 463,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9424),
                             IsDeleted = false,
                             Name = "Freestyle"
                         },
@@ -4565,7 +4595,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 464,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9425),
                             IsDeleted = false,
                             Name = "Fusion"
                         },
@@ -4573,7 +4603,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 465,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9426),
                             IsDeleted = false,
                             Name = "Galaxy"
                         },
@@ -4581,7 +4611,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 466,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9426),
                             IsDeleted = false,
                             Name = "Ka"
                         },
@@ -4589,7 +4619,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 467,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9427),
                             IsDeleted = false,
                             Name = "Kuga"
                         },
@@ -4597,7 +4627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 468,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9428),
                             IsDeleted = false,
                             Name = "Maverick"
                         },
@@ -4605,7 +4635,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 469,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9429),
                             IsDeleted = false,
                             Name = "Mondeo"
                         },
@@ -4613,7 +4643,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 470,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9430),
                             IsDeleted = false,
                             Name = "Mustang"
                         },
@@ -4621,7 +4651,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 471,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9431),
                             IsDeleted = false,
                             Name = "Mustang Mach-E"
                         },
@@ -4629,7 +4659,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 472,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9432),
                             IsDeleted = false,
                             Name = "Mustang Shelby GT350"
                         },
@@ -4637,7 +4667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 473,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9432),
                             IsDeleted = false,
                             Name = "Mustang Shelby GT500"
                         },
@@ -4645,7 +4675,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 474,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9433),
                             IsDeleted = false,
                             Name = "Puma"
                         },
@@ -4653,7 +4683,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 475,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9434),
                             IsDeleted = false,
                             Name = "Ranger"
                         },
@@ -4661,7 +4691,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 476,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9435),
                             IsDeleted = false,
                             Name = "S-Max"
                         },
@@ -4669,7 +4699,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 477,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9436),
                             IsDeleted = false,
                             Name = "Taurus"
                         },
@@ -4677,7 +4707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 478,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9437),
                             IsDeleted = false,
                             Name = "Taurus X"
                         },
@@ -4685,7 +4715,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 479,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9467),
                             IsDeleted = false,
                             Name = "Thunderbird"
                         },
@@ -4693,7 +4723,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 480,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9468),
                             IsDeleted = false,
                             Name = "Tourneo Connect"
                         },
@@ -4701,7 +4731,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 481,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9469),
                             IsDeleted = false,
                             Name = "Transit"
                         },
@@ -4709,7 +4739,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 482,
                             CarMakeId = 28,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9470),
                             IsDeleted = false,
                             Name = "Transit Connect"
                         },
@@ -4717,7 +4747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 483,
                             CarMakeId = 29,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9473),
                             IsDeleted = false,
                             Name = "Sauvana"
                         },
@@ -4725,7 +4755,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 484,
                             CarMakeId = 30,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9474),
                             IsDeleted = false,
                             Name = "GS5"
                         },
@@ -4733,7 +4763,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 485,
                             CarMakeId = 30,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9475),
                             IsDeleted = false,
                             Name = "Trumpchi GM8"
                         },
@@ -4741,7 +4771,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 486,
                             CarMakeId = 30,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9476),
                             IsDeleted = false,
                             Name = "Trumpchi GS8"
                         },
@@ -4749,7 +4779,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 487,
                             CarMakeId = 31,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9478),
                             IsDeleted = false,
                             Name = "3102"
                         },
@@ -4757,7 +4787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 488,
                             CarMakeId = 31,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9479),
                             IsDeleted = false,
                             Name = "31105"
                         },
@@ -4765,7 +4795,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 489,
                             CarMakeId = 31,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9480),
                             IsDeleted = false,
                             Name = "Gazelle"
                         },
@@ -4773,7 +4803,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 490,
                             CarMakeId = 31,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9480),
                             IsDeleted = false,
                             Name = "Gazelle Business"
                         },
@@ -4781,7 +4811,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 491,
                             CarMakeId = 31,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9481),
                             IsDeleted = false,
                             Name = "Gazelle Next"
                         },
@@ -4789,7 +4819,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 492,
                             CarMakeId = 31,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9482),
                             IsDeleted = false,
                             Name = "Gazelle NN"
                         },
@@ -4797,7 +4827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 493,
                             CarMakeId = 31,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9483),
                             IsDeleted = false,
                             Name = "Gazelle Sity"
                         },
@@ -4805,7 +4835,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 494,
                             CarMakeId = 31,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9484),
                             IsDeleted = false,
                             Name = "Siber"
                         },
@@ -4813,7 +4843,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 495,
                             CarMakeId = 31,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9485),
                             IsDeleted = false,
                             Name = "Sobol"
                         },
@@ -4821,7 +4851,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 496,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9488),
                             IsDeleted = false,
                             Name = "Atlas"
                         },
@@ -4829,7 +4859,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 497,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9488),
                             IsDeleted = false,
                             Name = "Atlas Pro"
                         },
@@ -4837,7 +4867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 498,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9489),
                             IsDeleted = false,
                             Name = "Azkarra"
                         },
@@ -4845,7 +4875,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 499,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9490),
                             IsDeleted = false,
                             Name = "Coolray"
                         },
@@ -4853,7 +4883,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 500,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9491),
                             IsDeleted = false,
                             Name = "Emgrand 7"
                         },
@@ -4861,7 +4891,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 501,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9492),
                             IsDeleted = false,
                             Name = "Emgrand EC7"
                         },
@@ -4869,7 +4899,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 502,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9493),
                             IsDeleted = false,
                             Name = "Emgrand GS"
                         },
@@ -4877,7 +4907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 503,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9494),
                             IsDeleted = false,
                             Name = "Emgrand X7"
                         },
@@ -4885,7 +4915,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 504,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9495),
                             IsDeleted = false,
                             Name = "GC9"
                         },
@@ -4893,7 +4923,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 505,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9496),
                             IsDeleted = false,
                             Name = "GС6"
                         },
@@ -4901,7 +4931,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 506,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9496),
                             IsDeleted = false,
                             Name = "MK"
                         },
@@ -4909,7 +4939,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 507,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9497),
                             IsDeleted = false,
                             Name = "Monjaro"
                         },
@@ -4917,7 +4947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 508,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9498),
                             IsDeleted = false,
                             Name = "Otaka"
                         },
@@ -4925,7 +4955,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 509,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9499),
                             IsDeleted = false,
                             Name = "Preface"
                         },
@@ -4933,7 +4963,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 510,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9500),
                             IsDeleted = false,
                             Name = "Tugella"
                         },
@@ -4941,7 +4971,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 511,
                             CarMakeId = 32,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9501),
                             IsDeleted = false,
                             Name = "Vision"
                         },
@@ -4949,7 +4979,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 512,
                             CarMakeId = 33,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9502),
                             IsDeleted = false,
                             Name = "G70"
                         },
@@ -4957,7 +4987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 513,
                             CarMakeId = 33,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9503),
                             IsDeleted = false,
                             Name = "G80"
                         },
@@ -4965,7 +4995,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 514,
                             CarMakeId = 33,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9504),
                             IsDeleted = false,
                             Name = "G90"
                         },
@@ -4973,7 +5003,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 515,
                             CarMakeId = 33,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9505),
                             IsDeleted = false,
                             Name = "GV60"
                         },
@@ -4981,7 +5011,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 516,
                             CarMakeId = 33,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9506),
                             IsDeleted = false,
                             Name = "GV70"
                         },
@@ -4989,7 +5019,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 517,
                             CarMakeId = 33,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9507),
                             IsDeleted = false,
                             Name = "GV80"
                         },
@@ -4997,7 +5027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 518,
                             CarMakeId = 34,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9509),
                             IsDeleted = false,
                             Name = "Acadia"
                         },
@@ -5005,7 +5035,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 519,
                             CarMakeId = 34,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9510),
                             IsDeleted = false,
                             Name = "Canyon"
                         },
@@ -5013,7 +5043,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 520,
                             CarMakeId = 34,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9511),
                             IsDeleted = false,
                             Name = "Envoy"
                         },
@@ -5021,7 +5051,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 521,
                             CarMakeId = 34,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9511),
                             IsDeleted = false,
                             Name = "Sierra 1500"
                         },
@@ -5029,7 +5059,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 522,
                             CarMakeId = 34,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9512),
                             IsDeleted = false,
                             Name = "Sierra 2500"
                         },
@@ -5037,7 +5067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 523,
                             CarMakeId = 34,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9513),
                             IsDeleted = false,
                             Name = "Sierra 3500"
                         },
@@ -5045,7 +5075,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 524,
                             CarMakeId = 34,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9514),
                             IsDeleted = false,
                             Name = "Terrain"
                         },
@@ -5053,7 +5083,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 525,
                             CarMakeId = 34,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9515),
                             IsDeleted = false,
                             Name = "Yukon"
                         },
@@ -5061,7 +5091,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 526,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9517),
                             IsDeleted = false,
                             Name = "Cowry"
                         },
@@ -5069,7 +5099,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 527,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9518),
                             IsDeleted = false,
                             Name = "Deer"
                         },
@@ -5077,7 +5107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 528,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9519),
                             IsDeleted = false,
                             Name = "Hover"
                         },
@@ -5085,7 +5115,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 529,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9519),
                             IsDeleted = false,
                             Name = "Hover M2"
                         },
@@ -5093,7 +5123,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 530,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9520),
                             IsDeleted = false,
                             Name = "Pegasus"
                         },
@@ -5101,7 +5131,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 531,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9521),
                             IsDeleted = false,
                             Name = "Peri"
                         },
@@ -5109,7 +5139,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 532,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9522),
                             IsDeleted = false,
                             Name = "Poer"
                         },
@@ -5117,7 +5147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 533,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9523),
                             IsDeleted = false,
                             Name = "Safe"
                         },
@@ -5125,7 +5155,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 534,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9524),
                             IsDeleted = false,
                             Name = "Sailor"
                         },
@@ -5133,7 +5163,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 535,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9525),
                             IsDeleted = false,
                             Name = "Sing"
                         },
@@ -5141,7 +5171,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 536,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9526),
                             IsDeleted = false,
                             Name = "Socool"
                         },
@@ -5149,7 +5179,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 537,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9527),
                             IsDeleted = false,
                             Name = "Wingle"
                         },
@@ -5157,7 +5187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 538,
                             CarMakeId = 35,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9528),
                             IsDeleted = false,
                             Name = "Wingle 7"
                         },
@@ -5165,7 +5195,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 539,
                             CarMakeId = 36,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9531),
                             IsDeleted = false,
                             Name = "Dargo"
                         },
@@ -5173,7 +5203,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 540,
                             CarMakeId = 36,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9532),
                             IsDeleted = false,
                             Name = "F7"
                         },
@@ -5181,7 +5211,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 541,
                             CarMakeId = 36,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9533),
                             IsDeleted = false,
                             Name = "F7x"
                         },
@@ -5189,7 +5219,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 542,
                             CarMakeId = 36,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9533),
                             IsDeleted = false,
                             Name = "H4"
                         },
@@ -5197,7 +5227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 543,
                             CarMakeId = 36,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9535),
                             IsDeleted = false,
                             Name = "H6"
                         },
@@ -5205,7 +5235,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 544,
                             CarMakeId = 36,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9536),
                             IsDeleted = false,
                             Name = "H9"
                         },
@@ -5213,7 +5243,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 545,
                             CarMakeId = 36,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9536),
                             IsDeleted = false,
                             Name = "Jolion"
                         },
@@ -5221,7 +5251,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 546,
                             CarMakeId = 37,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9539),
                             IsDeleted = false,
                             Name = "Commodore"
                         },
@@ -5229,7 +5259,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 547,
                             CarMakeId = 37,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9540),
                             IsDeleted = false,
                             Name = "Corvette C8"
                         },
@@ -5237,7 +5267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 548,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9542),
                             IsDeleted = false,
                             Name = "Accord"
                         },
@@ -5245,7 +5275,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 549,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9543),
                             IsDeleted = false,
                             Name = "Amaze"
                         },
@@ -5253,7 +5283,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 550,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9544),
                             IsDeleted = false,
                             Name = "City"
                         },
@@ -5261,7 +5291,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 551,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9544),
                             IsDeleted = false,
                             Name = "Civic"
                         },
@@ -5269,7 +5299,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 552,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9545),
                             IsDeleted = false,
                             Name = "Civic Type R"
                         },
@@ -5277,7 +5307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 553,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9546),
                             IsDeleted = false,
                             Name = "CR-V"
                         },
@@ -5285,7 +5315,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 554,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9547),
                             IsDeleted = false,
                             Name = "CR-Z"
                         },
@@ -5293,7 +5323,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 555,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9548),
                             IsDeleted = false,
                             Name = "Crosstour"
                         },
@@ -5301,7 +5331,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 556,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9549),
                             IsDeleted = false,
                             Name = "e"
                         },
@@ -5309,7 +5339,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 557,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9550),
                             IsDeleted = false,
                             Name = "Element"
                         },
@@ -5317,7 +5347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 558,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9551),
                             IsDeleted = false,
                             Name = "Fit"
                         },
@@ -5325,7 +5355,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 559,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9552),
                             IsDeleted = false,
                             Name = "FR-V"
                         },
@@ -5333,7 +5363,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 560,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9553),
                             IsDeleted = false,
                             Name = "HR-V"
                         },
@@ -5341,7 +5371,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 561,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9554),
                             IsDeleted = false,
                             Name = "Insight"
                         },
@@ -5349,7 +5379,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 562,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9555),
                             IsDeleted = false,
                             Name = "Jade"
                         },
@@ -5357,7 +5387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 563,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9556),
                             IsDeleted = false,
                             Name = "Jazz"
                         },
@@ -5365,7 +5395,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 564,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9577),
                             IsDeleted = false,
                             Name = "Legend"
                         },
@@ -5373,7 +5403,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 565,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9578),
                             IsDeleted = false,
                             Name = "Odyssey"
                         },
@@ -5381,7 +5411,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 566,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9579),
                             IsDeleted = false,
                             Name = "Passport"
                         },
@@ -5389,7 +5419,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 567,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9580),
                             IsDeleted = false,
                             Name = "Pilot"
                         },
@@ -5397,7 +5427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 568,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9581),
                             IsDeleted = false,
                             Name = "Prelude"
                         },
@@ -5405,7 +5435,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 569,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9582),
                             IsDeleted = false,
                             Name = "Ridgeline"
                         },
@@ -5413,7 +5443,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 570,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9583),
                             IsDeleted = false,
                             Name = "S2000"
                         },
@@ -5421,7 +5451,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 571,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9583),
                             IsDeleted = false,
                             Name = "Shuttle"
                         },
@@ -5429,7 +5459,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 572,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9585),
                             IsDeleted = false,
                             Name = "Stepwgn"
                         },
@@ -5437,7 +5467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 573,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9585),
                             IsDeleted = false,
                             Name = "Stream"
                         },
@@ -5445,7 +5475,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 574,
                             CarMakeId = 38,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9586),
                             IsDeleted = false,
                             Name = "Vezel"
                         },
@@ -5453,7 +5483,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 575,
                             CarMakeId = 39,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9588),
                             IsDeleted = false,
                             Name = "H1"
                         },
@@ -5461,7 +5491,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 576,
                             CarMakeId = 39,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9589),
                             IsDeleted = false,
                             Name = "H2"
                         },
@@ -5469,7 +5499,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 577,
                             CarMakeId = 39,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9590),
                             IsDeleted = false,
                             Name = "H3"
                         },
@@ -5477,7 +5507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 578,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9593),
                             IsDeleted = false,
                             Name = "Accent"
                         },
@@ -5485,7 +5515,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 579,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9594),
                             IsDeleted = false,
                             Name = "Atos Prime"
                         },
@@ -5493,7 +5523,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 580,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9595),
                             IsDeleted = false,
                             Name = "Azera"
                         },
@@ -5501,7 +5531,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 581,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9595),
                             IsDeleted = false,
                             Name = "Bayon"
                         },
@@ -5509,7 +5539,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 582,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9596),
                             IsDeleted = false,
                             Name = "Centennial"
                         },
@@ -5517,7 +5547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 583,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9597),
                             IsDeleted = false,
                             Name = "Creta"
                         },
@@ -5525,7 +5555,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 584,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9598),
                             IsDeleted = false,
                             Name = "Creta Grand"
                         },
@@ -5533,7 +5563,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 585,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9599),
                             IsDeleted = false,
                             Name = "Elantra"
                         },
@@ -5541,7 +5571,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 586,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9600),
                             IsDeleted = false,
                             Name = "Entourage"
                         },
@@ -5549,7 +5579,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 587,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9601),
                             IsDeleted = false,
                             Name = "Eon"
                         },
@@ -5557,7 +5587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 588,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9602),
                             IsDeleted = false,
                             Name = "Equus"
                         },
@@ -5565,7 +5595,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 589,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9603),
                             IsDeleted = false,
                             Name = "Galloper"
                         },
@@ -5573,7 +5603,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 590,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9604),
                             IsDeleted = false,
                             Name = "Genesis"
                         },
@@ -5581,7 +5611,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 591,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9605),
                             IsDeleted = false,
                             Name = "Genesis Coupe"
                         },
@@ -5589,7 +5619,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 592,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9606),
                             IsDeleted = false,
                             Name = "Getz"
                         },
@@ -5597,7 +5627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 593,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9607),
                             IsDeleted = false,
                             Name = "Grandeur"
                         },
@@ -5605,7 +5635,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 594,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9607),
                             IsDeleted = false,
                             Name = "H-1"
                         },
@@ -5613,7 +5643,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 595,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9608),
                             IsDeleted = false,
                             Name = "i10"
                         },
@@ -5621,7 +5651,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 596,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9609),
                             IsDeleted = false,
                             Name = "i20"
                         },
@@ -5629,7 +5659,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 597,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9610),
                             IsDeleted = false,
                             Name = "i20 N"
                         },
@@ -5637,7 +5667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 598,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9611),
                             IsDeleted = false,
                             Name = "i30"
                         },
@@ -5645,7 +5675,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 599,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9612),
                             IsDeleted = false,
                             Name = "i30 N"
                         },
@@ -5653,7 +5683,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 600,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9613),
                             IsDeleted = false,
                             Name = "i40"
                         },
@@ -5661,7 +5691,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 601,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9614),
                             IsDeleted = false,
                             Name = "Ioniq"
                         },
@@ -5669,7 +5699,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 602,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9615),
                             IsDeleted = false,
                             Name = "Ioniq 5"
                         },
@@ -5677,7 +5707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 603,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9615),
                             IsDeleted = false,
                             Name = "ix20"
                         },
@@ -5685,7 +5715,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 604,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9616),
                             IsDeleted = false,
                             Name = "ix35"
                         },
@@ -5693,7 +5723,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 605,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9617),
                             IsDeleted = false,
                             Name = "Kona"
                         },
@@ -5701,7 +5731,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 606,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9618),
                             IsDeleted = false,
                             Name = "Kona N"
                         },
@@ -5709,7 +5739,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 607,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9619),
                             IsDeleted = false,
                             Name = "Kusto"
                         },
@@ -5717,7 +5747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 608,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9620),
                             IsDeleted = false,
                             Name = "Matrix"
                         },
@@ -5725,7 +5755,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 609,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9621),
                             IsDeleted = false,
                             Name = "Mistra"
                         },
@@ -5733,7 +5763,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 610,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9622),
                             IsDeleted = false,
                             Name = "Nexo"
                         },
@@ -5741,7 +5771,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 611,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9623),
                             IsDeleted = false,
                             Name = "Palisade"
                         },
@@ -5749,7 +5779,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 612,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9624),
                             IsDeleted = false,
                             Name = "Porter"
                         },
@@ -5757,7 +5787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 613,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9625),
                             IsDeleted = false,
                             Name = "Santa Cruz"
                         },
@@ -5765,7 +5795,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 614,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9626),
                             IsDeleted = false,
                             Name = "Santa Fe"
                         },
@@ -5773,7 +5803,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 615,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9626),
                             IsDeleted = false,
                             Name = "Solaris"
                         },
@@ -5781,7 +5811,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 616,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9627),
                             IsDeleted = false,
                             Name = "Sonata"
                         },
@@ -5789,7 +5819,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 617,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9628),
                             IsDeleted = false,
                             Name = "Staria"
                         },
@@ -5797,7 +5827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 618,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9629),
                             IsDeleted = false,
                             Name = "Terracan"
                         },
@@ -5805,7 +5835,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 619,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9630),
                             IsDeleted = false,
                             Name = "Trajet"
                         },
@@ -5813,7 +5843,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 620,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9631),
                             IsDeleted = false,
                             Name = "Tucson"
                         },
@@ -5821,7 +5851,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 621,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9632),
                             IsDeleted = false,
                             Name = "Veloster"
                         },
@@ -5829,7 +5859,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 622,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9633),
                             IsDeleted = false,
                             Name = "Venue"
                         },
@@ -5837,7 +5867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 623,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9634),
                             IsDeleted = false,
                             Name = "Veracruz"
                         },
@@ -5845,7 +5875,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 624,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9634),
                             IsDeleted = false,
                             Name = "Verna"
                         },
@@ -5853,7 +5883,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 625,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9635),
                             IsDeleted = false,
                             Name = "Xcent"
                         },
@@ -5861,7 +5891,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 626,
                             CarMakeId = 40,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9636),
                             IsDeleted = false,
                             Name = "XG"
                         },
@@ -5869,7 +5899,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 627,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9638),
                             IsDeleted = false,
                             Name = "EX"
                         },
@@ -5877,7 +5907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 628,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9639),
                             IsDeleted = false,
                             Name = "FX"
                         },
@@ -5885,7 +5915,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 629,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9640),
                             IsDeleted = false,
                             Name = "G"
                         },
@@ -5893,7 +5923,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 630,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9641),
                             IsDeleted = false,
                             Name = "I35"
                         },
@@ -5901,7 +5931,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 631,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9642),
                             IsDeleted = false,
                             Name = "JX"
                         },
@@ -5909,7 +5939,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 632,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9642),
                             IsDeleted = false,
                             Name = "M"
                         },
@@ -5917,7 +5947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 633,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9643),
                             IsDeleted = false,
                             Name = "Q30"
                         },
@@ -5925,7 +5955,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 634,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9644),
                             IsDeleted = false,
                             Name = "Q40"
                         },
@@ -5933,7 +5963,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 635,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9645),
                             IsDeleted = false,
                             Name = "Q45"
                         },
@@ -5941,7 +5971,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 636,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9646),
                             IsDeleted = false,
                             Name = "Q50"
                         },
@@ -5949,7 +5979,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 637,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9647),
                             IsDeleted = false,
                             Name = "Q60"
                         },
@@ -5957,7 +5987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 638,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9648),
                             IsDeleted = false,
                             Name = "Q70"
                         },
@@ -5965,7 +5995,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 639,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9648),
                             IsDeleted = false,
                             Name = "QX30"
                         },
@@ -5973,7 +6003,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 640,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9649),
                             IsDeleted = false,
                             Name = "QX4"
                         },
@@ -5981,7 +6011,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 641,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9650),
                             IsDeleted = false,
                             Name = "QX50"
                         },
@@ -5989,7 +6019,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 642,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9651),
                             IsDeleted = false,
                             Name = "QX55"
                         },
@@ -5997,7 +6027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 643,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9652),
                             IsDeleted = false,
                             Name = "QX56"
                         },
@@ -6005,7 +6035,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 644,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9653),
                             IsDeleted = false,
                             Name = "QX60"
                         },
@@ -6013,7 +6043,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 645,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9654),
                             IsDeleted = false,
                             Name = "QX70"
                         },
@@ -6021,7 +6051,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 646,
                             CarMakeId = 41,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9655),
                             IsDeleted = false,
                             Name = "QX80"
                         },
@@ -6029,7 +6059,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 647,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9658),
                             IsDeleted = false,
                             Name = "Ascender"
                         },
@@ -6037,7 +6067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 648,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9658),
                             IsDeleted = false,
                             Name = "Axiom"
                         },
@@ -6045,7 +6075,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 649,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9683),
                             IsDeleted = false,
                             Name = "D-Max"
                         },
@@ -6053,7 +6083,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 650,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9685),
                             IsDeleted = false,
                             Name = "D-Max Rodeo"
                         },
@@ -6061,7 +6091,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 651,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9685),
                             IsDeleted = false,
                             Name = "I280"
                         },
@@ -6069,7 +6099,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 652,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9686),
                             IsDeleted = false,
                             Name = "I290"
                         },
@@ -6077,7 +6107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 653,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9687),
                             IsDeleted = false,
                             Name = "I350"
                         },
@@ -6085,7 +6115,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 654,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9688),
                             IsDeleted = false,
                             Name = "I370"
                         },
@@ -6093,7 +6123,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 655,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9689),
                             IsDeleted = false,
                             Name = "mu-X"
                         },
@@ -6101,7 +6131,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 656,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9690),
                             IsDeleted = false,
                             Name = "Rodeo"
                         },
@@ -6109,7 +6139,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 657,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9691),
                             IsDeleted = false,
                             Name = "Trooper"
                         },
@@ -6117,7 +6147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 658,
                             CarMakeId = 42,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9692),
                             IsDeleted = false,
                             Name = "VehiCross"
                         },
@@ -6125,7 +6155,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 659,
                             CarMakeId = 43,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9694),
                             IsDeleted = false,
                             Name = "Daily"
                         },
@@ -6133,7 +6163,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 660,
                             CarMakeId = 44,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9696),
                             IsDeleted = false,
                             Name = "iEV7S"
                         },
@@ -6141,7 +6171,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 661,
                             CarMakeId = 44,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9697),
                             IsDeleted = false,
                             Name = "T6"
                         },
@@ -6149,7 +6179,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 662,
                             CarMakeId = 45,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9699),
                             IsDeleted = false,
                             Name = "E-Pace"
                         },
@@ -6157,7 +6187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 663,
                             CarMakeId = 45,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9700),
                             IsDeleted = false,
                             Name = "F-Pace"
                         },
@@ -6165,7 +6195,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 664,
                             CarMakeId = 45,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9700),
                             IsDeleted = false,
                             Name = "F-Type"
                         },
@@ -6173,7 +6203,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 665,
                             CarMakeId = 45,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9701),
                             IsDeleted = false,
                             Name = "I-Pace"
                         },
@@ -6181,7 +6211,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 666,
                             CarMakeId = 45,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9702),
                             IsDeleted = false,
                             Name = "S-Type"
                         },
@@ -6189,7 +6219,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 667,
                             CarMakeId = 45,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9704),
                             IsDeleted = false,
                             Name = "X-Type"
                         },
@@ -6197,7 +6227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 668,
                             CarMakeId = 45,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9705),
                             IsDeleted = false,
                             Name = "XE"
                         },
@@ -6205,7 +6235,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 669,
                             CarMakeId = 45,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9706),
                             IsDeleted = false,
                             Name = "XF"
                         },
@@ -6213,7 +6243,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 670,
                             CarMakeId = 45,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9707),
                             IsDeleted = false,
                             Name = "XJ"
                         },
@@ -6221,7 +6251,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 671,
                             CarMakeId = 45,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9708),
                             IsDeleted = false,
                             Name = "XK/XKR"
                         },
@@ -6229,7 +6259,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 672,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9709),
                             IsDeleted = false,
                             Name = "Cherokee"
                         },
@@ -6237,7 +6267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 673,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9710),
                             IsDeleted = false,
                             Name = "Commander"
                         },
@@ -6245,7 +6275,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 674,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9711),
                             IsDeleted = false,
                             Name = "Compass"
                         },
@@ -6253,7 +6283,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 675,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9712),
                             IsDeleted = false,
                             Name = "Gladiator"
                         },
@@ -6261,7 +6291,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 676,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9713),
                             IsDeleted = false,
                             Name = "Grand Cherokee"
                         },
@@ -6269,7 +6299,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 677,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9714),
                             IsDeleted = false,
                             Name = "Grand Wagoneer"
                         },
@@ -6277,7 +6307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 678,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9715),
                             IsDeleted = false,
                             Name = "Liberty"
                         },
@@ -6285,7 +6315,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 679,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9716),
                             IsDeleted = false,
                             Name = "Meridian"
                         },
@@ -6293,7 +6323,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 680,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9717),
                             IsDeleted = false,
                             Name = "Patriot"
                         },
@@ -6301,7 +6331,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 681,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9718),
                             IsDeleted = false,
                             Name = "Renegade"
                         },
@@ -6309,7 +6339,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 682,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9719),
                             IsDeleted = false,
                             Name = "Wagoneer"
                         },
@@ -6317,7 +6347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 683,
                             CarMakeId = 46,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9720),
                             IsDeleted = false,
                             Name = "Wrangler"
                         },
@@ -6325,7 +6355,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 684,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9722),
                             IsDeleted = false,
                             Name = "Carens"
                         },
@@ -6333,7 +6363,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 685,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9723),
                             IsDeleted = false,
                             Name = "Carnival"
                         },
@@ -6341,7 +6371,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 686,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9723),
                             IsDeleted = false,
                             Name = "Ceed"
                         },
@@ -6349,7 +6379,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 687,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9724),
                             IsDeleted = false,
                             Name = "Cerato"
                         },
@@ -6357,7 +6387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 688,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9725),
                             IsDeleted = false,
                             Name = "Clarus"
                         },
@@ -6365,7 +6395,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 689,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9726),
                             IsDeleted = false,
                             Name = "EV6"
                         },
@@ -6373,7 +6403,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 690,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9727),
                             IsDeleted = false,
                             Name = "Forte"
                         },
@@ -6381,7 +6411,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 691,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9728),
                             IsDeleted = false,
                             Name = "K5"
                         },
@@ -6389,7 +6419,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 692,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9729),
                             IsDeleted = false,
                             Name = "K8"
                         },
@@ -6397,7 +6427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 693,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9730),
                             IsDeleted = false,
                             Name = "K900"
                         },
@@ -6405,7 +6435,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 694,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9731),
                             IsDeleted = false,
                             Name = "Magentis"
                         },
@@ -6413,7 +6443,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 695,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9731),
                             IsDeleted = false,
                             Name = "Mohave"
                         },
@@ -6421,7 +6451,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 696,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9732),
                             IsDeleted = false,
                             Name = "Niro"
                         },
@@ -6429,7 +6459,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 697,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9733),
                             IsDeleted = false,
                             Name = "Opirus"
                         },
@@ -6437,7 +6467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 698,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9735),
                             IsDeleted = false,
                             Name = "Optima"
                         },
@@ -6445,7 +6475,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 699,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9736),
                             IsDeleted = false,
                             Name = "Picanto"
                         },
@@ -6453,7 +6483,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 700,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9737),
                             IsDeleted = false,
                             Name = "ProCeed"
                         },
@@ -6461,7 +6491,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 701,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9738),
                             IsDeleted = false,
                             Name = "Quoris"
                         },
@@ -6469,7 +6499,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 702,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9738),
                             IsDeleted = false,
                             Name = "Ray"
                         },
@@ -6477,7 +6507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 703,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9739),
                             IsDeleted = false,
                             Name = "Rio"
                         },
@@ -6485,7 +6515,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 704,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9740),
                             IsDeleted = false,
                             Name = "Rio X"
                         },
@@ -6493,7 +6523,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 705,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9741),
                             IsDeleted = false,
                             Name = "Rio X-Line"
                         },
@@ -6501,7 +6531,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 706,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9742),
                             IsDeleted = false,
                             Name = "Seltos"
                         },
@@ -6509,7 +6539,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 707,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9743),
                             IsDeleted = false,
                             Name = "Shuma"
                         },
@@ -6517,7 +6547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 708,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9744),
                             IsDeleted = false,
                             Name = "Sonet"
                         },
@@ -6525,7 +6555,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 709,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9745),
                             IsDeleted = false,
                             Name = "Sorento"
                         },
@@ -6533,7 +6563,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 710,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9745),
                             IsDeleted = false,
                             Name = "Sorento Prime"
                         },
@@ -6541,7 +6571,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 711,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9746),
                             IsDeleted = false,
                             Name = "Soul"
                         },
@@ -6549,7 +6579,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 712,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9747),
                             IsDeleted = false,
                             Name = "Spectra"
                         },
@@ -6557,7 +6587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 713,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9748),
                             IsDeleted = false,
                             Name = "Sportage"
                         },
@@ -6565,7 +6595,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 714,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9749),
                             IsDeleted = false,
                             Name = "Stinger"
                         },
@@ -6573,7 +6603,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 715,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9750),
                             IsDeleted = false,
                             Name = "Stonic"
                         },
@@ -6581,7 +6611,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 716,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9751),
                             IsDeleted = false,
                             Name = "Telluride"
                         },
@@ -6589,7 +6619,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 717,
                             CarMakeId = 47,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9752),
                             IsDeleted = false,
                             Name = "Venga"
                         },
@@ -6597,7 +6627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 718,
                             CarMakeId = 48,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9754),
                             IsDeleted = false,
                             Name = "Aventador"
                         },
@@ -6605,7 +6635,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 719,
                             CarMakeId = 48,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9755),
                             IsDeleted = false,
                             Name = "Centenario"
                         },
@@ -6613,7 +6643,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 720,
                             CarMakeId = 48,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9756),
                             IsDeleted = false,
                             Name = "Diablo"
                         },
@@ -6621,7 +6651,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 721,
                             CarMakeId = 48,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9757),
                             IsDeleted = false,
                             Name = "Gallardo"
                         },
@@ -6629,7 +6659,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 722,
                             CarMakeId = 48,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9758),
                             IsDeleted = false,
                             Name = "Huracan"
                         },
@@ -6637,7 +6667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 723,
                             CarMakeId = 48,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9759),
                             IsDeleted = false,
                             Name = "Murcielago"
                         },
@@ -6645,7 +6675,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 724,
                             CarMakeId = 48,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9760),
                             IsDeleted = false,
                             Name = "Reventon"
                         },
@@ -6653,7 +6683,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 725,
                             CarMakeId = 48,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9761),
                             IsDeleted = false,
                             Name = "Sian"
                         },
@@ -6661,7 +6691,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 726,
                             CarMakeId = 48,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9762),
                             IsDeleted = false,
                             Name = "Urus"
                         },
@@ -6669,7 +6699,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 727,
                             CarMakeId = 49,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9763),
                             IsDeleted = false,
                             Name = "Delta"
                         },
@@ -6677,7 +6707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 728,
                             CarMakeId = 49,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9764),
                             IsDeleted = false,
                             Name = "Lybra"
                         },
@@ -6685,7 +6715,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 729,
                             CarMakeId = 49,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9765),
                             IsDeleted = false,
                             Name = "Musa"
                         },
@@ -6693,7 +6723,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 730,
                             CarMakeId = 49,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9766),
                             IsDeleted = false,
                             Name = "Phedra"
                         },
@@ -6701,7 +6731,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 731,
                             CarMakeId = 49,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9767),
                             IsDeleted = false,
                             Name = "Thema"
                         },
@@ -6709,7 +6739,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 732,
                             CarMakeId = 49,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9768),
                             IsDeleted = false,
                             Name = "Thesis"
                         },
@@ -6717,7 +6747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 733,
                             CarMakeId = 49,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9769),
                             IsDeleted = false,
                             Name = "Ypsilon"
                         },
@@ -6725,7 +6755,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 734,
                             CarMakeId = 50,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9791),
                             IsDeleted = false,
                             Name = "Defender"
                         },
@@ -6733,7 +6763,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 735,
                             CarMakeId = 50,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9793),
                             IsDeleted = false,
                             Name = "Discovery"
                         },
@@ -6741,7 +6771,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 736,
                             CarMakeId = 50,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9793),
                             IsDeleted = false,
                             Name = "Discovery Sport"
                         },
@@ -6749,7 +6779,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 737,
                             CarMakeId = 50,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9794),
                             IsDeleted = false,
                             Name = "Evoque"
                         },
@@ -6757,7 +6787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 738,
                             CarMakeId = 50,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9795),
                             IsDeleted = false,
                             Name = "Freelander"
                         },
@@ -6765,7 +6795,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 739,
                             CarMakeId = 50,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9796),
                             IsDeleted = false,
                             Name = "Range Rover"
                         },
@@ -6773,7 +6803,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 740,
                             CarMakeId = 50,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9797),
                             IsDeleted = false,
                             Name = "Range Rover Sport"
                         },
@@ -6781,7 +6811,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 741,
                             CarMakeId = 50,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9798),
                             IsDeleted = false,
                             Name = "Range Rover Velar"
                         },
@@ -6789,7 +6819,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 742,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9800),
                             IsDeleted = false,
                             Name = "CT"
                         },
@@ -6797,7 +6827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 743,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9801),
                             IsDeleted = false,
                             Name = "ES"
                         },
@@ -6805,7 +6835,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 744,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9802),
                             IsDeleted = false,
                             Name = "GS"
                         },
@@ -6813,7 +6843,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 745,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9803),
                             IsDeleted = false,
                             Name = "GX"
                         },
@@ -6821,7 +6851,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 746,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9804),
                             IsDeleted = false,
                             Name = "HS"
                         },
@@ -6829,7 +6859,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 747,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9805),
                             IsDeleted = false,
                             Name = "IS"
                         },
@@ -6837,7 +6867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 748,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9806),
                             IsDeleted = false,
                             Name = "LC"
                         },
@@ -6845,7 +6875,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 749,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9807),
                             IsDeleted = false,
                             Name = "LFA"
                         },
@@ -6853,7 +6883,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 750,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9807),
                             IsDeleted = false,
                             Name = "LM"
                         },
@@ -6861,7 +6891,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 751,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9808),
                             IsDeleted = false,
                             Name = "LS"
                         },
@@ -6869,7 +6899,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 752,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9809),
                             IsDeleted = false,
                             Name = "LX"
                         },
@@ -6877,7 +6907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 753,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9810),
                             IsDeleted = false,
                             Name = "NX"
                         },
@@ -6885,7 +6915,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 754,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9811),
                             IsDeleted = false,
                             Name = "RC"
                         },
@@ -6893,7 +6923,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 755,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9812),
                             IsDeleted = false,
                             Name = "RC F"
                         },
@@ -6901,7 +6931,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 756,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9813),
                             IsDeleted = false,
                             Name = "RX"
                         },
@@ -6909,7 +6939,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 757,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9814),
                             IsDeleted = false,
                             Name = "SC"
                         },
@@ -6917,7 +6947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 758,
                             CarMakeId = 51,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9815),
                             IsDeleted = false,
                             Name = "UX"
                         },
@@ -6925,7 +6955,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 759,
                             CarMakeId = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9817),
                             IsDeleted = false,
                             Name = "Breez"
                         },
@@ -6933,7 +6963,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 760,
                             CarMakeId = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9818),
                             IsDeleted = false,
                             Name = "Cebrium"
                         },
@@ -6941,7 +6971,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 761,
                             CarMakeId = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9819),
                             IsDeleted = false,
                             Name = "Celliya"
                         },
@@ -6949,7 +6979,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 762,
                             CarMakeId = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9820),
                             IsDeleted = false,
                             Name = "Murman"
                         },
@@ -6957,7 +6987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 763,
                             CarMakeId = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9821),
                             IsDeleted = false,
                             Name = "Myway"
                         },
@@ -6965,7 +6995,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 764,
                             CarMakeId = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9822),
                             IsDeleted = false,
                             Name = "Smily"
                         },
@@ -6973,7 +7003,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 765,
                             CarMakeId = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9823),
                             IsDeleted = false,
                             Name = "Solano"
                         },
@@ -6981,7 +7011,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 766,
                             CarMakeId = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9823),
                             IsDeleted = false,
                             Name = "X50"
                         },
@@ -6989,7 +7019,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 767,
                             CarMakeId = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9824),
                             IsDeleted = false,
                             Name = "X60"
                         },
@@ -6997,7 +7027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 768,
                             CarMakeId = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9825),
                             IsDeleted = false,
                             Name = "X70"
                         },
@@ -7005,7 +7035,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 769,
                             CarMakeId = 52,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9826),
                             IsDeleted = false,
                             Name = "X80"
                         },
@@ -7013,7 +7043,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 770,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9828),
                             IsDeleted = false,
                             Name = "Aviator"
                         },
@@ -7021,7 +7051,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 771,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9829),
                             IsDeleted = false,
                             Name = "Corsair"
                         },
@@ -7029,7 +7059,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 772,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9830),
                             IsDeleted = false,
                             Name = "Mark LT"
                         },
@@ -7037,7 +7067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 773,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9831),
                             IsDeleted = false,
                             Name = "MKC"
                         },
@@ -7045,7 +7075,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 774,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9832),
                             IsDeleted = false,
                             Name = "MKS"
                         },
@@ -7053,7 +7083,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 775,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9833),
                             IsDeleted = false,
                             Name = "MKT"
                         },
@@ -7061,7 +7091,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 776,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9834),
                             IsDeleted = false,
                             Name = "MKX"
                         },
@@ -7069,7 +7099,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 777,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9835),
                             IsDeleted = false,
                             Name = "MKZ"
                         },
@@ -7077,7 +7107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 778,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9836),
                             IsDeleted = false,
                             Name = "Nautilus"
                         },
@@ -7085,7 +7115,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 779,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9837),
                             IsDeleted = false,
                             Name = "Navigator"
                         },
@@ -7093,7 +7123,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 780,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9838),
                             IsDeleted = false,
                             Name = "Town Car"
                         },
@@ -7101,7 +7131,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 781,
                             CarMakeId = 53,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9839),
                             IsDeleted = false,
                             Name = "Zephyr"
                         },
@@ -7109,7 +7139,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 782,
                             CarMakeId = 54,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9840),
                             IsDeleted = false,
                             Name = "Elise"
                         },
@@ -7117,7 +7147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 783,
                             CarMakeId = 54,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9841),
                             IsDeleted = false,
                             Name = "Europa S"
                         },
@@ -7125,7 +7155,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 784,
                             CarMakeId = 54,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9842),
                             IsDeleted = false,
                             Name = "Evora"
                         },
@@ -7133,7 +7163,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 785,
                             CarMakeId = 54,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9843),
                             IsDeleted = false,
                             Name = "Exige"
                         },
@@ -7141,7 +7171,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 786,
                             CarMakeId = 55,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9845),
                             IsDeleted = false,
                             Name = "B1"
                         },
@@ -7149,7 +7179,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 787,
                             CarMakeId = 55,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9846),
                             IsDeleted = false,
                             Name = "B2"
                         },
@@ -7157,7 +7187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 788,
                             CarMakeId = 56,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9848),
                             IsDeleted = false,
                             Name = "3200 GT"
                         },
@@ -7165,7 +7195,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 789,
                             CarMakeId = 56,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9849),
                             IsDeleted = false,
                             Name = "Ghibli"
                         },
@@ -7173,7 +7203,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 790,
                             CarMakeId = 56,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9850),
                             IsDeleted = false,
                             Name = "Gran Cabrio"
                         },
@@ -7181,7 +7211,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 791,
                             CarMakeId = 56,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9851),
                             IsDeleted = false,
                             Name = "Gran Turismo "
                         },
@@ -7189,7 +7219,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 792,
                             CarMakeId = 56,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9852),
                             IsDeleted = false,
                             Name = "Gran Turismo S"
                         },
@@ -7197,7 +7227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 793,
                             CarMakeId = 56,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9853),
                             IsDeleted = false,
                             Name = "Grecale"
                         },
@@ -7205,7 +7235,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 794,
                             CarMakeId = 56,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9854),
                             IsDeleted = false,
                             Name = "Levante"
                         },
@@ -7213,7 +7243,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 795,
                             CarMakeId = 56,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9855),
                             IsDeleted = false,
                             Name = "MC20"
                         },
@@ -7221,7 +7251,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 796,
                             CarMakeId = 56,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9856),
                             IsDeleted = false,
                             Name = "Quattroporte"
                         },
@@ -7229,7 +7259,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 797,
                             CarMakeId = 56,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9856),
                             IsDeleted = false,
                             Name = "Quattroporte S"
                         },
@@ -7237,7 +7267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 798,
                             CarMakeId = 57,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9858),
                             IsDeleted = false,
                             Name = "57"
                         },
@@ -7245,7 +7275,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 799,
                             CarMakeId = 57,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9859),
                             IsDeleted = false,
                             Name = "57 S"
                         },
@@ -7253,7 +7283,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 800,
                             CarMakeId = 57,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9860),
                             IsDeleted = false,
                             Name = "62"
                         },
@@ -7261,7 +7291,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 801,
                             CarMakeId = 57,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9861),
                             IsDeleted = false,
                             Name = "62 S"
                         },
@@ -7269,7 +7299,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 802,
                             CarMakeId = 57,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9862),
                             IsDeleted = false,
                             Name = "Landaulet"
                         },
@@ -7277,7 +7307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 803,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9864),
                             IsDeleted = false,
                             Name = "2"
                         },
@@ -7285,7 +7315,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 804,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9865),
                             IsDeleted = false,
                             Name = "3"
                         },
@@ -7293,7 +7323,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 805,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9866),
                             IsDeleted = false,
                             Name = "323"
                         },
@@ -7301,7 +7331,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 806,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9867),
                             IsDeleted = false,
                             Name = "5"
                         },
@@ -7309,7 +7339,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 807,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9868),
                             IsDeleted = false,
                             Name = "6"
                         },
@@ -7317,7 +7347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 808,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9869),
                             IsDeleted = false,
                             Name = "626"
                         },
@@ -7325,7 +7355,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 809,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9870),
                             IsDeleted = false,
                             Name = "B-Series"
                         },
@@ -7333,7 +7363,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 810,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9871),
                             IsDeleted = false,
                             Name = "BT-50"
                         },
@@ -7341,7 +7371,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 811,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9872),
                             IsDeleted = false,
                             Name = "CX-3"
                         },
@@ -7349,7 +7379,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 812,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9873),
                             IsDeleted = false,
                             Name = "CX-30"
                         },
@@ -7357,7 +7387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 813,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9874),
                             IsDeleted = false,
                             Name = "CX-30 EV"
                         },
@@ -7365,7 +7395,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 814,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9875),
                             IsDeleted = false,
                             Name = "CX-4"
                         },
@@ -7373,7 +7403,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 815,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9875),
                             IsDeleted = false,
                             Name = "CX-5"
                         },
@@ -7381,7 +7411,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 816,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9876),
                             IsDeleted = false,
                             Name = "CX-60"
                         },
@@ -7389,7 +7419,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 817,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9877),
                             IsDeleted = false,
                             Name = "CX-7"
                         },
@@ -7397,7 +7427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 818,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9878),
                             IsDeleted = false,
                             Name = "CX-8"
                         },
@@ -7405,7 +7435,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 819,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9900),
                             IsDeleted = false,
                             Name = "CX-9"
                         },
@@ -7413,7 +7443,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 820,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9901),
                             IsDeleted = false,
                             Name = "MPV"
                         },
@@ -7421,7 +7451,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 821,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9902),
                             IsDeleted = false,
                             Name = "MX-30"
                         },
@@ -7429,7 +7459,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 822,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9903),
                             IsDeleted = false,
                             Name = "MX-5"
                         },
@@ -7437,7 +7467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 823,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9904),
                             IsDeleted = false,
                             Name = "Premacy"
                         },
@@ -7445,7 +7475,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 824,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9905),
                             IsDeleted = false,
                             Name = "RX-7"
                         },
@@ -7453,7 +7483,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 825,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9906),
                             IsDeleted = false,
                             Name = "RX-8"
                         },
@@ -7461,7 +7491,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 826,
                             CarMakeId = 58,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9907),
                             IsDeleted = false,
                             Name = "Tribute"
                         },
@@ -7469,7 +7499,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 827,
                             CarMakeId = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9909),
                             IsDeleted = false,
                             Name = "540C"
                         },
@@ -7477,7 +7507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 828,
                             CarMakeId = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9909),
                             IsDeleted = false,
                             Name = "570S"
                         },
@@ -7485,7 +7515,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 829,
                             CarMakeId = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9910),
                             IsDeleted = false,
                             Name = "600LT"
                         },
@@ -7493,7 +7523,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 830,
                             CarMakeId = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9911),
                             IsDeleted = false,
                             Name = "650S"
                         },
@@ -7501,7 +7531,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 831,
                             CarMakeId = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9912),
                             IsDeleted = false,
                             Name = "675LT"
                         },
@@ -7509,7 +7539,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 832,
                             CarMakeId = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9913),
                             IsDeleted = false,
                             Name = "720S"
                         },
@@ -7517,7 +7547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 833,
                             CarMakeId = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9914),
                             IsDeleted = false,
                             Name = "720S Spider"
                         },
@@ -7525,7 +7555,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 834,
                             CarMakeId = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9915),
                             IsDeleted = false,
                             Name = "765LT"
                         },
@@ -7533,7 +7563,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 835,
                             CarMakeId = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9916),
                             IsDeleted = false,
                             Name = "Artura"
                         },
@@ -7541,7 +7571,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 836,
                             CarMakeId = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9917),
                             IsDeleted = false,
                             Name = "MP4-12C"
                         },
@@ -7549,7 +7579,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 837,
                             CarMakeId = 59,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9917),
                             IsDeleted = false,
                             Name = "P1"
                         },
@@ -7557,7 +7587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 838,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9920),
                             IsDeleted = false,
                             Name = "A-class"
                         },
@@ -7565,7 +7595,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 839,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9921),
                             IsDeleted = false,
                             Name = "AMG GT"
                         },
@@ -7573,7 +7603,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 840,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9922),
                             IsDeleted = false,
                             Name = "AMG GT 4-Door"
                         },
@@ -7581,7 +7611,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 841,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9923),
                             IsDeleted = false,
                             Name = "B-class"
                         },
@@ -7589,7 +7619,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 842,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9924),
                             IsDeleted = false,
                             Name = "C-class"
                         },
@@ -7597,7 +7627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 843,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9925),
                             IsDeleted = false,
                             Name = "C-class Sport Coupe"
                         },
@@ -7605,7 +7635,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 844,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9925),
                             IsDeleted = false,
                             Name = "Citan"
                         },
@@ -7613,7 +7643,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 845,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9926),
                             IsDeleted = false,
                             Name = "CL-class"
                         },
@@ -7621,7 +7651,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 846,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9927),
                             IsDeleted = false,
                             Name = "CLA-class"
                         },
@@ -7629,7 +7659,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 847,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9928),
                             IsDeleted = false,
                             Name = "CLC-class "
                         },
@@ -7637,7 +7667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 848,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9929),
                             IsDeleted = false,
                             Name = "CLK-class"
                         },
@@ -7645,7 +7675,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 849,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9930),
                             IsDeleted = false,
                             Name = "CLS-class"
                         },
@@ -7653,7 +7683,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 850,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9931),
                             IsDeleted = false,
                             Name = "E-class"
                         },
@@ -7661,7 +7691,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 851,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9932),
                             IsDeleted = false,
                             Name = "E-class Coupe"
                         },
@@ -7669,7 +7699,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 852,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9933),
                             IsDeleted = false,
                             Name = "EQA"
                         },
@@ -7677,7 +7707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 853,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9934),
                             IsDeleted = false,
                             Name = "EQB"
                         },
@@ -7685,7 +7715,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 854,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9935),
                             IsDeleted = false,
                             Name = "EQC"
                         },
@@ -7693,7 +7723,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 855,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9936),
                             IsDeleted = false,
                             Name = "EQE"
                         },
@@ -7701,7 +7731,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 856,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9937),
                             IsDeleted = false,
                             Name = "EQE AMG"
                         },
@@ -7709,7 +7739,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 857,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9938),
                             IsDeleted = false,
                             Name = "EQS"
                         },
@@ -7717,7 +7747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 858,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9939),
                             IsDeleted = false,
                             Name = "EQS AMG"
                         },
@@ -7725,7 +7755,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 859,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9940),
                             IsDeleted = false,
                             Name = "EQV"
                         },
@@ -7733,7 +7763,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 860,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9940),
                             IsDeleted = false,
                             Name = "G-class"
                         },
@@ -7741,7 +7771,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 861,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9941),
                             IsDeleted = false,
                             Name = "GL-class"
                         },
@@ -7749,7 +7779,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 862,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9942),
                             IsDeleted = false,
                             Name = "GLA-class"
                         },
@@ -7757,7 +7787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 863,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9943),
                             IsDeleted = false,
                             Name = "GLA-class AMG"
                         },
@@ -7765,7 +7795,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 864,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9944),
                             IsDeleted = false,
                             Name = "GLB-class"
                         },
@@ -7773,7 +7803,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 865,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9945),
                             IsDeleted = false,
                             Name = "GLC-class"
                         },
@@ -7781,7 +7811,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 866,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9946),
                             IsDeleted = false,
                             Name = "GLC-class AMG"
                         },
@@ -7789,7 +7819,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 867,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9947),
                             IsDeleted = false,
                             Name = "GLC-class Coupe"
                         },
@@ -7797,7 +7827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 868,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9948),
                             IsDeleted = false,
                             Name = "GLE-class"
                         },
@@ -7805,7 +7835,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 869,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9949),
                             IsDeleted = false,
                             Name = "GLE-class AMG"
                         },
@@ -7813,7 +7843,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 870,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9950),
                             IsDeleted = false,
                             Name = "GLE-class Coupe"
                         },
@@ -7821,7 +7851,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 871,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9951),
                             IsDeleted = false,
                             Name = "GLK-class"
                         },
@@ -7829,7 +7859,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 872,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9952),
                             IsDeleted = false,
                             Name = "GLS-class"
                         },
@@ -7837,7 +7867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 873,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9953),
                             IsDeleted = false,
                             Name = "GLS-class AMG"
                         },
@@ -7845,7 +7875,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 874,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9954),
                             IsDeleted = false,
                             Name = "M-class"
                         },
@@ -7853,7 +7883,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 875,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9955),
                             IsDeleted = false,
                             Name = "R-class"
                         },
@@ -7861,7 +7891,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 876,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9956),
                             IsDeleted = false,
                             Name = "S-class"
                         },
@@ -7869,7 +7899,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 877,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9957),
                             IsDeleted = false,
                             Name = "S-class Cabrio"
                         },
@@ -7877,7 +7907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 878,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9957),
                             IsDeleted = false,
                             Name = "S-class Coupe"
                         },
@@ -7885,7 +7915,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 879,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9958),
                             IsDeleted = false,
                             Name = "SL-class"
                         },
@@ -7893,7 +7923,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 880,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9959),
                             IsDeleted = false,
                             Name = "SL-Class AMG"
                         },
@@ -7901,7 +7931,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 881,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9960),
                             IsDeleted = false,
                             Name = "SLC-class"
                         },
@@ -7909,7 +7939,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 882,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9961),
                             IsDeleted = false,
                             Name = "SLK-class"
                         },
@@ -7917,7 +7947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 883,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9962),
                             IsDeleted = false,
                             Name = "SLR-class"
                         },
@@ -7925,7 +7955,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 884,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9963),
                             IsDeleted = false,
                             Name = "SLS AMG"
                         },
@@ -7933,7 +7963,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 885,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9964),
                             IsDeleted = false,
                             Name = "Sprinter"
                         },
@@ -7941,7 +7971,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 886,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9965),
                             IsDeleted = false,
                             Name = "Vaneo"
                         },
@@ -7949,7 +7979,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 887,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9966),
                             IsDeleted = false,
                             Name = "Viano"
                         },
@@ -7957,7 +7987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 888,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9967),
                             IsDeleted = false,
                             Name = "Vito"
                         },
@@ -7965,7 +7995,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 889,
                             CarMakeId = 60,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9968),
                             IsDeleted = false,
                             Name = "X-class"
                         },
@@ -7973,7 +8003,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 890,
                             CarMakeId = 61,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9969),
                             IsDeleted = false,
                             Name = "Grand Marquis"
                         },
@@ -7981,7 +8011,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 891,
                             CarMakeId = 61,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9970),
                             IsDeleted = false,
                             Name = "Mariner"
                         },
@@ -7989,7 +8019,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 892,
                             CarMakeId = 61,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9971),
                             IsDeleted = false,
                             Name = "Milan"
                         },
@@ -7997,7 +8027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 893,
                             CarMakeId = 61,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9972),
                             IsDeleted = false,
                             Name = "Montego"
                         },
@@ -8005,7 +8035,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 894,
                             CarMakeId = 61,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9973),
                             IsDeleted = false,
                             Name = "Monterey"
                         },
@@ -8013,7 +8043,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 895,
                             CarMakeId = 61,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9974),
                             IsDeleted = false,
                             Name = "Mountaineer"
                         },
@@ -8021,7 +8051,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 896,
                             CarMakeId = 61,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9975),
                             IsDeleted = false,
                             Name = "Sable"
                         },
@@ -8029,7 +8059,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 897,
                             CarMakeId = 62,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9977),
                             IsDeleted = false,
                             Name = "Hector"
                         },
@@ -8037,7 +8067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 898,
                             CarMakeId = 62,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9977),
                             IsDeleted = false,
                             Name = "TF"
                         },
@@ -8045,7 +8075,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 899,
                             CarMakeId = 62,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9978),
                             IsDeleted = false,
                             Name = "XPower SV"
                         },
@@ -8053,7 +8083,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 900,
                             CarMakeId = 62,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9980),
                             IsDeleted = false,
                             Name = "ZR"
                         },
@@ -8061,7 +8091,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 901,
                             CarMakeId = 62,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9980),
                             IsDeleted = false,
                             Name = "ZS"
                         },
@@ -8069,7 +8099,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 902,
                             CarMakeId = 62,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9981),
                             IsDeleted = false,
                             Name = "ZS EV"
                         },
@@ -8077,7 +8107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 903,
                             CarMakeId = 62,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 593, DateTimeKind.Utc).AddTicks(9982),
                             IsDeleted = false,
                             Name = "ZT"
                         },
@@ -8085,7 +8115,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 904,
                             CarMakeId = 62,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(3),
                             IsDeleted = false,
                             Name = "ZT-T"
                         },
@@ -8093,7 +8123,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 905,
                             CarMakeId = 63,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(5),
                             IsDeleted = false,
                             Name = "Clubman"
                         },
@@ -8101,7 +8131,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 906,
                             CarMakeId = 63,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(6),
                             IsDeleted = false,
                             Name = "Clubman S"
                         },
@@ -8109,7 +8139,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 907,
                             CarMakeId = 63,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(7),
                             IsDeleted = false,
                             Name = "Clubvan"
                         },
@@ -8117,7 +8147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 908,
                             CarMakeId = 63,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(8),
                             IsDeleted = false,
                             Name = "Cooper"
                         },
@@ -8125,7 +8155,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 909,
                             CarMakeId = 63,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(9),
                             IsDeleted = false,
                             Name = "Cooper Cabrio"
                         },
@@ -8133,7 +8163,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 910,
                             CarMakeId = 63,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(10),
                             IsDeleted = false,
                             Name = "Cooper S"
                         },
@@ -8141,7 +8171,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 911,
                             CarMakeId = 63,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(11),
                             IsDeleted = false,
                             Name = "Cooper S Cabrio"
                         },
@@ -8149,7 +8179,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 912,
                             CarMakeId = 63,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(12),
                             IsDeleted = false,
                             Name = "Cooper S Countryman All4"
                         },
@@ -8157,7 +8187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 913,
                             CarMakeId = 63,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(13),
                             IsDeleted = false,
                             Name = "Countryman"
                         },
@@ -8165,7 +8195,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 914,
                             CarMakeId = 63,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(14),
                             IsDeleted = false,
                             Name = "One"
                         },
@@ -8173,7 +8203,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 915,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(16),
                             IsDeleted = false,
                             Name = "3000 GT"
                         },
@@ -8181,7 +8211,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 916,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(17),
                             IsDeleted = false,
                             Name = "ASX"
                         },
@@ -8189,7 +8219,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 917,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(18),
                             IsDeleted = false,
                             Name = "Carisma"
                         },
@@ -8197,7 +8227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 918,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(19),
                             IsDeleted = false,
                             Name = "Colt"
                         },
@@ -8205,7 +8235,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 919,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(20),
                             IsDeleted = false,
                             Name = "Dignity"
                         },
@@ -8213,7 +8243,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 920,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(21),
                             IsDeleted = false,
                             Name = "Eclipse"
                         },
@@ -8221,7 +8251,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 921,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(144),
                             IsDeleted = false,
                             Name = "Eclipse Cross"
                         },
@@ -8229,7 +8259,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 922,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(145),
                             IsDeleted = false,
                             Name = "Endeavor"
                         },
@@ -8237,7 +8267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 923,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(146),
                             IsDeleted = false,
                             Name = "Galant"
                         },
@@ -8245,7 +8275,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 924,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(147),
                             IsDeleted = false,
                             Name = "Grandis"
                         },
@@ -8253,7 +8283,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 925,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(148),
                             IsDeleted = false,
                             Name = "i-MiEV"
                         },
@@ -8261,7 +8291,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 926,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(149),
                             IsDeleted = false,
                             Name = "L200"
                         },
@@ -8269,7 +8299,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 927,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(150),
                             IsDeleted = false,
                             Name = "Lancer"
                         },
@@ -8277,7 +8307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 928,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(150),
                             IsDeleted = false,
                             Name = "Lancer Evo"
                         },
@@ -8285,7 +8315,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 929,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(152),
                             IsDeleted = false,
                             Name = "Mirage"
                         },
@@ -8293,7 +8323,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 930,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(152),
                             IsDeleted = false,
                             Name = "Outlander"
                         },
@@ -8301,7 +8331,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 931,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(153),
                             IsDeleted = false,
                             Name = "Outlander Sport"
                         },
@@ -8309,7 +8339,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 932,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(154),
                             IsDeleted = false,
                             Name = "Outlander XL"
                         },
@@ -8317,7 +8347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 933,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(155),
                             IsDeleted = false,
                             Name = "Pajero"
                         },
@@ -8325,7 +8355,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 934,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(156),
                             IsDeleted = false,
                             Name = "Pajero Pinin"
                         },
@@ -8333,7 +8363,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 935,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(157),
                             IsDeleted = false,
                             Name = "Pajero Sport"
                         },
@@ -8341,7 +8371,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 936,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(158),
                             IsDeleted = false,
                             Name = "Raider"
                         },
@@ -8349,7 +8379,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 937,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(159),
                             IsDeleted = false,
                             Name = "Space Gear"
                         },
@@ -8357,7 +8387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 938,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(160),
                             IsDeleted = false,
                             Name = "Space Runner"
                         },
@@ -8365,7 +8395,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 939,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(161),
                             IsDeleted = false,
                             Name = "Space Star"
                         },
@@ -8373,7 +8403,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 940,
                             CarMakeId = 64,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(161),
                             IsDeleted = false,
                             Name = "Xpander"
                         },
@@ -8381,7 +8411,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 941,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(164),
                             IsDeleted = false,
                             Name = "350Z"
                         },
@@ -8389,7 +8419,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 942,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(165),
                             IsDeleted = false,
                             Name = "370Z"
                         },
@@ -8397,7 +8427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 943,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(165),
                             IsDeleted = false,
                             Name = "Almera"
                         },
@@ -8405,7 +8435,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 944,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(166),
                             IsDeleted = false,
                             Name = "Almera Classic"
                         },
@@ -8413,7 +8443,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 945,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(167),
                             IsDeleted = false,
                             Name = "Almera Tino"
                         },
@@ -8421,7 +8451,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 946,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(168),
                             IsDeleted = false,
                             Name = "Altima"
                         },
@@ -8429,7 +8459,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 947,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(169),
                             IsDeleted = false,
                             Name = "Ariya"
                         },
@@ -8437,7 +8467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 948,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(170),
                             IsDeleted = false,
                             Name = "Armada"
                         },
@@ -8445,7 +8475,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 949,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(171),
                             IsDeleted = false,
                             Name = "Bluebird Sylphy"
                         },
@@ -8453,7 +8483,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 950,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(172),
                             IsDeleted = false,
                             Name = "Frontier"
                         },
@@ -8461,7 +8491,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 951,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(173),
                             IsDeleted = false,
                             Name = "GT-R"
                         },
@@ -8469,7 +8499,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 952,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(174),
                             IsDeleted = false,
                             Name = "Juke"
                         },
@@ -8477,7 +8507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 953,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(175),
                             IsDeleted = false,
                             Name = "Leaf"
                         },
@@ -8485,7 +8515,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 954,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(175),
                             IsDeleted = false,
                             Name = "Maxima"
                         },
@@ -8493,7 +8523,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 955,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(176),
                             IsDeleted = false,
                             Name = "Micra"
                         },
@@ -8501,7 +8531,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 956,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(177),
                             IsDeleted = false,
                             Name = "Murano"
                         },
@@ -8509,7 +8539,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 957,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(178),
                             IsDeleted = false,
                             Name = "Navara"
                         },
@@ -8517,7 +8547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 958,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(179),
                             IsDeleted = false,
                             Name = "Note"
                         },
@@ -8525,7 +8555,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 959,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(180),
                             IsDeleted = false,
                             Name = "NP300"
                         },
@@ -8533,7 +8563,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 960,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(181),
                             IsDeleted = false,
                             Name = "Pathfinder"
                         },
@@ -8541,7 +8571,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 961,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(182),
                             IsDeleted = false,
                             Name = "Patrol"
                         },
@@ -8549,7 +8579,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 962,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(183),
                             IsDeleted = false,
                             Name = "Primera"
                         },
@@ -8557,7 +8587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 963,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(183),
                             IsDeleted = false,
                             Name = "Qashqai"
                         },
@@ -8565,7 +8595,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 964,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(184),
                             IsDeleted = false,
                             Name = "Qashqai+2"
                         },
@@ -8573,7 +8603,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 965,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(185),
                             IsDeleted = false,
                             Name = "Quest"
                         },
@@ -8581,7 +8611,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 966,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(186),
                             IsDeleted = false,
                             Name = "Rogue"
                         },
@@ -8589,7 +8619,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 967,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(187),
                             IsDeleted = false,
                             Name = "Sentra"
                         },
@@ -8597,7 +8627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 968,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(188),
                             IsDeleted = false,
                             Name = "Skyline"
                         },
@@ -8605,7 +8635,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 969,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(189),
                             IsDeleted = false,
                             Name = "Sylphy"
                         },
@@ -8613,7 +8643,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 970,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(189),
                             IsDeleted = false,
                             Name = "Teana"
                         },
@@ -8621,7 +8651,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 971,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(190),
                             IsDeleted = false,
                             Name = "Terrano"
                         },
@@ -8629,7 +8659,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 972,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(191),
                             IsDeleted = false,
                             Name = "Tiida"
                         },
@@ -8637,7 +8667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 973,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(192),
                             IsDeleted = false,
                             Name = "Titan"
                         },
@@ -8645,7 +8675,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 974,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(193),
                             IsDeleted = false,
                             Name = "Titan XD"
                         },
@@ -8653,7 +8683,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 975,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(194),
                             IsDeleted = false,
                             Name = "X-Trail"
                         },
@@ -8661,7 +8691,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 976,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(195),
                             IsDeleted = false,
                             Name = "XTerra"
                         },
@@ -8669,7 +8699,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 977,
                             CarMakeId = 65,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(196),
                             IsDeleted = false,
                             Name = "Z"
                         },
@@ -8677,7 +8707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 978,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(198),
                             IsDeleted = false,
                             Name = "Adam"
                         },
@@ -8685,7 +8715,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 979,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(199),
                             IsDeleted = false,
                             Name = "Agila"
                         },
@@ -8693,7 +8723,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 980,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(200),
                             IsDeleted = false,
                             Name = "Ampera-e"
                         },
@@ -8701,7 +8731,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 981,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(200),
                             IsDeleted = false,
                             Name = "Antara"
                         },
@@ -8709,7 +8739,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 982,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(201),
                             IsDeleted = false,
                             Name = "Astra"
                         },
@@ -8717,7 +8747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 983,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(202),
                             IsDeleted = false,
                             Name = "Astra GTC"
                         },
@@ -8725,7 +8755,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 984,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(203),
                             IsDeleted = false,
                             Name = "Astra OPC"
                         },
@@ -8733,7 +8763,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 985,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(204),
                             IsDeleted = false,
                             Name = "Cascada"
                         },
@@ -8741,7 +8771,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 986,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(205),
                             IsDeleted = false,
                             Name = "Combo"
                         },
@@ -8749,7 +8779,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 987,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(206),
                             IsDeleted = false,
                             Name = "Corsa"
                         },
@@ -8757,7 +8787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 988,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(207),
                             IsDeleted = false,
                             Name = "Corsa OPC"
                         },
@@ -8765,7 +8795,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 989,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(208),
                             IsDeleted = false,
                             Name = "Crossland"
                         },
@@ -8773,7 +8803,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 990,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(209),
                             IsDeleted = false,
                             Name = "Crossland X"
                         },
@@ -8781,7 +8811,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 991,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(209),
                             IsDeleted = false,
                             Name = "Frontera"
                         },
@@ -8789,7 +8819,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 992,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(210),
                             IsDeleted = false,
                             Name = "Grandland"
                         },
@@ -8797,7 +8827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 993,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(232),
                             IsDeleted = false,
                             Name = "Grandland X"
                         },
@@ -8805,7 +8835,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 994,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(234),
                             IsDeleted = false,
                             Name = "Insignia"
                         },
@@ -8813,7 +8843,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 995,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(234),
                             IsDeleted = false,
                             Name = "Insignia OPC"
                         },
@@ -8821,7 +8851,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 996,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(235),
                             IsDeleted = false,
                             Name = "Karl"
                         },
@@ -8829,7 +8859,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 997,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(236),
                             IsDeleted = false,
                             Name = "Meriva"
                         },
@@ -8837,7 +8867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 998,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(237),
                             IsDeleted = false,
                             Name = "Mokka"
                         },
@@ -8845,7 +8875,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 999,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(238),
                             IsDeleted = false,
                             Name = "Omega"
                         },
@@ -8853,7 +8883,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1000,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(239),
                             IsDeleted = false,
                             Name = "Signum"
                         },
@@ -8861,7 +8891,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1001,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(240),
                             IsDeleted = false,
                             Name = "Speedster"
                         },
@@ -8869,7 +8899,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1002,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(241),
                             IsDeleted = false,
                             Name = "Tigra"
                         },
@@ -8877,7 +8907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1003,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(242),
                             IsDeleted = false,
                             Name = "Vectra"
                         },
@@ -8885,7 +8915,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1004,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(243),
                             IsDeleted = false,
                             Name = "Vivaro"
                         },
@@ -8893,7 +8923,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1005,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(243),
                             IsDeleted = false,
                             Name = "Zafira"
                         },
@@ -8901,7 +8931,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1006,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(244),
                             IsDeleted = false,
                             Name = "Zafira Life"
                         },
@@ -8909,7 +8939,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1007,
                             CarMakeId = 66,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(245),
                             IsDeleted = false,
                             Name = "Zafira Tourer"
                         },
@@ -8917,7 +8947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1008,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(247),
                             IsDeleted = false,
                             Name = "1007"
                         },
@@ -8925,7 +8955,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1009,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(248),
                             IsDeleted = false,
                             Name = "107"
                         },
@@ -8933,7 +8963,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1010,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(249),
                             IsDeleted = false,
                             Name = "108"
                         },
@@ -8941,7 +8971,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1011,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(250),
                             IsDeleted = false,
                             Name = "2008"
                         },
@@ -8949,7 +8979,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1012,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(251),
                             IsDeleted = false,
                             Name = "206"
                         },
@@ -8957,7 +8987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1013,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(252),
                             IsDeleted = false,
                             Name = "207"
                         },
@@ -8965,7 +8995,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1014,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(253),
                             IsDeleted = false,
                             Name = "208"
                         },
@@ -8973,7 +9003,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1015,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(254),
                             IsDeleted = false,
                             Name = "3008"
                         },
@@ -8981,7 +9011,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1016,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(255),
                             IsDeleted = false,
                             Name = "301"
                         },
@@ -8989,7 +9019,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1017,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(256),
                             IsDeleted = false,
                             Name = "307"
                         },
@@ -8997,7 +9027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1018,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(257),
                             IsDeleted = false,
                             Name = "308"
                         },
@@ -9005,7 +9035,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1019,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(258),
                             IsDeleted = false,
                             Name = "4007"
                         },
@@ -9013,7 +9043,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1020,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(259),
                             IsDeleted = false,
                             Name = "4008"
                         },
@@ -9021,7 +9051,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1021,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(259),
                             IsDeleted = false,
                             Name = "406"
                         },
@@ -9029,7 +9059,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1022,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(260),
                             IsDeleted = false,
                             Name = "407"
                         },
@@ -9037,7 +9067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1023,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(261),
                             IsDeleted = false,
                             Name = "408"
                         },
@@ -9045,7 +9075,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1024,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(262),
                             IsDeleted = false,
                             Name = "5008"
                         },
@@ -9053,7 +9083,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1025,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(263),
                             IsDeleted = false,
                             Name = "508"
                         },
@@ -9061,7 +9091,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1026,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(264),
                             IsDeleted = false,
                             Name = "607"
                         },
@@ -9069,7 +9099,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1027,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(265),
                             IsDeleted = false,
                             Name = "807"
                         },
@@ -9077,7 +9107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1028,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(266),
                             IsDeleted = false,
                             Name = "Boxer"
                         },
@@ -9085,7 +9115,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1029,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(267),
                             IsDeleted = false,
                             Name = "Expert"
                         },
@@ -9093,7 +9123,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1030,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(268),
                             IsDeleted = false,
                             Name = "Landtrek"
                         },
@@ -9101,7 +9131,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1031,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(269),
                             IsDeleted = false,
                             Name = "Manager"
                         },
@@ -9109,7 +9139,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1032,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(269),
                             IsDeleted = false,
                             Name = "Partner"
                         },
@@ -9117,7 +9147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1033,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(270),
                             IsDeleted = false,
                             Name = "RCZ Sport"
                         },
@@ -9125,7 +9155,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1034,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(271),
                             IsDeleted = false,
                             Name = "Rifter"
                         },
@@ -9133,7 +9163,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1035,
                             CarMakeId = 67,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(272),
                             IsDeleted = false,
                             Name = "Traveller"
                         },
@@ -9141,7 +9171,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1036,
                             CarMakeId = 68,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(275),
                             IsDeleted = false,
                             Name = "Road Runner"
                         },
@@ -9149,7 +9179,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1037,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(276),
                             IsDeleted = false,
                             Name = "Aztec"
                         },
@@ -9157,7 +9187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1038,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(277),
                             IsDeleted = false,
                             Name = "Bonneville"
                         },
@@ -9165,7 +9195,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1039,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(278),
                             IsDeleted = false,
                             Name = "Firebird"
                         },
@@ -9173,7 +9203,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1040,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(279),
                             IsDeleted = false,
                             Name = "G5 Pursuit"
                         },
@@ -9181,7 +9211,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1041,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(280),
                             IsDeleted = false,
                             Name = "G6"
                         },
@@ -9189,7 +9219,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1042,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(281),
                             IsDeleted = false,
                             Name = "G8"
                         },
@@ -9197,7 +9227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1043,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(282),
                             IsDeleted = false,
                             Name = "Grand AM"
                         },
@@ -9205,7 +9235,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1044,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(283),
                             IsDeleted = false,
                             Name = "Grand Prix"
                         },
@@ -9213,7 +9243,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1045,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(283),
                             IsDeleted = false,
                             Name = "GTO"
                         },
@@ -9221,7 +9251,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1046,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(284),
                             IsDeleted = false,
                             Name = "Montana"
                         },
@@ -9229,7 +9259,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1047,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(285),
                             IsDeleted = false,
                             Name = "Solstice"
                         },
@@ -9237,7 +9267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1048,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(286),
                             IsDeleted = false,
                             Name = "Sunfire"
                         },
@@ -9245,7 +9275,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1049,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(287),
                             IsDeleted = false,
                             Name = "Torrent"
                         },
@@ -9253,7 +9283,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1050,
                             CarMakeId = 69,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(288),
                             IsDeleted = false,
                             Name = "Vibe"
                         },
@@ -9261,7 +9291,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1051,
                             CarMakeId = 70,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(290),
                             IsDeleted = false,
                             Name = "718 Boxster"
                         },
@@ -9269,7 +9299,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1052,
                             CarMakeId = 70,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(290),
                             IsDeleted = false,
                             Name = "718 Cayman"
                         },
@@ -9277,7 +9307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1053,
                             CarMakeId = 70,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(291),
                             IsDeleted = false,
                             Name = "911"
                         },
@@ -9285,7 +9315,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1054,
                             CarMakeId = 70,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(292),
                             IsDeleted = false,
                             Name = "Boxster"
                         },
@@ -9293,7 +9323,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1055,
                             CarMakeId = 70,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(293),
                             IsDeleted = false,
                             Name = "Cayenne"
                         },
@@ -9301,7 +9331,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1056,
                             CarMakeId = 70,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(294),
                             IsDeleted = false,
                             Name = "Cayman"
                         },
@@ -9309,7 +9339,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1057,
                             CarMakeId = 70,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(295),
                             IsDeleted = false,
                             Name = "Macan"
                         },
@@ -9317,7 +9347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1058,
                             CarMakeId = 70,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(296),
                             IsDeleted = false,
                             Name = "Panamera"
                         },
@@ -9325,7 +9355,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1059,
                             CarMakeId = 70,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(297),
                             IsDeleted = false,
                             Name = "Taycan"
                         },
@@ -9333,7 +9363,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1060,
                             CarMakeId = 71,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(299),
                             IsDeleted = false,
                             Name = "Gentra"
                         },
@@ -9341,7 +9371,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1061,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(301),
                             IsDeleted = false,
                             Name = "Alaskan"
                         },
@@ -9349,7 +9379,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1062,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(302),
                             IsDeleted = false,
                             Name = "Arkana"
                         },
@@ -9357,7 +9387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1063,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(303),
                             IsDeleted = false,
                             Name = "Avantime"
                         },
@@ -9365,7 +9395,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1064,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(304),
                             IsDeleted = false,
                             Name = "Captur"
                         },
@@ -9373,7 +9403,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1065,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(305),
                             IsDeleted = false,
                             Name = "Clio"
                         },
@@ -9381,7 +9411,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1066,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(306),
                             IsDeleted = false,
                             Name = "Duster"
                         },
@@ -9389,7 +9419,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1067,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(307),
                             IsDeleted = false,
                             Name = "Duster Oroch"
                         },
@@ -9397,7 +9427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1068,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(307),
                             IsDeleted = false,
                             Name = "Espace"
                         },
@@ -9405,7 +9435,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1069,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(308),
                             IsDeleted = false,
                             Name = "Fluence"
                         },
@@ -9413,7 +9443,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1070,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(309),
                             IsDeleted = false,
                             Name = "Grand Scenic"
                         },
@@ -9421,7 +9451,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1071,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(310),
                             IsDeleted = false,
                             Name = "Kadjar"
                         },
@@ -9429,7 +9459,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1072,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(311),
                             IsDeleted = false,
                             Name = "Kangoo"
                         },
@@ -9437,7 +9467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1073,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(312),
                             IsDeleted = false,
                             Name = "Kaptur"
                         },
@@ -9445,7 +9475,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1074,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(313),
                             IsDeleted = false,
                             Name = "Kiger"
                         },
@@ -9453,7 +9483,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1075,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(314),
                             IsDeleted = false,
                             Name = "Koleos"
                         },
@@ -9461,7 +9491,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1076,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(315),
                             IsDeleted = false,
                             Name = "Laguna"
                         },
@@ -9469,7 +9499,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1077,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(316),
                             IsDeleted = false,
                             Name = "Latitude"
                         },
@@ -9477,7 +9507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1078,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(317),
                             IsDeleted = false,
                             Name = "Logan"
                         },
@@ -9485,7 +9515,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1079,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(337),
                             IsDeleted = false,
                             Name = "Logan Stepway"
                         },
@@ -9493,7 +9523,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1080,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(338),
                             IsDeleted = false,
                             Name = "Master"
                         },
@@ -9501,7 +9531,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1081,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(339),
                             IsDeleted = false,
                             Name = "Megane"
                         },
@@ -9509,7 +9539,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1082,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(340),
                             IsDeleted = false,
                             Name = "Modus"
                         },
@@ -9517,7 +9547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1083,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(341),
                             IsDeleted = false,
                             Name = "Sandero"
                         },
@@ -9525,7 +9555,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1084,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(342),
                             IsDeleted = false,
                             Name = "Sandero Stepway"
                         },
@@ -9533,7 +9563,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1085,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(343),
                             IsDeleted = false,
                             Name = "Scenic"
                         },
@@ -9541,7 +9571,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1086,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(344),
                             IsDeleted = false,
                             Name = "Symbol"
                         },
@@ -9549,7 +9579,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1087,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(345),
                             IsDeleted = false,
                             Name = "Taliant"
                         },
@@ -9557,7 +9587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1088,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(346),
                             IsDeleted = false,
                             Name = "Talisman"
                         },
@@ -9565,7 +9595,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1089,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(346),
                             IsDeleted = false,
                             Name = "Trafic"
                         },
@@ -9573,7 +9603,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1090,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(347),
                             IsDeleted = false,
                             Name = "Triber"
                         },
@@ -9581,7 +9611,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1091,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(348),
                             IsDeleted = false,
                             Name = "Twingo"
                         },
@@ -9589,7 +9619,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1092,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(349),
                             IsDeleted = false,
                             Name = "Twizy"
                         },
@@ -9597,7 +9627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1093,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(350),
                             IsDeleted = false,
                             Name = "Vel Satis"
                         },
@@ -9605,7 +9635,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1094,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(351),
                             IsDeleted = false,
                             Name = "Wind"
                         },
@@ -9613,7 +9643,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1095,
                             CarMakeId = 72,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(352),
                             IsDeleted = false,
                             Name = "Zoe"
                         },
@@ -9621,7 +9651,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1096,
                             CarMakeId = 73,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(354),
                             IsDeleted = false,
                             Name = "Cullinan"
                         },
@@ -9629,7 +9659,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1097,
                             CarMakeId = 73,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(355),
                             IsDeleted = false,
                             Name = "Dawn"
                         },
@@ -9637,7 +9667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1098,
                             CarMakeId = 73,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(355),
                             IsDeleted = false,
                             Name = "Ghost"
                         },
@@ -9645,7 +9675,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1099,
                             CarMakeId = 73,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(356),
                             IsDeleted = false,
                             Name = "Phantom"
                         },
@@ -9653,7 +9683,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1100,
                             CarMakeId = 73,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(357),
                             IsDeleted = false,
                             Name = "Wraith"
                         },
@@ -9661,7 +9691,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1101,
                             CarMakeId = 74,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(359),
                             IsDeleted = false,
                             Name = "25"
                         },
@@ -9669,7 +9699,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1102,
                             CarMakeId = 74,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(360),
                             IsDeleted = false,
                             Name = "400"
                         },
@@ -9677,7 +9707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1103,
                             CarMakeId = 74,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(361),
                             IsDeleted = false,
                             Name = "45"
                         },
@@ -9685,7 +9715,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1104,
                             CarMakeId = 74,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(362),
                             IsDeleted = false,
                             Name = "600"
                         },
@@ -9693,7 +9723,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1105,
                             CarMakeId = 74,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(363),
                             IsDeleted = false,
                             Name = "75"
                         },
@@ -9701,7 +9731,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1106,
                             CarMakeId = 74,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(364),
                             IsDeleted = false,
                             Name = "Streetwise"
                         },
@@ -9709,7 +9739,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1107,
                             CarMakeId = 75,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(366),
                             IsDeleted = false,
                             Name = "9-2x"
                         },
@@ -9717,7 +9747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1108,
                             CarMakeId = 75,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(366),
                             IsDeleted = false,
                             Name = "9-3"
                         },
@@ -9725,7 +9755,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1109,
                             CarMakeId = 75,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(367),
                             IsDeleted = false,
                             Name = "9-4x"
                         },
@@ -9733,7 +9763,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1110,
                             CarMakeId = 75,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(368),
                             IsDeleted = false,
                             Name = "9-5"
                         },
@@ -9741,7 +9771,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1111,
                             CarMakeId = 75,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(369),
                             IsDeleted = false,
                             Name = "9-7x"
                         },
@@ -9749,7 +9779,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1112,
                             CarMakeId = 76,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(371),
                             IsDeleted = false,
                             Name = "Aura"
                         },
@@ -9757,7 +9787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1113,
                             CarMakeId = 76,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(372),
                             IsDeleted = false,
                             Name = "Ion"
                         },
@@ -9765,7 +9795,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1114,
                             CarMakeId = 76,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(373),
                             IsDeleted = false,
                             Name = "LW"
                         },
@@ -9773,7 +9803,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1115,
                             CarMakeId = 76,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(374),
                             IsDeleted = false,
                             Name = "Outlook"
                         },
@@ -9781,7 +9811,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1116,
                             CarMakeId = 76,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(375),
                             IsDeleted = false,
                             Name = "Sky"
                         },
@@ -9789,7 +9819,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1117,
                             CarMakeId = 76,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(376),
                             IsDeleted = false,
                             Name = "Vue"
                         },
@@ -9797,7 +9827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1118,
                             CarMakeId = 77,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(377),
                             IsDeleted = false,
                             Name = "FR-S"
                         },
@@ -9805,7 +9835,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1119,
                             CarMakeId = 77,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(378),
                             IsDeleted = false,
                             Name = "tC"
                         },
@@ -9813,7 +9843,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1120,
                             CarMakeId = 77,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(379),
                             IsDeleted = false,
                             Name = "xA"
                         },
@@ -9821,7 +9851,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1121,
                             CarMakeId = 77,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(380),
                             IsDeleted = false,
                             Name = "xB"
                         },
@@ -9829,7 +9859,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1122,
                             CarMakeId = 77,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(381),
                             IsDeleted = false,
                             Name = "xD"
                         },
@@ -9837,7 +9867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1123,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(383),
                             IsDeleted = false,
                             Name = "Alhambra"
                         },
@@ -9845,7 +9875,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1124,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(384),
                             IsDeleted = false,
                             Name = "Altea"
                         },
@@ -9853,7 +9883,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1125,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(385),
                             IsDeleted = false,
                             Name = "Altea Freetrack"
                         },
@@ -9861,7 +9891,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1126,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(385),
                             IsDeleted = false,
                             Name = "Altea XL"
                         },
@@ -9869,7 +9899,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1127,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(387),
                             IsDeleted = false,
                             Name = "Arona"
                         },
@@ -9877,7 +9907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1128,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(387),
                             IsDeleted = false,
                             Name = "Arosa"
                         },
@@ -9885,7 +9915,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1129,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(388),
                             IsDeleted = false,
                             Name = "Ateca"
                         },
@@ -9893,7 +9923,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1130,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(389),
                             IsDeleted = false,
                             Name = "Cordoba"
                         },
@@ -9901,7 +9931,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1131,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(390),
                             IsDeleted = false,
                             Name = "Exeo"
                         },
@@ -9909,7 +9939,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1132,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(391),
                             IsDeleted = false,
                             Name = "Ibiza"
                         },
@@ -9917,7 +9947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1133,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(392),
                             IsDeleted = false,
                             Name = "Leon"
                         },
@@ -9925,7 +9955,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1134,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(393),
                             IsDeleted = false,
                             Name = "Mii"
                         },
@@ -9933,7 +9963,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1135,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(394),
                             IsDeleted = false,
                             Name = "Tarraco"
                         },
@@ -9941,7 +9971,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1136,
                             CarMakeId = 78,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(395),
                             IsDeleted = false,
                             Name = "Toledo"
                         },
@@ -9949,7 +9979,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1137,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(396),
                             IsDeleted = false,
                             Name = "Citigo"
                         },
@@ -9957,7 +9987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1138,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(397),
                             IsDeleted = false,
                             Name = "Enyaq iV"
                         },
@@ -9965,7 +9995,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1139,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(398),
                             IsDeleted = false,
                             Name = "Fabia"
                         },
@@ -9973,7 +10003,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1140,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(399),
                             IsDeleted = false,
                             Name = "Felicia"
                         },
@@ -9981,7 +10011,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1141,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(400),
                             IsDeleted = false,
                             Name = "Kamiq"
                         },
@@ -9989,7 +10019,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1142,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(401),
                             IsDeleted = false,
                             Name = "Karoq"
                         },
@@ -9997,7 +10027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1143,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(402),
                             IsDeleted = false,
                             Name = "Kodiaq"
                         },
@@ -10005,7 +10035,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1144,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(403),
                             IsDeleted = false,
                             Name = "Octavia"
                         },
@@ -10013,7 +10043,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1145,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(404),
                             IsDeleted = false,
                             Name = "Octavia Scout"
                         },
@@ -10021,7 +10051,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1146,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(405),
                             IsDeleted = false,
                             Name = "Octavia Tour"
                         },
@@ -10029,7 +10059,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1147,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(406),
                             IsDeleted = false,
                             Name = "Praktik"
                         },
@@ -10037,7 +10067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1148,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(407),
                             IsDeleted = false,
                             Name = "Rapid"
                         },
@@ -10045,7 +10075,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1149,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(407),
                             IsDeleted = false,
                             Name = "Rapid Spaceback (NH1)"
                         },
@@ -10053,7 +10083,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1150,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(408),
                             IsDeleted = false,
                             Name = "Roomster"
                         },
@@ -10061,7 +10091,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1151,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(409),
                             IsDeleted = false,
                             Name = "Scala"
                         },
@@ -10069,7 +10099,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1152,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(410),
                             IsDeleted = false,
                             Name = "Superb"
                         },
@@ -10077,7 +10107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1153,
                             CarMakeId = 79,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(411),
                             IsDeleted = false,
                             Name = "Yeti"
                         },
@@ -10085,7 +10115,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1154,
                             CarMakeId = 80,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(413),
                             IsDeleted = false,
                             Name = "Forfour"
                         },
@@ -10093,7 +10123,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1155,
                             CarMakeId = 80,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(414),
                             IsDeleted = false,
                             Name = "Fortwo"
                         },
@@ -10101,7 +10131,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1156,
                             CarMakeId = 80,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(415),
                             IsDeleted = false,
                             Name = "Roadster"
                         },
@@ -10109,7 +10139,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1157,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(417),
                             IsDeleted = false,
                             Name = "Actyon"
                         },
@@ -10117,7 +10147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1158,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(418),
                             IsDeleted = false,
                             Name = "Actyon Sports"
                         },
@@ -10125,7 +10155,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1159,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(418),
                             IsDeleted = false,
                             Name = "Chairman"
                         },
@@ -10133,7 +10163,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1160,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(419),
                             IsDeleted = false,
                             Name = "Korando"
                         },
@@ -10141,7 +10171,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1161,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(420),
                             IsDeleted = false,
                             Name = "Kyron"
                         },
@@ -10149,7 +10179,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1162,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(421),
                             IsDeleted = false,
                             Name = "Musso"
                         },
@@ -10157,7 +10187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1163,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(422),
                             IsDeleted = false,
                             Name = "Musso Grand"
                         },
@@ -10165,7 +10195,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1164,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(443),
                             IsDeleted = false,
                             Name = "Musso Sport"
                         },
@@ -10173,7 +10203,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1165,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(444),
                             IsDeleted = false,
                             Name = "Rexton"
                         },
@@ -10181,7 +10211,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1166,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(445),
                             IsDeleted = false,
                             Name = "Rexton Sports"
                         },
@@ -10189,7 +10219,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1167,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(446),
                             IsDeleted = false,
                             Name = "Rodius"
                         },
@@ -10197,7 +10227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1168,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(447),
                             IsDeleted = false,
                             Name = "Stavic"
                         },
@@ -10205,7 +10235,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1169,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(448),
                             IsDeleted = false,
                             Name = "Tivoli"
                         },
@@ -10213,7 +10243,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1170,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(449),
                             IsDeleted = false,
                             Name = "Tivoli Grand"
                         },
@@ -10221,7 +10251,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1171,
                             CarMakeId = 81,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(450),
                             IsDeleted = false,
                             Name = "XLV"
                         },
@@ -10229,7 +10259,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1172,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(452),
                             IsDeleted = false,
                             Name = "Ascent"
                         },
@@ -10237,7 +10267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1173,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(453),
                             IsDeleted = false,
                             Name = "Baja"
                         },
@@ -10245,7 +10275,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1174,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(454),
                             IsDeleted = false,
                             Name = "BRZ"
                         },
@@ -10253,7 +10283,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1175,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(455),
                             IsDeleted = false,
                             Name = "Crosstrack"
                         },
@@ -10261,7 +10291,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1176,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(456),
                             IsDeleted = false,
                             Name = "Exiga"
                         },
@@ -10269,7 +10299,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1177,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(457),
                             IsDeleted = false,
                             Name = "Forester"
                         },
@@ -10277,7 +10307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1178,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(458),
                             IsDeleted = false,
                             Name = "Impreza"
                         },
@@ -10285,7 +10315,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1179,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(459),
                             IsDeleted = false,
                             Name = "Justy"
                         },
@@ -10293,7 +10323,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1180,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(460),
                             IsDeleted = false,
                             Name = "Legacy"
                         },
@@ -10301,7 +10331,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1181,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(461),
                             IsDeleted = false,
                             Name = "Levorg"
                         },
@@ -10309,7 +10339,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1182,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(462),
                             IsDeleted = false,
                             Name = "Outback"
                         },
@@ -10317,7 +10347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1183,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(463),
                             IsDeleted = false,
                             Name = "Traviq"
                         },
@@ -10325,7 +10355,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1184,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(464),
                             IsDeleted = false,
                             Name = "Tribeca"
                         },
@@ -10333,7 +10363,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1185,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(465),
                             IsDeleted = false,
                             Name = "WRX"
                         },
@@ -10341,7 +10371,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1186,
                             CarMakeId = 82,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(466),
                             IsDeleted = false,
                             Name = "XV"
                         },
@@ -10349,7 +10379,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1187,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(468),
                             IsDeleted = false,
                             Name = "Alto"
                         },
@@ -10357,7 +10387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1188,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(468),
                             IsDeleted = false,
                             Name = "Baleno"
                         },
@@ -10365,7 +10395,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1189,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(469),
                             IsDeleted = false,
                             Name = "Celerio"
                         },
@@ -10373,7 +10403,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1190,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(470),
                             IsDeleted = false,
                             Name = "Ciaz"
                         },
@@ -10381,7 +10411,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1191,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(471),
                             IsDeleted = false,
                             Name = "Ertiga"
                         },
@@ -10389,7 +10419,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1192,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(472),
                             IsDeleted = false,
                             Name = "Grand Vitara"
                         },
@@ -10397,7 +10427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1193,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(473),
                             IsDeleted = false,
                             Name = "Grand Vitara XL7"
                         },
@@ -10405,7 +10435,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1194,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(474),
                             IsDeleted = false,
                             Name = "Ignis"
                         },
@@ -10413,7 +10443,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1195,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(474),
                             IsDeleted = false,
                             Name = "Jimny"
                         },
@@ -10421,7 +10451,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1196,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(475),
                             IsDeleted = false,
                             Name = "Kizashi"
                         },
@@ -10429,7 +10459,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1197,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(476),
                             IsDeleted = false,
                             Name = "Liana"
                         },
@@ -10437,7 +10467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1198,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(477),
                             IsDeleted = false,
                             Name = "S-Presso"
                         },
@@ -10445,7 +10475,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1199,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(478),
                             IsDeleted = false,
                             Name = "Splash"
                         },
@@ -10453,7 +10483,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1200,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(479),
                             IsDeleted = false,
                             Name = "Swift"
                         },
@@ -10461,7 +10491,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1201,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(480),
                             IsDeleted = false,
                             Name = "SX4"
                         },
@@ -10469,7 +10499,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1202,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(481),
                             IsDeleted = false,
                             Name = "Vitara"
                         },
@@ -10477,7 +10507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1203,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(482),
                             IsDeleted = false,
                             Name = "Wagon R"
                         },
@@ -10485,7 +10515,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1204,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(483),
                             IsDeleted = false,
                             Name = "Wagon R+"
                         },
@@ -10493,7 +10523,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1205,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(484),
                             IsDeleted = false,
                             Name = "XL6"
                         },
@@ -10501,7 +10531,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1206,
                             CarMakeId = 83,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(485),
                             IsDeleted = false,
                             Name = "XL7"
                         },
@@ -10509,7 +10539,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1207,
                             CarMakeId = 84,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(487),
                             IsDeleted = false,
                             Name = "Model 3"
                         },
@@ -10517,7 +10547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1208,
                             CarMakeId = 84,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(488),
                             IsDeleted = false,
                             Name = "Model S"
                         },
@@ -10525,7 +10555,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1209,
                             CarMakeId = 84,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(489),
                             IsDeleted = false,
                             Name = "Model X"
                         },
@@ -10533,7 +10563,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1210,
                             CarMakeId = 84,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(490),
                             IsDeleted = false,
                             Name = "Model Y"
                         },
@@ -10541,7 +10571,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1211,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(492),
                             IsDeleted = false,
                             Name = "4Runner"
                         },
@@ -10549,7 +10579,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1212,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(493),
                             IsDeleted = false,
                             Name = "Alphard"
                         },
@@ -10557,7 +10587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1213,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(493),
                             IsDeleted = false,
                             Name = "Auris"
                         },
@@ -10565,7 +10595,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1214,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(494),
                             IsDeleted = false,
                             Name = "Avalon"
                         },
@@ -10573,7 +10603,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1215,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(495),
                             IsDeleted = false,
                             Name = "Avensis"
                         },
@@ -10581,7 +10611,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1216,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(496),
                             IsDeleted = false,
                             Name = "Avensis Verso"
                         },
@@ -10589,7 +10619,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1217,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(497),
                             IsDeleted = false,
                             Name = "Aygo"
                         },
@@ -10597,7 +10627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1218,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(498),
                             IsDeleted = false,
                             Name = "Aygo X"
                         },
@@ -10605,7 +10635,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1219,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(499),
                             IsDeleted = false,
                             Name = "C+pod"
                         },
@@ -10613,7 +10643,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1220,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(500),
                             IsDeleted = false,
                             Name = "C-HR"
                         },
@@ -10621,7 +10651,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1221,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(501),
                             IsDeleted = false,
                             Name = "Caldina"
                         },
@@ -10629,7 +10659,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1222,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(502),
                             IsDeleted = false,
                             Name = "Camry"
                         },
@@ -10637,7 +10667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1223,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(503),
                             IsDeleted = false,
                             Name = "Celica"
                         },
@@ -10645,7 +10675,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1224,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(504),
                             IsDeleted = false,
                             Name = "Corolla"
                         },
@@ -10653,7 +10683,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1225,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(504),
                             IsDeleted = false,
                             Name = "Corolla Cross"
                         },
@@ -10661,7 +10691,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1226,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(505),
                             IsDeleted = false,
                             Name = "Corolla Verso"
                         },
@@ -10669,7 +10699,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1227,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(506),
                             IsDeleted = false,
                             Name = "FJ Cruiser"
                         },
@@ -10677,7 +10707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1228,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(507),
                             IsDeleted = false,
                             Name = "Fortuner"
                         },
@@ -10685,7 +10715,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1229,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(508),
                             IsDeleted = false,
                             Name = "GT 86"
                         },
@@ -10693,7 +10723,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1230,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(509),
                             IsDeleted = false,
                             Name = "Hiace"
                         },
@@ -10701,7 +10731,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1231,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(510),
                             IsDeleted = false,
                             Name = "Highlander"
                         },
@@ -10709,7 +10739,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1232,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(511),
                             IsDeleted = false,
                             Name = "Hilux"
                         },
@@ -10717,7 +10747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1233,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(512),
                             IsDeleted = false,
                             Name = "iQ"
                         },
@@ -10725,7 +10755,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1234,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(513),
                             IsDeleted = false,
                             Name = "ist"
                         },
@@ -10733,7 +10763,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1235,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(514),
                             IsDeleted = false,
                             Name = "Land Cruiser"
                         },
@@ -10741,7 +10771,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1236,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(515),
                             IsDeleted = false,
                             Name = "Land Cruiser Prado"
                         },
@@ -10749,7 +10779,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1237,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(515),
                             IsDeleted = false,
                             Name = "Mark II"
                         },
@@ -10757,7 +10787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1238,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(516),
                             IsDeleted = false,
                             Name = "Mirai"
                         },
@@ -10765,7 +10795,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1239,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(517),
                             IsDeleted = false,
                             Name = "MR2"
                         },
@@ -10773,7 +10803,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1240,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(518),
                             IsDeleted = false,
                             Name = "Picnic"
                         },
@@ -10781,7 +10811,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1241,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(519),
                             IsDeleted = false,
                             Name = "Previa"
                         },
@@ -10789,7 +10819,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1242,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(520),
                             IsDeleted = false,
                             Name = "Prius"
                         },
@@ -10797,7 +10827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1243,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(521),
                             IsDeleted = false,
                             Name = "Prius Prime"
                         },
@@ -10805,7 +10835,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1244,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(522),
                             IsDeleted = false,
                             Name = "RAV4"
                         },
@@ -10813,7 +10843,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1245,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(523),
                             IsDeleted = false,
                             Name = "Sequoia"
                         },
@@ -10821,7 +10851,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1246,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(524),
                             IsDeleted = false,
                             Name = "Sienna"
                         },
@@ -10829,7 +10859,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1247,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(525),
                             IsDeleted = false,
                             Name = "Supra"
                         },
@@ -10837,7 +10867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1248,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(526),
                             IsDeleted = false,
                             Name = "Tacoma"
                         },
@@ -10845,7 +10875,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1249,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(546),
                             IsDeleted = false,
                             Name = "Tundra"
                         },
@@ -10853,7 +10883,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1250,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(547),
                             IsDeleted = false,
                             Name = "Venza"
                         },
@@ -10861,7 +10891,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1251,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(548),
                             IsDeleted = false,
                             Name = "Verso"
                         },
@@ -10869,7 +10899,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1252,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(549),
                             IsDeleted = false,
                             Name = "Vitz"
                         },
@@ -10877,7 +10907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1253,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(550),
                             IsDeleted = false,
                             Name = "Yaris"
                         },
@@ -10885,7 +10915,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1254,
                             CarMakeId = 85,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(551),
                             IsDeleted = false,
                             Name = "Yaris Verso"
                         },
@@ -10893,7 +10923,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1255,
                             CarMakeId = 86,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(553),
                             IsDeleted = false,
                             Name = "Pickup"
                         },
@@ -10901,7 +10931,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1256,
                             CarMakeId = 86,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(554),
                             IsDeleted = false,
                             Name = "Патриот"
                         },
@@ -10909,7 +10939,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1257,
                             CarMakeId = 86,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(555),
                             IsDeleted = false,
                             Name = "Хантер"
                         },
@@ -10917,7 +10947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1258,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(557),
                             IsDeleted = false,
                             Name = "2101-2107"
                         },
@@ -10925,7 +10955,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1259,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(558),
                             IsDeleted = false,
                             Name = "2108"
                         },
@@ -10933,7 +10963,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1260,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(559),
                             IsDeleted = false,
                             Name = "2110"
                         },
@@ -10941,7 +10971,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1261,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(560),
                             IsDeleted = false,
                             Name = "2113"
                         },
@@ -10949,7 +10979,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1262,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(561),
                             IsDeleted = false,
                             Name = "4x4 Urban"
                         },
@@ -10957,7 +10987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1263,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(562),
                             IsDeleted = false,
                             Name = "Granta"
                         },
@@ -10965,7 +10995,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1264,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(562),
                             IsDeleted = false,
                             Name = "Granta Cross"
                         },
@@ -10973,7 +11003,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1265,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(563),
                             IsDeleted = false,
                             Name = "Largus"
                         },
@@ -10981,7 +11011,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1266,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(564),
                             IsDeleted = false,
                             Name = "Largus Cross"
                         },
@@ -10989,7 +11019,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1267,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(565),
                             IsDeleted = false,
                             Name = "Niva Legend"
                         },
@@ -10997,7 +11027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1268,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(566),
                             IsDeleted = false,
                             Name = "Niva Travel"
                         },
@@ -11005,7 +11035,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1269,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(567),
                             IsDeleted = false,
                             Name = "Vesta Cross"
                         },
@@ -11013,7 +11043,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1270,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(568),
                             IsDeleted = false,
                             Name = "Vesta Sport"
                         },
@@ -11021,7 +11051,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1271,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(569),
                             IsDeleted = false,
                             Name = "Vesta SW"
                         },
@@ -11029,7 +11059,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1272,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(570),
                             IsDeleted = false,
                             Name = "XRay"
                         },
@@ -11037,7 +11067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1273,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(571),
                             IsDeleted = false,
                             Name = "XRay Cross"
                         },
@@ -11045,7 +11075,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1274,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(571),
                             IsDeleted = false,
                             Name = "Веста"
                         },
@@ -11053,7 +11083,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1275,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(572),
                             IsDeleted = false,
                             Name = "Калина"
                         },
@@ -11061,7 +11091,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1276,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(573),
                             IsDeleted = false,
                             Name = "Нива 4X4"
                         },
@@ -11069,7 +11099,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1277,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(574),
                             IsDeleted = false,
                             Name = "Ока"
                         },
@@ -11077,7 +11107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1278,
                             CarMakeId = 87,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(575),
                             IsDeleted = false,
                             Name = "Приора"
                         },
@@ -11085,7 +11115,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1279,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(577),
                             IsDeleted = false,
                             Name = "Amarok"
                         },
@@ -11093,7 +11123,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1280,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(578),
                             IsDeleted = false,
                             Name = "Arteon"
                         },
@@ -11101,7 +11131,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1281,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(579),
                             IsDeleted = false,
                             Name = "Beetle"
                         },
@@ -11109,7 +11139,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1282,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(580),
                             IsDeleted = false,
                             Name = "Bora"
                         },
@@ -11117,7 +11147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1283,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(580),
                             IsDeleted = false,
                             Name = "Caddy"
                         },
@@ -11125,7 +11155,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1284,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(581),
                             IsDeleted = false,
                             Name = "CC"
                         },
@@ -11133,7 +11163,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1285,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(582),
                             IsDeleted = false,
                             Name = "Crafter"
                         },
@@ -11141,7 +11171,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1286,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(584),
                             IsDeleted = false,
                             Name = "CrossGolf"
                         },
@@ -11149,7 +11179,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1287,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(585),
                             IsDeleted = false,
                             Name = "CrossPolo"
                         },
@@ -11157,7 +11187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1288,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(585),
                             IsDeleted = false,
                             Name = "CrossTouran"
                         },
@@ -11165,7 +11195,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1289,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(586),
                             IsDeleted = false,
                             Name = "Eos"
                         },
@@ -11173,7 +11203,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1290,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(587),
                             IsDeleted = false,
                             Name = "Fox"
                         },
@@ -11181,7 +11211,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1291,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(588),
                             IsDeleted = false,
                             Name = "Golf"
                         },
@@ -11189,7 +11219,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1292,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(589),
                             IsDeleted = false,
                             Name = "ID.3"
                         },
@@ -11197,7 +11227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1293,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(590),
                             IsDeleted = false,
                             Name = "ID.4"
                         },
@@ -11205,7 +11235,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1294,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(591),
                             IsDeleted = false,
                             Name = "ID.4 X"
                         },
@@ -11213,7 +11243,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1295,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(592),
                             IsDeleted = false,
                             Name = "Jetta"
                         },
@@ -11221,7 +11251,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1296,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(593),
                             IsDeleted = false,
                             Name = "Lupo"
                         },
@@ -11229,7 +11259,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1297,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(594),
                             IsDeleted = false,
                             Name = "Multivan"
                         },
@@ -11237,7 +11267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1298,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(595),
                             IsDeleted = false,
                             Name = "New Beetle"
                         },
@@ -11245,7 +11275,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1299,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(596),
                             IsDeleted = false,
                             Name = "Passat"
                         },
@@ -11253,7 +11283,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1300,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(597),
                             IsDeleted = false,
                             Name = "Passat CC"
                         },
@@ -11261,7 +11291,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1301,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(598),
                             IsDeleted = false,
                             Name = "Phaeton"
                         },
@@ -11269,7 +11299,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1302,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(599),
                             IsDeleted = false,
                             Name = "Pointer"
                         },
@@ -11277,7 +11307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1303,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(600),
                             IsDeleted = false,
                             Name = "Polo"
                         },
@@ -11285,7 +11315,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1304,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(601),
                             IsDeleted = false,
                             Name = "Routan"
                         },
@@ -11293,7 +11323,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1305,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(602),
                             IsDeleted = false,
                             Name = "Scirocco"
                         },
@@ -11301,7 +11331,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1306,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(603),
                             IsDeleted = false,
                             Name = "Sharan"
                         },
@@ -11309,7 +11339,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1307,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(603),
                             IsDeleted = false,
                             Name = "T-Roc"
                         },
@@ -11317,7 +11347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1308,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(604),
                             IsDeleted = false,
                             Name = "Taos"
                         },
@@ -11325,7 +11355,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1309,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(605),
                             IsDeleted = false,
                             Name = "Teramont"
                         },
@@ -11333,7 +11363,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1310,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(606),
                             IsDeleted = false,
                             Name = "Teramont X"
                         },
@@ -11341,7 +11371,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1311,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(607),
                             IsDeleted = false,
                             Name = "Tiguan"
                         },
@@ -11349,7 +11379,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1312,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(608),
                             IsDeleted = false,
                             Name = "Tiguan X"
                         },
@@ -11357,7 +11387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1313,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(609),
                             IsDeleted = false,
                             Name = "Touareg"
                         },
@@ -11365,7 +11395,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1314,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(610),
                             IsDeleted = false,
                             Name = "Touran"
                         },
@@ -11373,7 +11403,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1315,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(611),
                             IsDeleted = false,
                             Name = "Transporter"
                         },
@@ -11381,7 +11411,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1316,
                             CarMakeId = 88,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(612),
                             IsDeleted = false,
                             Name = "Up"
                         },
@@ -11389,7 +11419,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1317,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(614),
                             IsDeleted = false,
                             Name = "C30"
                         },
@@ -11397,7 +11427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1318,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(615),
                             IsDeleted = false,
                             Name = "C40"
                         },
@@ -11405,7 +11435,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1319,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(616),
                             IsDeleted = false,
                             Name = "C70"
                         },
@@ -11413,7 +11443,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1320,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(616),
                             IsDeleted = false,
                             Name = "C70 Convertible"
                         },
@@ -11421,7 +11451,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1321,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(617),
                             IsDeleted = false,
                             Name = "C70 Coupe"
                         },
@@ -11429,7 +11459,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1322,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(618),
                             IsDeleted = false,
                             Name = "S40"
                         },
@@ -11437,7 +11467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1323,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(619),
                             IsDeleted = false,
                             Name = "S60"
                         },
@@ -11445,7 +11475,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1324,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(620),
                             IsDeleted = false,
                             Name = "S70"
                         },
@@ -11453,7 +11483,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1325,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(621),
                             IsDeleted = false,
                             Name = "S80"
                         },
@@ -11461,7 +11491,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1326,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(622),
                             IsDeleted = false,
                             Name = "S90"
                         },
@@ -11469,7 +11499,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1327,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(623),
                             IsDeleted = false,
                             Name = "V40"
                         },
@@ -11477,7 +11507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1328,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(624),
                             IsDeleted = false,
                             Name = "V50"
                         },
@@ -11485,7 +11515,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1329,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(625),
                             IsDeleted = false,
                             Name = "V60"
                         },
@@ -11493,7 +11523,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1330,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(626),
                             IsDeleted = false,
                             Name = "V70"
                         },
@@ -11501,7 +11531,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1331,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(627),
                             IsDeleted = false,
                             Name = "V90"
                         },
@@ -11509,7 +11539,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1332,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(628),
                             IsDeleted = false,
                             Name = "XC40"
                         },
@@ -11517,7 +11547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1333,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(629),
                             IsDeleted = false,
                             Name = "XC60"
                         },
@@ -11525,7 +11555,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1334,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(649),
                             IsDeleted = false,
                             Name = "XC70"
                         },
@@ -11533,7 +11563,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1335,
                             CarMakeId = 89,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(650),
                             IsDeleted = false,
                             Name = "XC90"
                         });
@@ -11574,35 +11604,35 @@ namespace RadCars.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(2852),
                             IsDeleted = false,
                             Name = "Системи за безопасност"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(2897),
                             IsDeleted = false,
                             Name = "Системи за комфорт"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(2898),
                             IsDeleted = false,
                             Name = "Системи за защита"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(2899),
                             IsDeleted = false,
                             Name = "Платени разходи"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 594, DateTimeKind.Utc).AddTicks(2903),
                             IsDeleted = false,
                             Name = "Вътрешни екстри"
                         });
@@ -11657,7 +11687,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2071),
                             IsDeleted = false,
                             Latitude = 41.5364m,
                             Longitude = 23.9358m,
@@ -11667,7 +11697,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 2,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2080),
                             IsDeleted = false,
                             Latitude = 42.6489m,
                             Longitude = 27.6481m,
@@ -11677,7 +11707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 3,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2081),
                             IsDeleted = false,
                             Latitude = 43.2500m,
                             Longitude = 27.8167m,
@@ -11687,7 +11717,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 4,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2083),
                             IsDeleted = false,
                             Latitude = 42.8484m,
                             Longitude = 22.9837m,
@@ -11697,7 +11727,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 5,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2087),
                             IsDeleted = false,
                             Latitude = 43.2631m,
                             Longitude = 24.9403m,
@@ -11707,7 +11737,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 6,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2088),
                             IsDeleted = false,
                             Latitude = 42.0167m,
                             Longitude = 24.8667m,
@@ -11717,7 +11747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 7,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2090),
                             IsDeleted = false,
                             Latitude = 44.0978m,
                             Longitude = 27.1691m,
@@ -11727,7 +11757,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 8,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2092),
                             IsDeleted = false,
                             Latitude = 42.7000m,
                             Longitude = 27.2500m,
@@ -11737,7 +11767,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 9,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2094),
                             IsDeleted = false,
                             Latitude = 42.6167m,
                             Longitude = 27.3000m,
@@ -11747,7 +11777,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 10,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2096),
                             IsDeleted = false,
                             Latitude = 43.3439m,
                             Longitude = 23.6902m,
@@ -11757,7 +11787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 11,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2097),
                             IsDeleted = false,
                             Latitude = 42.7000m,
                             Longitude = 23.1333m,
@@ -11767,7 +11797,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 12,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2099),
                             IsDeleted = false,
                             Latitude = 42.5500m,
                             Longitude = 24.8333m,
@@ -11777,7 +11807,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 13,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2100),
                             IsDeleted = false,
                             Latitude = 43.7763m,
                             Longitude = 25.9508m,
@@ -11787,7 +11817,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 14,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2102),
                             IsDeleted = false,
                             Latitude = 42.7363m,
                             Longitude = 27.4917m,
@@ -11797,7 +11827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 15,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2103),
                             IsDeleted = false,
                             Latitude = 42.6000m,
                             Longitude = 22.9500m,
@@ -11807,7 +11837,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 16,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2105),
                             IsDeleted = false,
                             Latitude = 43.3521m,
                             Longitude = 27.3312m,
@@ -11817,7 +11847,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 17,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2129),
                             IsDeleted = false,
                             Latitude = 43.1833m,
                             Longitude = 27.7000m,
@@ -11827,7 +11857,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 18,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2131),
                             IsDeleted = false,
                             Latitude = 42.2082m,
                             Longitude = 24.6499m,
@@ -11837,7 +11867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 19,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2134),
                             IsDeleted = false,
                             Latitude = 42.2393m,
                             Longitude = 23.1575m,
@@ -11847,7 +11877,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 20,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2136),
                             IsDeleted = false,
                             Latitude = 42.0119m,
                             Longitude = 23.0897m,
@@ -11857,7 +11887,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 21,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2138),
                             IsDeleted = false,
                             Latitude = 42.1500m,
                             Longitude = 23.0167m,
@@ -11867,7 +11897,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 22,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2139),
                             IsDeleted = false,
                             Latitude = 41.5932m,
                             Longitude = 23.7371m,
@@ -11877,7 +11907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 23,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2140),
                             IsDeleted = false,
                             Latitude = 42.9073m,
                             Longitude = 23.7937m,
@@ -11887,7 +11917,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 24,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2142),
                             IsDeleted = false,
                             Latitude = 42.7625m,
                             Longitude = 23.1997m,
@@ -11897,7 +11927,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 25,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2143),
                             IsDeleted = false,
                             Latitude = 44.1500m,
                             Longitude = 22.6500m,
@@ -11907,7 +11937,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 26,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2145),
                             IsDeleted = false,
                             Latitude = 42.0839m,
                             Longitude = 24.5920m,
@@ -11917,7 +11947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 27,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2146),
                             IsDeleted = false,
                             Latitude = 42.7667m,
                             Longitude = 23.5667m,
@@ -11927,7 +11957,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 28,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2147),
                             IsDeleted = false,
                             Latitude = 43.4439m,
                             Longitude = 24.6156m,
@@ -11937,7 +11967,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 29,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2149),
                             IsDeleted = false,
                             Latitude = 42.5030m,
                             Longitude = 27.4702m,
@@ -11947,7 +11977,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 30,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2151),
                             IsDeleted = false,
                             Latitude = 42.6833m,
                             Longitude = 23.4333m,
@@ -11957,7 +11987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 31,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2152),
                             IsDeleted = false,
                             Latitude = 41.5461m,
                             Longitude = 25.0738m,
@@ -11967,7 +11997,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 32,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2153),
                             IsDeleted = false,
                             Latitude = 43.4500m,
                             Longitude = 25.7333m,
@@ -11977,7 +12007,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 33,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2155),
                             IsDeleted = false,
                             Latitude = 42.7578m,
                             Longitude = 23.4256m,
@@ -11987,7 +12017,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 34,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2156),
                             IsDeleted = false,
                             Latitude = 42.2720m,
                             Longitude = 24.4011m,
@@ -11997,7 +12027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 35,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2158),
                             IsDeleted = false,
                             Latitude = 42.3103m,
                             Longitude = 23.1742m,
@@ -12007,7 +12037,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 36,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2159),
                             IsDeleted = false,
                             Latitude = 43.8056m,
                             Longitude = 26.0989m,
@@ -12017,7 +12047,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 37,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2161),
                             IsDeleted = false,
                             Latitude = 43.0436m,
                             Longitude = 25.6208m,
@@ -12027,7 +12057,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 38,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2162),
                             IsDeleted = false,
                             Latitude = 41.7333m,
                             Longitude = 24.4000m,
@@ -12037,7 +12067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 39,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2166),
                             IsDeleted = false,
                             Latitude = 43.2167m,
                             Longitude = 27.5667m,
@@ -12047,7 +12077,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 40,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2168),
                             IsDeleted = false,
                             Latitude = 42.0500m,
                             Longitude = 25.6000m,
@@ -12057,7 +12087,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 41,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2169),
                             IsDeleted = false,
                             Latitude = 42.6555m,
                             Longitude = 23.0496m,
@@ -12067,7 +12097,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 42,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2170),
                             IsDeleted = false,
                             Latitude = 43.1112m,
                             Longitude = 25.8330m,
@@ -12077,7 +12107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 43,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2172),
                             IsDeleted = false,
                             Latitude = 43.5667m,
                             Longitude = 27.8333m,
@@ -12087,7 +12117,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 44,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2174),
                             IsDeleted = false,
                             Latitude = 42.9522m,
                             Longitude = 27.2872m,
@@ -12097,7 +12127,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 45,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2175),
                             IsDeleted = false,
                             Latitude = 42.8167m,
                             Longitude = 23.2833m,
@@ -12107,7 +12137,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 46,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2176),
                             IsDeleted = false,
                             Latitude = 41.4238m,
                             Longitude = 25.1320m,
@@ -12117,7 +12147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 47,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2178),
                             IsDeleted = false,
                             Latitude = 42.2833m,
                             Longitude = 23.7667m,
@@ -12127,7 +12157,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 48,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2179),
                             IsDeleted = false,
                             Latitude = 43.1564m,
                             Longitude = 25.7392m,
@@ -12137,7 +12167,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 49,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2181),
                             IsDeleted = false,
                             Latitude = 42.7000m,
                             Longitude = 23.5000m,
@@ -12147,7 +12177,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 50,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2182),
                             IsDeleted = false,
                             Latitude = 43.2228m,
                             Longitude = 25.7468m,
@@ -12157,7 +12187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 51,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2184),
                             IsDeleted = false,
                             Latitude = 42.6043m,
                             Longitude = 23.1391m,
@@ -12167,7 +12197,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 52,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2185),
                             IsDeleted = false,
                             Latitude = 42.2650m,
                             Longitude = 23.1185m,
@@ -12177,7 +12207,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 53,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2187),
                             IsDeleted = false,
                             Latitude = 42.2263m,
                             Longitude = 23.0811m,
@@ -12187,7 +12217,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 54,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2188),
                             IsDeleted = false,
                             Latitude = 43.1374m,
                             Longitude = 25.9017m,
@@ -12197,7 +12227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 55,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2190),
                             IsDeleted = false,
                             Latitude = 42.6667m,
                             Longitude = 23.6000m,
@@ -12207,7 +12237,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 56,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2191),
                             IsDeleted = false,
                             Latitude = 42.8333m,
                             Longitude = 24.0000m,
@@ -12217,7 +12247,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 57,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2193),
                             IsDeleted = false,
                             Latitude = 43.2018m,
                             Longitude = 27.7671m,
@@ -12227,7 +12257,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 58,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2194),
                             IsDeleted = false,
                             Latitude = 43.5345m,
                             Longitude = 23.2646m,
@@ -12237,7 +12267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 59,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2196),
                             IsDeleted = false,
                             Latitude = 42.8667m,
                             Longitude = 25.3333m,
@@ -12247,7 +12277,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 60,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2197),
                             IsDeleted = false,
                             Latitude = 42.7689m,
                             Longitude = 27.5287m,
@@ -12257,7 +12287,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 61,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2220),
                             IsDeleted = false,
                             Latitude = 42.6167m,
                             Longitude = 23.4167m,
@@ -12267,7 +12297,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 62,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2221),
                             IsDeleted = false,
                             Latitude = 42.1574m,
                             Longitude = 24.3088m,
@@ -12277,7 +12307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 63,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2223),
                             IsDeleted = false,
                             Latitude = 43.6892m,
                             Longitude = 23.8081m,
@@ -12287,7 +12317,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 64,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2224),
                             IsDeleted = false,
                             Latitude = 41.5953m,
                             Longitude = 25.3935m,
@@ -12297,7 +12327,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 65,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2226),
                             IsDeleted = false,
                             Latitude = 43.1333m,
                             Longitude = 25.7000m,
@@ -12307,7 +12337,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 66,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2228),
                             IsDeleted = false,
                             Latitude = 42.7167m,
                             Longitude = 23.5333m,
@@ -12317,7 +12347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 67,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2229),
                             IsDeleted = false,
                             Latitude = 42.0214m,
                             Longitude = 25.4250m,
@@ -12327,7 +12357,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 68,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2231),
                             IsDeleted = false,
                             Latitude = 41.5667m,
                             Longitude = 23.7333m,
@@ -12337,7 +12367,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 69,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2232),
                             IsDeleted = false,
                             Latitude = 42.1472m,
                             Longitude = 25.2080m,
@@ -12347,7 +12377,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 70,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2234),
                             IsDeleted = false,
                             Latitude = 42.2818m,
                             Longitude = 24.7329m,
@@ -12357,7 +12387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 71,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2235),
                             IsDeleted = false,
                             Latitude = 43.4132m,
                             Longitude = 24.7054m,
@@ -12367,7 +12397,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 72,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2237),
                             IsDeleted = false,
                             Latitude = 43.6333m,
                             Longitude = 24.7000m,
@@ -12377,7 +12407,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 73,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2238),
                             IsDeleted = false,
                             Latitude = 42.6572m,
                             Longitude = 25.7961m,
@@ -12387,7 +12417,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 74,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2239),
                             IsDeleted = false,
                             Latitude = 42.7659m,
                             Longitude = 27.5998m,
@@ -12397,7 +12427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 75,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2241),
                             IsDeleted = false,
                             Latitude = 42.1424m,
                             Longitude = 24.4555m,
@@ -12407,7 +12437,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 76,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2242),
                             IsDeleted = false,
                             Latitude = 41.9333m,
                             Longitude = 25.5667m,
@@ -12417,7 +12447,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 77,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2244),
                             IsDeleted = false,
                             Latitude = 43.2483m,
                             Longitude = 27.7783m,
@@ -12427,7 +12457,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 78,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2246),
                             IsDeleted = false,
                             Latitude = 43.7167m,
                             Longitude = 26.8333m,
@@ -12437,7 +12467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 79,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2247),
                             IsDeleted = false,
                             Latitude = 42.2249m,
                             Longitude = 24.3304m,
@@ -12447,7 +12477,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 80,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2249),
                             IsDeleted = false,
                             Latitude = 43.2952m,
                             Longitude = 27.7694m,
@@ -12457,7 +12487,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 81,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2250),
                             IsDeleted = false,
                             Latitude = 42.6500m,
                             Longitude = 27.5667m,
@@ -12467,7 +12497,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 82,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2252),
                             IsDeleted = false,
                             Latitude = 42.1314m,
                             Longitude = 24.6072m,
@@ -12477,7 +12507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 83,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2253),
                             IsDeleted = false,
                             Latitude = 42.2364m,
                             Longitude = 24.8238m,
@@ -12487,7 +12517,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 84,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2254),
                             IsDeleted = false,
                             Latitude = 44.0861m,
                             Longitude = 27.2505m,
@@ -12497,7 +12527,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 85,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2256),
                             IsDeleted = false,
                             Latitude = 42.6167m,
                             Longitude = 24.9833m,
@@ -12507,7 +12537,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 86,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2258),
                             IsDeleted = false,
                             Latitude = 43.2493m,
                             Longitude = 27.8999m,
@@ -12517,7 +12547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 87,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2259),
                             IsDeleted = false,
                             Latitude = 42.2622m,
                             Longitude = 24.1715m,
@@ -12527,7 +12557,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 88,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2261),
                             IsDeleted = false,
                             Latitude = 42.7357m,
                             Longitude = 27.1845m,
@@ -12537,7 +12567,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 89,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2262),
                             IsDeleted = false,
                             Latitude = 43.6500m,
                             Longitude = 27.5667m,
@@ -12547,7 +12577,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 90,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2264),
                             IsDeleted = false,
                             Latitude = 41.6500m,
                             Longitude = 25.3667m,
@@ -12557,7 +12587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 91,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2269),
                             IsDeleted = false,
                             Latitude = 42.6436m,
                             Longitude = 24.8072m,
@@ -12567,7 +12597,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 92,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2271),
                             IsDeleted = false,
                             Latitude = 42.6167m,
                             Longitude = 25.4000m,
@@ -12577,7 +12607,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 93,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2296),
                             IsDeleted = false,
                             Latitude = 42.6667m,
                             Longitude = 23.4667m,
@@ -12587,7 +12617,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 94,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2298),
                             IsDeleted = false,
                             Latitude = 42.5040m,
                             Longitude = 26.2560m,
@@ -12597,7 +12627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 95,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2299),
                             IsDeleted = false,
                             Latitude = 42.9833m,
                             Longitude = 25.6333m,
@@ -12607,7 +12637,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 96,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2301),
                             IsDeleted = false,
                             Latitude = 42.5680m,
                             Longitude = 23.1796m,
@@ -12617,7 +12647,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 97,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2302),
                             IsDeleted = false,
                             Latitude = 42.5833m,
                             Longitude = 23.4167m,
@@ -12627,7 +12657,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 98,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2304),
                             IsDeleted = false,
                             Latitude = 43.1627m,
                             Longitude = 27.7806m,
@@ -12637,7 +12667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 99,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2305),
                             IsDeleted = false,
                             Latitude = 42.7516m,
                             Longitude = 27.6907m,
@@ -12647,7 +12677,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 100,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2306),
                             IsDeleted = false,
                             Latitude = 42.0000m,
                             Longitude = 24.0167m,
@@ -12657,7 +12687,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 101,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2308),
                             IsDeleted = false,
                             Latitude = 42.1790m,
                             Longitude = 24.6235m,
@@ -12667,7 +12697,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 102,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2309),
                             IsDeleted = false,
                             Latitude = 42.8167m,
                             Longitude = 23.2167m,
@@ -12677,7 +12707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 103,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2310),
                             IsDeleted = false,
                             Latitude = 43.3572m,
                             Longitude = 24.1444m,
@@ -12687,7 +12717,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 104,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2312),
                             IsDeleted = false,
                             Latitude = 43.7833m,
                             Longitude = 23.7333m,
@@ -12697,7 +12727,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 105,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2314),
                             IsDeleted = false,
                             Latitude = 42.6669m,
                             Longitude = 25.3831m,
@@ -12707,7 +12737,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 106,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2315),
                             IsDeleted = false,
                             Latitude = 41.9599m,
                             Longitude = 23.8208m,
@@ -12717,7 +12747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 107,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2316),
                             IsDeleted = false,
                             Latitude = 42.3199m,
                             Longitude = 23.2012m,
@@ -12727,7 +12757,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 108,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2318),
                             IsDeleted = false,
                             Latitude = 42.0081m,
                             Longitude = 25.5900m,
@@ -12737,7 +12767,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 109,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2319),
                             IsDeleted = false,
                             Latitude = 42.0500m,
                             Longitude = 24.4667m,
@@ -12747,7 +12777,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 110,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2320),
                             IsDeleted = false,
                             Latitude = 42.6833m,
                             Longitude = 23.4667m,
@@ -12757,7 +12787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 111,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2322),
                             IsDeleted = false,
                             Latitude = 42.5629m,
                             Longitude = 26.3822m,
@@ -12767,7 +12797,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 112,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2324),
                             IsDeleted = false,
                             Latitude = 42.4477m,
                             Longitude = 26.5331m,
@@ -12777,7 +12807,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 113,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2325),
                             IsDeleted = false,
                             Latitude = 42.0930m,
                             Longitude = 24.4998m,
@@ -12787,7 +12817,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 114,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2327),
                             IsDeleted = false,
                             Latitude = 42.2833m,
                             Longitude = 22.6833m,
@@ -12797,7 +12827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 115,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2328),
                             IsDeleted = false,
                             Latitude = 42.6431m,
                             Longitude = 23.6402m,
@@ -12807,7 +12837,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 116,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2329),
                             IsDeleted = false,
                             Latitude = 43.8256m,
                             Longitude = 23.2375m,
@@ -12817,7 +12847,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 117,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2331),
                             IsDeleted = false,
                             Latitude = 43.1347m,
                             Longitude = 24.7172m,
@@ -12827,7 +12857,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 118,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2332),
                             IsDeleted = false,
                             Latitude = 42.6000m,
                             Longitude = 23.4833m,
@@ -12837,7 +12867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 119,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2334),
                             IsDeleted = false,
                             Latitude = 43.1000m,
                             Longitude = 25.7167m,
@@ -12847,7 +12877,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 120,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2335),
                             IsDeleted = false,
                             Latitude = 43.3428m,
                             Longitude = 27.7756m,
@@ -12857,7 +12887,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 121,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2337),
                             IsDeleted = false,
                             Latitude = 41.5000m,
                             Longitude = 24.9500m,
@@ -12867,7 +12897,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 122,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2338),
                             IsDeleted = false,
                             Latitude = 42.7273m,
                             Longitude = 27.3702m,
@@ -12877,7 +12907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 123,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2339),
                             IsDeleted = false,
                             Latitude = 41.8580m,
                             Longitude = 25.6301m,
@@ -12887,7 +12917,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 124,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2341),
                             IsDeleted = false,
                             Latitude = 42.1990m,
                             Longitude = 24.4312m,
@@ -12897,7 +12927,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 125,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2343),
                             IsDeleted = false,
                             Latitude = 42.5995m,
                             Longitude = 23.1703m,
@@ -12907,7 +12937,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 126,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2344),
                             IsDeleted = false,
                             Latitude = 42.4015m,
                             Longitude = 27.4821m,
@@ -12917,7 +12947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 127,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2346),
                             IsDeleted = false,
                             Latitude = 43.9167m,
                             Longitude = 26.0833m,
@@ -12927,7 +12957,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 128,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2347),
                             IsDeleted = false,
                             Latitude = 42.1333m,
                             Longitude = 25.5000m,
@@ -12937,7 +12967,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 129,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2349),
                             IsDeleted = false,
                             Latitude = 42.7833m,
                             Longitude = 23.3000m,
@@ -12947,7 +12977,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 130,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2350),
                             IsDeleted = false,
                             Latitude = 42.1765m,
                             Longitude = 24.2936m,
@@ -12957,7 +12987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 131,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2352),
                             IsDeleted = false,
                             Latitude = 43.4075m,
                             Longitude = 23.2217m,
@@ -12967,7 +12997,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 132,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2353),
                             IsDeleted = false,
                             Latitude = 43.5238m,
                             Longitude = 26.6439m,
@@ -12977,7 +13007,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 133,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2355),
                             IsDeleted = false,
                             Latitude = 42.7695m,
                             Longitude = 23.4041m,
@@ -12987,7 +13017,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 134,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2356),
                             IsDeleted = false,
                             Latitude = 42.6333m,
                             Longitude = 25.8000m,
@@ -12997,7 +13027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 135,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2357),
                             IsDeleted = false,
                             Latitude = 43.8573m,
                             Longitude = 26.0929m,
@@ -13007,7 +13037,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 136,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2359),
                             IsDeleted = false,
                             Latitude = 43.3500m,
                             Longitude = 27.2000m,
@@ -13017,7 +13047,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 137,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2360),
                             IsDeleted = false,
                             Latitude = 43.8022m,
                             Longitude = 26.1932m,
@@ -13027,7 +13057,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 138,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2362),
                             IsDeleted = false,
                             Latitude = 42.8167m,
                             Longitude = 27.8833m,
@@ -13037,7 +13067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 139,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2363),
                             IsDeleted = false,
                             Latitude = 42.1475m,
                             Longitude = 24.4139m,
@@ -13047,7 +13077,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 140,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2365),
                             IsDeleted = false,
                             Latitude = 43.1000m,
                             Longitude = 26.4170m,
@@ -13057,7 +13087,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 141,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2366),
                             IsDeleted = false,
                             Latitude = 41.6022m,
                             Longitude = 25.3595m,
@@ -13067,7 +13097,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 142,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2367),
                             IsDeleted = false,
                             Latitude = 42.7498m,
                             Longitude = 27.6204m,
@@ -13077,7 +13107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 143,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2369),
                             IsDeleted = false,
                             Latitude = 43.6853m,
                             Longitude = 26.6070m,
@@ -13087,7 +13117,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 144,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2370),
                             IsDeleted = false,
                             Latitude = 42.5000m,
                             Longitude = 24.1833m,
@@ -13097,7 +13127,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 145,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2372),
                             IsDeleted = false,
                             Latitude = 42.5708m,
                             Longitude = 23.4397m,
@@ -13107,7 +13137,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 146,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2373),
                             IsDeleted = false,
                             Latitude = 42.0745m,
                             Longitude = 24.6630m,
@@ -13117,7 +13147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 147,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2375),
                             IsDeleted = false,
                             Latitude = 43.1530m,
                             Longitude = 25.6521m,
@@ -13127,7 +13157,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 148,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2376),
                             IsDeleted = false,
                             Latitude = 42.1220m,
                             Longitude = 24.2022m,
@@ -13137,7 +13167,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 149,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2378),
                             IsDeleted = false,
                             Latitude = 42.2000m,
                             Longitude = 24.3333m,
@@ -13147,7 +13177,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 150,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2380),
                             IsDeleted = false,
                             Latitude = 42.6000m,
                             Longitude = 23.0333m,
@@ -13157,7 +13187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 151,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2381),
                             IsDeleted = false,
                             Latitude = 42.0500m,
                             Longitude = 24.5500m,
@@ -13167,7 +13197,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 152,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2382),
                             IsDeleted = false,
                             Latitude = 42.0333m,
                             Longitude = 24.3000m,
@@ -13177,7 +13207,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 153,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2384),
                             IsDeleted = false,
                             Latitude = 42.8437m,
                             Longitude = 23.1480m,
@@ -13187,7 +13217,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 154,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2385),
                             IsDeleted = false,
                             Latitude = 41.3953m,
                             Longitude = 23.2069m,
@@ -13197,7 +13227,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 155,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2387),
                             IsDeleted = false,
                             Latitude = 43.1558m,
                             Longitude = 25.7902m,
@@ -13207,7 +13237,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 156,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2388),
                             IsDeleted = false,
                             Latitude = 42.8916m,
                             Longitude = 27.1551m,
@@ -13217,7 +13247,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 157,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2419),
                             IsDeleted = false,
                             Latitude = 43.4078m,
                             Longitude = 24.6203m,
@@ -13227,7 +13257,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 158,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2422),
                             IsDeleted = false,
                             Latitude = 42.1500m,
                             Longitude = 24.7500m,
@@ -13237,7 +13267,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 159,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2423),
                             IsDeleted = false,
                             Latitude = 43.1807m,
                             Longitude = 25.6199m,
@@ -13247,7 +13277,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 160,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2425),
                             IsDeleted = false,
                             Latitude = 42.5683m,
                             Longitude = 27.6167m,
@@ -13257,7 +13287,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 161,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2426),
                             IsDeleted = false,
                             Latitude = 42.7982m,
                             Longitude = 27.4513m,
@@ -13267,7 +13297,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 162,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2428),
                             IsDeleted = false,
                             Latitude = 43.1833m,
                             Longitude = 27.4333m,
@@ -13277,7 +13307,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 163,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2429),
                             IsDeleted = false,
                             Latitude = 41.9833m,
                             Longitude = 24.0833m,
@@ -13287,7 +13317,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 164,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2430),
                             IsDeleted = false,
                             Latitude = 43.6011m,
                             Longitude = 26.4641m,
@@ -13297,7 +13327,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 165,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2432),
                             IsDeleted = false,
                             Latitude = 42.6434m,
                             Longitude = 27.6783m,
@@ -13307,7 +13337,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 166,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2433),
                             IsDeleted = false,
                             Latitude = 42.5145m,
                             Longitude = 27.2405m,
@@ -13317,7 +13347,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 167,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2435),
                             IsDeleted = false,
                             Latitude = 43.5333m,
                             Longitude = 26.5167m,
@@ -13327,7 +13357,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 168,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2436),
                             IsDeleted = false,
                             Latitude = 42.7826m,
                             Longitude = 27.3955m,
@@ -13337,7 +13367,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 169,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2438),
                             IsDeleted = false,
                             Latitude = 41.8833m,
                             Longitude = 23.4667m,
@@ -13347,7 +13377,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 170,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2439),
                             IsDeleted = false,
                             Latitude = 43.1958m,
                             Longitude = 25.5591m,
@@ -13357,7 +13387,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 171,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2441),
                             IsDeleted = false,
                             Latitude = 42.1818m,
                             Longitude = 24.8646m,
@@ -13367,7 +13397,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 172,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2442),
                             IsDeleted = false,
                             Latitude = 42.5809m,
                             Longitude = 23.1677m,
@@ -13377,7 +13407,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 173,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2444),
                             IsDeleted = false,
                             Latitude = 41.4833m,
                             Longitude = 24.8500m,
@@ -13387,7 +13417,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 174,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2445),
                             IsDeleted = false,
                             Latitude = 42.7998m,
                             Longitude = 27.2822m,
@@ -13397,7 +13427,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 175,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2447),
                             IsDeleted = false,
                             Latitude = 43.8231m,
                             Longitude = 25.9539m,
@@ -13407,7 +13437,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 176,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2448),
                             IsDeleted = false,
                             Latitude = 42.1330m,
                             Longitude = 24.9330m,
@@ -13417,7 +13447,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 177,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2450),
                             IsDeleted = false,
                             Latitude = 42.2667m,
                             Longitude = 24.5500m,
@@ -13427,7 +13457,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 178,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2451),
                             IsDeleted = false,
                             Latitude = 42.2655m,
                             Longitude = 23.1583m,
@@ -13437,7 +13467,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 179,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2453),
                             IsDeleted = false,
                             Latitude = 43.9327m,
                             Longitude = 26.1149m,
@@ -13447,7 +13477,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 180,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2455),
                             IsDeleted = false,
                             Latitude = 42.2833m,
                             Longitude = 23.2667m,
@@ -13457,7 +13487,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 181,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2456),
                             IsDeleted = false,
                             Latitude = 42.2511m,
                             Longitude = 24.3203m,
@@ -13467,7 +13497,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 182,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2457),
                             IsDeleted = false,
                             Latitude = 41.7333m,
                             Longitude = 24.0333m,
@@ -13477,7 +13507,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 183,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2459),
                             IsDeleted = false,
                             Latitude = 42.6434m,
                             Longitude = 26.1526m,
@@ -13487,7 +13517,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 184,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2460),
                             IsDeleted = false,
                             Latitude = 43.7701m,
                             Longitude = 26.1703m,
@@ -13497,7 +13527,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 185,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2462),
                             IsDeleted = false,
                             Latitude = 42.2167m,
                             Longitude = 24.1000m,
@@ -13507,7 +13537,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 186,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2463),
                             IsDeleted = false,
                             Latitude = 42.7000m,
                             Longitude = 25.3833m,
@@ -13517,7 +13547,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 187,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2465),
                             IsDeleted = false,
                             Latitude = 43.2833m,
                             Longitude = 26.9333m,
@@ -13527,7 +13557,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 188,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2466),
                             IsDeleted = false,
                             Latitude = 44.1172m,
                             Longitude = 27.2606m,
@@ -13537,7 +13567,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 189,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2468),
                             IsDeleted = false,
                             Latitude = 42.1480m,
                             Longitude = 24.3765m,
@@ -13547,7 +13577,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 190,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2469),
                             IsDeleted = false,
                             Latitude = 42.1782m,
                             Longitude = 24.8417m,
@@ -13557,7 +13587,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 191,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2470),
                             IsDeleted = false,
                             Latitude = 43.4667m,
                             Longitude = 24.8667m,
@@ -13567,7 +13597,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 192,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2472),
                             IsDeleted = false,
                             Latitude = 42.6833m,
                             Longitude = 26.3333m,
@@ -13577,7 +13607,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 193,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2474),
                             IsDeleted = false,
                             Latitude = 42.8500m,
                             Longitude = 23.0333m,
@@ -13587,7 +13617,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 194,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2475),
                             IsDeleted = false,
                             Latitude = 42.2633m,
                             Longitude = 22.7019m,
@@ -13597,7 +13627,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 195,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2476),
                             IsDeleted = false,
                             Latitude = 41.5833m,
                             Longitude = 24.7000m,
@@ -13607,7 +13637,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 196,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2478),
                             IsDeleted = false,
                             Latitude = 42.8470m,
                             Longitude = 27.2775m,
@@ -13617,7 +13647,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 197,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2480),
                             IsDeleted = false,
                             Latitude = 42.7000m,
                             Longitude = 23.3300m,
@@ -13627,7 +13657,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 198,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2481),
                             IsDeleted = false,
                             Latitude = 42.6500m,
                             Longitude = 24.7500m,
@@ -13637,7 +13667,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 199,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2508),
                             IsDeleted = false,
                             Latitude = 42.6909m,
                             Longitude = 26.4035m,
@@ -13647,7 +13677,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 200,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2510),
                             IsDeleted = false,
                             Latitude = 42.1333m,
                             Longitude = 24.5333m,
@@ -13657,7 +13687,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 201,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2511),
                             IsDeleted = false,
                             Latitude = 42.4333m,
                             Longitude = 25.6500m,
@@ -13667,7 +13697,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 202,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2513),
                             IsDeleted = false,
                             Latitude = 41.4269m,
                             Longitude = 25.0568m,
@@ -13677,7 +13707,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 203,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2514),
                             IsDeleted = false,
                             Latitude = 43.4833m,
                             Longitude = 27.8667m,
@@ -13687,7 +13717,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 204,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2515),
                             IsDeleted = false,
                             Latitude = 43.4500m,
                             Longitude = 27.8167m,
@@ -13697,7 +13727,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 205,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2517),
                             IsDeleted = false,
                             Latitude = 42.7726m,
                             Longitude = 27.4710m,
@@ -13707,7 +13737,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 206,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2518),
                             IsDeleted = false,
                             Latitude = 42.5439m,
                             Longitude = 23.1209m,
@@ -13717,7 +13747,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 207,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2520),
                             IsDeleted = false,
                             Latitude = 43.3333m,
                             Longitude = 27.6000m,
@@ -13727,7 +13757,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 208,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2521),
                             IsDeleted = false,
                             Latitude = 42.7167m,
                             Longitude = 27.7667m,
@@ -13737,7 +13767,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 209,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2522),
                             IsDeleted = false,
                             Latitude = 42.7819m,
                             Longitude = 23.3838m,
@@ -13747,7 +13777,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 210,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2524),
                             IsDeleted = false,
                             Latitude = 43.6167m,
                             Longitude = 25.3500m,
@@ -13757,7 +13787,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 211,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2525),
                             IsDeleted = false,
                             Latitude = 42.6946m,
                             Longitude = 27.6496m,
@@ -13767,7 +13797,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 212,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2527),
                             IsDeleted = false,
                             Latitude = 43.2500m,
                             Longitude = 26.5833m,
@@ -13777,7 +13807,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 213,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2528),
                             IsDeleted = false,
                             Latitude = 42.6513m,
                             Longitude = 26.4278m,
@@ -13787,7 +13817,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 214,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2530),
                             IsDeleted = false,
                             Latitude = 43.2183m,
                             Longitude = 27.8214m,
@@ -13797,7 +13827,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 215,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2531),
                             IsDeleted = false,
                             Latitude = 42.9442m,
                             Longitude = 27.2117m,
@@ -13807,7 +13837,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 216,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2533),
                             IsDeleted = false,
                             Latitude = 42.1358m,
                             Longitude = 24.4661m,
@@ -13817,7 +13847,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 217,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2554),
                             IsDeleted = false,
                             Latitude = 42.2321m,
                             Longitude = 24.7246m,
@@ -13827,7 +13857,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 218,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2556),
                             IsDeleted = false,
                             Latitude = 42.2027m,
                             Longitude = 24.6875m,
@@ -13837,7 +13867,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 219,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2558),
                             IsDeleted = false,
                             Latitude = 43.3307m,
                             Longitude = 27.0114m,
@@ -13847,7 +13877,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 220,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2559),
                             IsDeleted = false,
                             Latitude = 41.9631m,
                             Longitude = 25.6558m,
@@ -13857,7 +13887,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 221,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2561),
                             IsDeleted = false,
                             Latitude = 43.2944m,
                             Longitude = 27.8488m,
@@ -13867,7 +13897,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 222,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2562),
                             IsDeleted = false,
                             Latitude = 41.5959m,
                             Longitude = 24.0636m,
@@ -13877,7 +13907,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 223,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2563),
                             IsDeleted = false,
                             Latitude = 41.5290m,
                             Longitude = 23.9894m,
@@ -13887,7 +13917,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 224,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2565),
                             IsDeleted = false,
                             Latitude = 43.1809m,
                             Longitude = 25.8290m,
@@ -13897,7 +13927,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 225,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2566),
                             IsDeleted = false,
                             Latitude = 43.1340m,
                             Longitude = 26.5309m,
@@ -13907,7 +13937,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 226,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2568),
                             IsDeleted = false,
                             Latitude = 43.2167m,
                             Longitude = 27.9167m,
@@ -13917,7 +13947,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 227,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2569),
                             IsDeleted = false,
                             Latitude = 43.1830m,
                             Longitude = 23.2830m,
@@ -13927,7 +13957,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 228,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2571),
                             IsDeleted = false,
                             Latitude = 43.1667m,
                             Longitude = 26.8170m,
@@ -13937,7 +13967,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 229,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2572),
                             IsDeleted = false,
                             Latitude = 43.0778m,
                             Longitude = 25.6167m,
@@ -13947,7 +13977,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 230,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2574),
                             IsDeleted = false,
                             Latitude = 42.0167m,
                             Longitude = 24.0000m,
@@ -13957,7 +13987,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 231,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2575),
                             IsDeleted = false,
                             Latitude = 42.5329m,
                             Longitude = 26.5448m,
@@ -13967,7 +13997,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 232,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2576),
                             IsDeleted = false,
                             Latitude = 43.7000m,
                             Longitude = 26.2667m,
@@ -13977,7 +14007,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 233,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2578),
                             IsDeleted = false,
                             Latitude = 42.2667m,
                             Longitude = 24.0500m,
@@ -13987,7 +14017,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 234,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2580),
                             IsDeleted = false,
                             Latitude = 44.0000m,
                             Longitude = 22.8667m,
@@ -13997,7 +14027,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 235,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2581),
                             IsDeleted = false,
                             Latitude = 42.1353m,
                             Longitude = 25.1363m,
@@ -14007,7 +14037,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 236,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2582),
                             IsDeleted = false,
                             Latitude = 42.2861m,
                             Longitude = 24.1302m,
@@ -14017,7 +14047,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 237,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2584),
                             IsDeleted = false,
                             Latitude = 42.6333m,
                             Longitude = 23.2000m,
@@ -14027,7 +14057,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 238,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2585),
                             IsDeleted = false,
                             Latitude = 42.7727m,
                             Longitude = 23.2429m,
@@ -14037,7 +14067,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 239,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2587),
                             IsDeleted = false,
                             Latitude = 42.2167m,
                             Longitude = 24.6333m,
@@ -14047,7 +14077,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 240,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2588),
                             IsDeleted = false,
                             Latitude = 42.1999m,
                             Longitude = 24.7942m,
@@ -14057,7 +14087,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 241,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2589),
                             IsDeleted = false,
                             Latitude = 41.8588m,
                             Longitude = 25.5472m,
@@ -14067,7 +14097,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 242,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2591),
                             IsDeleted = false,
                             Latitude = 43.2000m,
                             Longitude = 23.5500m,
@@ -14077,7 +14107,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 243,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2592),
                             IsDeleted = false,
                             Latitude = 42.8124m,
                             Longitude = 27.1985m,
@@ -14087,7 +14117,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 244,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2594),
                             IsDeleted = false,
                             Latitude = 42.7946m,
                             Longitude = 27.2540m,
@@ -14097,7 +14127,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 245,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2595),
                             IsDeleted = false,
                             Latitude = 42.0699m,
                             Longitude = 25.4411m,
@@ -14107,7 +14137,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 246,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2597),
                             IsDeleted = false,
                             Latitude = 42.2888m,
                             Longitude = 23.1423m,
@@ -14117,7 +14147,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 247,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2598),
                             IsDeleted = false,
                             Latitude = 42.4833m,
                             Longitude = 26.5000m,
@@ -14127,7 +14157,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 248,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2600),
                             IsDeleted = false,
                             Latitude = 42.7780m,
                             Longitude = 27.1697m,
@@ -14137,7 +14167,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 249,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2601),
                             IsDeleted = false,
                             Latitude = 42.5333m,
                             Longitude = 23.3667m,
@@ -14147,7 +14177,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 250,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2603),
                             IsDeleted = false,
                             Latitude = 41.3833m,
                             Longitude = 25.1000m,
@@ -14157,7 +14187,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 251,
                             CountryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(2604),
                             IsDeleted = false,
                             Latitude = 43.1538m,
                             Longitude = 27.8372m,
@@ -14200,7 +14230,7 @@ namespace RadCars.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3106),
                             IsDeleted = false,
                             Name = "Bulgaria"
                         });
@@ -14241,42 +14271,42 @@ namespace RadCars.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3235),
                             IsDeleted = false,
                             Name = "Бензин"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3241),
                             IsDeleted = false,
                             Name = "Дизел"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3242),
                             IsDeleted = false,
                             Name = "Газ / Бензин"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3243),
                             IsDeleted = false,
                             Name = "Метан / Бензин"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3245),
                             IsDeleted = false,
                             Name = "Електрически"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3246),
                             IsDeleted = false,
                             Name = "Хибрид"
                         });
@@ -14323,7 +14353,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3619),
                             IsDeleted = false,
                             Name = "Автоматичен контрол на стабилността"
                         },
@@ -14331,7 +14361,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3625),
                             IsDeleted = false,
                             Name = "ABS - система против блокиране на колелата"
                         },
@@ -14339,7 +14369,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 3,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3627),
                             IsDeleted = false,
                             Name = "Предни въздушни възглавници"
                         },
@@ -14347,7 +14377,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 4,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3628),
                             IsDeleted = false,
                             Name = "Задни въздушни възглавници"
                         },
@@ -14355,7 +14385,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 5,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3631),
                             IsDeleted = false,
                             Name = "Странични въздушни възглавници"
                         },
@@ -14363,7 +14393,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 6,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3632),
                             IsDeleted = false,
                             Name = "EBD - разпределяне на спирачното усилие"
                         },
@@ -14371,7 +14401,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 7,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3633),
                             IsDeleted = false,
                             Name = "Контрол на налягането на гумите"
                         },
@@ -14379,7 +14409,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 8,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3635),
                             IsDeleted = false,
                             Name = "Парктроник"
                         },
@@ -14387,7 +14417,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 9,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3637),
                             IsDeleted = false,
                             Name = "Система за защита от пробуксуване"
                         },
@@ -14395,7 +14425,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 10,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3639),
                             IsDeleted = false,
                             Name = "Distronic - система за контрол на дистанцията"
                         },
@@ -14403,7 +14433,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 11,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3640),
                             IsDeleted = false,
                             Name = "BAS - система за подпомагане на спирането"
                         },
@@ -14411,7 +14441,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 12,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3641),
                             IsDeleted = false,
                             Name = "Електронна програма за стабилизиране"
                         },
@@ -14419,7 +14449,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 13,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3642),
                             IsDeleted = false,
                             Name = "Блокаж на диференциала"
                         },
@@ -14427,7 +14457,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 14,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3643),
                             IsDeleted = false,
                             Name = "Старт/Стоп система"
                         },
@@ -14435,7 +14465,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 15,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3645),
                             IsDeleted = false,
                             Name = "USB, audio/video, IN/AUX изводи"
                         },
@@ -14443,7 +14473,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 16,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3646),
                             IsDeleted = false,
                             Name = "Ел. огледала"
                         },
@@ -14451,7 +14481,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 17,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3674),
                             IsDeleted = false,
                             Name = "Ел. стъкла"
                         },
@@ -14459,7 +14489,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 18,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3675),
                             IsDeleted = false,
                             Name = "Автоматични чистачки"
                         },
@@ -14467,7 +14497,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 19,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3678),
                             IsDeleted = false,
                             Name = "Автоматични фарове"
                         },
@@ -14475,7 +14505,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 20,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3679),
                             IsDeleted = false,
                             Name = "Ел. регулиране на окачването"
                         },
@@ -14483,7 +14513,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 21,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3680),
                             IsDeleted = false,
                             Name = "Ел. регулиране на седалките"
                         },
@@ -14491,7 +14521,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 22,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3682),
                             IsDeleted = false,
                             Name = "Ел. усилвател на волана"
                         },
@@ -14499,7 +14529,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 23,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3683),
                             IsDeleted = false,
                             Name = "Климатик"
                         },
@@ -14507,7 +14537,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 24,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3684),
                             IsDeleted = false,
                             Name = "Мултифункционален волан"
                         },
@@ -14515,7 +14545,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 25,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3685),
                             IsDeleted = false,
                             Name = "Навигация"
                         },
@@ -14523,7 +14553,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 26,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3686),
                             IsDeleted = false,
                             Name = "Подгев на предните седалките"
                         },
@@ -14531,7 +14561,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 27,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3688),
                             IsDeleted = false,
                             Name = "Подгев на задните седалките"
                         },
@@ -14539,7 +14569,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 28,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3689),
                             IsDeleted = false,
                             Name = "Регулиране на волана"
                         },
@@ -14547,7 +14577,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 29,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3690),
                             IsDeleted = false,
                             Name = "Серво усилвател на волана"
                         },
@@ -14555,7 +14585,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 30,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3692),
                             IsDeleted = false,
                             Name = "Система за измиване на фаровете"
                         },
@@ -14563,7 +14593,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 31,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3693),
                             IsDeleted = false,
                             Name = "Круиз контрол"
                         },
@@ -14571,7 +14601,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 32,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3694),
                             IsDeleted = false,
                             Name = "Хладилна жабка"
                         },
@@ -14579,7 +14609,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 33,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3695),
                             IsDeleted = false,
                             Name = "Безключово палене"
                         },
@@ -14587,7 +14617,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 34,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3696),
                             IsDeleted = false,
                             Name = "Bluetooth мултимедия"
                         },
@@ -14595,7 +14625,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 35,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3698),
                             IsDeleted = false,
                             Name = "Stereo уредба"
                         },
@@ -14603,7 +14633,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 40,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3699),
                             IsDeleted = false,
                             Name = "Ел. багажник"
                         },
@@ -14611,7 +14641,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 36,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3700),
                             IsDeleted = false,
                             Name = "Аларма"
                         },
@@ -14619,7 +14649,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 37,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3702),
                             IsDeleted = false,
                             Name = "Автокаско"
                         },
@@ -14627,7 +14657,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 38,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3705),
                             IsDeleted = false,
                             Name = "Централно заключване"
                         },
@@ -14635,7 +14665,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 39,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3706),
                             IsDeleted = false,
                             Name = "GPS проследяване"
                         },
@@ -14643,7 +14673,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 41,
                             CategoryId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3708),
                             IsDeleted = false,
                             Name = "Годишен данък"
                         },
@@ -14651,7 +14681,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 42,
                             CategoryId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3709),
                             IsDeleted = false,
                             Name = "Гражданска отговорност"
                         },
@@ -14659,7 +14689,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 43,
                             CategoryId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3710),
                             IsDeleted = false,
                             Name = "Платен и преминат ГТП"
                         },
@@ -14667,7 +14697,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 44,
                             CategoryId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3711),
                             IsDeleted = false,
                             Name = "Обслужени базови консумативи"
                         },
@@ -14675,7 +14705,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 45,
                             CategoryId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3713),
                             IsDeleted = false,
                             Name = "Винетка"
                         },
@@ -14683,7 +14713,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 46,
                             CategoryId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3714),
                             IsDeleted = false,
                             Name = "Кожен салон"
                         },
@@ -14691,7 +14721,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 47,
                             CategoryId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3715),
                             IsDeleted = false,
                             Name = "Алкантара салон"
                         },
@@ -14699,7 +14729,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 48,
                             CategoryId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3716),
                             IsDeleted = false,
                             Name = "Тапициран таван"
                         },
@@ -14707,7 +14737,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 49,
                             CategoryId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3717),
                             IsDeleted = false,
                             Name = "Кожени стелки"
                         },
@@ -14715,7 +14745,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 50,
                             CategoryId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3739),
                             IsDeleted = false,
                             Name = "Гумени стелки"
                         },
@@ -14723,7 +14753,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 51,
                             CategoryId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3740),
                             IsDeleted = false,
                             Name = "DVD"
                         },
@@ -14731,7 +14761,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 52,
                             CategoryId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3742),
                             IsDeleted = false,
                             Name = "Поставки за чаши"
                         },
@@ -14739,7 +14769,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 53,
                             CategoryId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3743),
                             IsDeleted = false,
                             Name = "Подлакатник с поставки"
                         },
@@ -14747,7 +14777,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 54,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3744),
                             IsDeleted = false,
                             Name = "Масаж на предните седалки"
                         },
@@ -14755,7 +14785,7 @@ namespace RadCars.Data.Migrations
                         {
                             Id = 55,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedOn = new DateTime(2023, 7, 22, 20, 47, 1, 595, DateTimeKind.Utc).AddTicks(3745),
                             IsDeleted = false,
                             Name = "Масаж на задните седалки"
                         });
@@ -14892,48 +14922,6 @@ namespace RadCars.Data.Migrations
                     b.ToTable("UserFavoriteListings");
                 });
 
-            modelBuilder.Entity("RadCars.Data.Models.User.ApplicationRole", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
             modelBuilder.Entity("RadCars.Data.Models.User.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -14961,7 +14949,6 @@ namespace RadCars.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -14969,7 +14956,6 @@ namespace RadCars.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -14994,7 +14980,6 @@ namespace RadCars.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
@@ -15008,7 +14993,6 @@ namespace RadCars.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -15029,7 +15013,7 @@ namespace RadCars.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("RadCars.Data.Models.User.ApplicationRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -15039,7 +15023,7 @@ namespace RadCars.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("RadCars.Data.Models.User.ApplicationUser", null)
-                        .WithMany("Claims")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -15048,7 +15032,7 @@ namespace RadCars.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("RadCars.Data.Models.User.ApplicationUser", null)
-                        .WithMany("Logins")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -15056,14 +15040,14 @@ namespace RadCars.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("RadCars.Data.Models.User.ApplicationRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RadCars.Data.Models.User.ApplicationUser", null)
-                        .WithMany("Roles")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -15240,15 +15224,9 @@ namespace RadCars.Data.Migrations
 
             modelBuilder.Entity("RadCars.Data.Models.User.ApplicationUser", b =>
                 {
-                    b.Navigation("Claims");
-
                     b.Navigation("FavoriteListings");
 
                     b.Navigation("Listings");
-
-                    b.Navigation("Logins");
-
-                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

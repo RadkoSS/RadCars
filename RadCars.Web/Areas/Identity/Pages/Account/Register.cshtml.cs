@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
+namespace RadCars.Web.Areas.Identity.Pages.Account;
 
 using System.Text;
 using System.Text.Encodings.Web;
@@ -13,11 +14,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
-using static RadCars.Common.NotificationTypeConstants;
-using static RadCars.Common.ExceptionsAndNotificationsMessages;
-using RadCars.Data.Models.User;
-
-namespace RadCars.Web.Areas.Identity.Pages.Account;
+using Data.Models.User;
+using static Common.NotificationTypeConstants;
+using static Common.ExceptionsAndNotificationsMessages;
 
 public class RegisterModel : PageModel
 {

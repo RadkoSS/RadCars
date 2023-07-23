@@ -10,6 +10,27 @@ internal class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<App
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
         builder
+            .HasMany(e => e.Claims)
+            .WithOne()
+            .HasForeignKey(e => e.UserId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasMany(e => e.Logins)
+            .WithOne()
+            .HasForeignKey(e => e.UserId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasMany(e => e.Roles)
+            .WithOne()
+            .HasForeignKey(e => e.UserId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
             .HasMany(u => u.Listings)
             .WithOne(l => l.Creator)
             .HasForeignKey(l => l.CreatorId);

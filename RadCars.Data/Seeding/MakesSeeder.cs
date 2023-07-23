@@ -11,7 +11,7 @@ internal static class MakesSeeder
         var csvCarData = ReadMakesAndModels();
 
         var makes = new HashSet<CarMake>();
-        ushort makeId = 1;
+        var makeId = 1;
 
         foreach (var (make, models) in csvCarData)
         {

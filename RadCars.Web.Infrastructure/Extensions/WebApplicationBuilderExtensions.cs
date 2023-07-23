@@ -2,9 +2,14 @@
 
 using System.Reflection;
 
+using Ganss.Xss;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-using Ganss.Xss;
+using Data.Models.User;
+
+using static Common.GeneralApplicationConstants;
 
 public static class WebApplicationBuilderExtensions
 {
@@ -15,7 +20,6 @@ public static class WebApplicationBuilderExtensions
     /// <param name="services"></param>
     /// <param name="serviceType"></param>
     /// <exception cref="InvalidOperationException"></exception>
-    /// 
     public static void AddApplicationServices(this IServiceCollection services, Type serviceType)
     {
         Assembly? serviceAssembly = Assembly.GetAssembly(serviceType);
@@ -44,5 +48,39 @@ public static class WebApplicationBuilderExtensions
         }
 
         services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();
+    }
+
+    /// <summary>
+    /// This method seeds admin role if it does not exist.
+    /// Passed email should be valid email of existing user in the application.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="email"></param>
+    /// <returns>IApplicationBuilder</returns>
+    public static async Task<IApplicationBuilder> SeedAdministratorAsync(this IApplicationBuilder builder, string email)
+    {
+        using IServiceScope scopedServices = builder.ApplicationServices.CreateScope();
+
+        IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+
+        UserManager<ApplicationUser> userManager =
+            serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        RoleManager<ApplicationRole> roleManager =
+            serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+
+        if (!await roleManager.RoleExistsAsync(AdminRoleName))
+        {
+            ApplicationRole role = new ApplicationRole(AdminRoleName);
+            await roleManager.CreateAsync(role);
+        }
+
+        ApplicationUser adminUser = await userManager.FindByEmailAsync(email);
+
+        if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, AdminRoleName))
+        {
+            await userManager.AddToRoleAsync(adminUser, AdminRoleName);
+        }
+
+        return builder;
     }
 }

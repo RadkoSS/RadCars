@@ -12,8 +12,8 @@ internal static class ModelsSeeder
 
         var makesAndModels = ReadMakesAndModels();
 
-        ushort makeId = 1;
-        ushort modelId = 1;
+        var makeId = 1;
+        var modelId = 1;
 
         foreach (var (makeName, models) in makesAndModels)
         {

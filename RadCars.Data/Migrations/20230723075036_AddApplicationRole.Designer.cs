@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RadCars.Data;
 
@@ -11,9 +12,10 @@ using RadCars.Data;
 namespace RadCars.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230723075036_AddApplicationRole")]
+    partial class AddApplicationRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -14895,7 +14897,6 @@ namespace RadCars.Data.Migrations
             modelBuilder.Entity("RadCars.Data.Models.User.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -15063,7 +15064,7 @@ namespace RadCars.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("RadCars.Data.Models.User.ApplicationUser", null)
-                        .WithMany("Roles")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -15207,6 +15208,15 @@ namespace RadCars.Data.Migrations
                     b.Navigation("Listing");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RadCars.Data.Models.User.ApplicationRole", b =>
+                {
+                    b.HasOne("RadCars.Data.Models.User.ApplicationUser", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.CarMake", b =>

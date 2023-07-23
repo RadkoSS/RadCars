@@ -3,14 +3,13 @@
 using System.Reflection;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 using Models.User;
 using Models.Entities;
 using Common.Contracts;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
 {
     private static readonly MethodInfo SetIsDeletedQueryFilterMethod =
         typeof(ApplicationDbContext).GetMethod(
@@ -71,7 +70,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
 
         builder
             .ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(ApplicationDbContext)) ?? Assembly.GetExecutingAssembly());
-
     }
 
     public override int SaveChanges() => this.SaveChanges(true);
@@ -82,8 +80,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
         return base.SaveChanges(acceptAllChangesOnSuccess);
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
-        this.SaveChangesAsync(true, cancellationToken);
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        this.ApplyAuditInfoRules();
+        return this.SaveChangesAsync(true, cancellationToken);
+    }
 
     public override Task<int> SaveChangesAsync(
         bool acceptAllChangesOnSuccess,

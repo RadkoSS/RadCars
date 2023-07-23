@@ -2,6 +2,7 @@ using System.Reflection;
 
 using AutoMapper;
 using CloudinaryDotNet;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
 
 using RadCars.Data;
@@ -14,6 +15,8 @@ using RadCars.Services.Data.Contracts;
 using RadCars.Web.Infrastructure.Extensions;
 using RadCars.Web.Infrastructure.ModelBinders;
 using RadCars.Data.Common.Contracts.Repositories;
+
+using static RadCars.Common.GeneralApplicationConstants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +39,14 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     options.Password.RequiredLength =
             builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
 })
+.AddRoles<ApplicationRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.HttpOnly = HttpOnlyPolicy.Always;
+    //options.MinimumSameSitePolicy = SameSiteMode.Strict; ToDo: Research this!!
+});
 
 builder.Services.AddMvc(options =>
 {
@@ -95,6 +105,11 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+if (app.Environment.IsDevelopment())
+{
+    await app.SeedAdministratorAsync(DevelopmentAdminEmail);
+}
 
 app.MapControllerRoute(
     name: "default",

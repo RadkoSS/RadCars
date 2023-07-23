@@ -64,4 +64,19 @@ public static class EntityValidationConstants
     {
         public const int NameMaximumLength = 15;
     }
+
+    public static class ApplicationUser
+    {
+        public const int UserNameMinimumLength = 3;
+        public const int UserNameMaxLength = 50;
+
+        public const int FirstNameMinimumLength = 2;
+        public const int FirstNameMaximumLength = 50;
+
+        public const int LastNameMinimumLength = 2;
+        public const int LastNameMaximumLength = 50;
+
+        public const int PhoneNumberMinimumLength = 10;
+        public const int PhoneNumberMaximumLength = 12;
+    }
 }
