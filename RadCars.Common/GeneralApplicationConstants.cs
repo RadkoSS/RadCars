@@ -4,6 +4,8 @@ using ByteSizeLib;
 
 public static class GeneralApplicationConstants
 {
+    public const int ReleaseYear = 2023;
+
     public const long ImageMaximumSizeInBytes = ByteSize.BytesInMegaByte * 10;
 
     public const int DefaultPage = 1;

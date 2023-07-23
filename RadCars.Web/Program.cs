@@ -2,8 +2,8 @@ using System.Reflection;
 
 using AutoMapper;
 using CloudinaryDotNet;
-using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.CookiePolicy;
 
 using RadCars.Data;
 using RadCars.Data.Common;

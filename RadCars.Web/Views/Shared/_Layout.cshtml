@@ -1,4 +1,5 @@
-﻿@inject SignInManager<ApplicationUser> SignInManager
+﻿@using static RadCars.Common.GeneralApplicationConstants
+@inject SignInManager<ApplicationUser> SignInManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,15 +28,15 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Начална страница</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="All">Всички обяви</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="All">Обяви</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="Create">Нова обява</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="Create">Създай обява</a>
                             </li>
                         }
                     </ul>
@@ -53,7 +54,13 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - RadCars - <a asp-area="" asp-controller="Home" asp-action="Privacy">Общи условия</a>
+            &copy; @ReleaseYear
+            @if (DateTime.UtcNow.Year != ReleaseYear)
+            {
+                @Html.Raw($"-{DateTime.UtcNow.ToLocalTime().Year}")
+            }
+            - RadCars LTD - All rights reserved.
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Общи условия</a>
         </div>
     </footer>
 
