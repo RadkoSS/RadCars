@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.CookiePolicy;
 
 using RadCars.Data;
 using RadCars.Data.Common;
+using RadCars.Services.Data;
 using RadCars.Data.Models.User;
 using RadCars.Services.Mapping;
 using RadCars.Data.Repositories;
@@ -48,6 +49,17 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     //options.MinimumSameSitePolicy = SameSiteMode.Strict; ToDo: Research this!!
 });
 
+builder.Services.ConfigureApplicationCookie(cfg =>
+{
+    cfg.LoginPath = "/User/Login";
+});
+
+builder.Services.AddAuthentication()
+.AddGoogle(googleOptions => {
+    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+});
+
 builder.Services.AddMvc(options =>
 {
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
@@ -66,6 +78,8 @@ builder.Services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
 //Register all services
 builder.Services.AddApplicationServices(typeof(IListingService));
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddRecaptchaService();
 
 //Register mappings
 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);

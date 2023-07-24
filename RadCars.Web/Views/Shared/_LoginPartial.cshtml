@@ -1,10 +1,32 @@
-﻿@inject SignInManager<ApplicationUser> SignInManager
+﻿@using RadCars.Services.Data.Contracts
+@inject IUserService UserService
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    var userFullName = await this.UserService.GetUserFullNameByUserNameAsync(User.Identity?.Name!);
+
+    int hour = DateTime.UtcNow.ToLocalTime().Hour;
+    string greeting;
+
+    if (hour is < 12 and >= 5)
+    {
+        greeting = "Добро утро";
+    }
+    else if (hour is >= 12 and < 18)
+    {
+        greeting = "Добър ден";
+    }
+    else
+    {
+        greeting = "Добър вечер";
+    }
+}
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравей, @User.Identity?.Name!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@greeting, @userFullName!</a>
         </li>
         <li class="nav-item mx-3">
             <div class="dropdown">

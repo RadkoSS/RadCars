@@ -25,12 +25,13 @@
 <form asp-controller="Listing" asp-action="Create" id="createListingForm" method="post" enctype="multipart/form-data">
 
     <partial name="_ListingFormPartial" model="@Model" />
-
-    <button type="submit" class="btn btn-primary">Създай обява</button>
+    
+    <recaptcha-v3 form-id="createListingForm" action="submit" class="btn btn-primary">Създай обява</recaptcha-v3>
 </form>
 
 @section Scripts
-    {
+{
+    <recaptcha-script />
     <partial name="_ValidationScriptsPartial" />
 
     <script type="module" src="~/js/loadCarModels.js"></script>

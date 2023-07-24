@@ -14,9 +14,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
+using RadCars.Data.Models.User;
 using static RadCars.Common.NotificationTypeConstants;
 using static RadCars.Common.ExceptionsAndNotificationsMessages;
-using RadCars.Data.Models.User;
+using static RadCars.Common.EntityValidationConstants.ApplicationUser;
 
 namespace RadCars.Web.Areas.Identity.Pages.Account;
 
@@ -77,13 +78,32 @@ public class ExternalLoginModel : PageModel
     /// </summary>
     public class InputModel
     {
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Имейл адрес")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Име")]
+        [StringLength(FirstNameMaximumLength, MinimumLength = FirstNameMinimumLength, ErrorMessage = "{0}то трябва да е с дължина между {2} и {1} символа.")]
+        public string FirstName { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Фамилия")]
+        [StringLength(LastNameMaximumLength, MinimumLength = LastNameMinimumLength, ErrorMessage = "{0}та трябва да е с дължина между {2} и {1} символа.")]
+        public string LastName { get; set; } = null!;
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Телефонен номер")]
+        [StringLength(PhoneNumberMaximumLength, MinimumLength = PhoneNumberMinimumLength, ErrorMessage = "Телефонният номер не е валиден.")]
+        public string PhoneNumber { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Потребителско име")]
+        [StringLength(UserNameMaxLength, MinimumLength = UserNameMinimumLength, ErrorMessage = "Потребителското име трябва да е с дължина между {2} и {1} символа.")]
+        [RegularExpression(@"^[a-z0-9]([._]?[a-z0-9]){2,49}$", ErrorMessage = "Потребителското име трябва да започва с буква и може да съдържа само малки букви, цифри, точки и долни черти.")]
+        public string UserName { get; set; } = null!;
     }
         
     public IActionResult OnGet() => RedirectToPage("./Login");
@@ -112,7 +132,7 @@ public class ExternalLoginModel : PageModel
         }
 
         // Sign in the user with this external login provider if the user already has a login.
-        var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+        var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: false);
         if (result.Succeeded)
         {
             _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
@@ -152,8 +172,11 @@ public class ExternalLoginModel : PageModel
         if (ModelState.IsValid)
         {
             var user = CreateUser();
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
 
-            await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+            await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
+            await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
             await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
             var result = await _userManager.CreateAsync(user);

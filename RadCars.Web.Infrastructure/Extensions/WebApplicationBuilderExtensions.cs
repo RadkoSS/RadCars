@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 using Data.Models.User;
+using Services.Data.Contracts;
 
 using static Common.GeneralApplicationConstants;
 
@@ -42,6 +43,11 @@ public static class WebApplicationBuilderExtensions
             {
                 throw new InvalidOperationException(
                     $"No interface is provided for the service with name: {implementationType.Name}");
+            }
+
+            if (interfaceType == typeof(IUserService))
+            {
+                continue;
             }
 
             services.AddScoped(interfaceType, implementationType);

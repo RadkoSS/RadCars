@@ -1,11 +1,15 @@
 ﻿namespace RadCars.Web.Controllers;
 
-using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Griesoft.AspNetCore.ReCaptcha;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 using ViewModels.User;
 using Data.Models.User;
@@ -15,22 +19,25 @@ using static Common.ExceptionsAndNotificationsMessages;
 
 public class UserController : BaseController
 {
-    private readonly SignInManager<ApplicationUser> signInManager;
+    private readonly IEmailSender emailSender;
     private readonly UserManager<ApplicationUser> userManager;
+    private readonly SignInManager<ApplicationUser> signInManager;
 
-    public UserController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+    public UserController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IEmailSender emailSender)
     {
-        this.signInManager = signInManager;
+        this.emailSender = emailSender;
         this.userManager = userManager;
+        this.signInManager = signInManager;
     }
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> Register()
+    public async Task<IActionResult> Register(string returnUrl = null)
     {
         var registerModel = new RegisterFormModel
         {
-            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList(),
+            ReturnUrl = returnUrl
         };
 
         return View(registerModel);
@@ -38,27 +45,29 @@ public class UserController : BaseController
 
     [HttpPost]
     [AllowAnonymous]
-    //[ValidateRecaptcha(Action = nameof(Register),
-    //    ValidationFailedAction = ValidationFailedAction.ContinueRequest)]
+    [ValidateRecaptcha(Action = nameof(Register),
+        ValidationFailedAction = ValidationFailedAction.ContinueRequest)]
     public async Task<IActionResult> Register(RegisterFormModel model)
     {
+        model.ReturnUrl ??= Url.Content("~/");
+
         if (!this.ModelState.IsValid)
         {
+            model.ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return View(model);
         }
 
         ApplicationUser user = new ApplicationUser
         {
             FirstName = model.FirstName,
-            LastName = model.LastName,
+            LastName = model.LastName
         };
 
         await this.userManager.SetEmailAsync(user, model.Email);
         await this.userManager.SetUserNameAsync(user, model.UserName);
         await this.userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
 
-        IdentityResult result =
-            await this.userManager.CreateAsync(user, model.Password);
+        IdentityResult result = await this.userManager.CreateAsync(user, model.Password);
 
         if (!result.Succeeded)
         {
@@ -67,12 +76,44 @@ public class UserController : BaseController
                 this.ModelState.AddModelError(string.Empty, error.Description);
             }
 
+            model.ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return View(model);
         }
 
-        await this.signInManager.SignInAsync(user, false);
+        var userId = await this.userManager.GetUserIdAsync(user);
 
-        return RedirectToAction("Index", "Home");
+        // Generate the email confirmation token
+        var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
+        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+        // Create the confirmation link
+        var confirmationLink = Url.Page(
+            "/Account/ConfirmEmail",
+            pageHandler: null,
+            values: new { area = "Identity", userId = userId, code = token, returnUrl = model.ReturnUrl },
+            protocol: Request.Scheme);
+
+        // Send the email. This will depend on how you've set up your email service.
+        await emailSender.SendEmailAsync(model.Email, "Confirm your email",
+            $"Please confirm your account by clicking this <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'>link</a>.");
+
+        // Check if the application requires email confirmation
+        if (this.userManager.Options.SignIn.RequireConfirmedAccount)
+        {
+            // Redirect the user to a page instructing them to check their email
+            return RedirectToPage("RegisterConfirmation", new { email = model.Email, returnUrl = model.ReturnUrl });
+        }
+        else
+        {
+            // If the application doesn't require email confirmation, sign the user in and redirect them to the home page
+
+            this.TempData[SuccessMessage] = RegistrationSuccessful;
+
+            await this.signInManager.SignInAsync(user, false);
+
+            return LocalRedirect(model.ReturnUrl);
+            //return RedirectToAction("Index", "Home");
+        }
     }
 
     [HttpGet]
@@ -81,22 +122,26 @@ public class UserController : BaseController
     {
         await this.HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
+        returnUrl ??= Url.Content("~/");
+
         LoginFormModel model = new LoginFormModel
         {
-            ReturnUrl = returnUrl,
-            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList(),
+            ReturnUrl = returnUrl
         };
 
         return View(model);
     }
 
-
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> Login(LoginFormModel model)
     {
+        model.ReturnUrl ??= Url.Content("~/");
+
         if (!this.ModelState.IsValid)
         {
+            model.ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return View(model);
         }
 
@@ -106,6 +151,7 @@ public class UserController : BaseController
         {
             TempData[ErrorMessage] =
                 "Невалиден опит за влизане. Опитайте отново.";
+            model.ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             return View(model);
         }
@@ -116,6 +162,7 @@ public class UserController : BaseController
         {
             TempData[ErrorMessage] =
                 "Невалиден опит за влизане. Опитайте отново.";
+            model.ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             return View(model);
         }
@@ -124,92 +171,4 @@ public class UserController : BaseController
 
         return Redirect(model.ReturnUrl ?? "/Home/Index");
     }
-
-    [HttpPost]
-    [AllowAnonymous]
-    public IActionResult ExternalLogin(string provider, string returnUrl)
-    {
-        var redirectUrl = Url.Action("ExternalLoginCallback", "User", new { ReturnUrl = returnUrl });
-        var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-        return new ChallengeResult(provider, properties);
-    }
-
-    [HttpGet]
-    [AllowAnonymous]
-    public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
-    {
-        returnUrl = returnUrl ?? Url.Content("~/");
-
-        if (remoteError != null)
-        {
-            TempData[ErrorMessage] = $"Грешка от: {remoteError}";
-            return RedirectToAction("Login", "User");
-        }
-
-        var info = await signInManager.GetExternalLoginInfoAsync();
-        if (info == null)
-        {
-            TempData[ErrorMessage] = "Грешка при зареждането на външен login.";
-            return RedirectToAction("Login", "User");
-        }
-
-        // Sign in the user with this external login provider if the user already has a login.
-        var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
-        if (result.Succeeded)
-        {
-            return LocalRedirect(returnUrl);
-        }
-        else
-        {
-            // If the user does not have an account, then ask the user to create an account.
-            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            var registerFormModel = new RegisterFormModel { Email = email };
-            return RedirectToAction("Register", "User", registerFormModel);
-        }
-    }
-
-
-    [HttpPost]
-    public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel model, string returnUrl = null)
-    {
-        if (ModelState.IsValid)
-        {
-            // Get the information about the user from the external login provider
-            var info = await signInManager.GetExternalLoginInfoAsync();
-            if (info == null)
-            {
-                throw new InvalidOperationException("Error loading external login information during confirmation.");
-            }
-
-            var user = new ApplicationUser
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName
-            };
-
-            await this.userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
-            await this.userManager.SetEmailAsync(user, model.Email);
-            await this.userManager.SetUserNameAsync(user, model.UserName);
-
-            var result = await userManager.CreateAsync(user);
-
-            if (result.Succeeded)
-            {
-                result = await userManager.AddLoginAsync(user, info);
-                if (result.Succeeded)
-                {
-                    await signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
-                }
-            }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-        }
-
-        ViewData["ReturnUrl"] = returnUrl;
-        return View("ExternalLogin", model);
-    }
-
 }

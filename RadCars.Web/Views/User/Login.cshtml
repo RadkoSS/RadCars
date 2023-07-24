@@ -32,10 +32,16 @@
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Влез</button>
                 </div>
-                <div class="mt-3">
-                    <p class="d-flex flex-column align-items-center">
+                <div class="d-flex flex-column align-items-center mt-3">
+                    <p>
+                        <a id="forgot-password" href="/Identity/Account/ForgotPassword" class="page-link mt-2">Забравена парола?</a>
+                    </p>
+                    <p class="text-center">
                         Нямате профил?
-                        <a asp-controller="User" asp-action="Register" class="page-link mt-2">Регистрирайте се!</a>
+                        <a asp-controller="User" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="page-link mt-2">Регистрирайте се!</a>
+                    </p>
+                    <p>
+                        <a id="resend-confirmation" href="/Identity/Account/ResendEmailConfirmation" class="page-link mt-2">Прати ново потвърждаване на имейл</a>
                     </p>
                 </div>
             </form>
@@ -44,13 +50,12 @@
         {
             <section class="text-center">
 
-                <h3>Можете да влезете и чрез:</h3>
                 <hr/>
                 <div>
-                    <form id="external-account" asp-controller="User" asp-action="ExternalLogin" method="post">
+                    <form id="external-account" action="/Identity/Account/ExternalLogin" method="post">
                         @foreach (var provider in Model.ExternalLogins)
                         {
-                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name">
+                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Влезте с @provider.DisplayName акаунт">
                                 @provider.DisplayName
                             </button>
                         }
