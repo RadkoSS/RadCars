@@ -2,20 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.ComponentModel.DataAnnotations;
+namespace RadCars.Web.Areas.Identity.Pages.Account;
+
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using RadCars.Data.Models.User;
+using System.ComponentModel.DataAnnotations;
 
-namespace RadCars.Web.Areas.Identity.Pages.Account;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+using Data.Models.User;
+
+using Services.Messaging.Contracts;
+
+using static Common.GeneralApplicationConstants;
+using static Common.EntityValidationConstants.ApplicationUser;
 
 public class ForgotPasswordModel : PageModel
 {
@@ -27,26 +30,16 @@ public class ForgotPasswordModel : PageModel
         _userManager = userManager;
         _emailSender = emailSender;
     }
-
-    /// <summary>
-    ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-    ///     directly from your code. This API may change or be removed in future releases.
-    /// </summary>
+    
     [BindProperty]
     public InputModel Input { get; set; }
-
-    /// <summary>
-    ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-    ///     directly from your code. This API may change or be removed in future releases.
-    /// </summary>
+    
     public class InputModel
     {
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [Required]
         [EmailAddress]
+        [Display(Name = "Имейл адрес")]
+        [StringLength(EmailMaximumLength, MinimumLength = EmailMinimumLength, ErrorMessage = "{0}ът трябва да е с дължина между {2} и {1} символа.")]
         public string Email { get; set; }
     }
 
@@ -71,10 +64,10 @@ public class ForgotPasswordModel : PageModel
                 values: new { area = "Identity", code },
                 protocol: Request.Scheme);
 
-            await _emailSender.SendEmailAsync(
+            await _emailSender.SendEmailAsync(SendGridSenderEmail, SendGridSenderName,
                 Input.Email,
-                "Reset Password",
-                $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Смяна на парола",
+                $"Моля, последвайте този <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>линк</a>, за да смените паролата си.");
 
             return RedirectToPage("./ForgotPasswordConfirmation");
         }

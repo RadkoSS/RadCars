@@ -1,5 +1,6 @@
 using System.Reflection;
 
+using SendGrid;
 using AutoMapper;
 using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +12,10 @@ using RadCars.Services.Data;
 using RadCars.Data.Models.User;
 using RadCars.Services.Mapping;
 using RadCars.Data.Repositories;
+using RadCars.Services.Messaging;
 using RadCars.Web.ViewModels.Home;
 using RadCars.Services.Data.Contracts;
+using RadCars.Services.Messaging.Contracts;
 using RadCars.Web.Infrastructure.Extensions;
 using RadCars.Web.Infrastructure.ModelBinders;
 using RadCars.Data.Common.Contracts.Repositories;
@@ -43,10 +46,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 .AddRoles<ApplicationRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+//ToDo: Research this!!
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.HttpOnly = HttpOnlyPolicy.Always;
-    //options.MinimumSameSitePolicy = SameSiteMode.Strict; ToDo: Research this!!
+    //options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 
 builder.Services.ConfigureApplicationCookie(cfg =>
@@ -96,6 +100,10 @@ builder.Services.AddSingleton(new Cloudinary(new Account(
         Secure = true
     }
 });
+
+builder.Services.AddSingleton<ISendGridClient>(new SendGridClient(builder.Configuration.GetSection("Authentication:SendGrid:ApiKey")
+    .Value));
+builder.Services.AddScoped<IEmailSender, SendGridEmailSender>();
 
 var app = builder.Build();
 

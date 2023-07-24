@@ -12,5 +12,8 @@ public static class GeneralApplicationConstants
     public const int EntitiesPerPage = 6;
 
     public const string AdminRoleName = "Administrator";
-    public const string DevelopmentAdminEmail = "radko121@mail.bg";
+    public const string DevelopmentAdminEmail = "radi7275@gmail.com";
+
+    public const string SendGridSenderEmail = "radcars.bg@gmail.com";
+    public const string SendGridSenderName = "RadCars";
 }

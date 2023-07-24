@@ -2,14 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+namespace RadCars.Web.Areas.Identity.Pages.Account;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-using static RadCars.Common.NotificationTypeConstants;
-using static RadCars.Common.ExceptionsAndNotificationsMessages;
-
-namespace RadCars.Web.Areas.Identity.Pages.Account;
+using static Common.NotificationTypeConstants;
+using static Common.ExceptionsAndNotificationsMessages;
 
 using Data.Models.User;
 

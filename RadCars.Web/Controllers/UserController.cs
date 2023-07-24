@@ -1,6 +1,7 @@
 ﻿namespace RadCars.Web.Controllers;
 
 using System.Text;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 
 using Microsoft.AspNetCore.Mvc;
@@ -9,12 +10,13 @@ using Griesoft.AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
 using ViewModels.User;
 using Data.Models.User;
+using Services.Messaging.Contracts;
 
 using static Common.NotificationTypeConstants;
+using static Common.GeneralApplicationConstants;
 using static Common.ExceptionsAndNotificationsMessages;
 
 public class UserController : BaseController
@@ -94,25 +96,30 @@ public class UserController : BaseController
             protocol: Request.Scheme);
 
         // Send the email. This will depend on how you've set up your email service.
-        await emailSender.SendEmailAsync(model.Email, "Confirm your email",
-            $"Please confirm your account by clicking this <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'>link</a>.");
+        await emailSender.SendEmailAsync(SendGridSenderEmail, SendGridSenderName, model.Email,"Потвърждаване на регистрация",
+            $"Здравейте, {model.FirstName} {model.LastName}, добре дошли в RadCars! Моля, потвърдете своята регистрация от тази връзка --> <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'>link</a>.");
 
         // Check if the application requires email confirmation
         if (this.userManager.Options.SignIn.RequireConfirmedAccount)
         {
             // Redirect the user to a page instructing them to check their email
-            return RedirectToPage("RegisterConfirmation", new { email = model.Email, returnUrl = model.ReturnUrl });
+            var confirmationViewModel = new RegisterConfirmationViewModel
+            {
+                Email = model.Email,
+                FullName = $"{model.FirstName} {model.LastName}"
+            };
+            this.TempData[SuccessMessage] = RegistrationSuccessful + " Моля, потвърдете имейла си!";
+
+            return View("RegisterConfirmation", confirmationViewModel);
         }
         else
         {
             // If the application doesn't require email confirmation, sign the user in and redirect them to the home page
-
             this.TempData[SuccessMessage] = RegistrationSuccessful;
 
             await this.signInManager.SignInAsync(user, false);
 
             return LocalRedirect(model.ReturnUrl);
-            //return RedirectToAction("Index", "Home");
         }
     }
 
@@ -149,8 +156,7 @@ public class UserController : BaseController
 
         if (user == null)
         {
-            TempData[ErrorMessage] =
-                "Невалиден опит за влизане. Опитайте отново.";
+            TempData[ErrorMessage] = "Невалиден опит за влизане. Опитайте отново.";
             model.ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             return View(model);
@@ -170,5 +176,144 @@ public class UserController : BaseController
         this.TempData[SuccessMessage] = LoginSuccessful;
 
         return Redirect(model.ReturnUrl ?? "/Home/Index");
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public IActionResult ExternalLogin(string provider, string returnUrl = null)
+    {
+        // Request a redirect to the external login provider.
+        var redirectUrl = Url.Action("Callback", "User", new { returnUrl });
+        var properties = this.signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+        return new ChallengeResult(provider, properties);
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> CallbackAsync(string returnUrl = null, string remoteError = null)
+    {
+        returnUrl = returnUrl ?? Url.Content("~/");
+        if (remoteError != null)
+        {
+            this.TempData[ErrorMessage] = $"Грешка от външен логин: {remoteError}";
+            return RedirectToAction("Login", "User", new { ReturnUrl = returnUrl });
+        }
+        var info = await this.signInManager.GetExternalLoginInfoAsync();
+        if (info == null)
+        {
+            this.TempData[ErrorMessage] = $"Грешка при зареждането на информация от {remoteError}";
+            return RedirectToAction("Login", "User", new { ReturnUrl = returnUrl });
+        }
+        
+        //ToDo: add validation if the user has already registered with the email provided to the loginProvider, get their user and log them in to the system without asking for password or redirecting to the Login action.
+
+        var result = await this.signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+
+        if (result.Succeeded)
+        {
+            this.TempData[SuccessMessage] = LoginSuccessful;
+            return LocalRedirect(returnUrl);
+        }
+
+        // If the user does not have an account, then ask the user to create an account.
+        this.ViewData["ProviderDisplayName"] = info.LoginProvider;
+
+        var externalRegisterInputModel = new ExternalRegistrationInputModel();
+        externalRegisterInputModel.ReturnUrl = returnUrl;
+
+        if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+        {
+            externalRegisterInputModel.Email = info.Principal.FindFirstValue(ClaimTypes.Email);
+        }
+
+        this.TempData[SuccessMessage] = "Въведете допълнителните данни, за да се регистрирате.";
+        return View("ExternalLogin", externalRegisterInputModel);
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> ConfirmationAsync(ExternalRegistrationInputModel input)
+    {
+        input.ReturnUrl ??= Url.Content("~/");
+
+        var info = await this.signInManager.GetExternalLoginInfoAsync();
+        if (info == null)
+        {
+            this.TempData[ErrorMessage] = "Грешка при зареждането на данните за външния login по време на потвърждаването.";
+            return RedirectToAction("Login", "User", new { input.ReturnUrl });
+        }
+
+        if (!ModelState.IsValid)
+        {
+            this.ViewData["ProviderDisplayName"] = info.LoginProvider;
+            TempData[ErrorMessage] = InvalidDataProvidedError;
+            return View("ExternalLogin", input);
+        }
+
+        var userByEmail = await this.userManager.FindByEmailAsync(input.Email);
+        var userByUserName = await this.userManager.FindByNameAsync(input.UserName);
+
+        if (userByEmail != null || userByUserName != null)
+        {
+            TempData[ErrorMessage] = "Вече сте регистрирани в сайта!";
+
+            return RedirectToAction("Login", "User");
+        }
+
+        var user = new ApplicationUser
+        {
+            FirstName = input.FirstName,
+            LastName = input.LastName
+        };
+
+        await this.userManager.SetUserNameAsync(user, input.UserName);
+        await this.userManager.SetPhoneNumberAsync(user, input.PhoneNumber);
+        await this.userManager.SetEmailAsync(user, input.Email);
+
+        var result = await this.userManager.CreateAsync(user);
+        if (result.Succeeded)
+        {
+            result = await this.userManager.AddLoginAsync(user, info);
+            if (result.Succeeded)
+            {
+                var userId = await this.userManager.GetUserIdAsync(user);
+
+                // Generate the email confirmation token
+                var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
+                token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+                // Create the confirmation link
+                var confirmationLink = Url.Page(
+                    "/Account/ConfirmEmail",
+                    pageHandler: null,
+                    values: new { area = "Identity", userId = userId, code = token, returnUrl = input.ReturnUrl },
+                    protocol: Request.Scheme);
+
+                // Send the email. This will depend on how you've set up your email service.
+                await emailSender.SendEmailAsync(SendGridSenderEmail, SendGridSenderName, input.Email, "Потвърждаване на регистрация",
+                    $"Здравейте, {input.FirstName} {input.LastName}, добре дошли в RadCars! Моля, потвърдете своята регистрация от тази връзка --> <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'>link</a>.");
+
+                // If account confirmation is required, we need to show the link if we don't have a real email sender
+                if (this.userManager.Options.SignIn.RequireConfirmedAccount)
+                {
+                    var confirmationViewModel = new RegisterConfirmationViewModel
+                    {
+                        Email = input.Email,
+                        FullName = $"{input.FirstName} {input.LastName}"
+                    };
+                    this.TempData[SuccessMessage] = RegistrationSuccessful + " Моля, потвърдете имейла си!";
+
+                    return View("RegisterConfirmation", confirmationViewModel);
+                }
+
+                this.TempData[SuccessMessage] = LoginSuccessful;
+                await this.signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
+                return LocalRedirect(input.ReturnUrl);
+            }
+        }
+
+        this.ViewData["ProviderDisplayName"] = info.LoginProvider;
+        TempData[ErrorMessage] = UnsuccessfulRegistration;
+        return View("ExternalLogin", input);
     }
 }

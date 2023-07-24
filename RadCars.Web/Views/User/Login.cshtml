@@ -1,16 +1,15 @@
 ﻿@model LoginFormModel
 
 @{
-    ViewData["Title"] = "Влизане в профил";
+    ViewData["Title"] = "Вход";
 }
 
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <section>
             <form id="account" method="post">
-                <h1 class="text-center">Влезте в профила си</h1>
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+                <div asp-validation-summary="@ValidationSummary.ModelOnly" class="text-danger"></div>
                 <div class="form-floating mb-2">
                     <input asp-for="@Model.UserNameOrEmailAddress" class="form-control" autocomplete="username" aria-required="true" />
                     <label asp-for="@Model.UserNameOrEmailAddress" class="form-label"></label>
@@ -30,29 +29,31 @@
                     </div>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Влез</button>
-                </div>
-                <div class="d-flex flex-column align-items-center mt-3">
-                    <p>
-                        <a id="forgot-password" href="/Identity/Account/ForgotPassword" class="page-link mt-2">Забравена парола?</a>
-                    </p>
-                    <p class="text-center">
-                        Нямате профил?
-                        <a asp-controller="User" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="page-link mt-2">Регистрирайте се!</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" href="/Identity/Account/ResendEmailConfirmation" class="page-link mt-2">Прати ново потвърждаване на имейл</a>
-                    </p>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg mt-2 btn-primary">Влез</button>
                 </div>
             </form>
+            
+            <div class="d-flex align-items-center mt-4">
+                <p class="me-2">
+                    <a asp-controller="User" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-success mt-2 fs-6">Регистрирайте се!</a>
+                </p>
+                <p class="me-2">
+                    <a id="forgot-password" href="/Identity/Account/ForgotPassword" class="btn btn-secondary fs-6 mt-2">Забравена парола?</a>
+                </p>
+                <p>
+                    <a id="resend-confirmation" href="/Identity/Account/ResendEmailConfirmation" class="btn btn-success mt-2 fs-6">Потвърдаване на имейл</a>
+                </p>
+            </div>
+
         </section>
         @if (Model.ExternalLogins.Any())
         {
             <section class="text-center">
 
-                <hr/>
-                <div>
-                    <form id="external-account" action="/Identity/Account/ExternalLogin" method="post">
+                <p class="fs-5 mt-4">Алтернативни начини за вход</p>
+                <div class="d-flex flex-column align-content-center">
+                    <form id="external-account" asp-controller="User" asp-action="ExternalLogin" method="post">
+                        <input type="hidden" asp-for="@Model.ReturnUrl"/>
                         @foreach (var provider in Model.ExternalLogins)
                         {
                             <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Влезте с @provider.DisplayName акаунт">

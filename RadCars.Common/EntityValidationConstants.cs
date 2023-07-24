@@ -81,5 +81,8 @@ public static class EntityValidationConstants
 
         public const int PasswordMinLength = 6;
         public const int PasswordMaxLength = 100;
+
+        public const int EmailMinimumLength = 5;
+        public const int EmailMaximumLength = 320;
     }
 }

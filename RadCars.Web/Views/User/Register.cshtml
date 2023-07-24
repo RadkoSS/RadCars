@@ -6,9 +6,8 @@
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h1 class="text-center">Създайте нов профил</h1>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+            <div asp-validation-summary="@ValidationSummary.ModelOnly" class="text-danger"></div>
             <div class="form-floating mb-2">
                 <input asp-for="@Model.FirstName" class="form-control" aria-required="true" />
                 <label asp-for="@Model.FirstName"></label>
@@ -45,22 +44,23 @@
                 <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
             </div>
 
-            <recaptcha-v3 form-id="registerForm" action="submit" class="w-100 btn btn-lg btn-primary">Създай профил</recaptcha-v3>
+            <recaptcha-v3 form-id="registerForm" action="submit" class="mt-4 w-100 btn btn-lg btn-primary">Създай профил</recaptcha-v3>
 
-            <div class="mt-3">
-                <p class="d-flex flex-column align-items-center">
+            <div class="mt-4">
+                <p class="d-flex flex-column align-items-center fs-5">
                     Регистрирани сте?
-                    <a asp-controller="User" asp-action="Login" class="page-link mt-2">Влезте тук.</a>
+                    <a asp-controller="User" asp-action="Login" class="btn btn-success mt-2">Вход</a>
                 </p>
             </div>
         </form>
         @if (Model.ExternalLogins.Any())
         {
-            <div class="text-center">
+            <div class="text-center mt-4">
 
-                <hr/>
-                <div>
-                    <form id="external-account" asp-page="/ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div class="d-flex flex-column align-content-center">
+                    <p class="fs-6">Алтернативни начини за регистрация</p>
+                    <form id="external-account" asp-controller="User" asp-action="ExternalLogin" method="post">
+                        <input type="hidden" asp-for="@Model.ReturnUrl"/>
                         @foreach (var provider in Model.ExternalLogins)
                         {
                             <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Регистрация с @provider.DisplayName акаунт">

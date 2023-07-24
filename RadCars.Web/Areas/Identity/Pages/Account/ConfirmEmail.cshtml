@@ -1,0 +1,10 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Потвърден имейл";
+}
+
+<div class="d-flex flex-column align-content-center text-center">
+    <h2 class="mb-3">@ViewData["Title"]</h2>
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+</div>

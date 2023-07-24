@@ -21,6 +21,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
+    <PackageReference Include="SendGrid" Version="9.28.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +29,7 @@
     <ProjectReference Include="..\RadCars.Data\RadCars.Data.csproj" />
     <ProjectReference Include="..\RadCars.Services.Data\RadCars.Services.Data.csproj" />
     <ProjectReference Include="..\RadCars.Services.Mapping\RadCars.Services.Mapping.csproj" />
+    <ProjectReference Include="..\RadCars.Services.Messaging\RadCars.Services.Messaging.csproj" />
     <ProjectReference Include="..\RadCars.Web.Infrastructure\RadCars.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\RadCars.Web.ViewModels\RadCars.Web.ViewModels.csproj" />
   </ItemGroup>

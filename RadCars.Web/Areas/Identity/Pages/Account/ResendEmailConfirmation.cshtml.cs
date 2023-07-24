@@ -2,20 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.ComponentModel.DataAnnotations;
+namespace RadCars.Web.Areas.Identity.Pages.Account;
+
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using RadCars.Data.Models.User;
+using System.ComponentModel.DataAnnotations;
 
-namespace RadCars.Web.Areas.Identity.Pages.Account;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+using Data.Models.User;
+using Services.Messaging.Contracts;
+
+using static Common.GeneralApplicationConstants;
+using static Common.EntityValidationConstants.ApplicationUser;
 
 [AllowAnonymous]
 public class ResendEmailConfirmationModel : PageModel
@@ -48,6 +51,8 @@ public class ResendEmailConfirmationModel : PageModel
         /// </summary>
         [Required]
         [EmailAddress]
+        [Display(Name = "Имейл адрес")]
+        [StringLength(EmailMaximumLength, MinimumLength = EmailMinimumLength, ErrorMessage = "{0}ът трябва да е с дължина между {2} и {1} символа.")]
         public string Email { get; set; }
     }
 
@@ -65,7 +70,7 @@ public class ResendEmailConfirmationModel : PageModel
         var user = await _userManager.FindByEmailAsync(Input.Email);
         if (user == null)
         {
-            ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+            ModelState.AddModelError(string.Empty, "Имейлът за потвърждаване е изпратен. Проверете електронната си поща.");
             return Page();
         }
 
@@ -77,11 +82,11 @@ public class ResendEmailConfirmationModel : PageModel
             pageHandler: null,
             values: new { userId = userId, code = code },
             protocol: Request.Scheme);
-        await _emailSender.SendEmailAsync(
+        await _emailSender.SendEmailAsync(SendGridSenderName, SendGridSenderEmail,
             Input.Email,
-            "Confirm your email",
-            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+            "Потвърдете своя имейл",
+            $"Потвърдете акаунта си, натискайки <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>тук</a>.");
+        
         ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
         return Page();
     }
