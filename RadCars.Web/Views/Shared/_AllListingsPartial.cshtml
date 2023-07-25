@@ -2,6 +2,10 @@
 
 @inject SignInManager<ApplicationUser> SignInManager
 
+@{
+    var userIsAdmin = this.User.IsAdmin();
+}
+
 <div class="container">
     <h3 class="text-center text-black mt-4 mb-5">@ViewData["Title"]</h3>
     <div class="row">
@@ -28,7 +32,7 @@
                                 <input type="submit" class="btn btn-sm btn-outline-info text-black w-100" value="Разгледай обявата" />
                             </form>
 
-                            @if (SignInManager.IsSignedIn(User) && string.Equals(listing.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase))
+                            @if (SignInManager.IsSignedIn(User) && (string.Equals(listing.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase) || userIsAdmin))
                             {
                                 <form asp-controller="Listing" asp-action="Deactivate" asp-route-listingId="@listing.Id" method="post">
                                     <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай обявата" />

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 
 using Common.Exceptions;
 using ViewModels.Listing;
-using ViewModels.CarImage;
 using ViewModels.Thumbnail;
 using Services.Data.Contracts;
 using Infrastructure.Extensions;
@@ -19,14 +18,12 @@ public class ListingController : BaseController
 {
     private readonly ICarService carService;
     private readonly IUserService userService;
-    private readonly IImageService imageService;
     private readonly IListingService listingService;
 
-    public ListingController(IListingService listingService, IImageService imageService, ICarService carService, IUserService userService)
+    public ListingController(IListingService listingService, ICarService carService, IUserService userService)
     {
         this.carService = carService;
         this.userService = userService;
-        this.imageService = imageService;
         this.listingService = listingService;
     }
 
@@ -112,8 +109,9 @@ public class ListingController : BaseController
         try
         {
             var userId = this.User.GetId()!;
+            var userIsAdmin = this.User.IsAdmin();
 
-            var listingFormModel = await this.listingService.GetListingEditAsync(listingId, userId);
+            var listingFormModel = await this.listingService.GetListingEditAsync(listingId, userId, userIsAdmin);
 
             return View(listingFormModel);
         }
@@ -148,7 +146,9 @@ public class ListingController : BaseController
                 form.PhoneNumber = await this.userService.GetUserPhoneNumberByIdAsync(userId);
             }
 
-            var listingId = await this.listingService.EditListingAsync(form, userId);
+            var userIsAdmin = this.User.IsAdmin();
+
+            var listingId = await this.listingService.EditListingAsync(form, userId, userIsAdmin);
 
             this.TempData[SuccessMessage] = ListingWasUpdatedSuccessfully;
 
@@ -225,8 +225,9 @@ public class ListingController : BaseController
         try
         {
             var userId = this.User.GetId()!;
+            var userIsAdmin = this.User.IsAdmin();
 
-            var deactivatedListingModel = await this.listingService.GetDeactivatedListingDetailsAsync(listingId, userId);
+            var deactivatedListingModel = await this.listingService.GetDeactivatedListingDetailsAsync(listingId, userId, userIsAdmin);
 
             return View("Details", deactivatedListingModel);
         }
@@ -316,10 +317,16 @@ public class ListingController : BaseController
         try
         {
             var userId = this.User.GetId()!;
+            var userIsAdmin = this.User.IsAdmin();
 
-            await this.listingService.DeactivateListingByIdAsync(listingId, userId);
+            await this.listingService.DeactivateListingByIdAsync(listingId, userId, userIsAdmin);
 
             this.TempData[WarningMessage] = ListingDeactivated;
+
+            if (userIsAdmin)
+            {
+                return RedirectToAction("DeactivatedDetails", new { listingId });
+            }
 
             return RedirectToAction("MineDeactivated", "Listing");
         }
@@ -337,10 +344,16 @@ public class ListingController : BaseController
         try
         {
             var userId = this.User.GetId()!;
+            var userIsAdmin = this.User.IsAdmin();
 
-            await this.listingService.ReactivateListingByIdAsync(listingId, userId);
+            await this.listingService.ReactivateListingByIdAsync(listingId, userId, userIsAdmin);
 
             this.TempData[SuccessMessage] = ListingReDeactivated;
+
+            if (userIsAdmin)
+            {
+                return RedirectToAction("Details", new { listingId });
+            }
 
             return RedirectToAction("Mine", "Listing");
         }
@@ -358,10 +371,16 @@ public class ListingController : BaseController
         try
         {
             var userId = this.User.GetId()!;
+            var userIsAdmin = this.User.IsAdmin();
 
-            await this.listingService.HardDeleteListingByIdAsync(listingId, userId);
+            await this.listingService.HardDeleteListingByIdAsync(listingId, userId, userIsAdmin);
 
             this.TempData[SuccessMessage] = ListingPermanentlyDeleted;
+
+            if (userIsAdmin)
+            {
+                return RedirectToAction("All", "Listing");
+            }
 
             return RedirectToAction("MineDeactivated", "Listing");
         }
@@ -373,29 +392,15 @@ public class ListingController : BaseController
         }
     }
 
-    [HttpPost]
-    public async Task<IActionResult> DeleteImage([FromBody] ImageInputModel data)
-    {
-        try
-        {
-            await this.imageService.DeleteImageAsync(data.ListingId, data.ImageId);
-
-            this.TempData[SuccessMessage] = ImageDeletedSuccessfully;
-
-            return Ok();
-        }
-        catch (Exception)
-        {
-            return NotFound();
-        }
-    }
-
     [HttpGet]
     public async Task<IActionResult> ChooseThumbnail(string listingId)
     {
         try
         {
-            var viewModel = await this.listingService.GetChooseThumbnailAsync(listingId, this.User.GetId()!);
+            var userId = this.User.GetId()!;
+            var userIsAdmin = this.User.IsAdmin();
+
+            var viewModel = await this.listingService.GetChooseThumbnailAsync(listingId, userId, userIsAdmin);
 
             return View(viewModel);
         }
@@ -412,16 +417,19 @@ public class ListingController : BaseController
     {
         try
         {
+            var userId = this.User.GetId()!;
+            var userIsAdmin = this.User.IsAdmin();
+
             if (!this.ModelState.IsValid)
             {
-                var viewModel = await this.listingService.GetChooseThumbnailAsync(form.Id, this.User.GetId()!);
+                var viewModel = await this.listingService.GetChooseThumbnailAsync(form.Id, userId, userIsAdmin);
 
                 this.TempData[ErrorMessage] = InvalidDataProvidedError;
 
                 return View(viewModel);
             }
 
-            await this.listingService.AddThumbnailToListingByIdAsync(form.Id, form.ThumbnailId, this.User.GetId()!);
+            await this.listingService.AddThumbnailToListingByIdAsync(form.Id, form.ThumbnailId, userId, userIsAdmin);
 
             this.TempData[SuccessMessage] = ThumbnailSelectedSuccessfully;
 
@@ -461,7 +469,9 @@ public class ListingController : BaseController
     {
         editForm = (await this.ReloadForm(editForm) as ListingEditFormModel)!;
 
-        editForm.UploadedImages = await this.listingService.GetUploadedImagesForListingByIdAsync(editForm.Id, userId);
+        var userIsAdmin = this.User.IsAdmin();
+
+        editForm.UploadedImages = await this.listingService.GetUploadedImagesForListingByIdAsync(editForm.Id, userId, userIsAdmin);
 
         return editForm;
     }

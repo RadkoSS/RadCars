@@ -4,6 +4,7 @@
 
 @{
     var userFullName = await this.UserService.GetUserFullNameByUserNameAsync(User.Identity?.Name!);
+    var userIsAdmin = this.User.IsAdmin();
 
     int hour = DateTime.UtcNow.ToLocalTime().Hour;
     string greeting;
@@ -26,7 +27,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@greeting, @userFullName!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@greeting, @userFullName@(userIsAdmin ? " (Админ)" : string.Empty)</a>
         </li>
         <li class="nav-item mx-3">
             <div class="dropdown">

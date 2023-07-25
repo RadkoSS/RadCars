@@ -13,13 +13,15 @@
     {
         modifiedOnDateString = Model.ModifiedOn.Value.ToLocalTime().ToString("g");
     }
+
+    bool userIsAdmin = this.User.IsAdmin();
 }
 
 @if (SignInManager.IsSignedIn(User))
 {
     <div class="container d-flex align-items-center mt-3 mb-3">
 
-        @if (string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase))
+        @if (string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase) || userIsAdmin)
         {
             @if (Model.IsDeleted)
             {
