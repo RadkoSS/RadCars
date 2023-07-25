@@ -1,6 +1,7 @@
 ﻿namespace RadCars.Web.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Griesoft.AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.Authorization;
 
 using Common.Exceptions;
@@ -45,6 +46,8 @@ public class ListingController : BaseController
     }
 
     [HttpPost]
+    [ValidateRecaptcha(Action = nameof(Create),
+        ValidationFailedAction = ValidationFailedAction.ContinueRequest)]
     public async Task<IActionResult> Create(ListingFormModel form)
     {
         try

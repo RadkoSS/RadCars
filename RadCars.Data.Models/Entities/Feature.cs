@@ -10,6 +10,7 @@ public class Feature : BaseDeletableModel<int>
     public Feature()
     {
         this.ListingFeatures = new HashSet<ListingFeature>();
+        this.AuctionFeatures = new HashSet<AuctionFeature>();
     }
     
     [Required]
@@ -21,4 +22,6 @@ public class Feature : BaseDeletableModel<int>
     public virtual Category Category { get; set; } = null!;
 
     public virtual ICollection<ListingFeature> ListingFeatures { get; set; }
+
+    public virtual ICollection<AuctionFeature> AuctionFeatures { get; set; }
 }

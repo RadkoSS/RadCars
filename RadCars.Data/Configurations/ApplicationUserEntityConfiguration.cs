@@ -34,5 +34,10 @@ internal class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<App
             .HasMany(u => u.Listings)
             .WithOne(l => l.Creator)
             .HasForeignKey(l => l.CreatorId);
+
+        builder
+            .HasMany(u => u.Auctions)
+            .WithOne(l => l.Creator)
+            .HasForeignKey(l => l.CreatorId);
     }
 }

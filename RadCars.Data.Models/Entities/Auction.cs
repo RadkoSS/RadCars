@@ -8,16 +8,33 @@ using Common.Models;
 using static RadCars.Common.EntityValidationConstants.ApplicationUser;
 using static RadCars.Common.EntityValidationConstants.ListingConstants;
 
-public class Listing : BaseDeletableModel<Guid>
+public class Auction : BaseDeletableModel<Guid>
 {
-    public Listing()
+    public Auction()
     {
         this.Id = Guid.NewGuid();
 
-        this.Images = new HashSet<CarImage>();
-        this.Favorites = new HashSet<UserFavoriteListing>();
-        this.ListingFeatures = new HashSet<ListingFeature>();
+        this.Images = new HashSet<AuctionCarImage>();
+        this.Favorites = new HashSet<UserFavoriteAuction>();
+        this.AuctionFeatures = new HashSet<AuctionFeature>();
     }
+
+    [Required]
+    public DateTime StartTime { get; set; }
+
+    [Required]
+    public DateTime EndDate { get; set; }
+
+    [Required]
+    public decimal StartingPrice { get; set; }
+
+    [Required]
+    public decimal CurrentPrice { get; set; }
+
+    public decimal? BlitzPrice { get; set; }
+
+    [Required]
+    public int MinimumBid { get; set; }
 
     [Required]
     [StringLength(TitleMaximumLength)]
@@ -27,11 +44,8 @@ public class Listing : BaseDeletableModel<Guid>
     [StringLength(DescriptionMaximumLength)]
     public string Description { get; set; } = null!;
 
-    //[StringLength(PhoneNumberMaximumLength)]
-    //public string? PhoneNumber { get; set; }
-
-    [Required]
-    public decimal Price { get; set; }
+    [StringLength(PhoneNumberMaximumLength)]
+    public string? PhoneNumber { get; set; }
 
     [Required]
     public int Year { get; set; }
@@ -66,7 +80,7 @@ public class Listing : BaseDeletableModel<Guid>
     public int CarModelId { get; set; }
 
     public virtual CarModel CarModel { get; set; } = null!;
-    
+
     public Guid? ThumbnailId { get; set; }
 
     public virtual CarImage? Thumbnail { get; set; }
@@ -75,11 +89,11 @@ public class Listing : BaseDeletableModel<Guid>
 
     public virtual City City { get; set; } = null!;
 
-    public virtual ICollection<ListingFeature> ListingFeatures { get; set; }
+    public virtual ICollection<AuctionFeature> AuctionFeatures { get; set; }
 
-    public virtual ICollection<UserFavoriteListing> Favorites { get; set; }
+    public virtual ICollection<UserFavoriteAuction> Favorites { get; set; }
 
-    public virtual ICollection<CarImage> Images { get; set; }
+    public virtual ICollection<AuctionCarImage> Images { get; set; }
 
     //We will support more countries in the future, not only Bulgaria
     //public int CountryId { get; set; }

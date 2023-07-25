@@ -1,4 +1,4 @@
-﻿namespace RadCars.Data.Configurations;
+﻿namespace RadCars.Data.Configurations.Listing;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -47,7 +47,6 @@ internal class ListingEntityConfiguration : IEntityTypeConfiguration<Listing>
         //When we start supporting other countries we will uncomment this code!
         //builder
         //    .HasOne(l => l.Country)
-        //    .WithMany()
-        //    .OnDelete(DeleteBehavior.Restrict);
+        //    .WithMany();
     }
 }

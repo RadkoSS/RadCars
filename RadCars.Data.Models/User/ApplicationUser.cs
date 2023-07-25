@@ -22,6 +22,10 @@ public class ApplicationUser : IdentityUser<Guid>, IAuditInfo, IDeletableEntity
     public ApplicationUser()
     {
         this.Id = Guid.NewGuid();
+
+        this.Auctions = new HashSet<Auction>();
+        this.FavoriteAuctions = new HashSet<UserFavoriteAuction>();
+
         this.Listings = new HashSet<Listing>();
         this.FavoriteListings = new HashSet<UserFavoriteListing>();
 
@@ -54,6 +58,10 @@ public class ApplicationUser : IdentityUser<Guid>, IAuditInfo, IDeletableEntity
     public virtual ICollection<Listing> Listings { get; set; }
 
     public virtual ICollection<UserFavoriteListing> FavoriteListings { get; set; }
+
+    public virtual ICollection<Auction> Auctions { get; set; }
+
+    public virtual ICollection<UserFavoriteAuction> FavoriteAuctions { get; set; }
 
     //Audit log
     public DateTime CreatedOn { get; set; }

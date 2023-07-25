@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\" />
+    <Folder Include="Views\Auction\" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-using ViewModels.Home;
 using RadCars.Services.Data.Contracts;
 
 public class HomeController : BaseController

@@ -1,4 +1,4 @@
-﻿namespace RadCars.Data.Configurations;
+﻿namespace RadCars.Data.Configurations.Listing;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
