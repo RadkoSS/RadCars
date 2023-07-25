@@ -2,7 +2,8 @@
 
 using System.ComponentModel.DataAnnotations;
 
-using static Common.EntityValidationConstants.ApplicationUser;
+using static RadCars.Common.GeneralApplicationConstants;
+using static RadCars.Common.EntityValidationConstants.ApplicationUser;
 
 public class ExternalRegistrationInputModel
 {
@@ -31,7 +32,7 @@ public class ExternalRegistrationInputModel
     [Required]
     [Display(Name = "Потребителско име")]
     [StringLength(UserNameMaxLength, MinimumLength = UserNameMinimumLength, ErrorMessage = "Потребителското име трябва да е с дължина между {2} и {1} символа.")]
-    [RegularExpression(@"^[a-z0-9]([._]?[a-z0-9]){2,49}$", ErrorMessage = "Потребителското име трябва да започва с буква и може да съдържа само малки букви, цифри, точки и долни черти.")]
+    [RegularExpression(UserNamePattern, ErrorMessage = "Потребителското име трябва да започва с буква и може да съдържа само малки букви, цифри, точки и долни черти.")]
     public string UserName { get; set; } = null!;
 
     public string? ReturnUrl { get; set; }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 using Microsoft.AspNetCore.Authentication;
 
-using static Common.EntityValidationConstants.ApplicationUser;
+using static RadCars.Common.EntityValidationConstants.ApplicationUser;
 
 public class RegisterFormModel : ExternalRegistrationInputModel
 {

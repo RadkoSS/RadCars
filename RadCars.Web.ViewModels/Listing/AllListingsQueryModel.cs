@@ -7,7 +7,8 @@ using Enums;
 using CarMake;
 using CarModel;
 using CarEngineType;
-using static Common.GeneralApplicationConstants;
+
+using static RadCars.Common.GeneralApplicationConstants;
 
 public class AllListingsQueryModel
 {
