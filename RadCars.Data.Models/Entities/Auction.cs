@@ -44,8 +44,9 @@ public class Auction : BaseDeletableModel<Guid>
     [StringLength(DescriptionMaximumLength)]
     public string Description { get; set; } = null!;
 
+    [Required]
     [StringLength(PhoneNumberMaximumLength)]
-    public string? PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; } = null!;
 
     [Required]
     public int Year { get; set; }

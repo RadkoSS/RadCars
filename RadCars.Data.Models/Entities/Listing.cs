@@ -29,7 +29,7 @@ public class Listing : BaseDeletableModel<Guid>
 
     [Required]
     [StringLength(PhoneNumberMaximumLength)]
-    public string PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; } = null!;
 
     [Required]
     public decimal Price { get; set; }
