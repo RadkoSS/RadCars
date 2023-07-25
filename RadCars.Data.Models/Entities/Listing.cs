@@ -27,8 +27,9 @@ public class Listing : BaseDeletableModel<Guid>
     [StringLength(DescriptionMaximumLength)]
     public string Description { get; set; } = null!;
 
-    //[StringLength(PhoneNumberMaximumLength)]
-    //public string? PhoneNumber { get; set; }
+    [Required]
+    [StringLength(PhoneNumberMaximumLength)]
+    public string PhoneNumber { get; set; }
 
     [Required]
     public decimal Price { get; set; }

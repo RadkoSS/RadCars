@@ -18,12 +18,14 @@ using static Common.EntityValidationConstants.ListingConstants;
 public class ListingController : BaseController
 {
     private readonly ICarService carService;
+    private readonly IUserService userService;
     private readonly IImageService imageService;
     private readonly IListingService listingService;
 
-    public ListingController(IListingService listingService, IImageService imageService, ICarService carService)
+    public ListingController(IListingService listingService, IImageService imageService, ICarService carService, IUserService userService)
     {
         this.carService = carService;
+        this.userService = userService;
         this.imageService = imageService;
         this.listingService = listingService;
     }
@@ -63,7 +65,14 @@ public class ListingController : BaseController
                 return View(form);
             }
 
-            var listingId = await this.listingService.CreateListingAsync(form, this.User.GetId()!);
+            var userId = this.User.GetId()!;
+
+            if (string.IsNullOrWhiteSpace(form.PhoneNumber))
+            {
+                form.PhoneNumber = await this.userService.GetUserPhoneNumberByIdAsync(userId);
+            }
+
+            var listingId = await this.listingService.CreateListingAsync(form, userId);
 
             this.TempData[SuccessMessage] = ListingCreatedSuccessfully;
 
@@ -125,13 +134,18 @@ public class ListingController : BaseController
 
         try
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 this.TempData[ErrorMessage] = InvalidDataProvidedError;
 
                 form = await this.ReloadEditForm(form, userId);
 
                 return View(form);
+            }
+
+            if (string.IsNullOrWhiteSpace(form.PhoneNumber))
+            {
+                form.PhoneNumber = await this.userService.GetUserPhoneNumberByIdAsync(userId);
             }
 
             var listingId = await this.listingService.EditListingAsync(form, userId);

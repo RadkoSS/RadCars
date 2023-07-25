@@ -25,4 +25,10 @@ public class UserService : IUserService
         
         return null;
     }
+
+    public async Task<string> GetUserPhoneNumberByIdAsync(string userId)
+    {
+        var user = await this.userManager.FindByIdAsync(userId);
+        return user.PhoneNumber;
+    }
 }

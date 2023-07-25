@@ -77,7 +77,7 @@ public static class EntityValidationConstants
         public const int LastNameMaximumLength = 50;
 
         public const int PhoneNumberMinimumLength = 10;
-        public const int PhoneNumberMaximumLength = 12;
+        public const int PhoneNumberMaximumLength = 13;
 
         public const int PasswordMinLength = 6;
         public const int PasswordMaxLength = 100;

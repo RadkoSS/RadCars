@@ -124,6 +124,11 @@
         <p class="fs-6">Описание: @Model.Description</p>
         <p class="fs-5">VIN номер: @Model.VinNumber</p>
         <p class="mt-5 fs-4">Цена: @Model.Price лв.</p>
+        
+        <div class="mt-5 fs-4 d-flex flex-column">
+            <p class="fs-5">Контакти:</p>
+            <a class="btn btn-primary w-25" href="tel:@Model.PhoneNumber">Oбадете се на: @Model.PhoneNumber</a>
+        </div>
     </div>
 
     <div class="mt-4">

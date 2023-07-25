@@ -301,6 +301,8 @@ public class ListingService : IListingService
             throw new InvalidDataException(InvalidDataProvidedError);
         }
 
+        form = (this.SanitizeForm(form) as ListingEditFormModel)!;
+
         if (form.Images.Any())
         {
             var uploadedImages = await this.imageService.UploadMultipleImagesAsync(listingToEdit.Id.ToString(), form.Images);
@@ -333,8 +335,6 @@ public class ListingService : IListingService
             await this.imageService.DeleteImageAsync(form.Id, deletedImgId);
         }
 
-        form = (this.SanitizeForm(form) as ListingEditFormModel)!;
-
         listingToEdit.Year = form.Year;
         listingToEdit.Price = form.Price;
         listingToEdit.Title = form.Title;
@@ -343,6 +343,7 @@ public class ListingService : IListingService
         listingToEdit.CarMakeId = form.CarMakeId;
         listingToEdit.VinNumber = form.VinNumber;
         listingToEdit.CarModelId = form.CarModelId;
+        listingToEdit.PhoneNumber = form.PhoneNumber;
         listingToEdit.EngineModel = form.EngineModel;
         listingToEdit.Description = form.Description;
         listingToEdit.EngineTypeId = form.EngineTypeId;
@@ -464,7 +465,7 @@ public class ListingService : IListingService
 
     public async Task<string> CreateListingAsync(ListingFormModel form, string userId)
     {
-        if (await ValidateForm(form) == false)
+        if (await this.ValidateForm(form) == false)
         {
             throw new InvalidDataException(InvalidDataProvidedError);
         }
@@ -605,6 +606,11 @@ public class ListingService : IListingService
         form.VinNumber = this.htmlSanitizer.Sanitize(form.VinNumber);
         form.Description = this.htmlSanitizer.Sanitize(form.Description);
         form.EngineModel = this.htmlSanitizer.Sanitize(form.EngineModel);
+
+        if (form.PhoneNumber != null)
+        {
+            form.PhoneNumber = this.htmlSanitizer.Sanitize(form.PhoneNumber);
+        }
 
         return form;
     }

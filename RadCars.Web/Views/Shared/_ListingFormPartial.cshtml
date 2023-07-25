@@ -17,6 +17,12 @@
 </div>
 
 <div class="form-group my-3">
+    <label asp-for="@Model.PhoneNumber" class="mb-1"></label>
+    <input asp-for="@Model.PhoneNumber" type="text" placeholder="Телефонен номер за връзка" id="phoneNumber" class="form-control">
+    <span asp-validation-for="@Model.PhoneNumber" class="small text-danger"></span>
+</div>
+
+<div class="form-group my-3">
     <label asp-for="@Model.Description" class="mb-1"></label>
     <textarea asp-for="@Model.Description" placeholder="Въведете описание" id="description" class="form-control" required></textarea>
     <span asp-validation-for="@Model.Description" class="small text-danger"></span>

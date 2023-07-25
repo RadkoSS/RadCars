@@ -14,6 +14,7 @@ using FeatureCategory;
 using Data.Models.Entities;
 using Services.Mapping.Contracts;
 
+using static Common.EntityValidationConstants.ApplicationUser;
 using static Common.EntityValidationConstants.ListingConstants;
 
 public class ListingFormModel : IMapTo<Listing>, IMapFrom<Listing>, IHaveCustomMappings
@@ -33,6 +34,11 @@ public class ListingFormModel : IMapTo<Listing>, IMapFrom<Listing>, IHaveCustomM
     [Required(ErrorMessage = "{0}то e задължително поле.")]
     [StringLength(TitleMaximumLength, MinimumLength = TitleMinimumLength, ErrorMessage = "{0}то трябва да има дължина между {2} и {1} символа.")]
     public string Title { get; set; } = null!;
+
+    [DataType(DataType.PhoneNumber)]
+    [Display(Name = "Телефонен номер")]
+    [StringLength(PhoneNumberMaximumLength, MinimumLength = PhoneNumberMinimumLength, ErrorMessage = "Тел. номер трябва да има дължина между {2} и {1} символа. Пример: +359896141722 или 0896141722")]
+    public string? PhoneNumber { get; set; }
 
     [Display(Name = "Описание")]
     [Required(ErrorMessage = "{0}то е задължително поле.")]

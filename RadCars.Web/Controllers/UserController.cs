@@ -203,8 +203,6 @@ public class UserController : BaseController
             this.TempData[ErrorMessage] = $"Грешка при зареждането на информация от {remoteError}";
             return RedirectToAction("Login", "User", new { ReturnUrl = returnUrl });
         }
-        
-        //ToDo: add validation if the user has already registered with the email provided to the loginProvider, get their user and log them in to the system without asking for password or redirecting to the Login action.
 
         var result = await this.signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
 
@@ -214,19 +212,30 @@ public class UserController : BaseController
             return LocalRedirect(returnUrl);
         }
 
-        // If the user does not have an account, then ask the user to create an account.
-        this.ViewData["ProviderDisplayName"] = info.LoginProvider;
+        var emailFromExternalLogin = info.Principal.FindFirstValue(ClaimTypes.Email);
+        var user = await this.userManager.FindByEmailAsync(emailFromExternalLogin);
 
-        var externalRegisterInputModel = new ExternalRegistrationInputModel();
-        externalRegisterInputModel.ReturnUrl = returnUrl;
-
-        if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+        if (user == null)
         {
-            externalRegisterInputModel.Email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            // If the user does not have an account, then ask the user to create an account.
+            this.ViewData["ProviderDisplayName"] = info.LoginProvider;
+
+            var externalRegisterInputModel = new ExternalRegistrationInputModel();
+            externalRegisterInputModel.ReturnUrl = returnUrl;
+
+            if (string.IsNullOrWhiteSpace(emailFromExternalLogin) == false)
+            {
+                externalRegisterInputModel.Email = emailFromExternalLogin;
+            }
+
+            this.TempData[SuccessMessage] = "Въведете допълнителните данни, за да се регистрирате.";
+            return View("ExternalLogin", externalRegisterInputModel);
         }
 
-        this.TempData[SuccessMessage] = "Въведете допълнителните данни, за да се регистрирате.";
-        return View("ExternalLogin", externalRegisterInputModel);
+        //The user has got an account so we log them in.
+        await this.signInManager.SignInAsync(user, isPersistent: false);
+        this.TempData[SuccessMessage] = LoginSuccessful;
+        return LocalRedirect(returnUrl);
     }
 
     [HttpPost]

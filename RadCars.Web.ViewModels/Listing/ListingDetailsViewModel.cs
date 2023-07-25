@@ -24,6 +24,8 @@ public class ListingDetailsViewModel : AllListingsViewModel
 
     public string CreatorUserName { get; set; } = null!;
 
+    public string PhoneNumber { get; set; } = null!;
+
     public string Description { get; set; } = null!;
 
     public string VinNumber { get; set; } = null!;

@@ -101,8 +101,7 @@ builder.Services.AddSingleton(new Cloudinary(new Account(
     }
 });
 
-builder.Services.AddSingleton<ISendGridClient>(new SendGridClient(builder.Configuration.GetSection("Authentication:SendGrid:ApiKey")
-    .Value));
+builder.Services.AddSingleton<ISendGridClient>(new SendGridClient(builder.Configuration.GetSection("Authentication:SendGrid:ApiKey").Value));
 builder.Services.AddScoped<IEmailSender, SendGridEmailSender>();
 
 var app = builder.Build();
