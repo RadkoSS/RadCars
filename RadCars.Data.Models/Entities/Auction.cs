@@ -1,4 +1,5 @@
-﻿namespace RadCars.Data.Models.Entities;
+﻿// ReSharper disable VirtualMemberCallInConstructor
+namespace RadCars.Data.Models.Entities;
 
 using System.ComponentModel.DataAnnotations;
 
@@ -14,6 +15,7 @@ public class Auction : BaseDeletableModel<Guid>
     {
         this.Id = Guid.NewGuid();
 
+        this.Bids = new HashSet<UserAuctionBid>();
         this.Images = new HashSet<AuctionCarImage>();
         this.Favorites = new HashSet<UserFavoriteAuction>();
         this.AuctionFeatures = new HashSet<AuctionFeature>();
@@ -23,7 +25,7 @@ public class Auction : BaseDeletableModel<Guid>
     public DateTime StartTime { get; set; }
 
     [Required]
-    public DateTime EndDate { get; set; }
+    public DateTime EndTime { get; set; }
 
     [Required]
     public decimal StartingPrice { get; set; }
@@ -89,6 +91,8 @@ public class Auction : BaseDeletableModel<Guid>
     public int CityId { get; set; }
 
     public virtual City City { get; set; } = null!;
+
+    public virtual ICollection<UserAuctionBid> Bids { get; set; }
 
     public virtual ICollection<AuctionFeature> AuctionFeatures { get; set; }
 

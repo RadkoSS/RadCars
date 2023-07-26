@@ -24,6 +24,7 @@ public class ApplicationUser : IdentityUser<Guid>, IAuditInfo, IDeletableEntity
         this.Id = Guid.NewGuid();
 
         this.Auctions = new HashSet<Auction>();
+        this.AuctionsBids = new HashSet<UserAuctionBid>();
         this.FavoriteAuctions = new HashSet<UserFavoriteAuction>();
 
         this.Listings = new HashSet<Listing>();
@@ -60,6 +61,8 @@ public class ApplicationUser : IdentityUser<Guid>, IAuditInfo, IDeletableEntity
     public virtual ICollection<UserFavoriteListing> FavoriteListings { get; set; }
 
     public virtual ICollection<Auction> Auctions { get; set; }
+
+    public virtual ICollection<UserAuctionBid> AuctionsBids { get; set; }
 
     public virtual ICollection<UserFavoriteAuction> FavoriteAuctions { get; set; }
 

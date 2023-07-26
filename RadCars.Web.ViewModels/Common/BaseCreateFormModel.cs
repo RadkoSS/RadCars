@@ -9,6 +9,7 @@ using City;
 using CarMake;
 using CarModel;
 using CarEngineType;
+using FeatureCategory;
 
 using static RadCars.Common.EntityValidationConstants.ApplicationUser;
 using static RadCars.Common.EntityValidationConstants.ListingConstants;
@@ -23,6 +24,7 @@ public abstract class BaseCreateFormModel
         this.CarMakes = new HashSet<CarMakeViewModel>();
         this.CarModels = new HashSet<CarModelViewModel>();
         this.EngineTypes = new HashSet<EngineTypeViewModel>();
+        this.FeatureCategories = new HashSet<FeatureCategoriesViewModel>();
     }
 
     [Display(Name = "Заглавие")]
@@ -44,11 +46,6 @@ public abstract class BaseCreateFormModel
     [Required(ErrorMessage = "{0}та е задължително поле.")]
     [Range(YearMinimumValue, int.MaxValue, ErrorMessage = "{0}та трябва да е след {2}.")]
     public int Year { get; set; }
-
-    [Display(Name = "Цена")]
-    [Required(ErrorMessage = "{0}та е задължително поле.")]
-    [Range(typeof(decimal), PriceMinimum, PriceMaximum, ErrorMessage = "{0}та трябва да е число между {2} и {1}.")]
-    public decimal Price { get; set; }
 
     [Display(Name = "Номер на рамата (VIN номер)")]
     [Required(ErrorMessage = "{0} е задължително поле.")]
@@ -97,4 +94,6 @@ public abstract class BaseCreateFormModel
     [Required(ErrorMessage = "{0}те са задължително поле.")]
     [Display(Name = "Снимки")]
     public virtual IEnumerable<IFormFile> Images { get; set; }
+
+    public IEnumerable<FeatureCategoriesViewModel> FeatureCategories { get; set; }
 }

@@ -4,3 +4,36 @@
     ViewData["Title"] = "Създаване на търг";
 }
 
+<h2 class="text-center mb-5">@ViewData["Title"]</h2>
+
+<div id="carouselContainer" class="d-flex flex-column text-center justify-content-center align-items-center visually-hidden">
+    <div class="carousel slide w-50" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!--Images are loaded dynamically with JS-->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <button type="button" id="clearImages" class="btn btn-danger mt-3 visually-hidden">Изтрий качените снимки</button>
+</div>
+
+<form asp-controller="Auction" asp-action="Create" id="createAuctionForm" method="post" enctype="multipart/form-data">
+
+    <partial name="_AuctionFormPartial" model="@Model" />
+
+    <recaptcha-v3 form-id="createAuctionForm" action="submit" class="btn btn-primary">Създай търг</recaptcha-v3>
+</form>
+
+@section Scripts
+{
+    <recaptcha-script />
+    <partial name="_ValidationScriptsPartial" />
+
+    <script type="module" src="~/js/loadCarModels.js"></script>
+    <script type="text/javascript" src="~/js/previewUploadedImages.js"></script>
+}

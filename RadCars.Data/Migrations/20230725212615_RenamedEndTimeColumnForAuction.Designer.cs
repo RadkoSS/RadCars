@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RadCars.Data;
 
@@ -11,9 +12,10 @@ using RadCars.Data;
 namespace RadCars.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230725212615_RenamedEndTimeColumnForAuction")]
+    partial class RenamedEndTimeColumnForAuction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,7 +235,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("ThumbnailId");
 
-                    b.ToTable("Auctions");
+                    b.ToTable("Auction");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.AuctionCarImage", b =>
@@ -267,7 +269,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("AuctionCarImages");
+                    b.ToTable("AuctionCarImage");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.AuctionFeature", b =>
@@ -290,7 +292,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("AuctionFeatures");
+                    b.ToTable("AuctionFeature");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.CarImage", b =>
@@ -15038,33 +15040,6 @@ namespace RadCars.Data.Migrations
                     b.ToTable("ListingFeatures");
                 });
 
-            modelBuilder.Entity("RadCars.Data.Models.Entities.UserAuctionBid", b =>
-                {
-                    b.Property<Guid>("BidderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AuctionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Amount")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("decimal(10,2)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("BidderId", "AuctionId");
-
-                    b.HasIndex("AuctionId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("UserAuctionBids");
-                });
-
             modelBuilder.Entity("RadCars.Data.Models.Entities.UserFavoriteAuction", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -15085,7 +15060,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("UserFavoriteAuctions");
+                    b.ToTable("UserFavoriteAuction");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.UserFavoriteListing", b =>
@@ -15488,25 +15463,6 @@ namespace RadCars.Data.Migrations
                     b.Navigation("Listing");
                 });
 
-            modelBuilder.Entity("RadCars.Data.Models.Entities.UserAuctionBid", b =>
-                {
-                    b.HasOne("RadCars.Data.Models.Entities.Auction", "Auction")
-                        .WithMany("Bids")
-                        .HasForeignKey("AuctionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("RadCars.Data.Models.User.ApplicationUser", "Bidder")
-                        .WithMany("AuctionsBids")
-                        .HasForeignKey("BidderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Auction");
-
-                    b.Navigation("Bidder");
-                });
-
             modelBuilder.Entity("RadCars.Data.Models.Entities.UserFavoriteAuction", b =>
                 {
                     b.HasOne("RadCars.Data.Models.Entities.Auction", "Auction")
@@ -15549,8 +15505,6 @@ namespace RadCars.Data.Migrations
                 {
                     b.Navigation("AuctionFeatures");
 
-                    b.Navigation("Bids");
-
                     b.Navigation("Favorites");
 
                     b.Navigation("Images");
@@ -15590,8 +15544,6 @@ namespace RadCars.Data.Migrations
             modelBuilder.Entity("RadCars.Data.Models.User.ApplicationUser", b =>
                 {
                     b.Navigation("Auctions");
-
-                    b.Navigation("AuctionsBids");
 
                     b.Navigation("Claims");
 

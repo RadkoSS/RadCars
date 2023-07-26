@@ -43,6 +43,16 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
     public DbSet<EngineType> EngineTypes { get; set; } = null!;
 
+    public DbSet<Auction> Auctions { get; set; } = null!;
+
+    public DbSet<AuctionCarImage> AuctionCarImages { get; set; } = null!;
+
+    public DbSet<AuctionFeature> AuctionFeatures { get; set; } = null!;
+
+    public DbSet<UserAuctionBid> UserAuctionBids { get; set; } = null!;
+
+    public DbSet<UserFavoriteAuction> UserFavoriteAuctions { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

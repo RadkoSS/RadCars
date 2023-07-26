@@ -1,20 +1,21 @@
 ﻿namespace RadCars.Web.ViewModels.Listing;
 
+using System.ComponentModel.DataAnnotations;
+
 using AutoMapper;
 
 using Common;
-using FeatureCategory;
 using Data.Models.Entities;
 using Services.Mapping.Contracts;
 
+using static RadCars.Common.EntityValidationConstants.ListingConstants;
+
 public class ListingFormModel : BaseCreateFormModel, IMapTo<Listing>, IMapFrom<Listing>, IHaveCustomMappings
 {
-    public ListingFormModel()
-    {
-        this.FeatureCategories = new HashSet<FeatureCategoriesViewModel>();
-    }
-
-    public IEnumerable<FeatureCategoriesViewModel> FeatureCategories { get; set; }
+    [Display(Name = "Цена")]
+    [Required(ErrorMessage = "{0}та е задължително поле.")]
+    [Range(typeof(decimal), PriceMinimum, PriceMaximum, ErrorMessage = "{0}та трябва да е число между {2} и {1}.")]
+    public decimal Price { get; set; }
 
     public virtual void CreateMappings(IProfileExpression configuration)
     {
