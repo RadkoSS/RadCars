@@ -43,6 +43,10 @@ public class AuctionFormModel : BaseCreateFormModel, IMapFrom<Auction>, IMapTo<A
             .ForMember(destination => destination.Images, options => options.Ignore())
             .ForMember(destination => destination.CurrentPrice,
                 options =>
-                    options.MapFrom(source => source.StartingPrice));
+                    options.MapFrom(source => source.StartingPrice))
+            .ForMember(destination => destination.StartTime, options => 
+                options.MapFrom(source => source.StartTime.ToUniversalTime()))
+            .ForMember(destination => destination.StartTime, options =>
+                options.MapFrom(source => source.EndTime.ToUniversalTime()));
     }
 }

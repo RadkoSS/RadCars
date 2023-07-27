@@ -1,11 +1,10 @@
 ﻿namespace RadCars.Services.Data.Contracts;
 
 using Models.Auction;
-using Web.ViewModels.Home;
+using RadCars.Web.ViewModels.FeatureCategory;
 using Web.ViewModels.Auction;
 using Web.ViewModels.CarImage;
 using Web.ViewModels.Thumbnail;
-using RadCars.Web.ViewModels.Listing;
 
 public interface IAuctionService
 {
@@ -38,6 +37,8 @@ public interface IAuctionService
     Task<IEnumerable<ImageViewModel>> GetUploadedImagesForAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin);
 
     Task<int> GetUploadedImagesCountForAuctionByIdAsync(string auctionId);
+
+    Task<ICollection<FeatureCategoriesViewModel>> GetSelectedFeaturesByAuctionIdAsync(string auctionId);
 
     Task<AuctionDetailsViewModel> GetAuctionDetailsAsync(string auctionId);
 

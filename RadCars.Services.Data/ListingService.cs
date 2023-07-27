@@ -213,7 +213,7 @@ public class ListingService : IListingService
         {
             CarMakes = await this.carService.GetCarMakesAsync(),
             FeatureCategories = await this.carService.GetFeatureCategoriesAsync(),
-            Cities = await this.carService.GetCitiesAsync(),
+            Cities = await this.carService.GetBulgarianCitiesAsync(),
             EngineTypes = await this.carService.GetEngineTypesAsync()
         };
 
@@ -233,7 +233,7 @@ public class ListingService : IListingService
 
         listingToEdit.UploadedImages = await this.GetUploadedImagesForListingByIdAsync(listingId, userId, isUserAdmin);
         
-        listingToEdit.Cities = await this.carService.GetCitiesAsync();
+        listingToEdit.Cities = await this.carService.GetBulgarianCitiesAsync();
         listingToEdit.CarMakes = await this.carService.GetCarMakesAsync();
         listingToEdit.CarModels = await this.carService.GetModelsByMakeIdAsync(listingToEdit.CarMakeId);
         listingToEdit.EngineTypes = await this.carService.GetEngineTypesAsync();
@@ -243,18 +243,11 @@ public class ListingService : IListingService
 
         foreach (var featuresWithCategory in listingToEdit.FeatureCategories)
         {
-            foreach (var selectedFeaturesWithCategory in selectedFeaturesWithCategories)
+            foreach (var feature in featuresWithCategory.Features)
             {
-                foreach (var feature in featuresWithCategory.Features)
-                {
-                    foreach (var selectedFeature in selectedFeaturesWithCategory.Features)
-                    {
-                        if (feature.Id == selectedFeature.Id)
-                        {
-                            feature.IsSelected = true;
-                        }
-                    }
-                }
+                feature.IsSelected = selectedFeaturesWithCategories
+                    .SelectMany(sfc => sfc.Features)
+                    .Any(sf => sf.Id == feature.Id);
             }
         }
 
@@ -266,6 +259,8 @@ public class ListingService : IListingService
         var listingToEdit = await this.listingsRepository.AllWithDeleted()
             .Where(l => l.Id.ToString() == form.Id && l.CreatorId.ToString() == userId || l.Id.ToString() == form.Id && isUserAdmin)
             .FirstAsync();
+
+        var oldThumbnailId = listingToEdit.ThumbnailId!.Value;
 
         if (form.Images.Any() == false && form.DeletedImages.Count() >= listingToEdit.Images.Count)
         {
@@ -279,7 +274,7 @@ public class ListingService : IListingService
 
         if (this.ValidateUploadedImages(form) == false)
         {
-            throw new InvalidImagesException(ListingUploadedImagesAreInvalid);
+            throw new InvalidImagesException(UploadedImagesAreInvalid);
         }
 
         if (await this.ValidateForm(form) == false)
@@ -293,7 +288,7 @@ public class ListingService : IListingService
         {
             var uploadedImages = await this.listingImageService.UploadMultipleListingImagesAsync(listingToEdit.Id.ToString(), form.Images);
 
-            if (!uploadedImages.Any())
+            if (uploadedImages.Any() == false)
             {
                 throw new InvalidDataException(ImagesUploadUnsuccessful);
             }
@@ -354,19 +349,21 @@ public class ListingService : IListingService
 
         listingToEdit.ListingFeatures = newSelectedFeatures;
 
-        var firstImageId = listingToEdit.Images.First().Id.ToString();
-
         this.listingsRepository.Update(listingToEdit);
         await this.listingsRepository.SaveChangesAsync();
 
-        await this.AddThumbnailToListingByIdAsync(listingToEdit.Id.ToString(), firstImageId, userId, isUserAdmin);
+        if (listingToEdit.ThumbnailId!.Value != oldThumbnailId)
+        {
+            var firstImageId = listingToEdit.Images.First().Id.ToString();
+            await this.AddThumbnailToListingByIdAsync(listingToEdit.Id.ToString(), firstImageId, userId, isUserAdmin);
+        }
 
         return listingToEdit.Id.ToString();
     }
 
     public async Task<IEnumerable<ImageViewModel>> GetUploadedImagesForListingByIdAsync(string listingId, string userId, bool isUserAdmin)
     => await this.carImagesRepository.AllWithDeleted()
-        .Where(ci => ci.ListingId.ToString() == listingId && ci.Listing.CreatorId.ToString() == userId || ci.ListingId.ToString() == listingId && isUserAdmin).To<ImageViewModel>().ToArrayAsync();
+        .Where(ci => ci.ListingId.ToString() == listingId && (ci.Listing.CreatorId.ToString() == userId || isUserAdmin)).To<ImageViewModel>().ToArrayAsync();
 
     public async Task<int> GetUploadedImagesCountForListingByIdAsync(string listingId)
         => await this.carImagesRepository.AllWithDeleted()
@@ -445,7 +442,7 @@ public class ListingService : IListingService
 
         if (this.ValidateUploadedImages(form) == false)
         {
-            throw new InvalidImagesException(ListingUploadedImagesAreInvalid);
+            throw new InvalidImagesException(UploadedImagesAreInvalid);
         }
 
         form = this.SanitizeForm(form);

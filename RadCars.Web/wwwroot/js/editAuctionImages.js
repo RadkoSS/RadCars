@@ -1,15 +1,15 @@
 ﻿import { post } from './webApiRequester.js';
 
-const form = document.getElementById('editListingForm');
+const form = document.getElementById('editAuctionForm');
 const undoButton = document.getElementById('undo-btn');
 const imagesInput = document.getElementById('images');
 imagesInput.setAttribute('data-val', 'false');
-const listingId = document.getElementById('listingId').value;
+const auctionId = document.getElementById('auctionId').value;
 
 //ToDo: implement JWT token send to the web API for security reasons!
 //const jwtToken = '';
 
-const uploadedImagesCount = await post('/api/listing/uploadedImages/count', listingId);
+const uploadedImagesCount = await post('/api/auction/uploadedImages/count', auctionId);
 
 document.querySelectorAll('.delete-button').forEach(button => {
     button.addEventListener('click', async (e) => {
@@ -19,7 +19,7 @@ document.querySelectorAll('.delete-button').forEach(button => {
         }
 
         const imageId = target.id.toLowerCase();
-        
+
         const swalResult = await Swal.fire({
             title: 'Сигурни ли сте, че искате да изтриете снимката?',
             text: 'След запазване на промените с бутона \"Редактирай\" снимката ще бъде изтрита!',

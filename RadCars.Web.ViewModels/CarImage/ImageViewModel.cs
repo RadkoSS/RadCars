@@ -3,7 +3,7 @@
 using Data.Models.Entities;
 using Services.Mapping.Contracts;
 
-public class ImageViewModel : IMapFrom<CarImage>
+public class ImageViewModel : IMapFrom<CarImage>, IMapFrom<AuctionCarImage>
 {
     public string Id { get; set; } = null!;
 

@@ -1,12 +1,12 @@
-﻿@model ListingEditFormModel
+﻿@model AuctionEditFormModel
 
 @{
-    ViewData["Title"] = "Редактиране на обява";
+    ViewData["Title"] = "Редактиране на търг";
 }
 
 <h1 class="text-center mt-3 mb-3">@ViewData["Title"]</h1>
 
-<a asp-controller="Listing" asp-action="Edit" asp-route-listingId="@Model.Id" id="undo-btn" class="btn btn-sm btn-outline-danger text-black mt-4 mb-2">Върни промените</a>
+<a asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@Model.Id" id="undo-btn" class="btn btn-sm btn-outline-danger text-black mt-4 mb-2">Върни промените</a>
 
 <div class="image-grid mb-2">
     @foreach (var image in Model.UploadedImages)
@@ -37,20 +37,24 @@
     <button type="button" id="clearImages" class="btn btn-danger mt-3 visually-hidden">Изтрий новите снимки</button>
 </div>
 
-<form asp-controller="Listing" asp-action="Edit" id="editListingForm" method="post" enctype="multipart/form-data">
+<form asp-controller="Auction" asp-action="Edit" id="editAuctionForm" method="post" enctype="multipart/form-data">
 
-    <input type="hidden" asp-for="@Model.Id" id="listingId"/>
+    <input type="hidden" asp-for="@Model.Id" id="auctionId" />
 
-    <partial name="_ListingFormPartial" model="@Model" />
+    <partial name="_AuctionFormPartial" model="@Model" />
 
-    <button type="submit" class="btn btn-primary">Редактирай обява</button>
+    <button type="submit" class="btn btn-primary">Редактирай търг</button>
 </form>
 
 @section Scripts
 {
+    <link rel="stylesheet" href="~/css/imageGrid.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/bg.js"></script>
     <partial name="_ValidationScriptsPartial" />
-    <link rel="stylesheet" href="~/css/imageGrid.css"/>
+    <script src="~/js/datesPickerSettings.js"></script>
     <script type="module" src="~/js/loadCarModels.js"></script>
-    <script type="module" src="~/js/editListingImages.js"></script>
+    <script type="module" src="~/js/editAuctionImages.js"></script>
     <script type="text/javascript" src="~/js/previewUploadedImages.js"></script>
 }

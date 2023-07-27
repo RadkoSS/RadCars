@@ -10,7 +10,8 @@ using Services.Mapping.Contracts;
 
 public class AllAuctionsViewModel : BaseAllViewModel, IMapFrom<Auction>, IMapFrom<UserFavoriteAuction>, IHaveCustomMappings
 {
-    public decimal CurrentPrice { get; set; }
+    //public decimal CurrentPrice { get; set; }
+    public decimal StartingPrice { get; set; }
 
     public virtual void CreateMappings(IProfileExpression configuration)
     {
@@ -32,7 +33,7 @@ public class AllAuctionsViewModel : BaseAllViewModel, IMapFrom<Auction>, IMapFro
             .ForMember(dest => dest.EngineModel, opt => opt.MapFrom(src => src.Auction.EngineModel))
             .ForMember(dest => dest.Mileage, opt => opt.MapFrom(src => src.Auction.Mileage))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Auction.Title))
-            .ForMember(dest => dest.CurrentPrice, opt => opt.MapFrom(src => src.Auction.CurrentPrice))
+            .ForMember(dest => dest.StartingPrice, opt => opt.MapFrom(src => src.Auction.StartingPrice))
             .ForMember(dest => dest.Year, opt => opt.MapFrom(src => src.Auction.Year));
     }
 }

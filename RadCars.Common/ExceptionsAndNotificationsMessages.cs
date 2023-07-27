@@ -23,7 +23,7 @@ public static class ExceptionsAndNotificationsMessages
         "Обявата отново беше активирана и вече е публична.";
 
     public const string ListingWasUpdatedSuccessfully = "Обявата беше редактирана. Изберете снимка за обложка.";
-    public const string ListingUploadedImagesAreInvalid = "Можете да качвате само снимки с размер до 10 MB!";
+    public const string UploadedImagesAreInvalid = "Можете да качвате само снимки с размер до 10 MB!";
 
     public const string ThumbnailSelectedSuccessfully = "Обложката беше избрана успешно.";
 
@@ -36,7 +36,6 @@ public static class ExceptionsAndNotificationsMessages
 
     public const string ListingIsAlreadyInCurrentUserFavorites = "Обявата вече е била добавена в любимите Ви обяви!";
 
-    public const string AuctionIsAlreadyInCurrentUserFavorites = "Търгът вече е бил добавен в любими!";
 
     public const string ListingIsNotInCurrentUserFavorites = "Обявата вече не присъства в любимите Ви обяви!";
 
@@ -46,4 +45,13 @@ public static class ExceptionsAndNotificationsMessages
 
     public const string UnsuccessfulRegistration =
         "Получи се грешка при опита за регистрация, моля опитайте отново по-късно.";
+
+    public const string AuctionIsAlreadyInCurrentUserFavorites = "Търгът вече е бил добавен в любими!";
+    public const string AuctionDoesNotExistError = "Търгът не същестува.";
+    public const string ErrorCreatingTheAuction =
+        "Неуспешно създаване на търг. Моля, опитайте отново по-късно или се свържете с администратор.";
+    public const string ErrorEditingTheAuction =
+        "Неуспешно редактиране на търг. Моля, опитайте отново по-късно или се свържете с администратор.";
+    public const string AuctionWasUpdatedSuccessfully = "Търгът беше обновен успешно. Изберете снимка за обложка и времена на започване и приключване.";
+    public const string AuctionCreateSuccessfully = "Търгът беше създаден успешно.";
 }

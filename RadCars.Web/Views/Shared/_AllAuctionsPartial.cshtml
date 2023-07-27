@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AllAuctionsViewModel>
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    var userIsAdmin = this.User.IsAdmin();
+}
+
+<div class="container">
+    <h3 class="text-center text-black mt-4 mb-5">@ViewData["Title"]</h3>
+    <div class="row">
+        @foreach (var auction in Model)
+        {
+            <div class="col-md-4 d-flex align-items-stretch">
+                <div class="card mb-4 shadow-sm w-100">
+                    <a asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id"><img class="card-img-top w-100" src="@auction.Thumbnail.Url" alt="Card image cap" style="height: 25vh; object-fit: cover;"></a>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@auction.Title</h5>
+                        <p class="card-text flex-grow-1">
+                            <ul class="list-unstyled">
+                                <li>Марка: @auction.CarMakeName</li>
+                                <li>Модел: @auction.CarModelName</li>
+                                <li>Година на производство: @auction.Year г.</li>
+                                <li>Населено място: @auction.City.Name</li>
+                                <li>Двигател: @auction.EngineModel</li>
+                                <li>Пробег: @auction.Mileage км.</li>
+                                <li class="mt-3">Начална цена: @auction.StartingPrice лв.</li>
+                            </ul>
+                        </p>
+                        <div class="mt-auto">
+                            <form asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id">
+                                <input type="submit" class="btn btn-sm btn-outline-info text-black w-100" value="Виж търг" />
+                            </form>
+
+                            @if (SignInManager.IsSignedIn(User) && (string.Equals(auction.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase) || userIsAdmin))
+                            {
+                                <form asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
+                                    <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай търг" />
+                                </form>
+
+                                <a asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@auction.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай търг</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

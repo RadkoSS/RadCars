@@ -71,7 +71,7 @@ public class AuctionController : BaseController
 
             var auctionId = await this.auctionService.CreateAuctionAsync(form, userId);
 
-            this.TempData[SuccessMessage] = ListingCreatedSuccessfully;
+            this.TempData[SuccessMessage] = AuctionCreateSuccessfully;
 
             return RedirectToAction("ChooseThumbnail", "Auction", new { auctionId });
         }
@@ -93,12 +93,12 @@ public class AuctionController : BaseController
             this.ModelState.AddModelError(nameof(form.Images), e.Message);
             return View(form);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             this.ViewData["MinYear"] = YearMinimumValue;
 
             form = await this.ReloadForm(form);
-            this.TempData[ErrorMessage] = ErrorCreatingTheListing;
+            this.TempData[ErrorMessage] = ErrorCreatingTheAuction;
             return View(form);
         }
     }
@@ -154,6 +154,79 @@ public class AuctionController : BaseController
         }
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Edit(string auctionId)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+            var userIsAdmin = this.User.IsAdmin();
+
+            var auctionEditFormModel = await this.auctionService.GetAuctionEditAsync(auctionId, userId, userIsAdmin);
+
+            return View(auctionEditFormModel);
+        }
+        catch (InvalidOperationException)
+        {
+            return Unauthorized();
+        }
+        catch (Exception)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(AuctionEditFormModel form)
+    {
+        var userId = this.User.GetId()!;
+
+        try
+        {
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[ErrorMessage] = InvalidDataProvidedError;
+
+                form = await this.ReloadEditForm(form, userId);
+
+                return View(form);
+            }
+
+            if (string.IsNullOrWhiteSpace(form.PhoneNumber))
+            {
+                form.PhoneNumber = await this.userService.GetUserPhoneNumberByIdAsync(userId);
+            }
+
+            var userIsAdmin = this.User.IsAdmin();
+
+            var auctionId = await this.auctionService.EditAuctionAsync(form, userId, userIsAdmin);
+
+            this.TempData[SuccessMessage] = AuctionWasUpdatedSuccessfully;
+
+            return RedirectToAction("ChooseThumbnail", "Auction", new { auctionId });
+        }
+        catch (InvalidImagesException e)
+        {
+            form = await this.ReloadEditForm(form, userId);
+            this.TempData[ErrorMessage] = InvalidDataProvidedError;
+            ModelState.AddModelError(nameof(form.Images), e.Message);
+            return View(form);
+        }
+        catch (InvalidDataException e)
+        {
+            form = await this.ReloadEditForm(form, userId);
+            this.TempData[ErrorMessage] = InvalidDataProvidedError;
+            ModelState.AddModelError(nameof(form.Images), e.Message);
+            return View(form);
+        }
+        catch (Exception)
+        {
+            form = await this.ReloadEditForm(form, userId);
+            this.TempData[ErrorMessage] = ErrorEditingTheAuction;
+            return View(form);
+        }
+    }
+
     [AllowAnonymous]
     public async Task<IActionResult> All([FromQuery] AllAuctionsQueryModel queryModel)
     {
@@ -170,7 +243,7 @@ public class AuctionController : BaseController
                 queryModel.CarModels = await this.carService.GetModelsByMakeIdAsync(queryModel.CarMakeId.Value);
             }
 
-            queryModel.Cities = await this.carService.GetCitiesAsync();
+            queryModel.Cities = await this.carService.GetBulgarianCitiesAsync();
             queryModel.EngineTypes = await this.carService.GetEngineTypesAsync();
 
             return View(queryModel);
@@ -217,7 +290,7 @@ public class AuctionController : BaseController
 
     private async Task<AuctionFormModel> ReloadForm(AuctionFormModel form)
     {
-        form.Cities = await this.carService.GetCitiesAsync();
+        form.Cities = await this.carService.GetBulgarianCitiesAsync();
         form.CarMakes = await this.carService.GetCarMakesAsync();
         form.EngineTypes = await this.carService.GetEngineTypesAsync();
         form.CarModels = await this.carService.GetModelsByMakeIdAsync(form.CarMakeId);

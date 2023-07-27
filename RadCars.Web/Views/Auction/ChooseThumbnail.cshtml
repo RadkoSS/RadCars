@@ -8,19 +8,19 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h2 class="text-center">@ViewData["Title"]</h2>
-            <p class="text-center mt-2">Изберете една от снимките като обложка, за да бъде представена добре обявата Ви сред всички останали.</p>
-            
+            <p class="text-center mt-2">Изберете една от снимките като обложка, за да бъде представен добре Вашия търг сред всички останали.</p>
+
             <div class="row my-3">
                 <div class="col-12">
-                    <a asp-controller="Listing" asp-action="Details" asp-route-listingId="@Model.Id" class="btn btn-close"></a>
+                    <a asp-controller="Auction" asp-action="Details" asp-route-auctionId="@Model.Id" class="btn btn-close"></a>
                     <span class="text-decoration-underline">Отказ</span>
                 </div>
             </div>
-            
+
             <span asp-validation-for="@Model.ThumbnailId" class="small text-danger"></span>
 
-            <form asp-controller="Listing" asp-action="ChooseThumbnail" method="post" class="mt-4">
-                <partial name="_ChooseThumbnailFormPartial" model="@Model"/>
+            <form asp-controller="Auction" asp-action="ChooseThumbnail" method="post" class="mt-4">
+                <partial name="_ChooseThumbnailFormPartial" model="@Model" />
             </form>
         </div>
     </div>

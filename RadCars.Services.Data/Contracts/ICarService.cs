@@ -14,7 +14,7 @@ public interface ICarService
 
     Task<IEnumerable<FeatureCategoriesViewModel>> GetFeatureCategoriesAsync();
 
-    Task<IEnumerable<CityViewModel>> GetCitiesAsync();
+    Task<IEnumerable<CityViewModel>> GetBulgarianCitiesAsync();
 
     Task<IEnumerable<EngineTypeViewModel>> GetEngineTypesAsync();
 

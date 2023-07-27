@@ -192,7 +192,7 @@ public class ListingController : BaseController
                 queryModel.CarModels = await this.carService.GetModelsByMakeIdAsync(queryModel.CarMakeId.Value);
             }
 
-            queryModel.Cities = await this.carService.GetCitiesAsync();
+            queryModel.Cities = await this.carService.GetBulgarianCitiesAsync();
             queryModel.EngineTypes = await this.carService.GetEngineTypesAsync();
 
             return View(queryModel);
@@ -445,7 +445,7 @@ public class ListingController : BaseController
 
     private async Task<ListingFormModel> ReloadForm(ListingFormModel form)
     {
-        form.Cities = await this.carService.GetCitiesAsync();
+        form.Cities = await this.carService.GetBulgarianCitiesAsync();
         form.CarMakes = await this.carService.GetCarMakesAsync();
         form.EngineTypes = await this.carService.GetEngineTypesAsync();
         form.CarModels = await this.carService.GetModelsByMakeIdAsync(form.CarMakeId);

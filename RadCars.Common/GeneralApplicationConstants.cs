@@ -11,6 +11,8 @@ public static class GeneralApplicationConstants
     public const int DefaultPage = 1;
     public const int EntitiesPerPage = 6;
 
+    public const int CountryIdOfBulgaria = 1;
+
     public const string UserNamePattern = @"^[a-z0-9]([._]?[a-z0-9]){2,49}$";
     public const string AdminRoleName = "Administrator";
     public const string DevelopmentAdminEmail = "radi7275@gmail.com";

@@ -31,6 +31,8 @@ public class AuctionEditFormModel : AuctionFormModel
     {
         configuration
             .CreateMap<Auction, AuctionEditFormModel>()
-            .ForMember(destination => destination.Images, options => options.Ignore());
+            .ForMember(destination => destination.Images, options => options.Ignore())
+            .ForMember(destination => destination.StartTime, options => options.MapFrom(source => source.StartTime.ToLocalTime()))
+            .ForMember(destination => destination.EndTime, options => options.MapFrom(source => source.EndTime.ToUniversalTime()));
     }
 }

@@ -24,8 +24,6 @@ public class AuctionDetailsViewModel : AllAuctionsViewModel
 
     public DateTime EndTime { get; set; }
 
-    public decimal StartingPrice { get; set; }
-    
     public decimal? BlitzPrice { get; set; }
 
     public int MinimumBid { get; set; }
@@ -35,6 +33,8 @@ public class AuctionDetailsViewModel : AllAuctionsViewModel
     public bool IsOver { get; set; }
 
     public string CreatorUserName { get; set; } = null!;
+
+    public string CreatorFullName { get; set; } = null!;
 
     public string PhoneNumber { get; set; } = null!;
 

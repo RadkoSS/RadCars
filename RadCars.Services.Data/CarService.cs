@@ -12,6 +12,8 @@ using RadCars.Data.Models.Entities;
 using Web.ViewModels.FeatureCategory;
 using RadCars.Data.Common.Contracts.Repositories;
 
+using static Common.GeneralApplicationConstants;
+
 public class CarService : ICarService
 {
     private readonly IDeletableEntityRepository<City> citiesRepository;
@@ -45,8 +47,8 @@ public class CarService : ICarService
     public async Task<IEnumerable<FeatureCategoriesViewModel>> GetFeatureCategoriesAsync()
         => await this.categoriesRepository.AllAsNoTracking().To<FeatureCategoriesViewModel>().ToArrayAsync();
 
-    public async Task<IEnumerable<CityViewModel>> GetCitiesAsync()
-        => await this.citiesRepository.AllAsNoTracking().To<CityViewModel>().ToArrayAsync();
+    public async Task<IEnumerable<CityViewModel>> GetBulgarianCitiesAsync()
+        => await this.citiesRepository.AllAsNoTracking().Where(c => c.CountryId == CountryIdOfBulgaria).To<CityViewModel>().ToArrayAsync();
 
     public async Task<IEnumerable<EngineTypeViewModel>> GetEngineTypesAsync()
         => await this.engineTypesRepository.AllAsNoTracking().To<EngineTypeViewModel>().ToArrayAsync();

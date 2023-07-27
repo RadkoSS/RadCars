@@ -10,10 +10,12 @@ using Mapping;
 using Contracts;
 using Models.Auction;
 using Web.ViewModels.Auction;
+using Web.ViewModels.Feature;
 using Web.ViewModels.CarImage;
 using Web.ViewModels.Thumbnail;
 using Web.ViewModels.Auction.Enums;
 using RadCars.Data.Models.Entities;
+using Web.ViewModels.FeatureCategory;
 using RadCars.Data.Common.Contracts.Repositories;
 
 using static Common.GeneralApplicationConstants;
@@ -192,9 +194,49 @@ public class AuctionService : IAuctionService
         return mostRecentAuctions;
     }
 
-    public Task<AuctionDetailsViewModel> GetAuctionDetailsAsync(string auctionId)
+    public async Task<AuctionDetailsViewModel> GetAuctionDetailsAsync(string auctionId)
     {
-        throw new NotImplementedException();
+        var detailsViewModel = await this.auctionsRepository.AllAsNoTracking()
+            .Where(a => a.Id.ToString() == auctionId)
+            .To<AuctionDetailsViewModel>()
+            .FirstAsync();
+
+        detailsViewModel.AuctionFeatures = await this.GetSelectedFeaturesByAuctionIdAsync(auctionId);
+
+        return detailsViewModel;
+    }
+
+    public async Task<ICollection<FeatureCategoriesViewModel>> GetSelectedFeaturesByAuctionIdAsync(string auctionId)
+    {
+        var selectedFeatures = await this.auctionsRepository.All()
+            .Include(l => l.AuctionFeatures)
+            .ThenInclude(lf => lf.Feature)
+            .ThenInclude(f => f.Category)
+            .AsNoTracking()
+            .Where(l => l.Id.ToString() == auctionId)
+            .SelectMany(l => l.AuctionFeatures)
+            .ToArrayAsync();
+
+        var listingFeatures = new HashSet<FeatureCategoriesViewModel>();
+
+        foreach (var currentLf in selectedFeatures.DistinctBy(lf => lf.Feature.CategoryId))
+        {
+            var featuresOfCategory = selectedFeatures.Where(l => l.Feature.CategoryId == currentLf.Feature.CategoryId);
+
+            listingFeatures.Add(new FeatureCategoriesViewModel
+            {
+                Id = currentLf.Feature.CategoryId,
+                Name = currentLf.Feature.Category.Name,
+                Features = featuresOfCategory.Select(f => new FeatureViewModel
+                {
+                    Id = f.FeatureId,
+                    Name = f.Feature.Name,
+                    IsSelected = true
+                }).ToArray()
+            });
+        }
+
+        return listingFeatures;
     }
 
     public async Task<AuctionFormModel> GetAuctionCreateAsync()
@@ -203,7 +245,7 @@ public class AuctionService : IAuctionService
         {
             CarMakes = await this.carService.GetCarMakesAsync(),
             FeatureCategories = await this.carService.GetFeatureCategoriesAsync(),
-            Cities = await this.carService.GetCitiesAsync(),
+            Cities = await this.carService.GetBulgarianCitiesAsync(),
             EngineTypes = await this.carService.GetEngineTypesAsync()
         };
 
@@ -258,9 +300,14 @@ public class AuctionService : IAuctionService
         return auction.Id.ToString();
     }
 
-    public Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string auctionId, string userId, bool isUserAdmin)
+    public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string auctionId, string userId, bool isUserAdmin)
     {
-        throw new NotImplementedException();
+        var chooseThumbnailViewModel = await this.auctionsRepository.All()
+            .Where(a => a.Id.ToString() == auctionId && (a.CreatorId.ToString() == userId || isUserAdmin))
+            .To<ChooseThumbnailFormModel>()
+            .FirstAsync();
+
+        return chooseThumbnailViewModel;
     }
 
     public async Task AddThumbnailToAuctionByIdAsync(string auctionId, string imageId, string userId, bool isUserAdmin)
@@ -282,25 +329,165 @@ public class AuctionService : IAuctionService
 
     public async Task<AuctionEditFormModel> GetAuctionEditAsync(string auctionId, string userId, bool isUserAdmin)
     {
-        throw new NotImplementedException();
+        var auctionToEdit = await this.auctionsRepository.AllWithDeleted()
+            .Where(a => a.Id.ToString() == auctionId && (a.CreatorId.ToString() == userId ||
+                        isUserAdmin))
+            .To<AuctionEditFormModel>()
+            .FirstOrDefaultAsync();
+
+        if (auctionToEdit == null)
+        {
+            throw new InvalidOperationException(AuctionDoesNotExistError);
+        }
+
+        auctionToEdit.UploadedImages = await this.GetUploadedImagesForAuctionByIdAsync(auctionId, userId, isUserAdmin);
+
+        auctionToEdit.Cities = await this.carService.GetBulgarianCitiesAsync();
+        auctionToEdit.CarMakes = await this.carService.GetCarMakesAsync();
+        auctionToEdit.CarModels = await this.carService.GetModelsByMakeIdAsync(auctionToEdit.CarMakeId);
+        auctionToEdit.EngineTypes = await this.carService.GetEngineTypesAsync();
+        auctionToEdit.FeatureCategories = await this.carService.GetFeatureCategoriesAsync();
+
+        var selectedFeaturesWithCategories = await GetSelectedFeaturesByAuctionIdAsync(auctionId);
+
+        foreach (var featuresWithCategory in auctionToEdit.FeatureCategories)
+        {
+            foreach (var feature in featuresWithCategory.Features)
+            {
+                feature.IsSelected = selectedFeaturesWithCategories
+                    .SelectMany(sfc => sfc.Features)
+                    .Any(sf => sf.Id == feature.Id);
+            }
+        }
+
+        return auctionToEdit;
     }
 
-    public Task<string> EditAuctionAsync(AuctionEditFormModel form, string userId, bool isUserAdmin)
+    public async Task<string> EditAuctionAsync(AuctionEditFormModel form, string userId, bool isUserAdmin)
     {
-        throw new NotImplementedException();
+        var auctionToEdit = await this.auctionsRepository.AllWithDeleted()
+            .Where(a => a.Id.ToString() == form.Id && (a.CreatorId.ToString() == userId || isUserAdmin))
+            .FirstAsync();
+
+        var oldThumbnail = auctionToEdit.ThumbnailId!.Value;
+
+        if (form.Images.Any() == false && form.DeletedImages.Count() >= auctionToEdit.Images.Count)
+        {
+            throw new InvalidDataException(InvalidDataProvidedError);
+        }
+
+        if (auctionToEdit.Images.Count - form.DeletedImages.Count() + form.Images.Count() <= 0)
+        {
+            throw new InvalidDataException(InvalidDataProvidedError);
+        }
+
+        if (this.ValidateUploadedImages(form) == false)
+        {
+            throw new InvalidImagesException(UploadedImagesAreInvalid);
+        }
+
+        if (await this.ValidateForm(form) == false)
+        {
+            throw new InvalidDataException(InvalidDataProvidedError);
+        }
+
+        form = (this.SanitizeForm(form) as AuctionEditFormModel)!;
+
+        if (form.Images.Any())
+        {
+            var uploadedImages = await this.auctionImageService.UploadMultipleAuctionImagesAsync(auctionToEdit.Id.ToString(), form.Images);
+
+            if (uploadedImages.Any() == false)
+            {
+                throw new InvalidDataException(ImagesUploadUnsuccessful);
+            }
+
+            foreach (var image in uploadedImages)
+            {
+                await this.carImagesRepository.AddAsync(image);
+            }
+
+            await this.carImagesRepository.SaveChangesAsync();
+        }
+
+        foreach (var deletedImgId in form.DeletedImages)
+        {
+            if (auctionToEdit.Images.Any(img => img.Id.ToString() == deletedImgId && img.AuctionId.ToString() == form.Id.ToLower() && (img.Auction.CreatorId.ToString() == userId || isUserAdmin)) == false)
+            {
+                throw new InvalidDataException(InvalidDataProvidedError);
+            }
+
+            if (auctionToEdit.ThumbnailId.ToString() == deletedImgId)
+            {
+                auctionToEdit.ThumbnailId = null;
+            }
+
+            await this.auctionImageService.DeleteAuctionImageAsync(form.Id, deletedImgId);
+        }
+
+        auctionToEdit.Year = form.Year;
+        auctionToEdit.Title = form.Title;
+        auctionToEdit.CityId = form.CityId;
+        auctionToEdit.Mileage = form.Mileage;
+        auctionToEdit.CarMakeId = form.CarMakeId;
+        auctionToEdit.VinNumber = form.VinNumber;
+        auctionToEdit.BlitzPrice = form.BlitzPrice;
+        auctionToEdit.CarModelId = form.CarModelId;
+        auctionToEdit.MinimumBid = form.MinimumBid;
+        auctionToEdit.EngineModel = form.EngineModel;
+        auctionToEdit.Description = form.Description;
+        auctionToEdit.PhoneNumber = form.PhoneNumber!;
+        auctionToEdit.EngineTypeId = form.EngineTypeId;
+        auctionToEdit.CurrentPrice = form.StartingPrice;
+        auctionToEdit.StartingPrice = form.StartingPrice;
+        auctionToEdit.EndTime = form.EndTime.ToUniversalTime();
+        auctionToEdit.StartTime = form.StartTime.ToUniversalTime();
+
+        var newSelectedFeatures = new HashSet<AuctionFeature>();
+
+        foreach (var id in form.SelectedFeatures)
+        {
+            newSelectedFeatures.Add(new AuctionFeature
+            {
+                FeatureId = id,
+                AuctionId = auctionToEdit.Id
+            });
+        }
+
+        foreach (var listingFeature in auctionToEdit.AuctionFeatures)
+        {
+            this.auctionFeaturesRepository.HardDelete(listingFeature);
+        }
+
+        await this.auctionFeaturesRepository.SaveChangesAsync();
+
+        auctionToEdit.AuctionFeatures = newSelectedFeatures;
+
+        this.auctionsRepository.Update(auctionToEdit);
+        await this.auctionsRepository.SaveChangesAsync();
+
+        if (auctionToEdit.ThumbnailId!.Value != oldThumbnail)
+        {
+            var firstImageId = auctionToEdit.Images.First().Id.ToString();
+            await this.AddThumbnailToAuctionByIdAsync(auctionToEdit.Id.ToString(), firstImageId, userId, isUserAdmin);
+        }
+
+        return auctionToEdit.Id.ToString();
     }
 
-    public Task<IEnumerable<ImageViewModel>> GetUploadedImagesForAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<ImageViewModel>> GetUploadedImagesForAuctionByIdAsync(string auctionId, string userId,
+        bool isUserAdmin)
+        => await this.carImagesRepository.AllWithDeleted()
+            .Where(ci =>
+                ci.AuctionId.ToString() == auctionId && (ci.Auction.CreatorId.ToString() == userId || isUserAdmin))
+                .To<ImageViewModel>().ToArrayAsync();
 
-    public Task<int> GetUploadedImagesCountForAuctionByIdAsync(string auctionId)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<int> GetUploadedImagesCountForAuctionByIdAsync(string auctionId)
+        => await this.carImagesRepository.AllWithDeleted()
+            .Where(ci => ci.AuctionId.ToString() == auctionId).CountAsync();
 
-    public Task<AuctionDetailsViewModel> GetDeactivatedAuctionDetailsAsync(string auctionId, string userId, bool isUserAdmin)
+    public async Task<AuctionDetailsViewModel> GetDeactivatedAuctionDetailsAsync(string auctionId, string userId,
+        bool isUserAdmin)
     {
         throw new NotImplementedException();
     }
@@ -322,11 +509,11 @@ public class AuctionService : IAuctionService
 
     private async Task<bool> ValidateForm(AuctionFormModel form)
     {
+        var cityIdExists = await this.carService.CityIdExistsAsync(form.CityId);
         var carMakeIdExists = await this.carService.CarMakeIdExistsAsync(form.CarMakeId);
         var carModelIdExists = await this.carService.CarModelIdExistsByMakeIdAsync(form.CarMakeId, form.CarModelId);
-        var engineTypeIdExists = await this.carService.CarEngineTypeIdExistsAsync(form.EngineTypeId);
-        var cityIdExists = await this.carService.CityIdExistsAsync(form.CityId);
         var featureIdsExist = await this.carService.SelectedFeaturesIdsExist(form.SelectedFeatures);
+        var engineTypeIdExists = await this.carService.CarEngineTypeIdExistsAsync(form.EngineTypeId);
 
         var currentDateAndTime = DateTime.UtcNow - TimeSpan.FromMinutes(1); //We give a little gap to compensate server response times and other things slowing down the requests
 
@@ -346,7 +533,6 @@ public class AuctionService : IAuctionService
 
         return carMakeIdExists && carModelIdExists && engineTypeIdExists && cityIdExists && featureIdsExist && datesAreValid;
     }
-
 
     private AuctionFormModel SanitizeForm(AuctionFormModel form)
     {

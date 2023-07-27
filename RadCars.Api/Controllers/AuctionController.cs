@@ -7,13 +7,13 @@ using Services.Data.Contracts;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ListingController : ControllerBase
+public class AuctionController : ControllerBase
 {
-    private readonly IListingService listingService;
+    private readonly IAuctionService auctionService;
 
-    public ListingController(IListingService listingService)
+    public AuctionController(IAuctionService auctionService)
     {
-        this.listingService = listingService;
+        this.auctionService = auctionService;
     }
 
     [HttpPost]
@@ -21,12 +21,12 @@ public class ListingController : ControllerBase
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-    public async Task<IActionResult> IsListingInFavorites([FromBody] ListingFavoriteInputModel data)
+    public async Task<IActionResult> IsAuctionInFavorites([FromBody] AuctionFavoriteInputModel data)
     {
         try
         {
-            var result = await this.listingService.IsListingInUserFavoritesByIdAsync(data.ListingId, data.UserId);
-            
+            var result = await this.auctionService.IsAuctionInUserFavoritesByIdAsync(data.AuctionId, data.UserId);
+
             return Ok(result);
         }
         catch (Exception)
@@ -40,11 +40,11 @@ public class ListingController : ControllerBase
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-    public async Task<IActionResult> ListingFavoritesCount([FromBody] ListingFavoritesCountInputModel data)
+    public async Task<IActionResult> AuctionFavoritesCount([FromBody] AuctionFavoritesCountInputModel data)
     {
         try
         {
-            var result = await this.listingService.GetFavoritesCountForListingByIdAsync(data.ListingId);
+            var result = await this.auctionService.GetFavoritesCountForAuctionByIdAsync(data.AuctionId);
 
             return Ok(result);
         }
@@ -59,11 +59,11 @@ public class ListingController : ControllerBase
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-    public async Task<IActionResult> ListingUploadedImagesCount([FromBody] string listingId)
+    public async Task<IActionResult> AuctionUploadedImagesCount([FromBody] string auctionId)
     {
         try
         {
-            var result = await this.listingService.GetUploadedImagesCountForListingByIdAsync(listingId);
+            var result = await this.auctionService.GetUploadedImagesCountForAuctionByIdAsync(auctionId);
 
             return Ok(result);
         }
@@ -79,11 +79,11 @@ public class ListingController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-    public async Task<IActionResult> AddListingToUserFavorites([FromBody] ListingFavoriteInputModel data)
+    public async Task<IActionResult> AddAuctionToUserFavorites([FromBody] AuctionFavoriteInputModel data)
     {
         try
         {
-            await this.listingService.FavoriteListingByIdAsync(data.ListingId, data.UserId);
+            await this.auctionService.FavoriteAuctionByIdAsync(data.AuctionId, data.UserId);
 
             return Ok();
         }
@@ -103,11 +103,11 @@ public class ListingController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-    public async Task<IActionResult> RemoveListingFromUserFavorites([FromBody] ListingFavoriteInputModel data)
+    public async Task<IActionResult> RemoveAuctionFromUserFavorites([FromBody] AuctionFavoriteInputModel data)
     {
         try
         {
-            await this.listingService.UnFavoriteListingByIdAsync(data.ListingId, data.UserId);
+            await this.auctionService.UnFavoriteAuctionByIdAsync(data.AuctionId, data.UserId);
 
             return Ok();
         }

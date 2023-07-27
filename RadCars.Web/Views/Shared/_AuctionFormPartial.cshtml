@@ -2,7 +2,7 @@
 
 @{
     var currentYear = DateTime.UtcNow.ToLocalTime().Year;
-    var currentTime = DateTime.UtcNow.ToLocalTime().ToString("yyyy-MM-ddTHH:mm"); ;
+    var currentTime = DateTime.UtcNow.ToLocalTime().ToString("yyyy-MM-ddTHH:mm");
 }
 
 <div class="form-group my-3">
@@ -19,13 +19,27 @@
 
 <div class="form-group my-3">
     <label asp-for="@Model.StartTime" class="mb-1"></label>
-    <input asp-for="@Model.StartTime" type="datetime-local" value="@currentTime" min="@currentTime" placeholder="Въведете началото на търга" id="start-time" class="form-control" required>
+    @if (Model.StartTime > DateTime.MinValue)
+    {
+        <input asp-for="@Model.StartTime" type="datetime-local" value="@Model.StartTime" min="@currentTime" placeholder="Въведете началото на търга" id="start-time" class="form-control" required>
+    }
+    else
+    {
+        <input asp-for="@Model.StartTime" type="datetime-local" value="@currentTime" min="@currentTime" placeholder="Въведете началото на търга" id="start-time" class="form-control" required>
+    }
     <span asp-validation-for="@Model.StartTime" class="small text-danger"></span>
 </div>
 
 <div class="form-group my-3">
     <label asp-for="@Model.EndTime" class="mb-1"></label>
-    <input asp-for="@Model.EndTime" type="datetime-local" value="@currentTime" min="@currentTime" placeholder="Въведете края на търга" id="end-time" class="form-control" required>
+    @if (Model.EndTime > DateTime.MinValue)
+    {
+        <input asp-for="@Model.EndTime" type="datetime-local" value="@Model.EndTime" min="@currentTime" placeholder="Въведете края на търга" id="end-time" class="form-control" required>
+    }
+    else
+    {
+        <input asp-for="@Model.EndTime" type="datetime-local" value="@currentTime" min="@currentTime" placeholder="Въведете края на търга" id="end-time" class="form-control" required>
+    }
     <span asp-validation-for="@Model.EndTime" class="small text-danger"></span>
 </div>
 

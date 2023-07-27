@@ -1,9 +1,9 @@
-﻿@model ListingDetailsViewModel
+﻿@model AuctionDetailsViewModel
 
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{
-    ViewData["Title"] = $"Обява - {Model.CarMakeName} {Model.CarModelName}";
+    ViewData["Title"] = $"Търг - {Model.CarMakeName} {Model.CarModelName}";
 
     string createdOnDateString = $"{Model.CreatedOn.ToLocalTime():g} ч.";
     int featureIndex = 1;
@@ -27,16 +27,16 @@
             {
                 <div class="row mt-3 me-2 justify-content-center">
                     <div class="col-12">
-                        <form asp-controller="Listing" asp-action="Reactivate" asp-route-listingId="@Model.Id" method="post">
-                            <input type="submit" value="Активарай обявата" class="btn btn-success" />
+                        <form asp-controller="Auction" asp-action="Reactivate" asp-route-auctionId="@Model.Id" method="post">
+                            <input type="submit" value="Активарай търга" class="btn btn-success" />
                         </form>
                     </div>
                 </div>
 
                 <div class="row mt-3 me-2 justify-content-center">
                     <div class="col-12">
-                        <form asp-controller="Listing" asp-action="Delete" asp-route-listingId="@Model.Id" method="post">
-                            <input type="submit" value="Изтрий обявата" class="btn btn-danger" />
+                        <form asp-controller="Auction" asp-action="Delete" asp-route-auctionId="@Model.Id" method="post">
+                            <input type="submit" value="Изтрий търга" class="btn btn-danger" />
                         </form>
                     </div>
                 </div>
@@ -45,8 +45,8 @@
             {
                 <div class="row mt-3 me-2 justify-content-center">
                     <div class="col-12">
-                        <form asp-controller="Listing" asp-action="Deactivate" asp-route-listingId="@Model.Id" method="post">
-                            <input id="deactivateButton" type="submit" value="Деактиварай обявата" class="btn btn-danger" />
+                        <form asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@Model.Id" method="post">
+                            <input id="deactivateButton" type="submit" value="Деактиварай търга" class="btn btn-danger" />
                         </form>
                     </div>
                 </div>
@@ -54,21 +54,21 @@
 
             <div class="row mt-3 me-2 justify-content-center">
                 <div class="col-12">
-                    <a asp-controller="Listing" asp-action="Edit" asp-route-listingId="@Model.Id" class="btn btn-outline-primary">Редактирай обявата</a>
+                    <a asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@Model.Id" class="btn btn-outline-primary">Редактирай търга</a>
                 </div>
             </div>
 
             <div class="row mt-3 justify-content-center ml-2">
                 <div class="col-12">
-                    <a asp-controller="Listing" asp-action="ChooseThumbnail" asp-route-listingId="@Model.Id" class="btn btn-outline-primary">Смени снимката на обложката</a>
+                    <a asp-controller="Auction" asp-action="ChooseThumbnail" asp-route-auctionId="@Model.Id" class="btn btn-outline-primary">Смени снимката на обложката</a>
                 </div>
             </div>
         }
         else
         {
-            <a asp-controller="Listing" asp-action="Favorites" id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
-            
-            <input type="hidden" id="listingId" value="@Model.Id"/>
+            <a asp-controller="Auction" asp-action="Favorites" id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
+
+            <input type="hidden" id="auctionId" value="@Model.Id" />
             <input type="hidden" id="userId" value="@User.GetId()" />
         }
     </div>
@@ -79,14 +79,14 @@
     <div class="row mb-4">
         <div class="col-md-12">
             <h1 class="text-center mb-4 mt-4">@Model.Title</h1>
-            <p class="text-muted text-center">Качена от @Model.CreatorFullName (@Model.CreatorUserName) на @createdOnDateString@(!string.IsNullOrWhiteSpace(modifiedOnDateString) ? $" Последно обновена на {modifiedOnDateString}" : string.Empty)</p>
+            <p class="text-muted text-center">Създаден от @Model.CreatorFullName (@Model.CreatorUserName) на @createdOnDateString @(!string.IsNullOrWhiteSpace(modifiedOnDateString) ? $" Последно обновена на {modifiedOnDateString}" : string.Empty)</p>
             @if (Model.FavoritesCount == 1)
             {
-                <span id="favoritesCounter" class="small">Добавена @Model.FavoritesCount път в "Любими"</span>
+                <span id="favoritesCounter" class="small">Добавен @Model.FavoritesCount път в "Любими"</span>
             }
             else
             {
-                <span id="favoritesCounter" class="small">Добавена @Model.FavoritesCount пъти в "Любими"</span>
+                <span id="favoritesCounter" class="small">Добавен @Model.FavoritesCount пъти в "Любими"</span>
             }
         </div>
     </div>
@@ -125,8 +125,8 @@
         <p class="fs-6">Пробег: @Model.Mileage km</p>
         <p class="fs-6">Описание: @Model.Description</p>
         <p class="fs-5">VIN номер: @Model.VinNumber</p>
-        <p class="mt-5 fs-4">Цена: @Model.Price лв.</p>
-        
+        <p class="mt-5 fs-4">Начална цена: @Model.StartingPrice лв.</p>
+
         <div class="mt-5 fs-4 d-flex flex-column">
             <p class="fs-5">Контакти:</p>
             <a class="btn btn-primary w-25" href="tel:@Model.PhoneNumber">Oбадете се на: @Model.PhoneNumber</a>
@@ -134,10 +134,10 @@
     </div>
 
     <div class="mt-4">
-        <label asp-for="@Model.ListingFeatures" class="modal-header mt-2 fw-bold fs-4"></label>
+        <label asp-for="@Model.AuctionFeatures" class="modal-header mt-2 fw-bold fs-4"></label>
 
         <div class="container d-flex flex-column">
-            @foreach (var category in Model.ListingFeatures)
+            @foreach (var category in Model.AuctionFeatures)
             {
                 <div class="mt-2">
                     <span class="fs-5">@category.Name:</span>
@@ -160,7 +160,7 @@
 </div>
 
 @section Scripts {
-    <script type="module" src="~/js/listingsFavoriter.js"></script>
+    <script type="module" src="~/js/auctionsFavoriter.js"></script>
 
     <script type="text/javascript" src="~/js/imageViewer.js"></script>
 }
