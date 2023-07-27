@@ -12,6 +12,7 @@ internal class AuctionCarImageEntityConfiguration : IEntityTypeConfiguration<Auc
         builder
             .HasOne(cp => cp.Auction)
             .WithMany(l => l.Images)
-            .HasForeignKey(cp => cp.AuctionId);
+            .HasForeignKey(cp => cp.AuctionId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

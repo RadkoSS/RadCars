@@ -1,10 +1,24 @@
 ﻿const priceRange = document.getElementById('priceRange');
 const priceRangeValue = document.getElementById('priceRangeValue');
 
-if (Number(priceRange.value) > 0) {
-    priceRangeValue.innerText = `до ${Number(priceRange.value).toLocaleString('eu-BG')} лв.`;
-} else {
-    priceRangeValue.innerText = `Без значение`;
+if (priceRange && priceRangeValue) {
+    if (Number(priceRange.value) > 0) {
+        priceRangeValue.innerText = `до ${Number(priceRange.value).toLocaleString('eu-BG')} лв.`;
+    } else {
+        priceRangeValue.innerText = `Без значение`;
+    }
+
+    priceRange.addEventListener('input',
+        (event) => {
+            const number = Number(event.target.value);
+
+            if (number <= 0) {
+                priceRangeValue.innerText = `Без значение`;
+                return;
+            }
+
+            priceRangeValue.innerHTML = `до ${number.toLocaleString('eu-BG')} лв.`;
+        });
 }
 
 const mileageRange = document.getElementById('mileageRange');
@@ -15,18 +29,6 @@ if (Number(mileageRange.value) > 0) {
 } else {
     mileageRangeValue.innerHTML = `Без значение`;
 }
-
-priceRange.addEventListener('input',
-    (event) => {
-        const number = Number(event.target.value);
-
-        if (number <= 0) {
-            priceRangeValue.innerText = `Без значение`;
-            return;
-        }
-
-        priceRangeValue.innerHTML = `до ${number.toLocaleString('eu-BG')} лв.`;
-    });
 
 mileageRange.addEventListener('input',
     (event) => {

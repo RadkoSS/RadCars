@@ -67,6 +67,7 @@ builder.Services.AddAuthentication()
 builder.Services.AddMvc(options =>
 {
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    options.ModelBinderProviders.Insert(1, new CustomDateTimeFormatModelBinderProvider());
 });
 
 builder.Services.AddAntiforgery(options =>

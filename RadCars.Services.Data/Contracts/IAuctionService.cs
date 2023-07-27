@@ -1,17 +1,19 @@
 ﻿namespace RadCars.Services.Data.Contracts;
 
+using Models.Auction;
 using Web.ViewModels.Home;
 using Web.ViewModels.Auction;
 using Web.ViewModels.CarImage;
 using Web.ViewModels.Thumbnail;
+using RadCars.Web.ViewModels.Listing;
 
 public interface IAuctionService
 {
-    //Task<AllAuctionsFilteredAndPagedServiceModel> GetAllAuctionsAsync(AllAuctionsQueryModel queryModel);
+    Task<AllAuctionsFilteredAndPagedServiceModel> GetAllAuctionsAsync(AllAuctionsQueryModel queryModel);
 
-    //Task<IEnumerable<AllAuctionsViewModel>> GetAllAuctionsByUserIdAsync(string userId);
+    Task<IEnumerable<AllAuctionsViewModel>> GetAllAuctionsByUserIdAsync(string userId);
 
-    //Task<IEnumerable<AllAuctionsViewModel>> GetFavoriteAuctionsByUserIdAsync(string userId);
+    Task<IEnumerable<AllAuctionsViewModel>> GetFavoriteAuctionsByUserIdAsync(string userId);
 
     Task<bool> IsAuctionInUserFavoritesByIdAsync(string auctionId, string userId);
 
@@ -21,33 +23,33 @@ public interface IAuctionService
 
     Task UnFavoriteAuctionByIdAsync(string auctionId, string userId);
 
-    //Task<IEnumerable<AllAuctionsViewModel>> GetAllDeactivatedAuctionsByUserIdAsync(string userId);
+    Task<IEnumerable<AllAuctionsViewModel>> GetAllDeactivatedAuctionsByUserIdAsync(string userId);
 
-    Task<IEnumerable<IndexViewModel>> GetMostRecentAuctionsAsync();
+    Task<IEnumerable<AuctionIndexViewModel>> GetMostRecentAuctionsAsync();
 
     Task<string> CreateAuctionAsync(AuctionFormModel form, string userId);
 
-    Task<AuctionEditFormModel> GetAuctionEditAsync(string auctionId, string userId, bool userIsAdmin);
+    Task<AuctionEditFormModel> GetAuctionEditAsync(string auctionId, string userId, bool isUserAdmin);
 
-    Task<string> EditAuctionAsync(AuctionEditFormModel form, string userId, bool userIsAdmin);
+    Task<string> EditAuctionAsync(AuctionEditFormModel form, string userId, bool isUserAdmin);
 
     Task<AuctionFormModel> GetAuctionCreateAsync();
 
-    Task<IEnumerable<ImageViewModel>> GetUploadedImagesForAuctionByIdAsync(string auctionId, string userId, bool userIsAdmin);
+    Task<IEnumerable<ImageViewModel>> GetUploadedImagesForAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin);
 
     Task<int> GetUploadedImagesCountForAuctionByIdAsync(string auctionId);
 
-    //Task<AuctionDetailsViewModel> GetAuctionDetailsAsync(string auctionId);
+    Task<AuctionDetailsViewModel> GetAuctionDetailsAsync(string auctionId);
 
-    //Task<AuctionDetailsViewModel> GetDeactivatedAuctionDetailsAsync(string auctionId, string userId, bool userIsAdmin);
+    Task<AuctionDetailsViewModel> GetDeactivatedAuctionDetailsAsync(string auctionId, string userId, bool isUserAdmin);
 
-    Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string auctionId, string userId, bool userIsAdmin);
+    Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string auctionId, string userId, bool isUserAdmin);
 
-    Task AddThumbnailToAuctionByIdAsync(string auctionId, string imageId, string userId, bool userIsAdmin);
+    Task AddThumbnailToAuctionByIdAsync(string auctionId, string imageId, string userId, bool isUserAdmin);
 
-    Task DeactivateAuctionByIdAsync(string auctionId, string userId, bool userIsAdmin);
+    Task DeactivateAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin);
 
-    Task ReactivateListingByIdAsync(string auctionId, string userId, bool userIsAdmin);
+    Task ReactivateAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin);
 
-    Task HardDeleteListingByIdAsync(string auctionId, string userId, bool userIsAdmin);
+    Task HardDeleteAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin);
 }

@@ -28,6 +28,9 @@ public static class EntityValidationConstants
     {
         public const string PriceMinimum = "1";
         public const string PriceMaximum = "99999999";
+
+        public const int MinimumMinutesToAuctionStart = 30;
+        public const int MinimumHoursToAuctionEnd = 24;
     }
 
     public static class FeatureCategoryConstants

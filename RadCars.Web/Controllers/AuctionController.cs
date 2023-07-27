@@ -19,14 +19,12 @@ public class AuctionController : BaseController
     private readonly ICarService carService;
     private readonly IUserService userService;
     private readonly IAuctionService auctionService;
-    private readonly IListingService listingService;
 
-    public AuctionController(IAuctionService auctionService, IUserService userService, ICarService carService, IListingService listingService)
+    public AuctionController(IAuctionService auctionService, IUserService userService, ICarService carService)
     {
         this.carService = carService;
         this.userService = userService;
         this.auctionService = auctionService;
-        this.listingService = listingService;
     }
 
     [HttpGet]
@@ -75,7 +73,7 @@ public class AuctionController : BaseController
 
             this.TempData[SuccessMessage] = ListingCreatedSuccessfully;
 
-            return RedirectToAction("ChooseThumbnail", "Auction", new { auctionId = auctionId });
+            return RedirectToAction("ChooseThumbnail", "Auction", new { auctionId });
         }
         catch (InvalidImagesException e)
         {
@@ -95,7 +93,7 @@ public class AuctionController : BaseController
             this.ModelState.AddModelError(nameof(form.Images), e.Message);
             return View(form);
         }
-        catch (Exception)
+        catch (Exception e)
         {
             this.ViewData["MinYear"] = YearMinimumValue;
 
@@ -105,125 +103,125 @@ public class AuctionController : BaseController
         }
     }
 
-    //[HttpGet]
-    //public async Task<IActionResult> ChooseThumbnail(string auctionId)
-    //{
-    //    try
-    //    {
-    //        var userId = this.User.GetId()!;
-    //        var userIsAdmin = this.User.IsAdmin();
+    [HttpGet]
+    public async Task<IActionResult> ChooseThumbnail(string auctionId)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+            var userIsAdmin = this.User.IsAdmin();
 
-    //        var viewModel = await this.auctionService.GetChooseThumbnailAsync(auctionId, userId, userIsAdmin);
+            var viewModel = await this.auctionService.GetChooseThumbnailAsync(auctionId, userId, userIsAdmin);
 
-    //        return View(viewModel);
-    //    }
-    //    catch (Exception)
-    //    {
-    //        this.TempData[ErrorMessage] = AnErrorOccurred;
+            return View(viewModel);
+        }
+        catch (Exception)
+        {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
 
-    //        return RedirectToAction("Details", "Auction", new { auctionId });
-    //    }
-    //}
+            return RedirectToAction("Details", "Auction", new { auctionId });
+        }
+    }
 
-    //[HttpPost]
-    //public async Task<IActionResult> ChooseThumbnail(ChooseThumbnailFormModel form)
-    //{
-    //    try
-    //    {
-    //        var userId = this.User.GetId()!;
-    //        var userIsAdmin = this.User.IsAdmin();
+    [HttpPost]
+    public async Task<IActionResult> ChooseThumbnail(ChooseThumbnailFormModel form)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+            var userIsAdmin = this.User.IsAdmin();
 
-    //        if (!this.ModelState.IsValid)
-    //        {
-    //            var viewModel = await this.auctionService.GetChooseThumbnailAsync(form.Id, userId, userIsAdmin);
+            if (!this.ModelState.IsValid)
+            {
+                var viewModel = await this.auctionService.GetChooseThumbnailAsync(form.Id, userId, userIsAdmin);
 
-    //            this.TempData[ErrorMessage] = InvalidDataProvidedError;
+                this.TempData[ErrorMessage] = InvalidDataProvidedError;
 
-    //            return View(viewModel);
-    //        }
+                return View(viewModel);
+            }
 
-    //        await this.auctionService.AddThumbnailToAuctionByIdAsync(form.Id, form.ThumbnailId, userId, userIsAdmin);
+            await this.auctionService.AddThumbnailToAuctionByIdAsync(form.Id, form.ThumbnailId, userId, userIsAdmin);
 
-    //        this.TempData[SuccessMessage] = ThumbnailSelectedSuccessfully;
+            this.TempData[SuccessMessage] = ThumbnailSelectedSuccessfully;
 
-    //        return RedirectToAction("All", "Auction");
-    //    }
-    //    catch (Exception)
-    //    {
-    //        this.TempData[ErrorMessage] = AnErrorOccurred;
+            return RedirectToAction("All", "Auction");
+        }
+        catch (Exception)
+        {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
 
-    //        return RedirectToAction("Details", "Auction", new { form.Id });
-    //    }
-    //}
+            return RedirectToAction("Details", "Auction", new { form.Id });
+        }
+    }
 
-    //[AllowAnonymous]
-    //public async Task<IActionResult> All([FromQuery] AllAuctionsQueryModel queryModel)
-    //{
-    //    try
-    //    {
-    //        var serviceModel = await this.auctionService.GetAllAuctionsAsync(queryModel);
+    [AllowAnonymous]
+    public async Task<IActionResult> All([FromQuery] AllAuctionsQueryModel queryModel)
+    {
+        try
+        {
+            var serviceModel = await this.auctionService.GetAllAuctionsAsync(queryModel);
 
-    //        queryModel.Auctions = serviceModel.Auctions;
-    //        queryModel.TotalAuctions = serviceModel.TotalAuctionsCount;
-    //        queryModel.CarMakes = await this.auctionService.GetCarMakesAsync();
+            queryModel.Auctions = serviceModel.Auctions;
+            queryModel.TotalAuctions = serviceModel.TotalAuctionsCount;
+            queryModel.CarMakes = await this.carService.GetCarMakesAsync();
 
-    //        if (queryModel.CarModelId.HasValue && queryModel.CarMakeId.HasValue)
-    //        {
-    //            queryModel.CarModels = await this.carService.GetModelsByMakeIdAsync(queryModel.CarMakeId.Value);
-    //        }
+            if (queryModel.CarModelId.HasValue && queryModel.CarMakeId.HasValue)
+            {
+                queryModel.CarModels = await this.carService.GetModelsByMakeIdAsync(queryModel.CarMakeId.Value);
+            }
 
-    //        queryModel.Cities = await this.listingService.GetCitiesAsync();
-    //        queryModel.EngineTypes = await this.listingService.GetEngineTypesAsync();
+            queryModel.Cities = await this.carService.GetCitiesAsync();
+            queryModel.EngineTypes = await this.carService.GetEngineTypesAsync();
 
-    //        return View(queryModel);
-    //    }
-    //    catch (Exception)
-    //    {
-    //        this.TempData[ErrorMessage] = AnErrorOccurred;
+            return View(queryModel);
+        }
+        catch (Exception)
+        {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
 
-    //        return RedirectToAction("Index", "Home");
-    //    }
-    //}
+            return RedirectToAction("Index", "Home");
+        }
+    }
 
-    //[AllowAnonymous]
-    //public async Task<IActionResult> Details(string auctionId)
-    //{
-    //    try
-    //    {
-    //        var listingViewModel = await this.auctionService.GetAuctionDetailsAsync(auctionId);
+    [AllowAnonymous]
+    public async Task<IActionResult> Details(string auctionId)
+    {
+        try
+        {
+            var listingViewModel = await this.auctionService.GetAuctionDetailsAsync(auctionId);
 
-    //        return View(listingViewModel);
-    //    }
-    //    catch (Exception)
-    //    {
-    //        return NotFound();
-    //    }
-    //}
+            return View(listingViewModel);
+        }
+        catch (Exception)
+        {
+            return NotFound();
+        }
+    }
 
-    //public async Task<IActionResult> DeactivatedDetails(string listingId)
-    //{
-    //    try
-    //    {
-    //        var userId = this.User.GetId()!;
-    //        var userIsAdmin = this.User.IsAdmin();
+    public async Task<IActionResult> DeactivatedDetails(string listingId)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+            var userIsAdmin = this.User.IsAdmin();
 
-    //        var deactivatedListingModel = await this.auctionService.GetDeactivatedAuctionDetailsAsync(listingId, userId, userIsAdmin);
+            var deactivatedListingModel = await this.auctionService.GetDeactivatedAuctionDetailsAsync(listingId, userId, userIsAdmin);
 
-    //        return View("Details", deactivatedListingModel);
-    //    }
-    //    catch (Exception)
-    //    {
-    //        return NotFound();
-    //    }
-    //}
+            return View("Details", deactivatedListingModel);
+        }
+        catch (Exception)
+        {
+            return NotFound();
+        }
+    }
 
     private async Task<AuctionFormModel> ReloadForm(AuctionFormModel form)
     {
-        form.Cities = await this.listingService.GetCitiesAsync();
-        form.CarMakes = await this.listingService.GetCarMakesAsync();
-        form.EngineTypes = await this.listingService.GetEngineTypesAsync();
+        form.Cities = await this.carService.GetCitiesAsync();
+        form.CarMakes = await this.carService.GetCarMakesAsync();
+        form.EngineTypes = await this.carService.GetEngineTypesAsync();
         form.CarModels = await this.carService.GetModelsByMakeIdAsync(form.CarMakeId);
-        form.FeatureCategories = await this.listingService.GetFeatureCategoriesAsync();
+        form.FeatureCategories = await this.carService.GetFeatureCategoriesAsync();
 
         foreach (var category in form.FeatureCategories)
         {

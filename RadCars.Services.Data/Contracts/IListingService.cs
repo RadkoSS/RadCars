@@ -1,14 +1,9 @@
 ﻿namespace RadCars.Services.Data.Contracts;
 
 using Models.Listing;
-using Web.ViewModels.City;
-using Web.ViewModels.Home;
-using Web.ViewModels.CarMake;
 using Web.ViewModels.Listing;
 using Web.ViewModels.CarImage;
 using Web.ViewModels.Thumbnail;
-using Web.ViewModels.CarEngineType;
-using Web.ViewModels.FeatureCategory;
 
 public interface IListingService
 {
@@ -28,39 +23,31 @@ public interface IListingService
 
     Task<IEnumerable<AllListingsViewModel>> GetAllDeactivatedListingsByUserIdAsync(string userId);
 
-    Task<IEnumerable<IndexViewModel>> GetMostRecentListingsAsync();
+    Task<IEnumerable<ListingIndexViewModel>> GetMostRecentListingsAsync();
 
     Task<string> CreateListingAsync(ListingFormModel form, string userId);
 
-    Task<ListingEditFormModel> GetListingEditAsync(string listingId, string userId, bool userIsAdmin);
+    Task<ListingEditFormModel> GetListingEditAsync(string listingId, string userId, bool isUserAdmin);
 
-    Task<string> EditListingAsync(ListingEditFormModel form, string userId, bool userIsAdmin);
-
-    Task<IEnumerable<CarMakeViewModel>> GetCarMakesAsync();
-
-    Task<IEnumerable<FeatureCategoriesViewModel>> GetFeatureCategoriesAsync();
-
-    Task<IEnumerable<CityViewModel>> GetCitiesAsync();
-
-    Task<IEnumerable<EngineTypeViewModel>> GetEngineTypesAsync();
+    Task<string> EditListingAsync(ListingEditFormModel form, string userId, bool isUserAdmin);
 
     Task<ListingFormModel> GetListingCreateAsync();
 
-    Task<IEnumerable<ImageViewModel>> GetUploadedImagesForListingByIdAsync(string listingId, string userId, bool userIsAdmin);
+    Task<IEnumerable<ImageViewModel>> GetUploadedImagesForListingByIdAsync(string listingId, string userId, bool isUserAdmin);
 
     Task<int> GetUploadedImagesCountForListingByIdAsync(string listingId);
 
     Task<ListingDetailsViewModel> GetListingDetailsAsync(string listingId);
 
-    Task<ListingDetailsViewModel> GetDeactivatedListingDetailsAsync(string listingId, string userId, bool userIsAdmin);
+    Task<ListingDetailsViewModel> GetDeactivatedListingDetailsAsync(string listingId, string userId, bool isUserAdmin);
 
-    Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId, bool userIsAdmin);
+    Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId, bool isUserAdmin);
 
-    Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string userId, bool userIsAdmin);
+    Task AddThumbnailToListingByIdAsync(string listingId, string imageId, string userId, bool isUserAdmin);
 
-    Task DeactivateListingByIdAsync(string listingId, string userId, bool userIsAdmin);
+    Task DeactivateListingByIdAsync(string listingId, string userId, bool isUserAdmin);
 
-    Task ReactivateListingByIdAsync(string listingId, string userId, bool userIsAdmin);
+    Task ReactivateListingByIdAsync(string listingId, string userId, bool isUserAdmin);
 
-    Task HardDeleteListingByIdAsync(string listingId, string userId, bool userIsAdmin);
+    Task HardDeleteListingByIdAsync(string listingId, string userId, bool isUserAdmin);
 }

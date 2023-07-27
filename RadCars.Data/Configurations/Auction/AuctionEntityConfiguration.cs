@@ -29,7 +29,8 @@ internal class AuctionEntityConfiguration : IEntityTypeConfiguration<Auction>
 
         builder.HasOne(a => a.Thumbnail)
             .WithMany()
-            .HasForeignKey(a => a.ThumbnailId);
+            .HasForeignKey(a => a.ThumbnailId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(a => a.AuctionFeatures)
             .WithOne()

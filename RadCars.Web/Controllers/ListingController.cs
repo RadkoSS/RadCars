@@ -185,15 +185,15 @@ public class ListingController : BaseController
 
             queryModel.Listings = serviceModel.Listings;
             queryModel.TotalListings = serviceModel.TotalListingsCount;
-            queryModel.CarMakes = await this.listingService.GetCarMakesAsync();
+            queryModel.CarMakes = await this.carService.GetCarMakesAsync();
 
             if (queryModel.CarModelId.HasValue && queryModel.CarMakeId.HasValue)
             {
                 queryModel.CarModels = await this.carService.GetModelsByMakeIdAsync(queryModel.CarMakeId.Value);
             }
 
-            queryModel.Cities = await this.listingService.GetCitiesAsync();
-            queryModel.EngineTypes = await this.listingService.GetEngineTypesAsync();
+            queryModel.Cities = await this.carService.GetCitiesAsync();
+            queryModel.EngineTypes = await this.carService.GetEngineTypesAsync();
 
             return View(queryModel);
         }
@@ -445,11 +445,11 @@ public class ListingController : BaseController
 
     private async Task<ListingFormModel> ReloadForm(ListingFormModel form)
     {
-        form.Cities = await this.listingService.GetCitiesAsync();
-        form.CarMakes = await this.listingService.GetCarMakesAsync();
-        form.EngineTypes = await this.listingService.GetEngineTypesAsync();
+        form.Cities = await this.carService.GetCitiesAsync();
+        form.CarMakes = await this.carService.GetCarMakesAsync();
+        form.EngineTypes = await this.carService.GetEngineTypesAsync();
         form.CarModels = await this.carService.GetModelsByMakeIdAsync(form.CarMakeId);
-        form.FeatureCategories = await this.listingService.GetFeatureCategoriesAsync();
+        form.FeatureCategories = await this.carService.GetFeatureCategoriesAsync();
 
         foreach (var category in form.FeatureCategories)
         {

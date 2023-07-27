@@ -6,7 +6,7 @@ using CarImage;
 using Data.Models.Entities;
 using Services.Mapping.Contracts;
 
-public class ChooseThumbnailFormModel : IMapFrom<Listing>
+public class ChooseThumbnailFormModel : IMapFrom<Listing>, IMapFrom<Auction>
 {
     public ChooseThumbnailFormModel()
     {

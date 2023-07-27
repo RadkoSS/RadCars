@@ -28,10 +28,10 @@ public class AuctionFormModel : BaseCreateFormModel, IMapFrom<Auction>, IMapTo<A
 
     [Display(Name = "Минимална стъпка на наддаване")]
     [Required(ErrorMessage = "{0} е задължително поле.")]
-    [Range(typeof(decimal), PriceMinimum, PriceMaximum, ErrorMessage = "Минималната стъпка трябва да е число между {2} и {1}.")]
+    [Range(typeof(int), PriceMinimum, PriceMaximum, ErrorMessage = "Минималната стъпка трябва да е число между {2} и {1}.")]
     public int MinimumBid { get; set; }
 
-    [Display(Name = "Блиц цена (цена, при която търга приключва)")]
+    [Display(Name = "Блиц цена (цена, при която търгът приключва)")]
     [Range(typeof(decimal), PriceMinimum, PriceMaximum, ErrorMessage = "{0}та трябва да е число между {2} и {1}.")]
     public decimal? BlitzPrice { get; set; }
 
@@ -40,6 +40,9 @@ public class AuctionFormModel : BaseCreateFormModel, IMapFrom<Auction>, IMapTo<A
         configuration
             .CreateMap<AuctionFormModel, Auction>()
             .ForMember(destination => destination.AuctionFeatures, options => options.Ignore())
-            .ForMember(destination => destination.Images, options => options.Ignore());
+            .ForMember(destination => destination.Images, options => options.Ignore())
+            .ForMember(destination => destination.CurrentPrice,
+                options =>
+                    options.MapFrom(source => source.StartingPrice));
     }
 }

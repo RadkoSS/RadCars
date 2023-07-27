@@ -9,16 +9,12 @@ using Mapping;
 using Contracts;
 using Models.Listing;
 using Common.Exceptions;
-using Web.ViewModels.City;
-using Web.ViewModels.Home;
-using Web.ViewModels.CarMake;
 using Web.ViewModels.Feature;
 using Web.ViewModels.Listing;
 using Web.ViewModels.CarImage;
 using Web.ViewModels.Thumbnail;
 using Web.ViewModels.Listing.Enums;
 using RadCars.Data.Models.Entities;
-using Web.ViewModels.CarEngineType;
 using Web.ViewModels.FeatureCategory;
 using RadCars.Data.Common.Contracts.Repositories;
 
@@ -31,32 +27,22 @@ public class ListingService : IListingService
     private readonly IHtmlSanitizer htmlSanitizer;
 
     private readonly ICarService carService;
-    private readonly IImageService imageService;
+    private readonly IListingImageService listingImageService;
     
-    private readonly IDeletableEntityRepository<City> citiesRepository;
     private readonly IDeletableEntityRepository<Listing> listingsRepository;
-    private readonly IDeletableEntityRepository<CarMake> carMakesRepository;
-    private readonly IDeletableEntityRepository<Feature> featuresRepository;
     private readonly IDeletableEntityRepository<CarImage> carImagesRepository;
-    private readonly IDeletableEntityRepository<Category> categoriesRepository;
-    private readonly IDeletableEntityRepository<EngineType> engineTypesRepository;
     private readonly IDeletableEntityRepository<ListingFeature> listingFeaturesRepository;
     private readonly IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepository;
 
-    public ListingService(IImageService imageService, ICarService carService,
-        IDeletableEntityRepository<Listing> listingsRepository, IDeletableEntityRepository<CarMake> carMakesRepository, IDeletableEntityRepository<Category> categoriesRepository, IDeletableEntityRepository<City> citiesRepository, IDeletableEntityRepository<EngineType> engineTypesRepository, IDeletableEntityRepository<CarImage> carImagesRepository, IDeletableEntityRepository<Feature> featuresRepository, IMapper mapper, IDeletableEntityRepository<ListingFeature> listingFeaturesRepository, IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepository, IHtmlSanitizer htmlSanitizer)
+    public ListingService(IListingImageService listingImageService, ICarService carService,
+        IDeletableEntityRepository<Listing> listingsRepository, IDeletableEntityRepository<CarImage> carImagesRepository, IMapper mapper, IDeletableEntityRepository<ListingFeature> listingFeaturesRepository, IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepository, IHtmlSanitizer htmlSanitizer)
     {
         this.mapper = mapper;
         this.carService = carService;
-        this.imageService = imageService;
+        this.listingImageService = listingImageService;
         this.htmlSanitizer = htmlSanitizer;
-        this.citiesRepository = citiesRepository;
-        this.carMakesRepository = carMakesRepository;
-        this.featuresRepository = featuresRepository;
         this.listingsRepository = listingsRepository;
         this.carImagesRepository = carImagesRepository;
-        this.categoriesRepository = categoriesRepository;
-        this.engineTypesRepository = engineTypesRepository;
         this.listingFeaturesRepository = listingFeaturesRepository;
         this.userFavoriteListingsRepository = userFavoriteListingsRepository;
     }
@@ -105,15 +91,15 @@ public class ListingService : IListingService
         listingsQuery = queryModel.ListingSorting switch
         {
             ListingSorting.Newest => listingsQuery
-                .OrderByDescending(h => h.CreatedOn),
+                .OrderByDescending(l => l.CreatedOn),
             ListingSorting.Oldest => listingsQuery
-                .OrderBy(h => h.CreatedOn),
+                .OrderBy(l => l.CreatedOn),
             ListingSorting.PriceAscending => listingsQuery
-                .OrderBy(h => h.Price),
+                .OrderBy(l => l.Price),
             ListingSorting.PriceDescending => listingsQuery
-                .OrderByDescending(h => h.Price),
+                .OrderByDescending(l => l.Price),
             _ => listingsQuery
-                .OrderByDescending(h => h.CreatedOn)
+                .OrderByDescending(l => l.CreatedOn)
         };
 
         var listings = await listingsQuery
@@ -210,12 +196,12 @@ public class ListingService : IListingService
         return deactivatedListings;
     }
 
-    public async Task<IEnumerable<IndexViewModel>> GetMostRecentListingsAsync()
+    public async Task<IEnumerable<ListingIndexViewModel>> GetMostRecentListingsAsync()
     {
         var mostRecentListings = await this.listingsRepository.AllAsNoTracking()
             .OrderByDescending(l => l.CreatedOn)
             .Take(3)
-            .To<IndexViewModel>()
+            .To<ListingIndexViewModel>()
             .ToArrayAsync();
 
         return mostRecentListings;
@@ -225,18 +211,18 @@ public class ListingService : IListingService
     {
         var formModel = new ListingFormModel
         {
-            CarMakes = await GetCarMakesAsync(),
-            FeatureCategories = await GetFeatureCategoriesAsync(),
-            Cities = await GetCitiesAsync(),
-            EngineTypes = await GetEngineTypesAsync()
+            CarMakes = await this.carService.GetCarMakesAsync(),
+            FeatureCategories = await this.carService.GetFeatureCategoriesAsync(),
+            Cities = await this.carService.GetCitiesAsync(),
+            EngineTypes = await this.carService.GetEngineTypesAsync()
         };
 
         return formModel;
     }
-    public async Task<ListingEditFormModel> GetListingEditAsync(string listingId, string userId, bool userIsAdmin)
+    public async Task<ListingEditFormModel> GetListingEditAsync(string listingId, string userId, bool isUserAdmin)
     {
         var listingToEdit = await this.listingsRepository.AllWithDeleted()
-            .Where(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == userId || l.Id.ToString() == listingId && userIsAdmin)
+            .Where(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == userId || l.Id.ToString() == listingId && isUserAdmin)
             .To<ListingEditFormModel>()
             .FirstOrDefaultAsync();
 
@@ -245,13 +231,13 @@ public class ListingService : IListingService
             throw new InvalidOperationException(ListingDoesNotExistError);
         }
 
-        listingToEdit.UploadedImages = await this.GetUploadedImagesForListingByIdAsync(listingId, userId, userIsAdmin);
+        listingToEdit.UploadedImages = await this.GetUploadedImagesForListingByIdAsync(listingId, userId, isUserAdmin);
         
-        listingToEdit.Cities = await GetCitiesAsync();
-        listingToEdit.CarMakes = await GetCarMakesAsync();
+        listingToEdit.Cities = await this.carService.GetCitiesAsync();
+        listingToEdit.CarMakes = await this.carService.GetCarMakesAsync();
         listingToEdit.CarModels = await this.carService.GetModelsByMakeIdAsync(listingToEdit.CarMakeId);
-        listingToEdit.EngineTypes = await GetEngineTypesAsync();
-        listingToEdit.FeatureCategories = await GetFeatureCategoriesAsync();
+        listingToEdit.EngineTypes = await this.carService.GetEngineTypesAsync();
+        listingToEdit.FeatureCategories = await this.carService.GetFeatureCategoriesAsync();
 
         var selectedFeaturesWithCategories = await GetSelectedFeaturesByListingIdAsync(listingId);
 
@@ -275,10 +261,10 @@ public class ListingService : IListingService
         return listingToEdit;
     }
 
-    public async Task<string> EditListingAsync(ListingEditFormModel form, string userId, bool userIsAdmin)
+    public async Task<string> EditListingAsync(ListingEditFormModel form, string userId, bool isUserAdmin)
     {
         var listingToEdit = await this.listingsRepository.AllWithDeleted()
-            .Where(l => l.Id.ToString() == form.Id && l.CreatorId.ToString() == userId || l.Id.ToString() == form.Id && userIsAdmin)
+            .Where(l => l.Id.ToString() == form.Id && l.CreatorId.ToString() == userId || l.Id.ToString() == form.Id && isUserAdmin)
             .FirstAsync();
 
         if (form.Images.Any() == false && form.DeletedImages.Count() >= listingToEdit.Images.Count)
@@ -305,7 +291,7 @@ public class ListingService : IListingService
 
         if (form.Images.Any())
         {
-            var uploadedImages = await this.imageService.UploadMultipleImagesAsync(listingToEdit.Id.ToString(), form.Images);
+            var uploadedImages = await this.listingImageService.UploadMultipleListingImagesAsync(listingToEdit.Id.ToString(), form.Images);
 
             if (!uploadedImages.Any())
             {
@@ -322,7 +308,7 @@ public class ListingService : IListingService
 
         foreach (var deletedImgId in form.DeletedImages)
         {
-            if (listingToEdit.Images.Any(img => img.Id.ToString() == deletedImgId && img.ListingId.ToString() == form.Id.ToLower() && (img.Listing.CreatorId.ToString() == userId || userIsAdmin)) == false)
+            if (listingToEdit.Images.Any(img => img.Id.ToString() == deletedImgId && img.ListingId.ToString() == form.Id.ToLower() && (img.Listing.CreatorId.ToString() == userId || isUserAdmin)) == false)
             {
                 throw new InvalidDataException(InvalidDataProvidedError);
             }
@@ -332,7 +318,7 @@ public class ListingService : IListingService
                 listingToEdit.ThumbnailId = null;
             }
 
-            await this.imageService.DeleteImageAsync(form.Id, deletedImgId);
+            await this.listingImageService.DeleteListingImageAsync(form.Id, deletedImgId);
         }
 
         listingToEdit.Year = form.Year;
@@ -373,23 +359,10 @@ public class ListingService : IListingService
         this.listingsRepository.Update(listingToEdit);
         await this.listingsRepository.SaveChangesAsync();
 
-        await this.AddThumbnailToListingByIdAsync(listingToEdit.Id.ToString(), firstImageId, userId, userIsAdmin);
+        await this.AddThumbnailToListingByIdAsync(listingToEdit.Id.ToString(), firstImageId, userId, isUserAdmin);
 
         return listingToEdit.Id.ToString();
     }
-
-    public async Task<IEnumerable<CarMakeViewModel>> GetCarMakesAsync()
-        => await this.carMakesRepository.AllAsNoTracking()
-            .To<CarMakeViewModel>().ToArrayAsync();
-
-    public async Task<IEnumerable<FeatureCategoriesViewModel>> GetFeatureCategoriesAsync()
-        => await this.categoriesRepository.AllAsNoTracking().To<FeatureCategoriesViewModel>().ToArrayAsync();
-
-    public async Task<IEnumerable<CityViewModel>> GetCitiesAsync()
-        => await this.citiesRepository.AllAsNoTracking().To<CityViewModel>().ToArrayAsync();
-
-    public async Task<IEnumerable<EngineTypeViewModel>> GetEngineTypesAsync()
-        => await this.engineTypesRepository.AllAsNoTracking().To<EngineTypeViewModel>().ToArrayAsync();
 
     public async Task<IEnumerable<ImageViewModel>> GetUploadedImagesForListingByIdAsync(string listingId, string userId, bool isUserAdmin)
     => await this.carImagesRepository.AllWithDeleted()
@@ -442,21 +415,21 @@ public class ListingService : IListingService
         return listingFeatures;
     }
 
-    public async Task<ListingDetailsViewModel> GetDeactivatedListingDetailsAsync(string listingId, string userId, bool userIsAdmin)
+    public async Task<ListingDetailsViewModel> GetDeactivatedListingDetailsAsync(string listingId, string userId, bool isUserAdmin)
     {
         var deactivatedListing = await this.listingsRepository.AllWithDeleted()
-            .Where(l => l.IsDeleted && (l.CreatorId.ToString() == userId && l.Id.ToString() == listingId || l.Id.ToString() == listingId && userIsAdmin))
+            .Where(l => l.IsDeleted && (l.CreatorId.ToString() == userId && l.Id.ToString() == listingId || l.Id.ToString() == listingId && isUserAdmin))
             .To<ListingDetailsViewModel>()
             .FirstAsync();
 
         return deactivatedListing;
     }
 
-    public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId, bool userIsAdmin)
+    public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId, bool isUserAdmin)
     {
         var chooseThumbnailViewModel =
              await this.listingsRepository.All()
-                 .Where(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == userId || l.Id.ToString() == listingId && userIsAdmin)
+                 .Where(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == userId || l.Id.ToString() == listingId && isUserAdmin)
                  .To<ChooseThumbnailFormModel>()
                  .FirstAsync();
 
@@ -491,9 +464,9 @@ public class ListingService : IListingService
             });
         }
 
-        var uploadedImages = await this.imageService.UploadMultipleImagesAsync(listing.Id.ToString(), form.Images);
+        var uploadedImages = await this.listingImageService.UploadMultipleListingImagesAsync(listing.Id.ToString(), form.Images);
 
-        if (!uploadedImages.Any())
+        if (uploadedImages.Any() == false)
         {
             throw new InvalidDataException(ImagesUploadUnsuccessful);
         }
@@ -517,7 +490,7 @@ public class ListingService : IListingService
             .AllWithDeleted()
             .AnyAsync(ci => ci.Id.ToString() == imageId && ci.ListingId.ToString() == listingId && (ci.Listing.CreatorId.ToString() == userId || isUserAdmin));
 
-        if (!imageAndListingExist)
+        if (imageAndListingExist == false)
         {
             throw new InvalidOperationException(InvalidImageForThumbnailProvided);
         }
@@ -529,27 +502,27 @@ public class ListingService : IListingService
         await this.listingsRepository.SaveChangesAsync();
     }
 
-    public async Task DeactivateListingByIdAsync(string listingId, string userId, bool userIsAdmin)
+    public async Task DeactivateListingByIdAsync(string listingId, string userId, bool isUserAdmin)
     {
-        var listingToDeactivate = await this.listingsRepository.All().FirstAsync(l => (l.CreatorId.ToString() == userId || userIsAdmin) && l.Id.ToString() == listingId);
+        var listingToDeactivate = await this.listingsRepository.All().FirstAsync(l => (l.CreatorId.ToString() == userId || isUserAdmin) && l.Id.ToString() == listingId);
 
         this.listingsRepository.Delete(listingToDeactivate);
 
         await this.listingsRepository.SaveChangesAsync();
     }
 
-    public async Task ReactivateListingByIdAsync(string listingId, string userId, bool userIsAdmin)
+    public async Task ReactivateListingByIdAsync(string listingId, string userId, bool isUserAdmin)
     {
-        var listingToDeactivate = await this.listingsRepository.AllWithDeleted().FirstAsync(l => (l.CreatorId.ToString() == userId || userIsAdmin) && l.Id.ToString() == listingId);
+        var listingToDeactivate = await this.listingsRepository.AllWithDeleted().FirstAsync(l => (l.CreatorId.ToString() == userId || isUserAdmin) && l.Id.ToString() == listingId);
 
         this.listingsRepository.Undelete(listingToDeactivate);
 
         await this.listingsRepository.SaveChangesAsync();
     }
 
-    public async Task HardDeleteListingByIdAsync(string listingId, string userId, bool userIsAdmin)
+    public async Task HardDeleteListingByIdAsync(string listingId, string userId, bool isUserAdmin)
     {
-        var listingToDelete = await this.listingsRepository.AllWithDeleted().FirstAsync(l => (l.CreatorId.ToString() == userId || userIsAdmin) && l.Id.ToString() == listingId);
+        var listingToDelete = await this.listingsRepository.AllWithDeleted().FirstAsync(l => (l.CreatorId.ToString() == userId || isUserAdmin) && l.Id.ToString() == listingId);
 
         var listingFeaturesToDelete = await this.listingFeaturesRepository.AllWithDeleted().Where(lf => lf.ListingId == listingToDelete.Id).ToArrayAsync();
 
@@ -562,7 +535,7 @@ public class ListingService : IListingService
         var imageIds =
             await this.carImagesRepository.AllWithDeleted().Where(ci => ci.ListingId == listingToDelete.Id).Select(ci => ci.Id.ToString()).ToArrayAsync();
 
-        await this.imageService.DeleteAllImagesAsync(listingId, imageIds);
+        await this.listingImageService.DeleteAllImagesOfListingAsync(listingId, imageIds);
 
         var userFavorites = await this.userFavoriteListingsRepository.AllWithDeleted()
             .Where(ufl => ufl.ListingId == listingToDelete.Id).ToArrayAsync();
@@ -579,23 +552,11 @@ public class ListingService : IListingService
 
     private async Task<bool> ValidateForm(ListingFormModel form)
     {
-        var carMakeIdExists = await this.carMakesRepository.All().AnyAsync(m => m.Id == form.CarMakeId);
-        var carModelsByMakeId = await this.carService.GetModelsByMakeIdAsync(form.CarMakeId);
-        var carModelIdExists = carModelsByMakeId.Any(m => m.Id == form.CarModelId);
-        var engineTypeIdExists = await this.engineTypesRepository.All().AnyAsync(t => t.Id == form.EngineTypeId);
-        var cityIdExists = await this.citiesRepository.All().AnyAsync(c => c.Id == form.CityId);
-
-        var features = await this.featuresRepository.All().Select(f => f.Id).ToArrayAsync();
-
-        bool featureIdsExist = true;
-        foreach (var featureId in form.SelectedFeatures)
-        {
-            if (!features.Contains(featureId))
-            {
-                featureIdsExist = false;
-                break;
-            }
-        }
+        var carMakeIdExists = await this.carService.CarMakeIdExistsAsync(form.CarMakeId);
+        var carModelIdExists = await this.carService.CarModelIdExistsByMakeIdAsync(form.CarMakeId, form.CarModelId);
+        var engineTypeIdExists = await this.carService.CarEngineTypeIdExistsAsync(form.EngineTypeId);
+        var cityIdExists = await this.carService.CityIdExistsAsync(form.CityId);
+        var featureIdsExist = await this.carService.SelectedFeaturesIdsExist(form.SelectedFeatures);
 
         return engineTypeIdExists && carMakeIdExists && carModelIdExists && cityIdExists && featureIdsExist;
     }

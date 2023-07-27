@@ -86,7 +86,7 @@ public class Auction : BaseDeletableModel<Guid>
 
     public Guid? ThumbnailId { get; set; }
 
-    public virtual CarImage? Thumbnail { get; set; }
+    public virtual AuctionCarImage? Thumbnail { get; set; }
 
     public int CityId { get; set; }
 
