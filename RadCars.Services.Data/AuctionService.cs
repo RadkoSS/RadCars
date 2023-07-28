@@ -522,15 +522,19 @@ public class AuctionService : IAuctionService
 
         var datesAreValid = true;
 
-        if (startTimeToUtc < currentDateAndTime - TimeSpan.FromMinutes(MinimumMinutesToAuctionStart))
+        if (startTimeToUtc < currentDateAndTime.AddMinutes(MinimumMinutesToAuctionStart))
         {
             datesAreValid = false;
         }
-        else if (startTimeToUtc + TimeSpan.FromHours(MinimumHoursToAuctionEnd) > endTimeToUtc)
+        else if (startTimeToUtc.AddHours(MinimumHoursToAuctionEnd) > endTimeToUtc)
         {
             datesAreValid = false;
         }
-
+        //ToDo: Add front end validation ensuring EndDate is at most 14 days after the StartDate!
+        else if (endTimeToUtc > startTimeToUtc.AddDays(MaximumDaysOfAuctioning))
+        {
+            datesAreValid = false;
+        }
         return carMakeIdExists && carModelIdExists && engineTypeIdExists && cityIdExists && featureIdsExist && datesAreValid;
     }
 

@@ -31,6 +31,8 @@ public static class EntityValidationConstants
 
         public const int MinimumMinutesToAuctionStart = 30;
         public const int MinimumHoursToAuctionEnd = 24;
+
+        public const int MaximumDaysOfAuctioning = 14;
     }
 
     public static class FeatureCategoryConstants
