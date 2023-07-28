@@ -352,7 +352,7 @@ public class ListingService : IListingService
         this.listingsRepository.Update(listingToEdit);
         await this.listingsRepository.SaveChangesAsync();
 
-        if (listingToEdit.ThumbnailId!.Value != oldThumbnailId)
+        if (listingToEdit.ThumbnailId.HasValue == false || listingToEdit.ThumbnailId!.Value != oldThumbnailId)
         {
             var firstImageId = listingToEdit.Images.First().Id.ToString();
             await this.AddThumbnailToListingByIdAsync(listingToEdit.Id.ToString(), firstImageId, userId, isUserAdmin);

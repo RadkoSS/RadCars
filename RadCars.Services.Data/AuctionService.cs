@@ -466,7 +466,7 @@ public class AuctionService : IAuctionService
         this.auctionsRepository.Update(auctionToEdit);
         await this.auctionsRepository.SaveChangesAsync();
 
-        if (auctionToEdit.ThumbnailId!.Value != oldThumbnail)
+        if (auctionToEdit.ThumbnailId.HasValue == false || auctionToEdit.ThumbnailId!.Value != oldThumbnail)
         {
             var firstImageId = auctionToEdit.Images.First().Id.ToString();
             await this.AddThumbnailToAuctionByIdAsync(auctionToEdit.Id.ToString(), firstImageId, userId, isUserAdmin);
