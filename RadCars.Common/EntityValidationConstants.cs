@@ -33,6 +33,8 @@ public static class EntityValidationConstants
         public const int MinimumHoursToAuctionEnd = 24;
 
         public const int MaximumDaysOfAuctioning = 14;
+
+        public const int EndJobIdMaximumLength = 36;
     }
 
     public static class FeatureCategoryConstants

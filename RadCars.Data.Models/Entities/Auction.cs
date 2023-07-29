@@ -8,6 +8,7 @@ using Common.Models;
 
 using static RadCars.Common.EntityValidationConstants.ApplicationUser;
 using static RadCars.Common.EntityValidationConstants.ListingConstants;
+using static RadCars.Common.EntityValidationConstants.AuctionConstants;
 
 public class Auction : BaseDeletableModel<Guid>
 {
@@ -28,12 +29,18 @@ public class Auction : BaseDeletableModel<Guid>
     public DateTime EndTime { get; set; }
 
     [Required]
+    [StringLength(EndJobIdMaximumLength)]
+    public string EndAuctionJobId { get; set; }
+
+    [Required]
     public decimal StartingPrice { get; set; }
 
     [Required]
     public decimal CurrentPrice { get; set; }
 
     public decimal? BlitzPrice { get; set; }
+
+    public bool? IsOver { get; set; }
 
     [Required]
     public int MinimumBid { get; set; }

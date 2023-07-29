@@ -60,16 +60,20 @@
 
             <div class="row mt-3 justify-content-center ml-2">
                 <div class="col-12">
-                    <a asp-controller="Auction" asp-action="ChooseThumbnail" asp-route-auctionId="@Model.Id" class="btn btn-outline-primary">Смени снимката на обложката</a>
+                    <a asp-controller="Auction" asp-action="ChooseThumbnail" asp-route-auctionId="@Model.Id" class="btn btn-outline-primary me-3">Смени снимката на обложката</a>
                 </div>
             </div>
         }
-        else
+        @if (!string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase))
         {
-            <a asp-controller="Auction" asp-action="Favorites" id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
+            <div class="row mt-3 justify-content-center ml-2">
+                <div class="col-12">
+                    <a asp-controller="Auction" asp-action="Favorites" id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
 
-            <input type="hidden" id="auctionId" value="@Model.Id" />
-            <input type="hidden" id="userId" value="@User.GetId()" />
+                    <input type="hidden" id="userId" value="@User.GetId()" />
+                    <input type="hidden" id="auctionId" value="@Model.Id" />
+                </div>
+            </div>
         }
     </div>
 }
@@ -133,6 +137,31 @@
         </div>
     </div>
 
+    @if (SignInManager.IsSignedIn(User) && !string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase) && !Model.IsOver.HasValue && Model.IsOver == false)
+    {
+        <form id="bidForm" method="post">
+            <div class="form-group">
+                <label for="bidAmount">Сума на наддаване</label>
+                <input type="number" class="form-control" id="bidAmount" name="bidAmount" min="@Model.MinimumBid" step="1" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Направи наддаване</button>
+        </form>
+    }
+
+    <div class="card-group d-flex flex-column" id="bids">
+        @if (Model.Bids.Any())
+        {
+            @foreach (var bid in Model.Bids)
+            {
+                <div class="card">
+                    <span>@bid.CreatedOn:</span>
+                    <p class="fw-bold">- @bid.BidderFullName (@bid.BidderUserName) предлага @bid.Amount лв.</p>
+                </div>
+            }
+        }
+        <!-- Bids will be appended here by JavaScript -->
+    </div>
+
     <div class="mt-4">
         <label asp-for="@Model.AuctionFeatures" class="modal-header mt-2 fw-bold fs-4"></label>
 
@@ -160,6 +189,8 @@
 </div>
 
 @section Scripts {
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/auctionsBidder.js"></script>
     <script type="module" src="~/js/auctionsFavoriter.js"></script>
 
     <script type="text/javascript" src="~/js/imageViewer.js"></script>

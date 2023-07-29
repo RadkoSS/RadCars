@@ -1,10 +1,10 @@
 ﻿namespace RadCars.Services.Data.Contracts;
 
 using Models.Auction;
-using RadCars.Web.ViewModels.FeatureCategory;
 using Web.ViewModels.Auction;
 using Web.ViewModels.CarImage;
 using Web.ViewModels.Thumbnail;
+using Web.ViewModels.FeatureCategory;
 
 public interface IAuctionService
 {

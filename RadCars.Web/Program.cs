@@ -1,12 +1,14 @@
 using System.Reflection;
 
 using SendGrid;
+using Hangfire;
 using AutoMapper;
 using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.CookiePolicy;
 
 using RadCars.Data;
+using RadCars.Web.Hubs;
 using RadCars.Data.Common;
 using RadCars.Services.Data;
 using RadCars.Data.Models.User;
@@ -104,12 +106,18 @@ builder.Services.AddSingleton(new Cloudinary(new Account(
 
 builder.Services.AddSingleton<ISendGridClient>(new SendGridClient(builder.Configuration.GetSection("Authentication:SendGrid:ApiKey").Value));
 builder.Services.AddScoped<IEmailSender, SendGridEmailSender>();
+
 builder.Services.AddSignalR();
+
+builder.Services.AddHangfire(hf => hf.UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireConnection")));
+builder.Services.AddHangfireServer();
+builder.Services.AddTransient<IBackgroundJobClient, BackgroundJobClient>();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseHangfireDashboard("/dashboard");
     app.UseMigrationsEndPoint();
     app.UseDeveloperExceptionPage();
 }
@@ -137,6 +145,9 @@ if (app.Environment.IsDevelopment())
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
+
+app.MapHub<AuctionHub>("/auctionHub");
 
 await app.RunAsync();

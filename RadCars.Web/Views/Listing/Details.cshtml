@@ -60,16 +60,20 @@
 
             <div class="row mt-3 justify-content-center ml-2">
                 <div class="col-12">
-                    <a asp-controller="Listing" asp-action="ChooseThumbnail" asp-route-listingId="@Model.Id" class="btn btn-outline-primary">Смени снимката на обложката</a>
+                    <a asp-controller="Listing" asp-action="ChooseThumbnail" asp-route-listingId="@Model.Id" class="btn btn-outline-primary me-3">Смени снимката на обложката</a>
                 </div>
             </div>
         }
-        else
+        @if (!string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase))
         {
-            <a asp-controller="Listing" asp-action="Favorites" id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
-            
-            <input type="hidden" id="listingId" value="@Model.Id"/>
-            <input type="hidden" id="userId" value="@User.GetId()" />
+            <div class="row mt-3 justify-content-center ml-2">
+                <div class="col-12">
+                    <a asp-controller="Listing" asp-action="Favorites" id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
+                    
+                    <input type="hidden" id="listingId" value="@Model.Id"/>
+                    <input type="hidden" id="userId" value="@User.GetId()" />
+                </div>
+            </div>
         }
     </div>
 }

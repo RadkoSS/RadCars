@@ -1,10 +1,15 @@
 ﻿namespace RadCars.Data.Models.Entities;
 
 using User;
-using Common.Contracts;
+using Common.Models;
 
-public class UserAuctionBid : IDeletableEntity
+public class UserAuctionBid : BaseDeletableModel<Guid>
 {
+    public UserAuctionBid()
+    {
+        this.Id = Guid.NewGuid();
+    }
+
     public Guid BidderId { get; set; }
 
     public virtual ApplicationUser Bidder { get; set; } = null!;
@@ -14,8 +19,4 @@ public class UserAuctionBid : IDeletableEntity
     public virtual Auction Auction { get; set; } = null!;
 
     public decimal Amount { get; set; }
-
-    public bool IsDeleted { get; set; }
-
-    public DateTime? DeletedOn { get; set; }
 }

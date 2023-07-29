@@ -13,6 +13,7 @@ public class AuctionDetailsViewModel : AllAuctionsViewModel
     public AuctionDetailsViewModel()
     {
         this.Images = new HashSet<ImageViewModel>();
+        this.Bids = new HashSet<AuctionBidViewModel>();
         this.AuctionFeatures = new HashSet<FeatureCategoriesViewModel>();
     }
 
@@ -30,7 +31,7 @@ public class AuctionDetailsViewModel : AllAuctionsViewModel
 
     public bool IsDeleted { get; set; }
 
-    public bool IsOver { get; set; }
+    public bool? IsOver { get; set; }
 
     public string CreatorUserName { get; set; } = null!;
 
@@ -49,10 +50,14 @@ public class AuctionDetailsViewModel : AllAuctionsViewModel
 
     public ICollection<ImageViewModel> Images { get; set; }
 
+    [Display(Name = "Наддаване")]
+    public ICollection<AuctionBidViewModel> Bids { get; set; }
+
     public override void CreateMappings(IProfileExpression configuration)
     {
         configuration
             .CreateMap<Auction, AuctionDetailsViewModel>()
-            .ForMember(destination => destination.AuctionFeatures, options => options.Ignore());
+            .ForMember(destination => destination.AuctionFeatures, options => options.Ignore())
+            .ForMember(destination => destination.Bids, options => options.MapFrom(source => source.Bids.OrderBy(a => a.CreatedOn)));
     }
 }

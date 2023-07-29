@@ -10,9 +10,6 @@ internal class UserAuctionBidEntityConfiguration : IEntityTypeConfiguration<User
     public void Configure(EntityTypeBuilder<UserAuctionBid> builder)
     {
         builder
-            .HasKey(f => new { f.BidderId, f.AuctionId });
-
-        builder
             .HasOne(f => f.Bidder)
             .WithMany(u => u.AuctionsBids)
             .HasForeignKey(f => f.BidderId);
