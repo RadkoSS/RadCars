@@ -28,9 +28,8 @@ public class Auction : BaseDeletableModel<Guid>
     [Required]
     public DateTime EndTime { get; set; }
 
-    [Required]
     [StringLength(EndJobIdMaximumLength)]
-    public string EndAuctionJobId { get; set; }
+    public string? EndAuctionJobId { get; set; }
 
     [Required]
     public decimal StartingPrice { get; set; }

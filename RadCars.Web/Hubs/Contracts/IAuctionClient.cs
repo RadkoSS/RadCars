@@ -9,4 +9,10 @@ public interface IAuctionClient
     Task NotifyAuctionStartedAsync(string auctionId);
 
     Task NotifyAuctionEndedAsync(string auctionId);
+
+    Task CancelScheduledAuctionEnd(string jobId);
+
+    public void ScheduleAuctionStart(string auctionId, DateTime startTime);
+
+    public string ScheduleAuctionEnd(string auctionId, DateTime endTime);
 }

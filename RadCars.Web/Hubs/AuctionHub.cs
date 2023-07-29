@@ -66,7 +66,7 @@ public class AuctionHub : Hub<IAuctionClient>
     //    throw new NotImplementedException();
     //}
 
-    //private void ScheduleAuctionStart(string auctionId, DateTime startTime)
+    //public void ScheduleAuctionStart(string auctionId, DateTime startTime)
     //{
     //    this.backgroundJobClient.Enqueue(() => this.NotifyAuctionStartedAsync(auctionId), startTime);
     //}
@@ -78,7 +78,7 @@ public class AuctionHub : Hub<IAuctionClient>
     //    return jobId;
     //}
 
-    //private void CancelScheduledAuctionEnd(string jobId)
+    //public Task CancelScheduledAuctionEnd(string jobId)
     //{
     //    this.backgroundJobClient.Delete(jobId);
     //}
