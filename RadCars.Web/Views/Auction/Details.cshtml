@@ -137,7 +137,7 @@
         </div>
     </div>
 
-    @if (SignInManager.IsSignedIn(User) && !string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase) && !Model.IsOver.HasValue && Model.IsOver == false)
+    @if (SignInManager.IsSignedIn(User) && !string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase) && !Model.IsOver.HasValue || Model.IsOver == false)
     {
         <form id="bidForm" method="post">
             <div class="form-group">

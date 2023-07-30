@@ -27,59 +27,44 @@ public class AuctionHub : Hub<IAuctionClient>
 
     public async Task PlaceBid(string auctionId, decimal amount)
     {
-        // Retrieve the user's ID from the HTTP context\
         var userId = this.Context.UserIdentifier;
 
         var user = await this.userManager.FindByIdAsync(userId);
 
         var auction = await this.auctionsRepository.All()
-            .Where(a => a.Id.ToString() == auctionId && a.CreatorId.ToString() != userId)
+            .Where(a => a.Id.ToString() == auctionId && a.CreatorId.ToString() != user.Id.ToString())
             .FirstAsync();
 
-        if (user != null)
+        var highestBid = auction.Bids.Any() ? auction.Bids.Max(b => b.Amount) : 0;
+
+        if (amount <= highestBid)
         {
-            // Retrieve the user's details
+            throw new InvalidOperationException();
+        }
 
-            // Logic to place a bid
-            var bid = new UserAuctionBid
-            {
-                AuctionId = auction.Id,
-                Amount = amount,
-                BidderId = user.Id
-            };
+        var bid = new UserAuctionBid
+        {
+            AuctionId = auction.Id,
+            Amount = amount,
+            BidderId = user.Id
+        };
 
-            await this.userBidsRepository.AddAsync(bid);
-            await this.userBidsRepository.SaveChangesAsync();
+        await this.userBidsRepository.AddAsync(bid);
+        await this.userBidsRepository.SaveChangesAsync();
 
-            //Notify all clients about the new bid
-            await Clients.All.BidPlaced(amount, user.FullName, user.UserName, bid.CreatedOn.ToString("G"));
+        await this.Clients.All.BidPlaced(amount, user.FullName, user.UserName, bid.CreatedOn.ToString("G"));
+
+        if (auction.BlitzPrice.HasValue && bid.Amount >= auction.BlitzPrice.Value)
+        {
+            this.CancelScheduledAuctionEnd(auction.EndAuctionJobId!);
+
+            auction.IsOver = true;
+            await this.auctionsRepository.SaveChangesAsync();
+
+            await this.Clients.All.AuctionEnded(auctionId);
         }
     }
 
-    //public Task NotifyAuctionStartedAsync(string auctionId)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public Task NotifyAuctionEndedAsync(string auctionId)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public void ScheduleAuctionStart(string auctionId, DateTime startTime)
-    //{
-    //    this.backgroundJobClient.Enqueue(() => this.NotifyAuctionStartedAsync(auctionId), startTime);
-    //}
-
-    //public string ScheduleAuctionEnd(string auctionId, DateTime endTime)
-    //{
-    //    var delay = endTime - DateTime.UtcNow;
-    //    var jobId = this.backgroundJobClient.Schedule(() => this.NotifyAuctionEndedAsync(auctionId), delay);
-    //    return jobId;
-    //}
-
-    //public Task CancelScheduledAuctionEnd(string jobId)
-    //{
-    //    this.backgroundJobClient.Delete(jobId);
-    //}
+    public void CancelScheduledAuctionEnd(string jobId)
+    => this.backgroundJobClient.Delete(jobId);
 }

@@ -2,17 +2,9 @@
 
 public interface IAuctionClient
 {
-    Task PlaceBid(string auctionId, decimal amount);
-
     Task BidPlaced(decimal amount, string userFullName, string userUserName, string timePlaced);
 
-    Task NotifyAuctionStartedAsync(string auctionId);
+    Task AuctionStarted(string auctionId);
 
-    Task NotifyAuctionEndedAsync(string auctionId);
-
-    Task CancelScheduledAuctionEnd(string jobId);
-
-    public void ScheduleAuctionStart(string auctionId, DateTime startTime);
-
-    public string ScheduleAuctionEnd(string auctionId, DateTime endTime);
+    Task AuctionEnded(string auctionId);
 }

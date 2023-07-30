@@ -46,7 +46,7 @@ public class AuctionFormModel : BaseCreateFormModel, IMapFrom<Auction>, IMapTo<A
                     options.MapFrom(source => source.StartingPrice))
             .ForMember(destination => destination.StartTime, options => 
                 options.MapFrom(source => source.StartTime.ToUniversalTime()))
-            .ForMember(destination => destination.StartTime, options =>
+            .ForMember(destination => destination.EndTime, options =>
                 options.MapFrom(source => source.EndTime.ToUniversalTime()));
     }
 }

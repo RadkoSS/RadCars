@@ -9,6 +9,7 @@ using ViewModels.Auction;
 using ViewModels.Thumbnail;
 using Services.Data.Contracts;
 using Infrastructure.Extensions;
+using BackgroundServices.Contracts;
 
 using static Common.NotificationTypeConstants;
 using static Common.ExceptionsAndNotificationsMessages;
@@ -19,12 +20,14 @@ public class AuctionController : BaseController
     private readonly ICarService carService;
     private readonly IUserService userService;
     private readonly IAuctionService auctionService;
+    private readonly IAuctionBackgroundJobService auctionBackgroundJobService;
 
-    public AuctionController(IAuctionService auctionService, IUserService userService, ICarService carService)
+    public AuctionController(IAuctionService auctionService, IUserService userService, ICarService carService, IAuctionBackgroundJobService auctionBackgroundJobService)
     {
         this.carService = carService;
         this.userService = userService;
         this.auctionService = auctionService;
+        this.auctionBackgroundJobService = auctionBackgroundJobService;
     }
 
     [HttpGet]
@@ -71,6 +74,9 @@ public class AuctionController : BaseController
 
             var auctionId = await this.auctionService.CreateAuctionAsync(form, userId);
 
+            await this.auctionBackgroundJobService.ScheduleAuctionStart(auctionId);
+            await this.auctionBackgroundJobService.ScheduleAuctionEnd(auctionId);
+
             this.TempData[SuccessMessage] = AuctionCreateSuccessfully;
 
             return RedirectToAction("ChooseThumbnail", "Auction", new { auctionId });
@@ -93,7 +99,7 @@ public class AuctionController : BaseController
             this.ModelState.AddModelError(nameof(form.Images), e.Message);
             return View(form);
         }
-        catch (Exception)
+        catch (Exception e)
         {
             this.ViewData["MinYear"] = YearMinimumValue;
 

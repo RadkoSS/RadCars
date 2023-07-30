@@ -515,7 +515,7 @@ public class AuctionService : IAuctionService
         var featureIdsExist = await this.carService.SelectedFeaturesIdsExist(form.SelectedFeatures);
         var engineTypeIdExists = await this.carService.CarEngineTypeIdExistsAsync(form.EngineTypeId);
 
-        var currentDateAndTime = DateTime.UtcNow - TimeSpan.FromMinutes(1); //We give a little gap to compensate server response times and other things slowing down the requests
+        var currentDateAndTime = DateTime.UtcNow - TimeSpan.FromMinutes(1); //ToDo: Fix this! We give a little gap to compensate server response times and other things slowing down the requests especially while debugging!
 
         var startTimeToUtc = form.StartTime.ToUniversalTime();
         var endTimeToUtc = form.EndTime.ToUniversalTime();

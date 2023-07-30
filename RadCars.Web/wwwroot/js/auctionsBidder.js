@@ -40,3 +40,11 @@ connection.on("BidPlaced", (amount, userFullName, userName, createdOn) => {
     
     bidsDisplay.appendChild(bidContainer);
 });
+
+connection.on("AuctionStarted", (auctionId) => {
+    console.log(`AUCTION WITH ID: ${auctionId} HAS NOW STARTED!`);
+});
+
+connection.on("AuctionEnded", (auctionId) => {
+    console.log(`AUCTION WITH ID: ${auctionId} HAS ENDED!`);
+});

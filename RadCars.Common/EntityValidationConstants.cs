@@ -29,8 +29,8 @@ public static class EntityValidationConstants
         public const string PriceMinimum = "1";
         public const string PriceMaximum = "99999999";
 
-        public const int MinimumMinutesToAuctionStart = 30;
-        public const int MinimumHoursToAuctionEnd = 24;
+        public const int MinimumMinutesToAuctionStart = 5; //ToDo: Fix this! For testing this will be set to 5 minutes. Should be 30 minutes
+        public const double MinimumHoursToAuctionEnd = 0.2; //ToDo: Fix this! For testing this will be set to 0.2 hours (12 minutes). Should be 24 hours
 
         public const int MaximumDaysOfAuctioning = 14;
 

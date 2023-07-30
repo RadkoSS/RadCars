@@ -16,10 +16,12 @@ using RadCars.Services.Mapping;
 using RadCars.Data.Repositories;
 using RadCars.Services.Messaging;
 using RadCars.Web.ViewModels.Home;
+using RadCars.Web.BackgroundServices;
 using RadCars.Services.Data.Contracts;
 using RadCars.Services.Messaging.Contracts;
 using RadCars.Web.Infrastructure.Extensions;
 using RadCars.Web.Infrastructure.ModelBinders;
+using RadCars.Web.BackgroundServices.Contracts;
 using RadCars.Data.Common.Contracts.Repositories;
 
 using static RadCars.Common.GeneralApplicationConstants;
@@ -111,7 +113,9 @@ builder.Services.AddSignalR();
 
 builder.Services.AddHangfire(hf => hf.UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireConnection")));
 builder.Services.AddHangfireServer();
-builder.Services.AddTransient<IBackgroundJobClient, BackgroundJobClient>();
+
+builder.Services.AddScoped<IBackgroundJobClient, BackgroundJobClient>();
+builder.Services.AddScoped<IAuctionBackgroundJobService, AuctionBackgroundJobService>();
 
 var app = builder.Build();
 
