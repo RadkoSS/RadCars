@@ -23,7 +23,7 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
         this.backgroundJobClient = backgroundJobClient;
     }
 
-    public async Task<string> ScheduleAuctionStart(string auctionId)
+    public async Task ScheduleAuctionStart(string auctionId)
     {
         var auctionToSchedule = await this.auctionsRepository.All().Where(a => a.Id.ToString() == auctionId).FirstAsync();
 
@@ -31,14 +31,12 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 
         var jobId = this.backgroundJobClient.Schedule(() => this.StartAuction(auctionId), dateOfInvoke);
 
-        //auctionToSchedule.StartAuctionJobId = jobId;
+        auctionToSchedule.StartAuctionJobId = jobId;
 
-        //await this.auctionsRepository.SaveChangesAsync();
-
-        return jobId;
+        await this.auctionsRepository.SaveChangesAsync();
     }
 
-    public async Task<string> ScheduleAuctionEnd(string auctionId)
+    public async Task ScheduleAuctionEnd(string auctionId)
     {
         var auctionToSchedule = await this.auctionsRepository.All().Where(a => a.Id.ToString() == auctionId).FirstAsync();
 
@@ -49,8 +47,6 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
         auctionToSchedule.EndAuctionJobId = jobId;
 
         await this.auctionsRepository.SaveChangesAsync();
-
-        return jobId;
     }
 
     public async Task StartAuction(string auctionId)
