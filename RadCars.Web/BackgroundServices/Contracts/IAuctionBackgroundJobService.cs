@@ -6,7 +6,5 @@ public interface IAuctionBackgroundJobService
 
     Task ScheduleAuctionEnd(string auctionId);
 
-    Task StartAuction(string auctionId);
-
-    Task EndAuction(string auctionId);
+    Task CancelAuction(string auctionId);
 }

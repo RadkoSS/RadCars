@@ -186,7 +186,7 @@ public class AuctionService : IAuctionService
     public async Task<IEnumerable<AuctionIndexViewModel>> GetMostRecentAuctionsAsync()
     {
         var mostRecentAuctions = await this.auctionsRepository.AllAsNoTracking()
-            .OrderByDescending(a => a.CreatorId)
+            .OrderByDescending(a => a.CreatedOn)
             .Take(3)
             .To<AuctionIndexViewModel>()
             .ToArrayAsync();
@@ -196,7 +196,7 @@ public class AuctionService : IAuctionService
 
     public async Task<AuctionDetailsViewModel> GetAuctionDetailsAsync(string auctionId)
     {
-        var detailsViewModel = await this.auctionsRepository.AllAsNoTracking()
+        var detailsViewModel = await this.auctionsRepository.All()
             .Where(a => a.Id.ToString() == auctionId)
             .To<AuctionDetailsViewModel>()
             .FirstAsync();
@@ -507,6 +507,13 @@ public class AuctionService : IAuctionService
         throw new NotImplementedException();
     }
 
+    public async Task<int> GetBidsCountForAuctionByIdAsync(string auctionId)
+    {
+        var bidsForAuction =
+            await this.auctionsRepository.AllAsNoTracking().Where(a => a.Id.ToString() == auctionId).SelectMany(a => a.Bids).ToArrayAsync();
+
+        return bidsForAuction.Length;
+    }
     private async Task<bool> ValidateForm(AuctionFormModel form)
     {
         var cityIdExists = await this.carService.CityIdExistsAsync(form.CityId);

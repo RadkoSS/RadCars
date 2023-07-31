@@ -19,44 +19,28 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="container d-flex align-items-center mt-3 mb-3">
-
+    <div class="container d-flex align-items-center mt-3 mb-3" id="auctionButtonsContainer">
         @if (string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase) || userIsAdmin)
         {
-            @if (Model.IsDeleted)
+            if (userIsAdmin)
             {
-                <div class="row mt-3 me-2 justify-content-center">
-                    <div class="col-12">
-                        <form asp-controller="Auction" asp-action="Reactivate" asp-route-auctionId="@Model.Id" method="post">
-                            <input type="submit" value="Активарай търга" class="btn btn-success" />
-                        </form>
-                    </div>
-                </div>
-
-                <div class="row mt-3 me-2 justify-content-center">
-                    <div class="col-12">
-                        <form asp-controller="Auction" asp-action="Delete" asp-route-auctionId="@Model.Id" method="post">
-                            <input type="submit" value="Изтрий търга" class="btn btn-danger" />
-                        </form>
-                    </div>
-                </div>
+                <partial name="_AuctionControlsPartial" />
             }
             else
             {
-                <div class="row mt-3 me-2 justify-content-center">
-                    <div class="col-12">
-                        <form asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@Model.Id" method="post">
-                            <input id="deactivateButton" type="submit" value="Деактиварай търга" class="btn btn-danger" />
-                        </form>
-                    </div>
-                </div>
+                if (Model.IsOver.HasValue == false || Model.IsOver is true)
+                {
+                    <section class="d-flex" id="auctionControls">
+                        <partial name="_AuctionControlsPartial" model="@Model" />
+                    </section>
+                }
+                else
+                {
+                    <section class="d-flex visually-hidden" id="auctionControls">
+                        <partial name="_AuctionControlsPartial" model="@Model" />
+                    </section>
+                }
             }
-
-            <div class="row mt-3 me-2 justify-content-center">
-                <div class="col-12">
-                    <a asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@Model.Id" class="btn btn-outline-primary">Редактирай търга</a>
-                </div>
-            </div>
 
             <div class="row mt-3 justify-content-center ml-2">
                 <div class="col-12">
@@ -69,13 +53,12 @@
             <div class="row mt-3 justify-content-center ml-2">
                 <div class="col-12">
                     <a asp-controller="Auction" asp-action="Favorites" id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
-
-                    <input type="hidden" id="userId" value="@User.GetId()" />
                     <input type="hidden" id="auctionId" value="@Model.Id" />
                 </div>
             </div>
         }
     </div>
+    <input type="hidden" id="userId" value="@User.GetId()" />
 }
 
 <div class="container mt-4">
@@ -83,7 +66,7 @@
     <div class="row mb-4">
         <div class="col-md-12">
             <h1 class="text-center mb-4 mt-4">@Model.Title</h1>
-            <p class="text-muted text-center">Създаден от @Model.CreatorFullName (@Model.CreatorUserName) на @createdOnDateString @(!string.IsNullOrWhiteSpace(modifiedOnDateString) ? $" Последно обновена на {modifiedOnDateString}" : string.Empty)</p>
+            <p class="text-muted text-center">Създаден от @Model.CreatorFullName (@Model.CreatorUserName) на @createdOnDateString @(!string.IsNullOrWhiteSpace(modifiedOnDateString) ? $" Последно обновен на {modifiedOnDateString}" : string.Empty)</p>
             @if (Model.FavoritesCount == 1)
             {
                 <span id="favoritesCounter" class="small">Добавен @Model.FavoritesCount път в "Любими"</span>
@@ -93,6 +76,29 @@
                 <span id="favoritesCounter" class="small">Добавен @Model.FavoritesCount пъти в "Любими"</span>
             }
         </div>
+    </div>
+
+    <div class="d-flex flex-column mt-3 mb-3" id="auctionInfoContainer">
+        @if (Model.IsOver is true)
+        {
+            //Here I am displaying the auction winner
+            <div class="text-center mb-3" id="winnerInfoContainer">
+                @if (string.IsNullOrWhiteSpace(Model.CurrentWinnerFullNameAndUserName) || Model.CurrentHighestBid <= 0)
+                {
+                    <h3 class="text-danger">Край на търга. Няма победител.</h3>
+                }
+                else
+                {
+                    <h3>Търгът е спечелен от @Model.CurrentWinnerFullNameAndUserName за @Model.CurrentHighestBid.ToString("f2") лв.</h3>
+                }
+            </div>
+        }
+        else
+        {
+            //Timer indicating the time left to the start or end
+            <div id="timerContainer">
+            </div>
+        }
     </div>
 
     <div class="row mt-3 justify-content-center">
@@ -120,7 +126,88 @@
         </div>
     </div>
 
-    <div class="text-wrap">
+    <div class="d-flex mt-5 mb-5 flex-column w-100 h-25">
+
+        <div class="d-flex flex-column text-center">
+            <p class="mt-3 mb-3 fs-4">Начална цена: @Model.StartingPrice.ToString("f2") лв.</p>
+            <p class="mt-3 mb-3 fs-4">Минимална стъпка: @Model.MinimumBid.ToString("f2") лв.</p>
+            @if (Model.BlitzPrice.HasValue)
+            {
+                <p class="mt-1 mb-4 fw-bold">Този търг ИМА Блиц цена!</p>
+            }
+            else
+            {
+                <p class="mt-1 mb-4 fw-bold">Този търг НЯМА Блиц цена!</p>
+            }
+        </div>
+
+        <label class="fs-5" asp-for="@Model.Bids"></label>
+
+        <div class="d-flex flex-column w-100 overflow-auto mt-3" style="max-height: 50vh;" id="bids">
+            @if (Model.Bids.Any() == false)
+            {
+                if (Model.IsOver is false)
+                {
+                    <div class="card mb-2 p-2">
+                        <span class="card-header">Търгът вече е активен! Нека наддаването започне!</span>
+                        <p class="card-text fw-bold">- Успех на всички участници!</p>
+                    </div>
+                }
+            }
+            else
+            {
+                @foreach (var bid in Model.Bids)
+                {
+                    <div class="card mb-2 p-2">
+                        <span class="card-header">@bid.CreatedOn:</span>
+                        <p class="card-text fw-bold">- @bid.BidderFullName (@bid.BidderUserName) предлага @bid.Amount лв.</p>
+                    </div>
+                }
+            }
+
+            @if (Model.IsOver.HasValue == false)
+            {
+                <div class="card mb-2 p-2">
+                    <span class="card-header">Търгът ще започне в @Model.StartTime.ToString("f")</span>
+                    <p class="card-text fw-bold">- Успех на всички участници!</p>
+                </div>
+            }
+            else if (Model.IsOver is true)
+            {
+                if (string.IsNullOrWhiteSpace(Model.CurrentHighestBidTimeOfCreate) || string.IsNullOrWhiteSpace(Model.CurrentWinnerFullNameAndUserName) || Model.CurrentHighestBid <= 0)
+                {
+                    <div class="card mb-2 p-2 text-danger">
+                        <span class="card-header">Търгът приключи без наддавания:</span>
+                        <p class="card-text fw-bold">- Няма победител.</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="card mb-2 p-2 text-danger">
+                        <span class="card-header">Край на търга! Последно наддаване в @Model.CurrentHighestBidTimeOfCreate:</span>
+                        <p class="card-text fw-bold">- Победител: @Model.CurrentWinnerFullNameAndUserName с цена от @Model.CurrentHighestBid.ToString("f2") лв.</p>
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="w-50" id="bidFormContainer">
+            @if (SignInManager.IsSignedIn(User) &&
+            !string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase)
+            && Model.IsOver is false)
+            {
+                <form id="bidForm" method="post">
+                    <div class="form-group mb-2">
+                        <label for="bidAmount" class="mb-2">Сума на наддаване</label>
+                        <input type="number" class="form-control" id="bidAmount" name="bidAmount" placeholder="Направете своето наддаване" min="@Model.CurrentHighestBid" step="@Model.MinimumBid" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Потвърди</button>
+                </form>
+            }
+        </div>
+    </div>
+
+    <div class="text-wrap mb-3">
         <p class="fs-6">Населено място: @Model.City.Name</p>
         <p class="fs-6">Марка: @Model.CarMakeName</p>
         <p class="fs-6">Модел: @Model.CarModelName</p>
@@ -129,68 +216,46 @@
         <p class="fs-6">Пробег: @Model.Mileage km</p>
         <p class="fs-6">Описание: @Model.Description</p>
         <p class="fs-5">VIN номер: @Model.VinNumber</p>
-        <p class="mt-5 fs-4">Начална цена: @Model.StartingPrice лв.</p>
 
         <div class="mt-5 fs-4 d-flex flex-column">
-            <p class="fs-5">Контакти:</p>
+            <p class="fs-5 mb-3">Контакти:</p>
             <a class="btn btn-primary w-25" href="tel:@Model.PhoneNumber">Oбадете се на: @Model.PhoneNumber</a>
         </div>
     </div>
 
-    @if (SignInManager.IsSignedIn(User) && !string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase) && !Model.IsOver.HasValue || Model.IsOver == false)
+    @if (Model.AuctionFeatures.Any())
     {
-        <form id="bidForm" method="post">
-            <div class="form-group">
-                <label for="bidAmount">Сума на наддаване</label>
-                <input type="number" class="form-control" id="bidAmount" name="bidAmount" min="@Model.MinimumBid" step="1" required>
+        <div>
+            <label asp-for="@Model.AuctionFeatures" class="modal-header mt-2 fw-bold fs-5"></label>
+
+            <div class="container d-flex">
+                @foreach (var category in Model.AuctionFeatures)
+                {
+                    <div class="mt-2">
+                        <span class="fs-5">@category.Name:</span>
+                    </div>
+
+                    <ul class="mt-4 fs-6 d-flex flex-column">
+                        @foreach (var feature in category.Features)
+                        {
+                            <li class="me-4 list-unstyled">
+                                <p class="m-2">@(featureIndex++). @feature.Name</p>
+                            </li>
+                        }
+                        @{
+                            featureIndex = 1;
+                        }
+                    </ul>
+                }
             </div>
-            <button type="submit" class="btn btn-primary">Направи наддаване</button>
-        </form>
+        </div>
     }
 
-    <div class="card-group d-flex flex-column" id="bids">
-        @if (Model.Bids.Any())
-        {
-            @foreach (var bid in Model.Bids)
-            {
-                <div class="card">
-                    <span>@bid.CreatedOn:</span>
-                    <p class="fw-bold">- @bid.BidderFullName (@bid.BidderUserName) предлага @bid.Amount лв.</p>
-                </div>
-            }
-        }
-        <!-- Bids will be appended here by JavaScript -->
-    </div>
-
-    <div class="mt-4">
-        <label asp-for="@Model.AuctionFeatures" class="modal-header mt-2 fw-bold fs-4"></label>
-
-        <div class="container d-flex flex-column">
-            @foreach (var category in Model.AuctionFeatures)
-            {
-                <div class="mt-2">
-                    <span class="fs-5">@category.Name:</span>
-                </div>
-
-                <ul class="mt-4 d-flex flex-column">
-                    @foreach (var feature in category.Features)
-                    {
-                        <li class="me-4 list-unstyled">
-                            <p class="m-2">@(featureIndex++). @feature.Name</p>
-                        </li>
-                    }
-                    @{
-                        featureIndex = 1;
-                    }
-                </ul>
-            }
-        </div>
-    </div>
 </div>
 
 @section Scripts {
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/auctionsBidder.js"></script>
+    <script type="module" src="~/js/auctionsBidder.js"></script>
     <script type="module" src="~/js/auctionsFavoriter.js"></script>
 
     <script type="text/javascript" src="~/js/imageViewer.js"></script>

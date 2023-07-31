@@ -1,0 +1,36 @@
+﻿@model AuctionDetailsViewModel
+
+@if (Model.IsDeleted)
+{
+    <div class="row mt-3 me-2 justify-content-center">
+        <div class="col-12">
+            <form asp-controller="Auction" asp-action="Reactivate" asp-route-auctionId="@Model.Id" method="post">
+                <input type="submit" value="Активарай търга" class="btn btn-success" />
+            </form>
+        </div>
+    </div>
+
+    <div class="row mt-3 me-2 justify-content-center">
+        <div class="col-12">
+            <form asp-controller="Auction" asp-action="Delete" asp-route-auctionId="@Model.Id" method="post">
+                <input type="submit" value="Изтрий търга" class="btn btn-danger" />
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row mt-3 me-2 justify-content-center">
+        <div class="col-12">
+            <form asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@Model.Id" method="post">
+                <input id="deactivateButton" type="submit" value="Деактиварай търга" class="btn btn-danger" />
+            </form>
+        </div>
+    </div>
+}
+
+<div class="row mt-3 me-2 justify-content-center">
+    <div class="col-12">
+        <a asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@Model.Id" class="btn btn-outline-primary">Редактирай търга</a>
+    </div>
+</div>

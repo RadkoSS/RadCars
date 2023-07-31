@@ -53,4 +53,5 @@ public interface IAuctionService
     Task ReactivateAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin);
 
     Task HardDeleteAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin);
+    Task<int> GetBidsCountForAuctionByIdAsync(string auctionId);
 }

@@ -59,7 +59,7 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 
         await this.auctionsRepository.SaveChangesAsync();
 
-        await this.auctionHub.Clients.All.AuctionStarted(auctionId);
+        await this.auctionHub.Clients.All.AuctionStarted(auctionId, auction.CreatorId.ToString(), auction.EndTime.ToLocalTime().ToString("f"), auction.StartingPrice, auction.MinimumBid);
     }
 
     public async Task EndAuction(string auctionId)
@@ -70,6 +70,40 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 
         auction.IsOver = true;
 
-        await this.auctionHub.Clients.All.AuctionEnded(auctionId);
+        await this.auctionsRepository.SaveChangesAsync();
+
+        var lastBidAmount = 0m;
+        var lastBidTime = string.Empty;
+        var winnerFullNameAndUserName = string.Empty;
+
+        if (auction.Bids.Any())
+        {
+            lastBidTime = auction.Bids.OrderByDescending(b => b.CreatedOn).First().CreatedOn.ToLocalTime().ToString("f");
+
+            winnerFullNameAndUserName = $"{auction.Bids.OrderByDescending(b => b.CreatedOn).First().Bidder.FullName} ({auction.Bids.OrderByDescending(b => b.CreatedOn).First().Bidder.UserName})";
+
+            lastBidAmount = auction.Bids.OrderByDescending(b => b.CreatedOn).First().Amount;
+        }
+
+        await this.auctionHub.Clients.All.AuctionEnded(auctionId, lastBidTime, lastBidAmount, winnerFullNameAndUserName);
     }
+
+    public async Task CancelAuction(string auctionId)
+    {
+        var auction = await this.auctionsRepository.All()
+            .Where(a => a.Id.ToString() == auctionId)
+            .FirstAsync();
+
+        this.CancelBackgroundJob(auction.StartAuctionJobId!);
+        this.CancelBackgroundJob(auction.EndAuctionJobId!);
+
+        auction.StartAuctionJobId = null;
+        auction.EndAuctionJobId = null;
+        auction.IsOver = null;
+
+        await this.auctionsRepository.SaveChangesAsync();
+    }
+
+    private void CancelBackgroundJob(string jobId) 
+        => this.backgroundJobClient.Delete(jobId);
 }

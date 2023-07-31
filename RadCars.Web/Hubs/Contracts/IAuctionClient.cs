@@ -4,7 +4,7 @@ public interface IAuctionClient
 {
     Task BidPlaced(decimal amount, string userFullName, string userUserName, string timePlaced);
 
-    Task AuctionStarted(string auctionId);
+    Task AuctionStarted(string auctionId, string creatorId, string endTime, decimal startingPrice, decimal minimumBid);
 
-    Task AuctionEnded(string auctionId);
+    Task AuctionEnded(string auctionId, string lastBidTime, decimal lastBidAmount, string winnerFullNameAndUserName);
 }

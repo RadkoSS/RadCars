@@ -55,6 +55,25 @@ public class AuctionController : ControllerBase
     }
 
     [HttpPost]
+    [Route("bids/count")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+    [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+    public async Task<IActionResult> AuctionBidsCount([FromBody] string auctionId)
+    {
+        try
+        {
+            var result = await this.auctionService.GetBidsCountForAuctionByIdAsync(auctionId);
+
+            return Ok(result);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status503ServiceUnavailable);
+        }
+    }
+
+    [HttpPost]
     [Route("uploadedImages/count")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]

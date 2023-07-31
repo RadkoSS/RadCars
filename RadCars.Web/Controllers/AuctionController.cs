@@ -99,7 +99,7 @@ public class AuctionController : BaseController
             this.ModelState.AddModelError(nameof(form.Images), e.Message);
             return View(form);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             this.ViewData["MinYear"] = YearMinimumValue;
 
@@ -271,7 +271,7 @@ public class AuctionController : BaseController
 
             return View(listingViewModel);
         }
-        catch (Exception)
+        catch (Exception e)
         {
             return NotFound();
         }

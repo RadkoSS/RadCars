@@ -34,10 +34,25 @@ public class AuctionHub : Hub<IAuctionClient>
         var auction = await this.auctionsRepository.All()
             .Where(a => a.Id.ToString() == auctionId && a.CreatorId.ToString() != user.Id.ToString())
             .FirstAsync();
+        
+        if (auction.Bids.Any() == false)
+        {
+            if (amount < auction.StartingPrice)
+            {
+                throw new InvalidOperationException();
+            }
+        }
+        else
+        {
+            var highestBid = auction.Bids.OrderByDescending(b => b.CreatedOn).First().Amount;
 
-        var highestBid = auction.Bids.Any() ? auction.Bids.Max(b => b.Amount) : 0;
+            if (amount < highestBid + auction.MinimumBid)
+            {
+                throw new InvalidOperationException();
+            }
+        }
 
-        if (amount <= highestBid)
+        if (auction.IsOver.HasValue == false || auction.IsOver is true)
         {
             throw new InvalidOperationException();
         }
@@ -52,19 +67,23 @@ public class AuctionHub : Hub<IAuctionClient>
         await this.userBidsRepository.AddAsync(bid);
         await this.userBidsRepository.SaveChangesAsync();
 
-        await this.Clients.All.BidPlaced(amount, user.FullName, user.UserName, bid.CreatedOn.ToString("G"));
+        await this.Clients.All.BidPlaced(amount, user.FullName, user.UserName, bid.CreatedOn.ToLocalTime().ToString("f"));
 
         if (auction.BlitzPrice.HasValue && bid.Amount >= auction.BlitzPrice.Value)
         {
-            this.CancelScheduledAuctionEnd(auction.EndAuctionJobId!);
+            this.CancelScheduledJob(auction.EndAuctionJobId!);
 
             auction.IsOver = true;
             await this.auctionsRepository.SaveChangesAsync();
 
-            await this.Clients.All.AuctionEnded(auctionId);
+            var lastBidTime = auction.Bids.OrderByDescending(b => b.CreatedOn).First().CreatedOn.ToLocalTime().ToString("f");
+
+            var winnerFullNameAndUserName = $"{user.FullName} ({user.UserName})";
+
+            await this.Clients.All.AuctionEnded(auctionId, lastBidTime, amount, winnerFullNameAndUserName);
         }
     }
 
-    public void CancelScheduledAuctionEnd(string jobId)
+    private void CancelScheduledJob(string jobId)
     => this.backgroundJobClient.Delete(jobId);
 }
