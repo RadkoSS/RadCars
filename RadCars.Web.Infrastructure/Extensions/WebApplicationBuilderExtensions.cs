@@ -2,13 +2,26 @@
 
 using System.Reflection;
 
+using SendGrid;
 using Ganss.Xss;
+using AutoMapper;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using ViewModels.Home;
 using Data.Models.User;
+using Services.Mapping;
 using Services.Data.Contracts;
+
+using Data;
+using Data.Repositories;
+using Services.Messaging;
+using RadCars.Data.Common;
+using Services.Messaging.Contracts;
+using RadCars.Data.Common.Contracts.Repositories;
 
 using static Common.GeneralApplicationConstants;
 
@@ -52,8 +65,41 @@ public static class WebApplicationBuilderExtensions
 
             services.AddScoped(interfaceType, implementationType);
         }
-
+        
         services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();
+
+        //Register mappings
+        AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+        services.AddSingleton(typeof(IMapper), AutoMapperConfig.MapperInstance);
+
+        //Register Data repositories and DbQuery runner
+        services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
+        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+        services.AddScoped<IDbQueryRunner, DbQueryRunner>();
+    }
+
+    /// <summary>
+    /// This method registers all external services with the credentials provided in the config files.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    public static void AddExternalApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        //Register CloudinaryAPI
+        services.AddSingleton(new Cloudinary(new Account(
+            configuration.GetSection("ExternalConnections:Cloudinary:CloudName").Value,
+            configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").Value,
+            configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").Value))
+        {
+            Api =
+            {
+                Secure = true
+            }
+        });
+
+        //Register Sendgrid
+        services.AddSingleton<ISendGridClient>(new SendGridClient(configuration.GetSection("Authentication:SendGrid:ApiKey").Value));
+        services.AddSingleton<IEmailSender, SendGridEmailSender>();
     }
 
     /// <summary>

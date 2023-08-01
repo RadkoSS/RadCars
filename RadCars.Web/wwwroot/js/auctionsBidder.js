@@ -71,7 +71,6 @@ window.addEventListener("load",
         timerInterval = setInterval(startCountdown, 1000);
     });
 
-
 const currentUserId = document.getElementById("userId");
 
 const auctionActions = document.getElementById("auctionControls");

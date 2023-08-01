@@ -10,11 +10,13 @@
     <PackageReference Include="HtmlSanitizer" Version="8.0.645" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+    <PackageReference Include="SendGrid" Version="9.28.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RadCars.Data.Models\RadCars.Data.Models.csproj" />
     <ProjectReference Include="..\RadCars.Services.Data\RadCars.Services.Data.csproj" />
+    <ProjectReference Include="..\RadCars.Services.Messaging\RadCars.Services.Messaging.csproj" />
   </ItemGroup>
 
 </Project>

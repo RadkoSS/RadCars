@@ -1,28 +1,16 @@
-using System.Reflection;
-
-using SendGrid;
 using Hangfire;
-using AutoMapper;
-using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.CookiePolicy;
 
 using RadCars.Data;
 using RadCars.Web.Hubs;
-using RadCars.Data.Common;
 using RadCars.Services.Data;
 using RadCars.Data.Models.User;
-using RadCars.Services.Mapping;
-using RadCars.Data.Repositories;
-using RadCars.Services.Messaging;
-using RadCars.Web.ViewModels.Home;
 using RadCars.Web.BackgroundServices;
 using RadCars.Services.Data.Contracts;
-using RadCars.Services.Messaging.Contracts;
 using RadCars.Web.Infrastructure.Extensions;
 using RadCars.Web.Infrastructure.ModelBinders;
 using RadCars.Web.BackgroundServices.Contracts;
-using RadCars.Data.Common.Contracts.Repositories;
 
 using static RadCars.Common.GeneralApplicationConstants;
 
@@ -31,7 +19,11 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString).UseLazyLoadingProxies());
+    options
+        .UseSqlServer(connectionString)
+        .UseLazyLoadingProxies()
+    );
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
@@ -80,34 +72,12 @@ builder.Services.AddAntiforgery(options =>
     options.HeaderName = "X-CSRF-VERIFICATION-TOKEN";
 });
 
-//Register Data repositories and DbQuery runner
-builder.Services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
-builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-builder.Services.AddScoped<IDbQueryRunner, DbQueryRunner>();
-
 //Register all services
 builder.Services.AddApplicationServices(typeof(IListingService));
+builder.Services.AddExternalApplicationServices(builder.Configuration);
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddRecaptchaService();
-
-//Register mappings
-AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
-builder.Services.AddSingleton(typeof(IMapper), AutoMapperConfig.MapperInstance);
-
-//Register CloudinaryAPI
-builder.Services.AddSingleton(new Cloudinary(new Account(
-    builder.Configuration.GetSection("ExternalConnections:Cloudinary:CloudName").Value,
-    builder.Configuration.GetSection("ExternalConnections:Cloudinary:ApiKey").Value,
-    builder.Configuration.GetSection("ExternalConnections:Cloudinary:ApiSecret").Value))
-{
-    Api =
-    {
-        Secure = true
-    }
-});
-
-builder.Services.AddSingleton<ISendGridClient>(new SendGridClient(builder.Configuration.GetSection("Authentication:SendGrid:ApiKey").Value));
-builder.Services.AddScoped<IEmailSender, SendGridEmailSender>();
 
 builder.Services.AddSignalR();
 
