@@ -67,7 +67,13 @@ public class AuctionHub : Hub<IAuctionClient>
         await this.userBidsRepository.AddAsync(bid);
         await this.userBidsRepository.SaveChangesAsync();
 
+        auction.CurrentPrice = amount;
+
+        await this.auctionsRepository.SaveChangesAsync();
+
         await this.Clients.All.BidPlaced(amount, user.FullName, user.UserName, bid.CreatedOn.ToLocalTime().ToString("f"));
+
+        await this.Clients.All.AllPageBidPlaced(auctionId, amount);
 
         if (auction.BlitzPrice.HasValue && bid.Amount >= auction.BlitzPrice.Value)
         {
@@ -81,6 +87,8 @@ public class AuctionHub : Hub<IAuctionClient>
             var winnerFullNameAndUserName = $"{user.FullName} ({user.UserName})";
 
             await this.Clients.All.AuctionEnded(auctionId, lastBidTime, amount, winnerFullNameAndUserName);
+
+            await this.Clients.All.AllPageAuctionEnded(auctionId);
         }
     }
 

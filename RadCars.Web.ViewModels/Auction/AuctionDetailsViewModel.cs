@@ -21,17 +21,11 @@ public class AuctionDetailsViewModel : AllAuctionsViewModel
 
     public DateTime? ModifiedOn { get; set; }
 
-    public DateTime StartTime { get; set; }
-
-    public DateTime EndTime { get; set; }
-
     public decimal? BlitzPrice { get; set; }
 
     public int MinimumBid { get; set; }
 
     public bool IsDeleted { get; set; }
-
-    public bool? IsOver { get; set; }
 
     public string CreatorUserName { get; set; } = null!;
 

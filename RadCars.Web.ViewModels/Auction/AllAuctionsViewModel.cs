@@ -10,8 +10,15 @@ using Services.Mapping.Contracts;
 
 public class AllAuctionsViewModel : BaseAllViewModel, IMapFrom<Auction>, IMapFrom<UserFavoriteAuction>, IHaveCustomMappings
 {
-    //public decimal CurrentPrice { get; set; }
+    public DateTime StartTime { get; set; }
+
+    public DateTime EndTime { get; set; }
+
+    public decimal CurrentPrice { get; set; }
+
     public decimal StartingPrice { get; set; }
+
+    public bool? IsOver { get; set; }
 
     public virtual void CreateMappings(IProfileExpression configuration)
     {
@@ -34,6 +41,16 @@ public class AllAuctionsViewModel : BaseAllViewModel, IMapFrom<Auction>, IMapFro
             .ForMember(dest => dest.Mileage, opt => opt.MapFrom(src => src.Auction.Mileage))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Auction.Title))
             .ForMember(dest => dest.StartingPrice, opt => opt.MapFrom(src => src.Auction.StartingPrice))
-            .ForMember(dest => dest.Year, opt => opt.MapFrom(src => src.Auction.Year));
+            .ForMember(dest => dest.Year, opt => opt.MapFrom(src => src.Auction.Year))
+            .ForMember(dest => dest.CurrentPrice, opt => opt.MapFrom(src => src.Auction.CurrentPrice))
+            .ForMember(dest => dest.IsOver, opt => opt.MapFrom(src => src.Auction.IsOver))
+            .ForMember(destination => destination.StartTime, options => options.MapFrom(source => source.Auction.StartTime.ToLocalTime()))
+            .ForMember(destination => destination.EndTime, options => options.MapFrom(source => source.Auction.EndTime.ToLocalTime()));
+
+        configuration.CreateMap<Auction, AllAuctionsViewModel>()
+            .ForMember(destination => destination.StartTime,
+                options => options.MapFrom(source => source.StartTime.ToLocalTime()))
+            .ForMember(destination => destination.EndTime,
+                options => options.MapFrom(source => source.EndTime.ToLocalTime()));
     }
 }

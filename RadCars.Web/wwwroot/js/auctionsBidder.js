@@ -7,11 +7,11 @@ const connection = new signalR.HubConnectionBuilder()
 connection.start()
     .catch(err => console.error(err.toString()));
 
-const timeToCountdown = document.getElementById("time").value;
+const timeToCountdown = document.getElementById("time");
 
-let timeParts = timeToCountdown.replace(' г.', '').split(/[\s.]+/);
+let timeParts = timeToCountdown && timeToCountdown.value.replace(' г.', '').split(/[\s.]+/);
 
-let countdownDate = new Date(timeParts[2], timeParts[1] - 1, timeParts[0], ...timeParts[3].split(':'));
+let countdownDate = timeParts && new Date(timeParts[2], timeParts[1] - 1, timeParts[0], ...timeParts[3].split(':'));
 
 let timerInterval;
 
@@ -34,6 +34,10 @@ const formatTime = (time, string) => {
 };
 
 const startCountdown = () => {
+    if (!timer) {
+        return;
+    }
+
     const now = new Date().getTime();
     const countdown = new Date(countdownDate).getTime();
 
@@ -56,7 +60,9 @@ const startCountdown = () => {
 
 const endCountdown = () => {
     clearInterval(timerInterval);
-    timer.classList.add("visually-hidden");
+    if (timer) {
+        timer.classList.add("visually-hidden");
+    }
 };
 
 window.addEventListener("load",

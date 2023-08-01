@@ -60,6 +60,7 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
         await this.auctionsRepository.SaveChangesAsync();
 
         await this.auctionHub.Clients.All.AuctionStarted(auctionId, auction.CreatorId.ToString(), auction.EndTime.ToLocalTime(), auction.StartingPrice, auction.MinimumBid);
+        await this.auctionHub.Clients.All.AllPageAuctionStarted(auctionId, auction.EndTime.ToLocalTime(), auction.StartingPrice);
     }
 
     public async Task EndAuction(string auctionId)
@@ -86,6 +87,7 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
         }
 
         await this.auctionHub.Clients.All.AuctionEnded(auctionId, lastBidTime, lastBidAmount, winnerFullNameAndUserName);
+        await this.auctionHub.Clients.All.AllPageAuctionEnded(auctionId);
     }
 
     public async Task CancelAuction(string auctionId)
