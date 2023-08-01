@@ -22,6 +22,8 @@ public interface IAuctionService
 
     Task UnFavoriteAuctionByIdAsync(string auctionId, string userId);
 
+    Task<AuctionBidServiceModel> CreateBidAsync(string auctionId, string userId, decimal amount);
+
     Task<IEnumerable<AllAuctionsViewModel>> GetAllDeactivatedAuctionsByUserIdAsync(string userId);
 
     Task<IEnumerable<AuctionIndexViewModel>> GetMostRecentAuctionsAsync();

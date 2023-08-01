@@ -3,25 +3,21 @@
 using Hangfire;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 using Contracts;
 using Data.Models.User;
-using Data.Models.Entities;
-using Data.Common.Contracts.Repositories;
+using Services.Data.Contracts;
 
 public class AuctionHub : Hub<IAuctionClient>
 {
+    private readonly IAuctionService auctionService;
     private readonly UserManager<ApplicationUser> userManager;
     private readonly IBackgroundJobClient backgroundJobClient;
-    private readonly IDeletableEntityRepository<Auction> auctionsRepository;
-    private readonly IDeletableEntityRepository<UserAuctionBid> userBidsRepository;
 
-    public AuctionHub(UserManager<ApplicationUser> userManager, IDeletableEntityRepository<Auction> auctionsRepository, IDeletableEntityRepository<UserAuctionBid> userBidsRepository, IBackgroundJobClient backgroundJobClient)
+    public AuctionHub(UserManager<ApplicationUser> userManager, IBackgroundJobClient backgroundJobClient, IAuctionService auctionService)
     {
         this.userManager = userManager;
-        this.auctionsRepository = auctionsRepository;
-        this.userBidsRepository = userBidsRepository;
+        this.auctionService = auctionService;
         this.backgroundJobClient = backgroundJobClient;
     }
 
@@ -31,62 +27,17 @@ public class AuctionHub : Hub<IAuctionClient>
 
         var user = await this.userManager.FindByIdAsync(userId);
 
-        var auction = await this.auctionsRepository.All()
-            .Where(a => a.Id.ToString() == auctionId && a.CreatorId.ToString() != user.Id.ToString())
-            .FirstAsync();
-        
-        if (auction.Bids.Any() == false)
-        {
-            if (amount < auction.StartingPrice)
-            {
-                throw new InvalidOperationException();
-            }
-        }
-        else
-        {
-            var highestBid = auction.Bids.OrderByDescending(b => b.CreatedOn).First().Amount;
+        var bidServiceModel = await this.auctionService.CreateBidAsync(auctionId, user.Id.ToString(), amount);
 
-            if (amount < highestBid + auction.MinimumBid)
-            {
-                throw new InvalidOperationException();
-            }
-        }
-
-        if (auction.IsOver.HasValue == false || auction.IsOver is true)
-        {
-            throw new InvalidOperationException();
-        }
-
-        var bid = new UserAuctionBid
-        {
-            AuctionId = auction.Id,
-            Amount = amount,
-            BidderId = user.Id
-        };
-
-        await this.userBidsRepository.AddAsync(bid);
-        await this.userBidsRepository.SaveChangesAsync();
-
-        auction.CurrentPrice = amount;
-
-        await this.auctionsRepository.SaveChangesAsync();
-
-        await this.Clients.All.BidPlaced(amount, user.FullName, user.UserName, bid.CreatedOn.ToLocalTime().ToString("f"));
+        await this.Clients.All.BidPlaced(amount, user.FullName, user.UserName, bidServiceModel.CreatedOn);
 
         await this.Clients.All.AllPageBidPlaced(auctionId, amount);
 
-        if (auction.BlitzPrice.HasValue && bid.Amount >= auction.BlitzPrice.Value)
+        if (bidServiceModel.OverBlitzPrice)
         {
-            this.CancelScheduledJob(auction.EndAuctionJobId!);
+            this.CancelScheduledJob(bidServiceModel.EndAuctionJobId!);
 
-            auction.IsOver = true;
-            await this.auctionsRepository.SaveChangesAsync();
-
-            var lastBidTime = auction.Bids.OrderByDescending(b => b.CreatedOn).First().CreatedOn.ToLocalTime().ToString("f");
-
-            var winnerFullNameAndUserName = $"{user.FullName} ({user.UserName})";
-
-            await this.Clients.All.AuctionEnded(auctionId, lastBidTime, amount, winnerFullNameAndUserName);
+            await this.Clients.All.AuctionEnded(auctionId, bidServiceModel.CreatedOn, amount, bidServiceModel.UserFullNameAndUserName);
 
             await this.Clients.All.AllPageAuctionEnded(auctionId);
         }

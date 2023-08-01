@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RadCars.Common\RadCars.Common.csproj" />
     <ProjectReference Include="..\RadCars.Data\RadCars.Data.csproj" />
+    <ProjectReference Include="..\RadCars.Services.Data.Models\RadCars.Services.Data.Models.csproj" />
     <ProjectReference Include="..\RadCars.Services.Data\RadCars.Services.Data.csproj" />
     <ProjectReference Include="..\RadCars.Services.Mapping\RadCars.Services.Mapping.csproj" />
     <ProjectReference Include="..\RadCars.Services.Messaging\RadCars.Services.Messaging.csproj" />

@@ -31,15 +31,17 @@ public class AuctionService : IAuctionService
     private readonly IAuctionImageService auctionImageService;
 
     private readonly IDeletableEntityRepository<Auction> auctionsRepository;
+    private readonly IDeletableEntityRepository<UserAuctionBid> bidsRepository;
     private readonly IDeletableEntityRepository<AuctionCarImage> carImagesRepository;
     private readonly IDeletableEntityRepository<AuctionFeature> auctionFeaturesRepository;
     private readonly IDeletableEntityRepository<UserFavoriteAuction> userFavoriteAuctionsRepository;
 
-    public AuctionService(IMapper mapper, IHtmlSanitizer htmlSanitizer, ICarService carService, IAuctionImageService auctionImageService, IDeletableEntityRepository<Auction> auctionsRepository, IDeletableEntityRepository<AuctionCarImage> carImagesRepository, IDeletableEntityRepository<AuctionFeature> auctionFeaturesRepository, IDeletableEntityRepository<UserFavoriteAuction> userFavoriteAuctionsRepository)
+    public AuctionService(IMapper mapper, IHtmlSanitizer htmlSanitizer, ICarService carService, IAuctionImageService auctionImageService, IDeletableEntityRepository<Auction> auctionsRepository, IDeletableEntityRepository<AuctionCarImage> carImagesRepository, IDeletableEntityRepository<AuctionFeature> auctionFeaturesRepository, IDeletableEntityRepository<UserFavoriteAuction> userFavoriteAuctionsRepository, IDeletableEntityRepository<UserAuctionBid> bidsRepository)
     {
         this.mapper = mapper;
         this.carService = carService;
         this.htmlSanitizer = htmlSanitizer;
+        this.bidsRepository = bidsRepository;
         this.auctionsRepository = auctionsRepository;
         this.auctionImageService = auctionImageService;
         this.carImagesRepository = carImagesRepository;
@@ -299,6 +301,67 @@ public class AuctionService : IAuctionService
         await this.AddThumbnailToAuctionByIdAsync(auction.Id.ToString(), firstImageId, userId, false);
 
         return auction.Id.ToString();
+    }
+
+    public async Task<AuctionBidServiceModel> CreateBidAsync(string auctionId, string userId, decimal amount)
+    {
+        var auction = await this.auctionsRepository.All()
+            .Where(a => a.Id.ToString() == auctionId && a.CreatorId.ToString() != userId)
+            .FirstAsync();
+
+        if (auction.Bids.Any() == false)
+        {
+            if (amount < auction.StartingPrice)
+            {
+                throw new InvalidOperationException();
+            }
+        }
+        else
+        {
+            var highestBid = auction.Bids.OrderByDescending(b => b.CreatedOn).First().Amount;
+
+            if (amount < highestBid + auction.MinimumBid)
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        if (auction.IsOver.HasValue == false || auction.IsOver is true)
+        {
+            throw new InvalidOperationException();
+        }
+
+        var bid = new UserAuctionBid
+        {
+            AuctionId = auction.Id,
+            Amount = amount,
+            BidderId = Guid.Parse(userId)
+        };
+
+        await this.bidsRepository.AddAsync(bid);
+        await this.bidsRepository.SaveChangesAsync();
+
+        auction.CurrentPrice = amount;
+
+        await this.auctionsRepository.SaveChangesAsync();
+
+        var serviceModel = new AuctionBidServiceModel
+        {
+            CreatedOn = bid.CreatedOn.ToLocalTime().ToString("f"),
+            UserFullNameAndUserName = $"{bid.Bidder.FullName} ({bid.Bidder.UserName})",
+            EndAuctionJobId = auction.EndAuctionJobId,
+            OverBlitzPrice = false
+        };
+
+        if (auction.BlitzPrice.HasValue && bid.Amount >= auction.BlitzPrice.Value)
+        {
+            serviceModel.OverBlitzPrice = true;
+
+            auction.IsOver = true;
+            await this.auctionsRepository.SaveChangesAsync();
+        }
+
+        return serviceModel;
     }
 
     public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string auctionId, string userId, bool isUserAdmin)
