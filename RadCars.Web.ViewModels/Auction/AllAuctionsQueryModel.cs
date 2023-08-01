@@ -19,7 +19,7 @@ public class AllAuctionsQueryModel : BaseAllQueryModel
     [Display(Name = "Сортиране:")]
     public AuctionSorting AuctionSorting { get; set; }
 
-    [Display(Name = "Брой обяви на страница:")]
+    [Display(Name = "Брой търгове на страница:")]
     public int AuctionsPerPage { get; set; }
 
     public int TotalAuctions { get; set; }

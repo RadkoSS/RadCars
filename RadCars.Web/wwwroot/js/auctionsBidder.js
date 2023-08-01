@@ -7,6 +7,65 @@ const connection = new signalR.HubConnectionBuilder()
 connection.start()
     .catch(err => console.error(err.toString()));
 
+const timeToCountdown = document.getElementById("time").value;
+
+let timeParts = timeToCountdown.replace(' г.', '').split(/[\s.]+/);
+
+let countdownDate = new Date(timeParts[2], timeParts[1] - 1, timeParts[0], ...timeParts[3].split(':'));
+
+let timerInterval;
+
+const daysElem = document.getElementById("days"),
+    hoursElem = document.getElementById("hours"),
+    minutesElem = document.getElementById("minutes"),
+    secondsElem = document.getElementById("seconds"),
+    timer = document.getElementById("timer");
+
+const formatTime = (time, string) => {
+    if (string === "ден") {
+        return time == 1 ? `${time} ${string}` : `${time} дни`;
+    } else if (string === "час") {
+        return time == 1 ? `${time} ${string}` : `${time} ${string}а`;
+    } else if (string === "минута") {
+        return time == 1 ? `${time} ${string}` : `${time} минути`;
+    } else {
+        return time == 1 ? `${time} ${string}` : `${time} секунди`;
+    }
+};
+
+const startCountdown = () => {
+    const now = new Date().getTime();
+    const countdown = new Date(countdownDate).getTime();
+
+    const difference = (countdown - now) / 1000;
+
+    if (difference < 1) {
+        endCountdown();
+    }
+
+    let days = Math.floor(difference / (60 * 60 * 24));
+    let hours = Math.floor((difference % (60 * 60 * 24)) / (60 * 60));
+    let minutes = Math.floor((difference % (60 * 60)) / 60);
+    let seconds = Math.floor(difference % 60);
+
+    daysElem.innerHTML = formatTime(days, "ден");
+    hoursElem.innerHTML = formatTime(hours, "час");
+    minutesElem.innerHTML = formatTime(minutes, "минута");
+    secondsElem.innerHTML = formatTime(seconds, "секунда");
+};
+
+const endCountdown = () => {
+    clearInterval(timerInterval);
+    timer.classList.add("visually-hidden");
+};
+
+window.addEventListener("load",
+    () => {
+        startCountdown();
+        timerInterval = setInterval(startCountdown, 1000);
+    });
+
+
 const currentUserId = document.getElementById("userId");
 
 const auctionActions = document.getElementById("auctionControls");
@@ -95,6 +154,12 @@ connection.on("AuctionStarted", (auctionId, creatorId, endTime, startingPrice, m
         auctionActions.classList.add("visually-hidden");
     }
 
+    countdownDate = new Date(endTime);
+    document.getElementById("timerText").textContent = "Край след:";
+    timer.classList.remove("visually-hidden");
+    startCountdown();
+    timerInterval = setInterval(startCountdown, 1000);
+
     const announceContainer = document.createElement("div");
     announceContainer.classList.add("card", "mb-2", "p-2");
 
@@ -177,6 +242,8 @@ connection.on("AuctionEnded", (auctionId, lastBidTime, lastBidAmount, winnerFull
     if (auctionActions) {
         auctionActions.classList.remove("visually-hidden");
     }
+
+    endCountdown();
 
     const winnerInfoContainer = document.createElement("div");
     winnerInfoContainer.classList.add("text-center", "mb-3");

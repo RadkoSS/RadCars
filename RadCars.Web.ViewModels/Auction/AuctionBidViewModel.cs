@@ -22,6 +22,6 @@ public class AuctionBidViewModel : IMapFrom<UserAuctionBid>, IHaveCustomMappings
         configuration
             .CreateMap<UserAuctionBid, AuctionBidViewModel>()
             .ForMember(destination => destination.CreatedOn,
-                options => options.MapFrom(source => source.CreatedOn.ToLocalTime().ToString("G")));
+                options => options.MapFrom(source => source.CreatedOn.ToLocalTime().ToString("f")));
     }
 }

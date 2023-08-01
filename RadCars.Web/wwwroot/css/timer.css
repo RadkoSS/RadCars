@@ -1,0 +1,17 @@
+﻿#timer {
+    display: flex;
+    flex-direction: column;
+    min-height: 10vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.timer-container {
+    font-size: 3em;
+}
+
+.timer-container span {
+    white-space: nowrap;
+}

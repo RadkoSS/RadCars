@@ -96,7 +96,28 @@
         else
         {
             //Timer indicating the time left to the start or end
-            <div id="timerContainer">
+            <div class="mb-3" id="timerContainer">
+                <section id="timer" aria-live="polite">
+                    <div class="fs-4">
+                        @if (Model.IsOver.HasValue == false)
+                        {
+                            <p id="timerText">Начало след:</p>
+                            <input type="hidden" id="time" value="@Model.StartTime"/>
+                        }
+                        else
+                        {
+                            <p id="timerText">Край след:</p>
+                            <input type="hidden" id="time" value="@Model.EndTime"/>
+                        }
+                    </div>
+                    <div class="timer-container">
+                        <span id="days" role="timer">0 дни</span>
+                        <span id="hours" role="timer">0 часа</span>
+                        <span id="minutes" role="timer">0 минути</span>
+                        и
+                        <span id="seconds" role="timer">0 секунди</span>
+                    </div>
+                </section>
             </div>
         }
     </div>
@@ -168,7 +189,7 @@
             @if (Model.IsOver.HasValue == false)
             {
                 <div class="card mb-2 p-2">
-                    <span class="card-header">Търгът ще започне в @Model.StartTime.ToString("f")</span>
+                    <span class="card-header">Търгът ще започне в/ъв @Model.StartTime.ToString("f")</span>
                     <p class="card-text fw-bold">- Успех на всички участници!</p>
                 </div>
             }
@@ -255,6 +276,7 @@
 
 @section Scripts {
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <link rel="stylesheet" href="~/css/timer.css"/>
     <script type="module" src="~/js/auctionsBidder.js"></script>
     <script type="module" src="~/js/auctionsFavoriter.js"></script>
 

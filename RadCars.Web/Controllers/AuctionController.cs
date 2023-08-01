@@ -271,7 +271,7 @@ public class AuctionController : BaseController
 
             return View(listingViewModel);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return NotFound();
         }

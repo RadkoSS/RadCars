@@ -93,15 +93,16 @@ public class AuctionService : IAuctionService
             AuctionSorting.NotStarted => auctionsQuery.OrderByDescending(a => a),
             AuctionSorting.Started => auctionsQuery.OrderByDescending(a => a),
             AuctionSorting.Finished => auctionsQuery.OrderByDescending(a => a),
-            _ => auctionsQuery.OrderByDescending(a => a)
+            _ => auctionsQuery.OrderByDescending(a => a.CreatedOn)
         };
 
-        var auctions = await auctionsQuery.Skip((queryModel.CurrentPage - 1) * queryModel.AuctionsPerPage)
+        var auctions = await auctionsQuery
+            .Skip((queryModel.CurrentPage - 1) * queryModel.AuctionsPerPage)
             .Take(queryModel.AuctionsPerPage)
             .To<AllAuctionsViewModel>()
             .ToArrayAsync();
 
-        var count = auctions.Length;
+        var count = auctionsQuery.Count();
 
         var auctionsQueryModel = new AllAuctionsFilteredAndPagedServiceModel
         {
