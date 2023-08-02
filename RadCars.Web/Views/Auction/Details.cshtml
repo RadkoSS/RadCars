@@ -53,13 +53,13 @@
             <div class="row mt-3 justify-content-center ml-2">
                 <div class="col-12">
                     <a asp-controller="Auction" asp-action="Favorites" id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
-                    <input type="hidden" id="auctionId" value="@Model.Id" />
                 </div>
             </div>
         }
     </div>
     <input type="hidden" id="userId" value="@User.GetId()" />
 }
+<input type="hidden" id="auctionId" value="@Model.Id" />
 
 <div class="container mt-4">
 
@@ -102,12 +102,12 @@
                         @if (Model.IsOver.HasValue == false)
                         {
                             <p id="timerText">Начало след:</p>
-                            <input type="hidden" id="time" value="@Model.StartTime"/>
+                            <input type="hidden" id="time" value="@Model.StartTime" />
                         }
                         else
                         {
                             <p id="timerText">Край след:</p>
-                            <input type="hidden" id="time" value="@Model.EndTime"/>
+                            <input type="hidden" id="time" value="@Model.EndTime" />
                         }
                     </div>
                     <div class="timer-container">
@@ -276,7 +276,7 @@
 
 @section Scripts {
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-    <link rel="stylesheet" href="~/css/auctionDetailsTimer.css"/>
+    <link rel="stylesheet" href="~/css/auctionDetailsTimer.css" />
     <script type="module" src="~/js/auctionsBidder.js"></script>
     <script type="module" src="~/js/auctionsFavoriter.js"></script>
 

@@ -3,7 +3,7 @@
 public interface IAuctionClient
 {
     //AuctionDetails
-    Task BidPlaced(decimal amount, string userFullName, string userUserName, string timePlaced);
+    Task BidPlaced(string auctionId, decimal amount, string userFullName, string userUserName, string timePlaced);
 
     Task AuctionStarted(string auctionId, string creatorId, DateTime endTime, decimal startingPrice, decimal minimumBid);
 

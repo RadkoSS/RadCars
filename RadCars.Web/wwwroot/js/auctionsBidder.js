@@ -72,6 +72,7 @@ window.addEventListener("load",
     });
 
 const currentUserId = document.getElementById("userId");
+const currentAuctionId = document.getElementById("auctionId").value;
 
 const auctionActions = document.getElementById("auctionControls");
 
@@ -100,14 +101,13 @@ async function handleBids(event) {
     }
 
     const bidAmount = Number(bidInput.value);
-    const auctionId = document.getElementById("auctionId").value;
 
-    const bidsTotalCount = await post("/api/auction/bids/count", auctionId);
+    const bidsTotalCount = await post("/api/auction/bids/count", currentAuctionId);
 
     if (bidsTotalCount === 0) {
 
         if (bidAmount >= lastHighestBid) {
-            connection.invoke("PlaceBid", auctionId, bidAmount)
+            connection.invoke("PlaceBid", currentAuctionId, bidAmount)
                 .catch(err => console.error(err));
 
             bidsDisplay.innerHTML = '';
@@ -119,14 +119,18 @@ async function handleBids(event) {
 
     }
     else if (bidAmount >= lastHighestBid + minimumStep) {
-        connection.invoke("PlaceBid", auctionId, bidAmount)
+        connection.invoke("PlaceBid", currentAuctionId, bidAmount)
             .catch(err => console.error(err));
 
         bidInput.value = '';
     }
 }
 
-connection.on("BidPlaced", (amount, userFullName, userName, createdOn) => {
+connection.on("BidPlaced", (auctionId, amount, userFullName, userName, createdOn) => {
+    if (currentAuctionId.toLowerCase() !== auctionId.toLowerCase()) {
+        return;
+    }
+
     const bidContainer = document.createElement("div");
     bidContainer.classList.add("card", "mb-2", "p-2");
 
@@ -153,8 +157,10 @@ connection.on("BidPlaced", (amount, userFullName, userName, createdOn) => {
 });
 
 connection.on("AuctionStarted", (auctionId, creatorId, endTime, startingPrice, minimumBid) => {
-    console.log(`AUCTION WITH ID: ${auctionId} HAS NOW STARTED!`);
-
+    if (currentAuctionId.toLowerCase() !== auctionId.toLowerCase()) {
+        return;
+    }
+    
     if (auctionActions) {
         auctionActions.classList.add("visually-hidden");
     }
@@ -238,8 +244,10 @@ connection.on("AuctionStarted", (auctionId, creatorId, endTime, startingPrice, m
 });
 
 connection.on("AuctionEnded", (auctionId, lastBidTime, lastBidAmount, winnerFullNameAndUserName) => {
-    console.log(`AUCTION WITH ID: ${auctionId} HAS ENDED!`);
-
+    if (currentAuctionId.toLowerCase() !== auctionId.toLowerCase()) {
+        return;
+    }
+    
     if (bidForm) {
         bidFormContainer.remove(bidForm);
     }
@@ -285,8 +293,4 @@ connection.on("AuctionEnded", (auctionId, lastBidTime, lastBidAmount, winnerFull
     bidsDisplay.appendChild(lastBidDisplay);
 
     bidsDisplay.scrollTo(0, bidsDisplay.scrollHeight);
-});
-
-connection.onclose(e => {
-    console.log('Connection closed. Error: ', e);
 });
