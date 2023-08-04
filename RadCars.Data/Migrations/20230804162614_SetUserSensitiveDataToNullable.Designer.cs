@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RadCars.Data;
 
@@ -11,9 +12,10 @@ using RadCars.Data;
 namespace RadCars.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230804162614_SetUserSensitiveDataToNullable")]
+    partial class SetUserSensitiveDataToNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,7 +246,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("ThumbnailId");
 
-                    b.ToTable("Auctions", (string)null);
+                    b.ToTable("Auctions");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.AuctionCarImage", b =>
@@ -278,7 +280,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("AuctionCarImages", (string)null);
+                    b.ToTable("AuctionCarImages");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.AuctionFeature", b =>
@@ -301,7 +303,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("AuctionFeatures", (string)null);
+                    b.ToTable("AuctionFeatures");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.CarImage", b =>
@@ -335,7 +337,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("ListingId");
 
-                    b.ToTable("CarImages", (string)null);
+                    b.ToTable("CarImages");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.CarMake", b =>
@@ -367,7 +369,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("CarMakes", (string)null);
+                    b.ToTable("CarMakes");
 
                     b.HasData(
                         new
@@ -1029,7 +1031,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("CarModels", (string)null);
+                    b.ToTable("CarModels");
 
                     b.HasData(
                         new
@@ -11743,7 +11745,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -11825,7 +11827,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
 
                     b.HasData(
                         new
@@ -14369,7 +14371,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
 
                     b.HasData(
                         new
@@ -14410,7 +14412,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("EngineTypes", (string)null);
+                    b.ToTable("EngineTypes");
 
                     b.HasData(
                         new
@@ -14491,7 +14493,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Features", (string)null);
+                    b.ToTable("Features");
 
                     b.HasData(
                         new
@@ -15023,7 +15025,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("ThumbnailId");
 
-                    b.ToTable("Listings", (string)null);
+                    b.ToTable("Listings");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.ListingFeature", b =>
@@ -15046,7 +15048,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("ListingFeatures", (string)null);
+                    b.ToTable("ListingFeatures");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.UserAuctionBid", b =>
@@ -15085,7 +15087,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("UserAuctionBids", (string)null);
+                    b.ToTable("UserAuctionBids");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.UserFavoriteAuction", b =>
@@ -15108,7 +15110,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("UserFavoriteAuctions", (string)null);
+                    b.ToTable("UserFavoriteAuctions");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.Entities.UserFavoriteListing", b =>
@@ -15131,7 +15133,7 @@ namespace RadCars.Data.Migrations
 
                     b.HasIndex("ListingId");
 
-                    b.ToTable("UserFavoriteListings", (string)null);
+                    b.ToTable("UserFavoriteListings");
                 });
 
             modelBuilder.Entity("RadCars.Data.Models.User.ApplicationRole", b =>

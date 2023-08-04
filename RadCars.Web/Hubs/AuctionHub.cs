@@ -29,7 +29,7 @@ public class AuctionHub : Hub<IAuctionClient>
 
         var bidServiceModel = await this.auctionService.CreateBidAsync(auctionId, user.Id.ToString(), amount);
 
-        await this.Clients.All.BidPlaced(auctionId, amount, user.FullName, user.UserName, bidServiceModel.CreatedOn);
+        await this.Clients.All.BidPlaced(auctionId, amount, user.FullName, user.UserName!, bidServiceModel.CreatedOn);
 
         await this.Clients.All.AllPageBidPlaced(auctionId, amount);
 

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using Models.User;
 
+using static Seeding.ApplicationUsersSeeder;
+
 internal class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<ApplicationUser>
 {
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
@@ -39,5 +41,7 @@ internal class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<App
             .HasMany(u => u.Auctions)
             .WithOne(l => l.Creator)
             .HasForeignKey(l => l.CreatorId);
+
+        //builder.HasData(SeedApplicationUsers());
     }
 }

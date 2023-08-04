@@ -35,23 +35,20 @@ public class ApplicationUser : IdentityUser<Guid>, IAuditInfo, IDeletableEntity
         this.Logins = new HashSet<IdentityUserLogin<Guid>>();
     }
 
-    [Required]
     [StringLength(FirstNameMaximumLength)]
-    public string FirstName { get; set; } = null!;
+    public string? FirstName { get; set; }
 
-    [Required]
     [StringLength(LastNameMaximumLength)]
-    public string LastName { get; set; } = null!;
+    public string? LastName { get; set; }
 
-    [Required]
     [ProtectedPersonalData]
     [StringLength(UserNameMaxLength)]
-    public override string UserName { get; set; } = null!;
+    public override string? UserName { get; set; }
 
     [ProtectedPersonalData]
     [DataType(DataType.PhoneNumber)]
     [StringLength(PhoneNumberMaximumLength)]
-    public override string PhoneNumber { get; set; } = null!;
+    public override string? PhoneNumber { get; set; }
 
     [NotMapped]
     public string FullName => $"{this.FirstName} {this.LastName}";
