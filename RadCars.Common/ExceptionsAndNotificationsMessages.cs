@@ -19,7 +19,7 @@ public static class ExceptionsAndNotificationsMessages
 
     public const string ListingDeactivated =
         "Обявата беше скрита и деактивирана! Можете да я активирате отново или да я изтриете.";
-    public const string ListingReDeactivated =
+    public const string ListingReactivated =
         "Обявата отново беше активирана и вече е публична.";
 
     public const string ListingWasUpdatedSuccessfully = "Обявата беше редактирана. Изберете снимка за обложка.";
@@ -36,7 +36,6 @@ public static class ExceptionsAndNotificationsMessages
 
     public const string ListingIsAlreadyInCurrentUserFavorites = "Обявата вече е била добавена в любимите Ви обяви!";
 
-
     public const string ListingIsNotInCurrentUserFavorites = "Обявата вече не присъства в любимите Ви обяви!";
 
     public const string LogoutSuccessful = "Излязохте успешно от своя акаунт.";
@@ -46,12 +45,18 @@ public static class ExceptionsAndNotificationsMessages
     public const string UnsuccessfulRegistration =
         "Получи се грешка при опита за регистрация, моля опитайте отново по-късно.";
 
+    public const string AuctionDeactivated = "Търгът беше деактивиран.";
+    public const string CannotDeactivateAuction = "Не можете да деактивирате търг, който вече е започнал или има наддавания!";
+    public const string AuctionReactivated = "Търгът беше активиран отново. Моля, опреснете данните за неговото провеждане!";
     public const string AuctionIsAlreadyInCurrentUserFavorites = "Търгът вече е бил добавен в любими!";
+    public const string AuctionRemovedFromFavorites = "Търгът беше премахнат от любими.";
+    public const string CannotEditActiveAuctionWithBids = "Нямате правомощията, за да редактирате търгове, които имат наддавания!";
     public const string AuctionDoesNotExistError = "Търгът не същестува.";
+    public const string AuctionHasAlreadyStarted = "Нямате правомощията да променяте търга след неговото начало или край.";
     public const string ErrorCreatingTheAuction =
         "Неуспешно създаване на търг. Моля, опитайте отново по-късно или се свържете с администратор.";
     public const string ErrorEditingTheAuction =
         "Неуспешно редактиране на търг. Моля, опитайте отново по-късно или се свържете с администратор.";
-    public const string AuctionWasUpdatedSuccessfully = "Търгът беше обновен успешно. Изберете снимка за обложка и времена на започване и приключване.";
+    public const string AuctionWasUpdatedSuccessfully = "Търгът беше обновен успешно. Изберете снимка за обложката.";
     public const string AuctionCreateSuccessfully = "Търгът беше създаден успешно.";
 }

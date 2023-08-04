@@ -1,9 +1,15 @@
 ﻿const priceRange = document.getElementById('priceRange');
 const priceRangeValue = document.getElementById('priceRangeValue');
 
+const numberFormatter = new Intl.NumberFormat("bg-BG", { style: "currency", currency: "BGN" });
+const kilometersNumberFormatter = Intl.NumberFormat("en", {
+    style: "unit",
+    unit: "kilometer"
+});
+
 if (priceRange && priceRangeValue) {
     if (Number(priceRange.value) > 0) {
-        priceRangeValue.innerText = `до ${Number(priceRange.value).toLocaleString('eu-BG')} лв.`;
+        priceRangeValue.innerText = `до ${numberFormatter.format(Number(priceRange.value))}`;
     } else {
         priceRangeValue.innerText = `Без значение`;
     }
@@ -17,7 +23,7 @@ if (priceRange && priceRangeValue) {
                 return;
             }
 
-            priceRangeValue.innerHTML = `до ${number.toLocaleString('eu-BG')} лв.`;
+            priceRangeValue.innerHTML = `до ${numberFormatter.format(number)}`;
         });
 }
 
@@ -25,7 +31,7 @@ const mileageRange = document.getElementById('mileageRange');
 const mileageRangeValue = document.getElementById('mileageRangeValue');
 
 if (Number(mileageRange.value) > 0) {
-    mileageRangeValue.innerHTML = `до ${Number(mileageRange.value).toLocaleString('eu-BG')} km`;
+    mileageRangeValue.innerHTML = `до ${kilometersNumberFormatter.format(Number(mileageRange.value))}`;
 } else {
     mileageRangeValue.innerHTML = `Без значение`;
 }
@@ -39,5 +45,5 @@ mileageRange.addEventListener('input',
             return;
         }
 
-        mileageRangeValue.innerHTML = `до ${number.toLocaleString('eu-BG')} km`;
+        mileageRangeValue.innerHTML = `до ${kilometersNumberFormatter.format(number)}`;
     });

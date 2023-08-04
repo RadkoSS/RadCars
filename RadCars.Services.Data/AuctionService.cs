@@ -1,14 +1,14 @@
 ﻿namespace RadCars.Services.Data;
 
-using AutoMapper;
-using Common.Exceptions;
 using Ganss.Xss;
+using AutoMapper;
 
 using Microsoft.EntityFrameworkCore;
 
 using Mapping;
 using Contracts;
 using Models.Auction;
+using Common.Exceptions;
 using Web.ViewModels.Auction;
 using Web.ViewModels.Feature;
 using Web.ViewModels.CarImage;
@@ -90,11 +90,11 @@ public class AuctionService : IAuctionService
         {
             AuctionSorting.Newest => auctionsQuery.OrderByDescending(a => a.CreatedOn),
             AuctionSorting.Oldest => auctionsQuery.OrderBy(a => a.CreatedOn),
-            AuctionSorting.MostTimeLeft => auctionsQuery.OrderByDescending(a => a),
-            AuctionSorting.LeastTimeLeft => auctionsQuery.OrderBy(a => a),
-            AuctionSorting.NotStarted => auctionsQuery.OrderByDescending(a => a),
-            AuctionSorting.Started => auctionsQuery.OrderByDescending(a => a),
-            AuctionSorting.Finished => auctionsQuery.OrderByDescending(a => a),
+            AuctionSorting.MostTimeLeft => auctionsQuery.Where(a => a.IsOver.HasValue && a.IsOver == false).OrderByDescending(a => a.EndTime - a.StartTime),
+            AuctionSorting.LeastTimeLeft => auctionsQuery.Where(a => a.IsOver.HasValue && a.IsOver == false).OrderBy(a => a.EndTime - a.StartTime),
+            AuctionSorting.NotStarted => auctionsQuery.Where(a => a.IsOver.HasValue == false).OrderByDescending(a => a.StartTime),
+            AuctionSorting.Started => auctionsQuery.Where(a => a.IsOver.HasValue && a.IsOver == false).OrderByDescending(a => a.EndTime),
+            AuctionSorting.Finished => auctionsQuery.Where(a => a.IsOver.HasValue && a.IsOver == true).OrderByDescending(a => a.CreatedOn),
             _ => auctionsQuery.OrderByDescending(a => a.CreatedOn)
         };
 
@@ -117,9 +117,19 @@ public class AuctionService : IAuctionService
 
     public async Task<IEnumerable<AllAuctionsViewModel>> GetAllAuctionsByUserIdAsync(string userId)
     {
-        var auctions = await this.auctionsRepository
-            .AllAsNoTracking()
-            .Where(a => a.CreatorId.ToString() == userId)
+        var auctions = await this.auctionsRepository.All()
+            .Where(a => a.CreatorId.ToString() == userId && a.IsOver.HasValue && a.IsOver.Value == false)
+            .OrderByDescending(a => a.CreatedOn)
+            .To<AllAuctionsViewModel>()
+            .ToArrayAsync();
+
+        return auctions;
+    }
+
+    public async Task<IEnumerable<AllAuctionsViewModel>> GetAllExpiredAuctionsByUserIdAsync(string userId)
+    {
+        var auctions = await this.auctionsRepository.All()
+            .Where(a => a.IsOver.HasValue && a.IsOver.Value == true && a.CreatorId.ToString() == userId)
             .OrderByDescending(a => a.CreatedOn)
             .To<AllAuctionsViewModel>()
             .ToArrayAsync();
@@ -181,9 +191,14 @@ public class AuctionService : IAuctionService
         await this.userFavoriteAuctionsRepository.SaveChangesAsync();
     }
 
-    public Task<IEnumerable<AllAuctionsViewModel>> GetAllDeactivatedAuctionsByUserIdAsync(string userId)
+    public async Task<IEnumerable<AllAuctionsViewModel>> GetAllDeactivatedAuctionsByUserIdAsync(string userId)
     {
-        throw new NotImplementedException();
+        var deactivatedAuctions = await this.auctionsRepository.AllWithDeleted()
+            .Where(a => a.IsDeleted && a.CreatorId.ToString() == userId)
+            .OrderByDescending(a => a.DeletedOn)
+            .To<AllAuctionsViewModel>().ToArrayAsync();
+
+        return deactivatedAuctions;
     }
 
     public async Task<IEnumerable<AuctionIndexViewModel>> GetMostRecentAuctionsAsync()
@@ -197,12 +212,23 @@ public class AuctionService : IAuctionService
         return mostRecentAuctions;
     }
 
-    public async Task<AuctionDetailsViewModel> GetAuctionDetailsAsync(string auctionId)
+    public async Task<AuctionDetailsViewModel> GetAuctionDetailsAsync(string auctionId, string? userId, bool isUserAdmin)
     {
-        var detailsViewModel = await this.auctionsRepository.All()
-            .Where(a => a.Id.ToString() == auctionId)
-            .To<AuctionDetailsViewModel>()
-            .FirstAsync();
+        AuctionDetailsViewModel detailsViewModel;
+
+        var userIsCreator = await this.IsUserCreatorOfAuctionByIdAsync(auctionId, userId);
+
+        if (isUserAdmin || userIsCreator)
+        {
+            detailsViewModel = await this.GetAuctionActivatedAndDeactivatedDetailsAsync(auctionId);
+        }
+        else
+        {
+            detailsViewModel = await this.auctionsRepository.All()
+                .Where(a => a.Id.ToString() == auctionId)
+                .To<AuctionDetailsViewModel>()
+                .FirstAsync();
+        }
 
         detailsViewModel.AuctionFeatures = await this.GetSelectedFeaturesByAuctionIdAsync(auctionId);
 
@@ -211,7 +237,7 @@ public class AuctionService : IAuctionService
 
     public async Task<ICollection<FeatureCategoriesViewModel>> GetSelectedFeaturesByAuctionIdAsync(string auctionId)
     {
-        var selectedFeatures = await this.auctionsRepository.All()
+        var selectedFeatures = await this.auctionsRepository.AllWithDeleted()
             .Include(l => l.AuctionFeatures)
             .ThenInclude(lf => lf.Feature)
             .ThenInclude(f => f.Category)
@@ -220,16 +246,16 @@ public class AuctionService : IAuctionService
             .SelectMany(l => l.AuctionFeatures)
             .ToArrayAsync();
 
-        var listingFeatures = new HashSet<FeatureCategoriesViewModel>();
+        var auctionFeatures = new HashSet<FeatureCategoriesViewModel>();
 
-        foreach (var currentLf in selectedFeatures.DistinctBy(lf => lf.Feature.CategoryId))
+        foreach (var currentAf in selectedFeatures.DistinctBy(lf => lf.Feature.CategoryId))
         {
-            var featuresOfCategory = selectedFeatures.Where(l => l.Feature.CategoryId == currentLf.Feature.CategoryId);
+            var featuresOfCategory = selectedFeatures.Where(l => l.Feature.CategoryId == currentAf.Feature.CategoryId);
 
-            listingFeatures.Add(new FeatureCategoriesViewModel
+            auctionFeatures.Add(new FeatureCategoriesViewModel
             {
-                Id = currentLf.Feature.CategoryId,
-                Name = currentLf.Feature.Category.Name,
+                Id = currentAf.Feature.CategoryId,
+                Name = currentAf.Feature.Category.Name,
                 Features = featuresOfCategory.Select(f => new FeatureViewModel
                 {
                     Id = f.FeatureId,
@@ -239,7 +265,7 @@ public class AuctionService : IAuctionService
             });
         }
 
-        return listingFeatures;
+        return auctionFeatures;
     }
 
     public async Task<AuctionFormModel> GetAuctionCreateAsync()
@@ -342,6 +368,7 @@ public class AuctionService : IAuctionService
         await this.bidsRepository.SaveChangesAsync();
 
         auction.CurrentPrice = amount;
+        auction.Bids.Add(bid);
 
         await this.auctionsRepository.SaveChangesAsync();
 
@@ -391,6 +418,14 @@ public class AuctionService : IAuctionService
         await this.auctionsRepository.SaveChangesAsync();
     }
 
+    private async Task<bool?> GetAuctionStateAsync(string auctionId)
+    {
+        var state = await this.auctionsRepository.AllWithDeleted().Where(a => a.Id.ToString() == auctionId)
+            .Select(a => a.IsOver).FirstAsync();
+
+        return state;
+    }
+
     public async Task<AuctionEditFormModel> GetAuctionEditAsync(string auctionId, string userId, bool isUserAdmin)
     {
         var auctionToEdit = await this.auctionsRepository.AllWithDeleted()
@@ -401,8 +436,20 @@ public class AuctionService : IAuctionService
 
         if (auctionToEdit == null)
         {
-            throw new InvalidOperationException(AuctionDoesNotExistError);
+            throw new InvalidDataException(AuctionDoesNotExistError);
         }
+
+        var auctionStartedOrIsOver = await this.GetAuctionStateAsync(auctionId);
+
+        if (isUserAdmin == false)
+        {
+            //false means started, true means ended
+            if (auctionStartedOrIsOver is false || (auctionStartedOrIsOver is true && await this.GetBidsCountForAuctionByIdAsync(auctionId) > 0))
+            {
+                throw new InvalidOperationException(AuctionHasAlreadyStarted);
+            }
+        }
+        //state is null -> not started yet
 
         auctionToEdit.UploadedImages = await this.GetUploadedImagesForAuctionByIdAsync(auctionId, userId, isUserAdmin);
 
@@ -430,8 +477,28 @@ public class AuctionService : IAuctionService
     public async Task<string> EditAuctionAsync(AuctionEditFormModel form, string userId, bool isUserAdmin)
     {
         var auctionToEdit = await this.auctionsRepository.AllWithDeleted()
+            .Include(a => a.Bids)
             .Where(a => a.Id.ToString() == form.Id && (a.CreatorId.ToString() == userId || isUserAdmin))
             .FirstAsync();
+
+        if (auctionToEdit.Bids.Any())
+        {
+            if (isUserAdmin == false)
+            {
+                throw new InvalidOperationException(CannotEditActiveAuctionWithBids);
+            }
+
+            foreach (var bid in auctionToEdit.Bids)
+            {
+                this.bidsRepository.HardDelete(bid);
+            }
+
+            await this.bidsRepository.SaveChangesAsync();
+
+            this.auctionsRepository.Delete(auctionToEdit);
+
+            await this.auctionsRepository.SaveChangesAsync();
+        }
 
         var oldThumbnail = auctionToEdit.ThumbnailId!.Value;
 
@@ -518,9 +585,9 @@ public class AuctionService : IAuctionService
             });
         }
 
-        foreach (var listingFeature in auctionToEdit.AuctionFeatures)
+        foreach (var auctionFeature in auctionToEdit.AuctionFeatures)
         {
-            this.auctionFeaturesRepository.HardDelete(listingFeature);
+            this.auctionFeaturesRepository.HardDelete(auctionFeature);
         }
 
         await this.auctionFeaturesRepository.SaveChangesAsync();
@@ -534,6 +601,13 @@ public class AuctionService : IAuctionService
         {
             var firstImageId = auctionToEdit.Images.First().Id.ToString();
             await this.AddThumbnailToAuctionByIdAsync(auctionToEdit.Id.ToString(), firstImageId, userId, isUserAdmin);
+        }
+
+        if (auctionToEdit.IsDeleted)
+        {
+            this.auctionsRepository.Undelete(auctionToEdit);
+
+            await this.auctionsRepository.SaveChangesAsync();
         }
 
         return auctionToEdit.Id.ToString();
@@ -550,31 +624,101 @@ public class AuctionService : IAuctionService
         => await this.carImagesRepository.AllWithDeleted()
             .Where(ci => ci.AuctionId.ToString() == auctionId).CountAsync();
 
-    public async Task<AuctionDetailsViewModel> GetDeactivatedAuctionDetailsAsync(string auctionId, string userId,
-        bool isUserAdmin)
+    private async Task<AuctionDetailsViewModel> GetAuctionActivatedAndDeactivatedDetailsAsync(string auctionId)
     {
-        throw new NotImplementedException();
+        var auctionDetails = await this.auctionsRepository.AllWithDeleted()
+            .Where(a => a.Id.ToString() == auctionId)
+            .To<AuctionDetailsViewModel>()
+            .FirstAsync();
+
+        return auctionDetails;
     }
 
-    public Task DeactivateAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin)
+    private async Task<bool> IsUserCreatorOfAuctionByIdAsync(string auctionId, string? userId)
     {
-        throw new NotImplementedException();
+        var result = await this.auctionsRepository.AllWithDeleted()
+            .Where(a => a.Id.ToString() == auctionId && a.CreatorId.ToString() == userId)
+            .AnyAsync();
+
+        return result;
     }
 
-    public Task ReactivateAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin)
+    public async Task DeactivateAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin)
     {
-        throw new NotImplementedException();
+        var auctionToDeactivate = await this.auctionsRepository.All()
+            .FirstAsync(l => (l.CreatorId.ToString() == userId || isUserAdmin) && l.Id.ToString() == auctionId);
+
+        if (auctionToDeactivate.IsOver.HasValue)
+        {
+            if (isUserAdmin == false)
+            {
+                throw new InvalidOperationException(CannotDeactivateAuction);
+            }
+        }
+
+        if (auctionToDeactivate.Bids.Any())
+        {
+            if (isUserAdmin == false)
+            {
+                throw new InvalidOperationException(CannotEditActiveAuctionWithBids);
+            }
+
+            foreach (var bid in auctionToDeactivate.Bids)
+            {
+                this.bidsRepository.HardDelete(bid);
+            }
+
+            await this.bidsRepository.SaveChangesAsync();
+        }
+        
+        this.auctionsRepository.Delete(auctionToDeactivate);
+
+        await this.auctionsRepository.SaveChangesAsync();
     }
 
-    public Task HardDeleteAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin)
+    public async Task HardDeleteAuctionByIdAsync(string auctionId)
     {
-        throw new NotImplementedException();
+        var auctionToDelete = await this.auctionsRepository.AllWithDeleted()
+            .Include(a => a.Bids)
+            .FirstAsync(a => a.Id.ToString() == auctionId);
+
+        foreach (var bid in auctionToDelete.Bids)
+        {
+            this.bidsRepository.HardDelete(bid);
+        }
+
+        await this.bidsRepository.SaveChangesAsync();
+
+        var auctionFeaturesToDelete = await this.auctionFeaturesRepository.AllWithDeleted().Where(af => af.AuctionId == auctionToDelete.Id).ToArrayAsync();
+
+        foreach (var auctionFeature in auctionFeaturesToDelete)
+        {
+            this.auctionFeaturesRepository.HardDelete(auctionFeature);
+        }
+        await this.auctionFeaturesRepository.SaveChangesAsync();
+
+        var imageIds =
+            await this.carImagesRepository.AllWithDeleted().Where(ci => ci.AuctionId == auctionToDelete.Id).Select(ci => ci.Id.ToString()).ToArrayAsync();
+
+        await this.auctionImageService.DeleteAllImagesOfAuctionAsync(auctionId, imageIds);
+
+        var userFavorites = await this.userFavoriteAuctionsRepository.AllWithDeleted()
+            .Where(ufa => ufa.AuctionId == auctionToDelete.Id).ToArrayAsync();
+        foreach (var userFavorite in userFavorites)
+        {
+            this.userFavoriteAuctionsRepository.HardDelete(userFavorite);
+        }
+        await this.userFavoriteAuctionsRepository.SaveChangesAsync();
+
+        this.auctionsRepository.HardDelete(auctionToDelete);
+
+        await this.auctionsRepository.SaveChangesAsync();
     }
 
     public async Task<int> GetBidsCountForAuctionByIdAsync(string auctionId)
     {
         var bidsForAuction =
-            await this.auctionsRepository.AllAsNoTracking().Where(a => a.Id.ToString() == auctionId).SelectMany(a => a.Bids).ToArrayAsync();
+            await this.auctionsRepository.AllAsNoTrackingWithDeleted().Where(a => a.Id.ToString() == auctionId).SelectMany(a => a.Bids).ToArrayAsync();
 
         return bidsForAuction.Length;
     }
@@ -591,22 +735,20 @@ public class AuctionService : IAuctionService
         var startTimeToUtc = form.StartTime.ToUniversalTime();
         var endTimeToUtc = form.EndTime.ToUniversalTime();
 
-        var datesAreValid = true;
-
         if (startTimeToUtc < currentDateAndTime.AddMinutes(MinimumMinutesToAuctionStart))
         {
-            datesAreValid = false;
+            return false;
         }
-        else if (startTimeToUtc.AddHours(MinimumHoursToAuctionEnd) > endTimeToUtc)
+        if (startTimeToUtc.AddHours(MinimumHoursToAuctionEnd) > endTimeToUtc)
         {
-            datesAreValid = false;
+            return false;
         }
         //ToDo: Add front end validation ensuring EndDate is at most 14 days after the StartDate!
-        else if (endTimeToUtc > startTimeToUtc.AddDays(MaximumDaysOfAuctioning))
+        if (endTimeToUtc > startTimeToUtc.AddDays(MaximumDaysOfAuctioning))
         {
-            datesAreValid = false;
+            return false;
         }
-        return carMakeIdExists && carModelIdExists && engineTypeIdExists && cityIdExists && featureIdsExist && datesAreValid;
+        return carMakeIdExists && carModelIdExists && engineTypeIdExists && cityIdExists && featureIdsExist;
     }
 
     private AuctionFormModel SanitizeForm(AuctionFormModel form)

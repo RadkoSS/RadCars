@@ -12,6 +12,8 @@ public interface IAuctionService
 
     Task<IEnumerable<AllAuctionsViewModel>> GetAllAuctionsByUserIdAsync(string userId);
 
+    Task<IEnumerable<AllAuctionsViewModel>> GetAllExpiredAuctionsByUserIdAsync(string userId);
+
     Task<IEnumerable<AllAuctionsViewModel>> GetFavoriteAuctionsByUserIdAsync(string userId);
 
     Task<bool> IsAuctionInUserFavoritesByIdAsync(string auctionId, string userId);
@@ -42,9 +44,7 @@ public interface IAuctionService
 
     Task<ICollection<FeatureCategoriesViewModel>> GetSelectedFeaturesByAuctionIdAsync(string auctionId);
 
-    Task<AuctionDetailsViewModel> GetAuctionDetailsAsync(string auctionId);
-
-    Task<AuctionDetailsViewModel> GetDeactivatedAuctionDetailsAsync(string auctionId, string userId, bool isUserAdmin);
+    Task<AuctionDetailsViewModel> GetAuctionDetailsAsync(string auctionId, string? userId, bool isUserAdmin);
 
     Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string auctionId, string userId, bool isUserAdmin);
 
@@ -52,8 +52,7 @@ public interface IAuctionService
 
     Task DeactivateAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin);
 
-    Task ReactivateAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin);
+    Task HardDeleteAuctionByIdAsync(string auctionId);
 
-    Task HardDeleteAuctionByIdAsync(string auctionId, string userId, bool isUserAdmin);
     Task<int> GetBidsCountForAuctionByIdAsync(string auctionId);
 }

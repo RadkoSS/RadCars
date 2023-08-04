@@ -348,11 +348,11 @@ public class ListingController : BaseController
 
             await this.listingService.ReactivateListingByIdAsync(listingId, userId, userIsAdmin);
 
-            this.TempData[SuccessMessage] = ListingReDeactivated;
+            this.TempData[SuccessMessage] = ListingReactivated;
 
             if (userIsAdmin)
             {
-                return RedirectToAction("Details", new { listingId });
+                return RedirectToAction("Details", "Listing",new { listingId });
             }
 
             return RedirectToAction("Mine", "Listing");

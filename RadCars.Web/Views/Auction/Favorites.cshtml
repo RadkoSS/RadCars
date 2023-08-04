@@ -1,0 +1,101 @@
+﻿@model IEnumerable<AllAuctionsViewModel>
+
+@{
+    ViewData["Title"] = "Любими търгове";
+}
+
+@if (!Model.Any())
+{
+    <div class="d-flex flex-column align-items-center">
+        <h1 class="mb-4">@ViewData["Title"]</h1>
+        <p>Все още нямате любими търгове... Добавете търг в "Любими" и той ще бъде показан тук.</p>
+        <a class="btn btn-success" asp-controller="Auction" asp-action="All">Всички търгове</a>
+    </div>
+}
+else
+{
+    <div class="container">
+        <h3 class="text-center text-black mt-4 mb-5">@ViewData["Title"]</h3>
+        <div class="row">
+            @foreach (var auction in Model)
+            {
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <div class="card mb-4 shadow-sm w-100" id="@auction.Id.ToLower()">
+                        <a asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id"><img class="card-img-top w-100" src="@auction.Thumbnail.Url" alt="Card image cap" style="height: 25vh; object-fit: cover;"></a>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@auction.Title</h5>
+                            <p class="card-text flex-grow-1">
+                                <ul class="list-unstyled">
+                                    <li>Марка: @auction.CarMakeName</li>
+                                    <li>Модел: @auction.CarModelName</li>
+                                    <li>Година на производство: @auction.Year г.</li>
+                                    <li>Населено място: @auction.City.Name</li>
+                                    <li>Двигател: @auction.EngineModel</li>
+                                    <li>Пробег: @auction.Mileage.ToString("##,###") км.</li>
+                                </ul>
+                            </p>
+
+                            <div class="d-flex flex-column align-items-center mt-3 mb-3 auctionInfoContainer">
+                                @if (auction.IsOver is true)
+                                {
+                                    <div class="text-center mb-3">
+                                        <h4 class="text-decoration-underline fw-bold">Търгът приключи!</h4>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <section class="mb-2 timer" aria-live="polite">
+                                        <div class="fs-6">
+                                            @if (auction.IsOver.HasValue == false)
+                                            {
+                                                <p class="fw-bold timerText">Начална цена: @auction.StartingPrice.ToString("C") Започва след:</p>
+                                                <input type="hidden" class="time" value="@auction.StartTime" />
+                                            }
+                                            else
+                                            {
+                                                if (auction.CurrentPrice == auction.StartingPrice)
+                                                {
+                                                    <p class="fw-bold timerText">Начална цена @auction.CurrentPrice.ToString("C") Приключва след:</p>
+                                                    <input type="hidden" class="time" value="@auction.EndTime" />
+                                                }
+                                                else
+                                                {
+                                                    <p class="fw-bold timerText">Моментна цена @auction.CurrentPrice.ToString("C") Приключва след:</p>
+                                                    <input type="hidden" class="time" value="@auction.EndTime" />
+                                                }
+                                            }
+                                        </div>
+                                        <div class="timer-container">
+                                            <span class="days" role="timer">0 дни</span>
+                                            <span class="hours" role="timer">0 часа</span>
+                                            <span class="minutes" role="timer">0 минути</span>
+                                            и
+                                            <span class="seconds" role="timer">0 секунди</span>
+                                        </div>
+                                    </section>
+                                }
+                            </div>
+
+                            <div class="mt-auto">
+                                <form asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id">
+                                    <input type="submit" class="btn btn-sm btn-outline-info text-black w-100" value="Виж търг" />
+                                </form>
+
+                                <form asp-controller="Auction" asp-action="UnFavorite" asp-route-auctionId="@auction.Id" method="post" class="mt-2">
+                                    <input type="submit" class="btn btn-sm btn-outline-warning text-black w-100" value="Премахни от любими" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    <link rel="stylesheet" href="~/css/allAuctionsTimer.css" />
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/allAuctionsUpdater.js"></script>
+}

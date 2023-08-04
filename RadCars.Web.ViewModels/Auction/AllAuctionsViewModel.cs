@@ -20,6 +20,10 @@ public class AllAuctionsViewModel : BaseAllViewModel, IMapFrom<Auction>, IMapFro
 
     public bool? IsOver { get; set; }
 
+    public bool HasBids { get; set; }
+
+    public string? DeletedOn { get; set; }
+
     public virtual void CreateMappings(IProfileExpression configuration)
     {
         configuration.CreateMap<UserFavoriteAuction, AllAuctionsViewModel>()
@@ -51,6 +55,8 @@ public class AllAuctionsViewModel : BaseAllViewModel, IMapFrom<Auction>, IMapFro
             .ForMember(destination => destination.StartTime,
                 options => options.MapFrom(source => source.StartTime.ToLocalTime()))
             .ForMember(destination => destination.EndTime,
-                options => options.MapFrom(source => source.EndTime.ToLocalTime()));
+                options => options.MapFrom(source => source.EndTime.ToLocalTime()))
+            .ForMember(destination => destination.HasBids, options => options.MapFrom(source => source.Bids.Any()))
+            .ForMember(destination => destination.DeletedOn, options => options.MapFrom(source => source.DeletedOn.HasValue ? source.DeletedOn.Value.ToLocalTime().ToString("f") : string.Empty));
     }
 }

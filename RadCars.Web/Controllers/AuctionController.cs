@@ -174,6 +174,11 @@ public class AuctionController : BaseController
         }
         catch (InvalidOperationException)
         {
+            this.TempData[ErrorMessage] = AuctionHasAlreadyStarted;
+            return RedirectToAction("Details", "Auction", new { auctionId });
+        }
+        catch (InvalidDataException)
+        {
             return Unauthorized();
         }
         catch (Exception)
@@ -207,9 +212,17 @@ public class AuctionController : BaseController
 
             var auctionId = await this.auctionService.EditAuctionAsync(form, userId, userIsAdmin);
 
+            await this.auctionBackgroundJobService.RescheduleEditedAuctionStartAndEndAsync(auctionId);
+
             this.TempData[SuccessMessage] = AuctionWasUpdatedSuccessfully;
 
             return RedirectToAction("ChooseThumbnail", "Auction", new { auctionId });
+        }
+        catch (InvalidOperationException)
+        {
+            this.TempData[ErrorMessage] = CannotEditActiveAuctionWithBids;
+
+            return RedirectToAction("Details", "Auction", new { form.Id });
         }
         catch (InvalidImagesException e)
         {
@@ -267,32 +280,151 @@ public class AuctionController : BaseController
     {
         try
         {
-            var listingViewModel = await this.auctionService.GetAuctionDetailsAsync(auctionId);
+            var userId = this.User.GetId();
+            var isAdmin = this.User.IsAdmin();
 
-            return View(listingViewModel);
+            var auctionDetailsViewModel = await this.auctionService.GetAuctionDetailsAsync(auctionId, userId, isAdmin);
+
+            return View(auctionDetailsViewModel);
         }
         catch (Exception)
         {
-            return NotFound();
+            this.TempData[WarningMessage] = AuctionDoesNotExistError;
+            return RedirectToAction("All", "Auction");
         }
     }
 
-    public async Task<IActionResult> DeactivatedDetails(string listingId)
+    public async Task<IActionResult> Mine()
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            var auctions = await this.auctionService.GetAllAuctionsByUserIdAsync(userId);
+
+            return View(auctions);
+        }
+        catch (Exception)
+        {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
+            return RedirectToAction("All", "Auction");
+        }
+    }
+
+    public async Task<IActionResult> MineExpired()
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            var auctions = await this.auctionService.GetAllExpiredAuctionsByUserIdAsync(userId);
+
+            return View(auctions);
+        }
+        catch (Exception)
+        {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
+            return RedirectToAction("All", "Auction");
+        }
+    }
+
+    public async Task<IActionResult> Favorites()
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            var favoriteAuctions = await this.auctionService.GetFavoriteAuctionsByUserIdAsync(userId);
+
+            return View(favoriteAuctions);
+        }
+        catch (Exception)
+        {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
+            return RedirectToAction("All", "Auction");
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UnFavorite(string auctionId)
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            await this.auctionService.UnFavoriteAuctionByIdAsync(auctionId, userId);
+
+            this.TempData[WarningMessage] = AuctionRemovedFromFavorites;
+
+            return RedirectToAction("Favorites", "Auction");
+        }
+        catch (Exception)
+        {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
+            return RedirectToAction("All", "Auction");
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> MineDeactivated()
+    {
+        try
+        {
+            var userId = this.User.GetId()!;
+
+            var deactivatedAuctions = await this.auctionService.GetAllDeactivatedAuctionsByUserIdAsync(userId);
+
+            return View(deactivatedAuctions);
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("Mine", "Auction");
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Deactivate(string auctionId)
     {
         try
         {
             var userId = this.User.GetId()!;
             var userIsAdmin = this.User.IsAdmin();
 
-            var deactivatedListingModel = await this.auctionService.GetDeactivatedAuctionDetailsAsync(listingId, userId, userIsAdmin);
+            await this.auctionService.DeactivateAuctionByIdAsync(auctionId, userId, userIsAdmin);
 
-            return View("Details", deactivatedListingModel);
+            await this.auctionBackgroundJobService.CancelAuctionStartAndEnd(auctionId);
+
+            this.TempData[WarningMessage] = AuctionDeactivated;
+
+            if (userIsAdmin)
+            {
+                return RedirectToAction("Details", new { auctionId });
+            }
+
+            return RedirectToAction("MineDeactivated", "Auction");
+        }
+        catch (InvalidOperationException)
+        {
+            this.TempData[ErrorMessage] = CannotDeactivateAuction;
+
+            return RedirectToAction("Details", "Auction", new { auctionId });
         }
         catch (Exception)
         {
-            return NotFound();
+            this.TempData[ErrorMessage] = AnErrorOccurred;
+
+            return RedirectToAction("All", "Auction");
         }
     }
+
+    [HttpPost]
+    public IActionResult Reactivate(string auctionId) 
+        => RedirectToAction("Edit", "Auction", new { auctionId });
+
 
     private async Task<AuctionFormModel> ReloadForm(AuctionFormModel form)
     {

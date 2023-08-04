@@ -23,14 +23,14 @@
                                 <li>Година на производство: @auction.Year г.</li>
                                 <li>Населено място: @auction.City.Name</li>
                                 <li>Двигател: @auction.EngineModel</li>
-                                <li>Пробег: @auction.Mileage км.</li>
+                                <li>Пробег: @auction.Mileage.ToString("##,###") км.</li>
                             </ul>
                         </p>
 
                         <div class="d-flex flex-column align-items-center mt-3 mb-3 auctionInfoContainer">
                             @if (auction.IsOver is true)
                             {
-                                <div class="text-center mb-3">
+                                <div class="text-center mb-3 endAnnounce">
                                     <h4 class="text-decoration-underline fw-bold">Търгът приключи!</h4>
                                 </div>
                             }
@@ -40,19 +40,19 @@
                                     <div class="fs-6">
                                         @if (auction.IsOver.HasValue == false)
                                         {
-                                            <p class="fw-bold timerText">Начална цена: @auction.StartingPrice лв. Започва след:</p>
+                                            <p class="fw-bold timerText">Начална цена: @auction.StartingPrice.ToString("C") Започва след:</p>
                                             <input type="hidden" class="time" value="@auction.StartTime" />
                                         }
                                         else
                                         {
                                             if (auction.CurrentPrice == auction.StartingPrice)
                                             {
-                                                <p class="fw-bold timerText">Начална цена @auction.CurrentPrice лв. Приключва след:</p>
+                                                <p class="fw-bold timerText">Начална цена @auction.CurrentPrice.ToString("C") Приключва след:</p>
                                                 <input type="hidden" class="time" value="@auction.EndTime" />
                                             }
                                             else
                                             {
-                                                <p class="fw-bold timerText">Моментна цена @auction.CurrentPrice лв. Приключва след:</p>
+                                                <p class="fw-bold timerText">Моментна цена @auction.CurrentPrice.ToString("C") Приключва след:</p>
                                                 <input type="hidden" class="time" value="@auction.EndTime" />
                                             }
                                         }
@@ -77,20 +77,28 @@
                             {
                                 if (userIsAdmin)
                                 {
-                                    <form asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
-                                        <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай търг" />
-                                    </form>
+                                    <div class="d-flex flex-column adminAuctionControls">
+                                        @if (auction.IsOver.HasValue == false || auction.IsOver is false)
+                                        {
+                                            <form asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
+                                                <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай търг" />
+                                            </form>
 
-                                    <a asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@auction.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай търг</a>
+                                            <a asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@auction.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай търг</a>
+                                        }
+                                    </div>
                                 }
                                 else
                                 {
-                                    <div class="d-flex flex-column auctionControls @(auction.IsOver is false ? "visually-hidden" : string.Empty)">
-                                        <form asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
-                                            <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай търг" />
-                                        </form>
+                                    <div class="d-flex flex-column auctionControls">
+                                        @if (auction.IsOver.HasValue == false)
+                                        {
+                                            <form asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
+                                                <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай търг" />
+                                            </form>
 
-                                        <a asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@auction.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай търг</a>
+                                            <a asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@auction.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай търг</a>
+                                        }
                                     </div>
                                 }
                             }

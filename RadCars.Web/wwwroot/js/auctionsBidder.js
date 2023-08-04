@@ -7,6 +7,8 @@ const connection = new signalR.HubConnectionBuilder()
 connection.start()
     .catch(err => console.error(err.toString()));
 
+const numberFormatter = new Intl.NumberFormat("bg-BG", { style: "currency", currency: "BGN" });
+
 const timeToCountdown = document.getElementById("time");
 
 let timeParts = timeToCountdown && timeToCountdown.value.replace(' г.', '').split(/[\s.]+/);
@@ -75,6 +77,11 @@ const currentUserId = document.getElementById("userId");
 const currentAuctionId = document.getElementById("auctionId").value;
 
 const auctionActions = document.getElementById("auctionControls");
+const userEditButton = document.getElementById("userEdit");
+const userDeactivateButton = document.getElementById("userDeactivate");
+
+const adminEditButton = document.getElementById("adminEdit");
+const adminDeactivateButton = document.getElementById("adminDeactivate");
 
 const auctionInfoContainer = document.getElementById("auctionInfoContainer");
 
@@ -142,7 +149,7 @@ connection.on("BidPlaced", (auctionId, amount, userFullName, userName, createdOn
 
     const bidElement = document.createElement("p");
     bidElement.classList.add("card-text", "fw-bold");
-    bidElement.textContent = `- ${userFullName} (${userName}) предлага ${amount.toFixed(2)} лв.`;
+    bidElement.textContent = `- ${userFullName} (${userName}) предлага ${numberFormatter.format(amount)}`;
 
     if (bidInput) {
         bidInput.min = `${amount}`;
@@ -163,6 +170,8 @@ connection.on("AuctionStarted", (auctionId, creatorId, endTime, startingPrice, m
     
     if (auctionActions) {
         auctionActions.classList.add("visually-hidden");
+        userEditButton.remove();
+        userDeactivateButton.remove();
     }
 
     countdownDate = new Date(endTime);
@@ -214,7 +223,7 @@ connection.on("AuctionStarted", (auctionId, creatorId, endTime, startingPrice, m
         input.classList.add("form-control");
         input.id = "bidAmount";
         input.name = "bidAmount";
-        input.placeholder = "Направете своето наддаване";
+        input.placeholder = "Направете своето наддаване в лева (BGN).";
         input.min = `${startingPrice}`;
         input.step = `${minimumBid}`;
         input.required = true;
@@ -256,6 +265,16 @@ connection.on("AuctionEnded", (auctionId, lastBidTime, lastBidAmount, winnerFull
         auctionActions.classList.remove("visually-hidden");
     }
 
+    if (userEditButton && userDeactivateButton) {
+        userEditButton.remove();
+        userDeactivateButton.remove();
+    }
+
+    if (adminEditButton && adminDeactivateButton) {
+        adminEditButton.remove();
+        adminDeactivateButton.remove();
+    }
+
     endCountdown();
 
     const winnerInfoContainer = document.createElement("div");
@@ -279,9 +298,9 @@ connection.on("AuctionEnded", (auctionId, lastBidTime, lastBidAmount, winnerFull
         lastBidHeader.textContent = "Търгът приключи без наддавания:";
         lastBidContent.textContent = "- Няма победител.";
     } else {
-        winnerAnnounce.textContent = `Търгът е спечелен от ${winnerFullNameAndUserName} за сумата от ${lastBidAmount.toFixed(2)} лв.`;
+        winnerAnnounce.textContent = `Търгът е спечелен от ${winnerFullNameAndUserName} за сумата от ${numberFormatter.format(lastBidAmount)}`;
         lastBidHeader.textContent = `Край на търга! Последно наддаване в ${lastBidTime}:`;
-        lastBidContent.textContent = `- Победител: ${winnerFullNameAndUserName} с цена от ${lastBidAmount.toFixed(2)} лв.`;
+        lastBidContent.textContent = `- Победител: ${winnerFullNameAndUserName} с цена от ${numberFormatter.format(lastBidAmount) }`;
     }
 
     winnerInfoContainer.appendChild(winnerAnnounce);
@@ -289,6 +308,53 @@ connection.on("AuctionEnded", (auctionId, lastBidTime, lastBidAmount, winnerFull
 
     lastBidDisplay.appendChild(lastBidHeader);
     lastBidDisplay.appendChild(lastBidContent);
+
+    bidsDisplay.appendChild(lastBidDisplay);
+
+    bidsDisplay.scrollTo(0, bidsDisplay.scrollHeight);
+});
+
+connection.on("AuctionChangedOrDeleted", (auctionId) => {
+    if (currentAuctionId.toLowerCase() !== auctionId.toLowerCase()) {
+        return;
+    }
+
+    if (bidForm) {
+        bidFormContainer.remove(bidForm);
+    }
+
+    endCountdown();
+
+    const warningInfoContainer = document.createElement("div");
+    warningInfoContainer.classList.add("text-center", "mb-3");
+    warningInfoContainer.id = "winnerInfoContainer";
+
+    const warningAnnounce = document.createElement("h3");
+
+    const lastBidDisplay = document.createElement("div");
+    lastBidDisplay.classList.add("card", "mb-2", "p-2", "text-danger");
+
+    const lastBidHeader = document.createElement("span");
+    lastBidHeader.classList.add("card-header", "fw-bold");
+
+    const lastBidContent = document.createElement("p");
+    lastBidContent.classList.add("card-text", "fw-bold");
+
+    warningAnnounce.textContent = 'Търгът беше променен или изтрит. Моля, презаредете страницата, за да видите промените!';
+    warningAnnounce.classList.add("text-danger", "fw-bold");
+    lastBidHeader.textContent = 'Беше направена промяна! Моля, отворете наново страницата на търга или я презаредете, за да видите промените!';
+    lastBidContent.textContent = '- Търгът е променен или изтрит!';
+
+    warningInfoContainer.appendChild(warningAnnounce);
+
+    auctionInfoContainer.innerHTML = '';
+
+    auctionInfoContainer.appendChild(warningInfoContainer);
+
+    lastBidDisplay.appendChild(lastBidHeader);
+    lastBidDisplay.appendChild(lastBidContent);
+
+    bidsDisplay.innerHTML = '';
 
     bidsDisplay.appendChild(lastBidDisplay);
 

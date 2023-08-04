@@ -59,7 +59,9 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 
         await this.auctionsRepository.SaveChangesAsync();
 
-        await this.auctionHub.Clients.All.AuctionStarted(auctionId, auction.CreatorId.ToString(), auction.EndTime.ToLocalTime(), auction.StartingPrice, auction.MinimumBid);
+        await this.auctionHub.Clients.All
+            .AuctionStarted(auctionId, auction.CreatorId.ToString(), auction.EndTime.ToLocalTime(), auction.StartingPrice, auction.MinimumBid);
+
         await this.auctionHub.Clients.All.AllPageAuctionStarted(auctionId, auction.EndTime.ToLocalTime(), auction.StartingPrice);
     }
 
@@ -90,9 +92,49 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
         await this.auctionHub.Clients.All.AllPageAuctionEnded(auctionId);
     }
 
-    public async Task CancelAuction(string auctionId)
+    public async Task RescheduleEditedAuctionStartAndEndAsync(string auctionId)
     {
-        var auction = await this.auctionsRepository.All()
+        var editedAuction = await this.auctionsRepository.AllWithDeleted()
+            .Where(a => a.Id.ToString() == auctionId)
+            .FirstAsync();
+
+        if (string.IsNullOrWhiteSpace(editedAuction.StartAuctionJobId) == false
+            || string.IsNullOrWhiteSpace(editedAuction.EndAuctionJobId) == false
+            || editedAuction.IsOver.HasValue)
+        {
+            this.CancelBackgroundJob(editedAuction.StartAuctionJobId!);
+            this.CancelBackgroundJob(editedAuction.EndAuctionJobId!);
+
+            editedAuction.StartAuctionJobId = null;
+            editedAuction.EndAuctionJobId = null;
+            editedAuction.IsOver = null;
+
+            await this.auctionsRepository.SaveChangesAsync();
+        }
+
+        var currentTime = DateTime.UtcNow;
+
+        var startTimeDateOfInvoke = editedAuction.StartTime - currentTime;
+
+        var startAuctionJobId = this.backgroundJobClient.Schedule(() => this.StartAuction(auctionId), startTimeDateOfInvoke);
+
+        editedAuction.StartAuctionJobId = startAuctionJobId;
+
+        var endTimeDateOfInvoke = editedAuction.EndTime - currentTime;
+
+        var endAuctionJobId = this.backgroundJobClient.Schedule(() => this.EndAuction(auctionId), endTimeDateOfInvoke);
+
+        editedAuction.EndAuctionJobId = endAuctionJobId;
+
+        await this.auctionsRepository.SaveChangesAsync();
+
+        await this.auctionHub.Clients.All.AllPageAuctionChanged(auctionId, editedAuction.StartTime, editedAuction.StartingPrice);
+        await this.auctionHub.Clients.All.AuctionChangedOrDeleted(auctionId);
+    }
+
+    public async Task CancelAuctionStartAndEnd(string auctionId)
+    {
+        var auction = await this.auctionsRepository.AllWithDeleted()
             .Where(a => a.Id.ToString() == auctionId)
             .FirstAsync();
 
@@ -104,6 +146,9 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
         auction.IsOver = null;
 
         await this.auctionsRepository.SaveChangesAsync();
+
+        await this.auctionHub.Clients.All.AllPageAuctionDeleted(auctionId);
+        await this.auctionHub.Clients.All.AuctionChangedOrDeleted(auctionId);
     }
 
     private void CancelBackgroundJob(string jobId) 

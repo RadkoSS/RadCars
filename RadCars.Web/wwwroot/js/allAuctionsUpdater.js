@@ -7,6 +7,8 @@ connection.start()
 
 const timerIntervals = {};
 
+const numberFormatter = new Intl.NumberFormat("bg-BG", { style: "currency", currency: "BGN" });
+
 const allAuctions = document.querySelectorAll(".card");
 
 allAuctions.forEach((auction) => {
@@ -109,7 +111,7 @@ connection.on("AllPageBidPlaced", (auctionId, amount) => {
     }
     const timerText = timer.querySelector(".timerText");
 
-    timerText.textContent = `Моментна цена ${amount.toFixed(2)} лв. Приключва след:`;
+    timerText.textContent = `Моментна цена ${numberFormatter.format(amount)} Приключва след:`;
 });
 
 connection.on("AllPageAuctionStarted", (auctionId, endTime, startingPrice) => {
@@ -128,14 +130,15 @@ connection.on("AllPageAuctionStarted", (auctionId, endTime, startingPrice) => {
     endCountdown(auctionId);
 
     const countdownDate = new Date(endTime);
-    const auctionActions = auction.querySelector(".auctionControls");
 
     const timerText = timer.querySelector(".timerText");
-    timerText.textContent = `Начална цена ${startingPrice.toFixed(2)} лв. Приключва след:`;
+    timerText.textContent = `Начална цена ${numberFormatter.format(startingPrice)} Приключва след:`;
 
     timer.classList.remove("visually-hidden");
     startCountdown(auctionId, countdownDate);
     timerIntervals[auctionId] = setInterval(startCountdown, 1000, auctionId, countdownDate);
+
+    const auctionActions = auction.querySelector(".auctionControls");
 
     if (auctionActions) {
         auctionActions.classList.add("visually-hidden");
@@ -155,7 +158,7 @@ connection.on("AllPageAuctionEnded", (auctionId) => {
     const auctionInfoContainer = auction.querySelector(".auctionInfoContainer");
 
     const auctionEndAnnounce = document.createElement("div");
-    auctionEndAnnounce.classList.add("text-center", "mb-3");
+    auctionEndAnnounce.classList.add("text-center", "mb-3", "endAnnounce");
 
     const announceText = document.createElement("h4");
     announceText.classList.add("text-decoration-underline", "fw-bold");
@@ -164,15 +167,64 @@ connection.on("AllPageAuctionEnded", (auctionId) => {
 
     auctionInfoContainer.prepend(auctionEndAnnounce);
 
+    const timer = auction.querySelector(".timer");
+
+    if (timer) {
+        timer.classList.add("visually-hidden");
+    }
+
+    const adminAuctionControls = auction.querySelector(".adminAuctionControls");
+
+    if (adminAuctionControls) {
+        adminAuctionControls.innerHTML = '';
+    }
+});
+
+connection.on("AllPageAuctionDeleted", (auctionId) => {
+    auctionId = auctionId.toLowerCase();
+    const auction = document.getElementById(auctionId);
+
+    if (!auction) {
+        return;
+    }
+
+    auction.parentNode.remove();
+});
+
+connection.on("AllPageAuctionChanged", (auctionId, startTime, startingPrice) => {
+    auctionId = auctionId.toLowerCase();
+    const auction = document.getElementById(auctionId);
+
+    if (!auction) {
+        return;
+    }
+    const timer = auction.querySelector(".timer");
+
+    if (!timer) {
+        return;
+    }
+    endCountdown(auctionId);
+
+    const countdownDate = new Date(startTime);
+
+    const auctionInfoContainer = auction.querySelector(".auctionInfoContainer");
+
+    var announceText = auctionInfoContainer.querySelector(".endAnnounce");
+
+    if (announceText) {
+        announceText.remove();
+    }
+
+    const timerText = timer.querySelector(".timerText");
+    timerText.textContent = `Начална цена ${numberFormatter.format(startingPrice)} Приключва след:`;
+
+    timer.classList.remove("visually-hidden");
+    startCountdown(auctionId, countdownDate);
+    timerIntervals[auctionId] = setInterval(startCountdown, 1000, auctionId, countdownDate);
+
     const auctionActions = auction.querySelector(".auctionControls");
 
     if (auctionActions) {
         auctionActions.classList.remove("visually-hidden");
-    }
-
-    const timer = auction.querySelector(".timer");
-
-    if (timer) {
-        timer.remove();
     }
 });

@@ -36,7 +36,7 @@
                                        asp-route-listingId="@listing.Id">@listing.Title</a>
                                 </h5>
                                 <div class="bg-white w-auto bg-opacity-75 mt-3">
-                                    <p class="text-black text-primary fs-5">@listing.Price лв.</p>
+                                    <p class="text-black text-primary fs-5">@listing.Price.ToString("C")</p>
                                 </div>
                             </div>
                         </div>

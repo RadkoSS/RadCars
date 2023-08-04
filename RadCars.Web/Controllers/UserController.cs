@@ -34,7 +34,7 @@ public class UserController : BaseController
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> Register(string returnUrl = null)
+    public async Task<IActionResult> Register(string? returnUrl = null)
     {
         var registerModel = new RegisterFormModel
         {
@@ -179,7 +179,7 @@ public class UserController : BaseController
 
     [HttpPost]
     [AllowAnonymous]
-    public IActionResult ExternalLogin(string provider, string returnUrl = null)
+    public IActionResult ExternalLogin(string provider, string? returnUrl = null)
     {
         // Request a redirect to the external login provider.
         var redirectUrl = Url.Action("Callback", "User", new { returnUrl });
@@ -189,9 +189,9 @@ public class UserController : BaseController
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> CallbackAsync(string returnUrl = null, string remoteError = null)
+    public async Task<IActionResult> CallbackAsync(string? returnUrl = null, string? remoteError = null)
     {
-        returnUrl = returnUrl ?? Url.Content("~/");
+        returnUrl ??= Url.Content("~/");
         if (remoteError != null)
         {
             this.TempData[ErrorMessage] = $"Грешка от външен логин: {remoteError}";

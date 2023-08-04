@@ -9,10 +9,16 @@ public interface IAuctionClient
 
     Task AuctionEnded(string auctionId, string lastBidTime, decimal lastBidAmount, string winnerFullNameAndUserName);
 
+    Task AuctionChangedOrDeleted(string auctionId);
+
     //AllAuctions
     Task AllPageBidPlaced(string auctionId, decimal amount);
 
     Task AllPageAuctionStarted(string auctionId, DateTime endTime, decimal startingPrice);
+
+    Task AllPageAuctionChanged(string auctionId, DateTime startTime, decimal startingPrice);
+
+    Task AllPageAuctionDeleted(string auctionId);
 
     Task AllPageAuctionEnded(string auctionId);
 }
