@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication;
 using ViewModels.User;
 using Data.Models.User;
 using Services.Messaging.Contracts;
+using Microsoft.Extensions.Caching.Memory;
 
 using static Common.NotificationTypeConstants;
 using static Common.GeneralApplicationConstants;
@@ -22,12 +23,14 @@ using static Common.ExceptionsAndNotificationsMessages;
 public class UserController : BaseController
 {
     private readonly IEmailSender emailSender;
+    private readonly IMemoryCache memoryCache;
     private readonly UserManager<ApplicationUser> userManager;
     private readonly SignInManager<ApplicationUser> signInManager;
 
-    public UserController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+    public UserController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IEmailSender emailSender, IMemoryCache memoryCache)
     {
         this.emailSender = emailSender;
+        this.memoryCache = memoryCache;
         this.userManager = userManager;
         this.signInManager = signInManager;
     }
@@ -105,6 +108,7 @@ public class UserController : BaseController
             // If the application doesn't require email confirmation, sign the user in and redirect them to the home page
 
             await this.signInManager.SignInAsync(user, false);
+            this.memoryCache.Remove(UsersCacheKey);
             this.TempData[SuccessMessage] = RegistrationSuccessful;
 
             return LocalRedirect(model.ReturnUrl);
@@ -116,7 +120,10 @@ public class UserController : BaseController
             Email = model.Email,
             FullName = $"{model.FirstName} {model.LastName}"
         };
+
         this.TempData[SuccessMessage] = RegistrationSuccessful + " Моля, потвърдете имейла си!";
+
+        this.memoryCache.Remove(UsersCacheKey);
 
         return View("RegisterConfirmation", confirmationViewModel);
     }
@@ -307,6 +314,7 @@ public class UserController : BaseController
                     // If the application doesn't require email confirmation, sign the user in and redirect them to the home page
 
                     await this.signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
+                    this.memoryCache.Remove(UsersCacheKey);
                     this.TempData[SuccessMessage] = LoginSuccessful;
                     return LocalRedirect(input.ReturnUrl);
                 }
@@ -316,6 +324,7 @@ public class UserController : BaseController
                     Email = input.Email,
                     FullName = $"{input.FirstName} {input.LastName}"
                 };
+                this.memoryCache.Remove(UsersCacheKey);
                 this.TempData[SuccessMessage] = RegistrationSuccessful + " Моля, потвърдете имейла си!";
 
                 return View("RegisterConfirmation", confirmationViewModel);

@@ -49,9 +49,18 @@ public class AuctionService : IAuctionService
         this.userFavoriteAuctionsRepository = userFavoriteAuctionsRepository;
     }
 
-    public async Task<AllAuctionsFilteredAndPagedServiceModel> GetAllAuctionsAsync(AllAuctionsQueryModel queryModel)
+    public async Task<AllAuctionsFilteredAndPagedServiceModel> GetAllAuctionsAsync(AllAuctionsQueryModel queryModel, bool withDeleted)
     {
-        var auctionsQuery = this.auctionsRepository.All().AsQueryable().Where(a => a.ThumbnailId != null);
+        IQueryable<Auction> auctionsQuery;
+
+        if (withDeleted == false)
+        {
+            auctionsQuery = this.auctionsRepository.All().AsQueryable().Where(a => a.ThumbnailId != null);
+        }
+        else
+        {
+            auctionsQuery = this.auctionsRepository.AllWithDeleted().AsQueryable().Where(a => a.IsDeleted == true);
+        }
 
         if (queryModel.CarMakeId.HasValue)
         {
@@ -97,6 +106,11 @@ public class AuctionService : IAuctionService
             AuctionSorting.Finished => auctionsQuery.Where(a => a.IsOver.HasValue && a.IsOver == true).OrderByDescending(a => a.CreatedOn),
             _ => auctionsQuery.OrderByDescending(a => a.CreatedOn)
         };
+
+        if (withDeleted)
+        {
+            auctionsQuery = auctionsQuery.OrderByDescending(l => l.DeletedOn);
+        }
 
         var auctions = await auctionsQuery
             .Skip((queryModel.CurrentPage - 1) * queryModel.AuctionsPerPage)

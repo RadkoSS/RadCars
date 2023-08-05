@@ -12,6 +12,7 @@ using Infrastructure.Extensions;
 using BackgroundServices.Contracts;
 
 using static Common.NotificationTypeConstants;
+using static Common.GeneralApplicationConstants;
 using static Common.ExceptionsAndNotificationsMessages;
 using static Common.EntityValidationConstants.ListingConstants;
 
@@ -249,9 +250,16 @@ public class AuctionController : BaseController
     [AllowAnonymous]
     public async Task<IActionResult> All([FromQuery] AllAuctionsQueryModel queryModel)
     {
+        if (this.User.IsAdmin())
+        {
+            return RedirectToAction("AllActive", "Auction", new { Area = AdminAreaName });
+        }
+
         try
         {
-            var serviceModel = await this.auctionService.GetAllAuctionsAsync(queryModel);
+            var withDeletedAuctions = false;
+
+            var serviceModel = await this.auctionService.GetAllAuctionsAsync(queryModel, withDeletedAuctions);
 
             queryModel.Auctions = serviceModel.Auctions;
             queryModel.TotalAuctions = serviceModel.TotalAuctionsCount;
@@ -422,7 +430,7 @@ public class AuctionController : BaseController
     }
 
     [HttpPost]
-    public IActionResult Reactivate(string auctionId) 
+    public IActionResult Reactivate(string auctionId)
         => RedirectToAction("Edit", "Auction", new { auctionId });
 
 

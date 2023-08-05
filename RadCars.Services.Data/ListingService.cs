@@ -39,17 +39,26 @@ public class ListingService : IListingService
     {
         this.mapper = mapper;
         this.carService = carService;
-        this.listingImageService = listingImageService;
         this.htmlSanitizer = htmlSanitizer;
         this.listingsRepository = listingsRepository;
         this.carImagesRepository = carImagesRepository;
+        this.listingImageService = listingImageService;
         this.listingFeaturesRepository = listingFeaturesRepository;
         this.userFavoriteListingsRepository = userFavoriteListingsRepository;
     }
 
-    public async Task<AllListingsFilteredAndPagedServiceModel> GetAllListingsAsync(AllListingsQueryModel queryModel)
+    public async Task<AllListingsFilteredAndPagedServiceModel> GetAllListingsAsync(AllListingsQueryModel queryModel, bool withDeleted)
     {
-        var listingsQuery = this.listingsRepository.All().AsQueryable().Where(l => l.ThumbnailId != null);
+        IQueryable<Listing> listingsQuery;
+
+        if (withDeleted == false)
+        {
+            listingsQuery = this.listingsRepository.All().AsQueryable().Where(l => l.ThumbnailId != null);
+        }
+        else
+        {
+            listingsQuery = this.listingsRepository.AllWithDeleted().AsQueryable().Where(l => l.IsDeleted == true);
+        }
 
         if (queryModel.CarMakeId.HasValue)
         {
@@ -101,6 +110,11 @@ public class ListingService : IListingService
             _ => listingsQuery
                 .OrderByDescending(l => l.CreatedOn)
         };
+
+        if (withDeleted)
+        {
+            listingsQuery = listingsQuery.OrderByDescending(l => l.DeletedOn);
+        }
 
         var listings = await listingsQuery
             .Skip((queryModel.CurrentPage - 1) * queryModel.ListingsPerPage)

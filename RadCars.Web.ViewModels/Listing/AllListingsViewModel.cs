@@ -1,14 +1,17 @@
 ﻿namespace RadCars.Web.ViewModels.Listing;
 
+using AutoMapper;
+
 using City;
 using Common;
 using CarImage;
-using AutoMapper;
 using Data.Models.Entities;
 using Services.Mapping.Contracts;
 
 public class AllListingsViewModel : BaseAllViewModel, IMapFrom<Listing>, IMapFrom<UserFavoriteListing>, IHaveCustomMappings
 {
+    public bool IsDeleted { get; set; }
+
     public decimal Price { get; set; }
 
     public virtual void CreateMappings(IProfileExpression configuration)
@@ -32,6 +35,7 @@ public class AllListingsViewModel : BaseAllViewModel, IMapFrom<Listing>, IMapFro
             .ForMember(dest => dest.Mileage, opt => opt.MapFrom(src => src.Listing.Mileage))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Listing.Title))
             .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Listing.Price))
-            .ForMember(dest => dest.Year, opt => opt.MapFrom(src => src.Listing.Year));
+            .ForMember(dest => dest.Year, opt => opt.MapFrom(src => src.Listing.Year))
+            .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.Listing.IsDeleted));
     }
 }

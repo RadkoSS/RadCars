@@ -78,7 +78,7 @@
                                 if (userIsAdmin)
                                 {
                                     <div class="d-flex flex-column adminAuctionControls">
-                                        @if (auction.IsOver.HasValue == false || auction.IsOver is false)
+                                        @if ((auction.IsOver.HasValue == false || auction.IsOver is false) && string.IsNullOrWhiteSpace(auction.DeletedOn))
                                         {
                                             <form asp-area="" asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
                                                 <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай търг" />

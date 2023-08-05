@@ -20,6 +20,16 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <div class="container d-flex align-items-center mt-3 mb-3">
+        @if (userIsAdmin)
+        {
+            <div class="row mt-3 me-2 justify-content-center">
+                <div class="col-12">
+                    <form asp-area="" asp-controller="Listing" asp-action="Delete" asp-route-listingId="@Model.Id" method="post">
+                        <input id="deleteButton" type="submit" value="Изтрий обявата" class="btn btn-danger" />
+                    </form>
+                </div>
+            </div>
+        }
 
         @if (string.Equals(Model.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase) || userIsAdmin)
         {
@@ -33,20 +43,23 @@
                     </div>
                 </div>
 
-                <div class="row mt-3 me-2 justify-content-center">
-                    <div class="col-12">
-                        <form asp-area="" asp-controller="Listing" asp-action="Delete" asp-route-listingId="@Model.Id" method="post">
-                            <input type="submit" value="Изтрий обявата" class="btn btn-danger" />
-                        </form>
+                if (userIsAdmin == false)
+                {
+                    <div class="row mt-3 me-2 justify-content-center">
+                        <div class="col-12">
+                            <form asp-area="" asp-controller="Listing" asp-action="Delete" asp-route-listingId="@Model.Id" method="post">
+                                <input type="submit" value="Изтрий обявата" class="btn btn-danger" />
+                            </form>
+                        </div>
                     </div>
-                </div>
+                }
             }
             else
             {
                 <div class="row mt-3 me-2 justify-content-center">
                     <div class="col-12">
                         <form asp-area="" asp-controller="Listing" asp-action="Deactivate" asp-route-listingId="@Model.Id" method="post">
-                            <input id="deactivateButton" type="submit" value="Деактиварай обявата" class="btn btn-danger" />
+                            <input id="deactivateButton" type="submit" value="Деактиварай обявата" class="btn btn-outline-danger" />
                         </form>
                     </div>
                 </div>
@@ -69,8 +82,8 @@
             <div class="row mt-3 justify-content-center ml-2">
                 <div class="col-12">
                     <a asp-area="" asp-controller="Listing" asp-action="Favorites" id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
-                    
-                    <input type="hidden" id="listingId" value="@Model.Id"/>
+
+                    <input type="hidden" id="listingId" value="@Model.Id" />
                     <input type="hidden" id="userId" value="@User.GetId()" />
                 </div>
             </div>
@@ -130,7 +143,7 @@
         <p class="fs-6">Описание: @Model.Description</p>
         <p class="fs-5">VIN номер: @Model.VinNumber</p>
         <p class="mt-5 fs-4">Цена: @Model.Price.ToString("C")</p>
-        
+
         <div class="mt-5 fs-4 d-flex flex-column">
             <p class="fs-5">Контакти:</p>
             <a class="btn btn-primary w-25" href="tel:@Model.PhoneNumber">Oбадете се на: @Model.PhoneNumber</a>

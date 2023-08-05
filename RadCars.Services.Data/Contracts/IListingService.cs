@@ -7,7 +7,7 @@ using Web.ViewModels.Thumbnail;
 
 public interface IListingService
 {
-    Task<AllListingsFilteredAndPagedServiceModel> GetAllListingsAsync(AllListingsQueryModel queryModel);
+    Task<AllListingsFilteredAndPagedServiceModel> GetAllListingsAsync(AllListingsQueryModel queryModel, bool withDeleted);
 
     Task<IEnumerable<AllListingsViewModel>> GetAllListingsByUserIdAsync(string userId);
 

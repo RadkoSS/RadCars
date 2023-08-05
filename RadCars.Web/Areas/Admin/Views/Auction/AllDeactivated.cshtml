@@ -1,7 +1,7 @@
 ﻿@model AllAuctionsQueryModel
 
 @{
-    ViewData["Title"] = "Търгове";
+    ViewData["Title"] = "Деактивирани търгове";
 
     var previousPage = Model.CurrentPage - 1;
     if (previousPage < 1)
@@ -14,7 +14,7 @@
     var shouldNextPageBeDisabled = Model.CurrentPage == maxPage || !Model.Auctions.Any();
 }
 
-<form asp-area="" asp-controller="Auction" asp-action="All" method="get">
+<form asp-area="Admin" asp-controller="Auction" asp-action="AllDeactivated" method="get">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group mb-3">
@@ -77,19 +77,6 @@
                 </select>
             </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="@Model.AuctionSorting" class="form-label"></label>
-                <select asp-for="@Model.AuctionSorting" class="form-control">
-                    <option value="0">Най-нови търгове</option>
-                    <option value="1">Най-стари търгове</option>
-                    @*<option value="2">С най-много оставащо време</option>
-                    <option value="3">С най-малко оставащо време</option>
-                    <option value="4">Предстоящи</option>
-                    <option value="5">Активни</option>
-                    <option value="6">Приключили</option>*@
-                </select>
-            </div>
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group mb-3">
@@ -123,12 +110,12 @@
 @if (!Model.Auctions.Any())
 {
     <div class="d-flex flex-column align-items-center mt-5">
-        <p class="text-center fs-2">Няма намерени търгове.</p>
+        <p class="text-center fs-2">Няма деактивирани търгове.</p>
     </div>
 }
 else
 {
-    <partial name="_AllAuctionsPartial" model="@Model.Auctions"/>
+    <partial name="_AllAuctionsPartial" model="@Model.Auctions" />
 
     <div class="row mb-5">
         <div class="col-md-12 d-flex justify-content-center">
@@ -136,9 +123,9 @@ else
                 <ul class="pagination">
                     <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : string.Empty)">
                         <a class="page-link"
-                           asp-area=""
+                           asp-area="Admin"
                            asp-controller="Auction"
-                           asp-action="All"
+                           asp-action="AllDeactivated"
                            asp-route-currentPage="@previousPage"
                            asp-route-carMake="@Model.CarMakeId"
                            asp-route-carModel="@Model.CarModelId"
@@ -152,9 +139,9 @@ else
                     {
                         <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
                             <a class="page-link"
-                               asp-area=""
+                               asp-area="Admin"
                                asp-controller="Auction"
-                               asp-action="All"
+                               asp-action="AllDeactivated"
                                asp-route-currentPage="@i"
                                asp-route-carMake="@Model.CarMakeId"
                                asp-route-carModel="@Model.CarModelId"
@@ -167,9 +154,9 @@ else
                     }
                     <li class="page-item @(shouldNextPageBeDisabled ? "disabled" : string.Empty)">
                         <a class="page-link"
-                           asp-area=""
+                           asp-area="Admin"
                            asp-controller="Auction"
-                           asp-action="All"
+                           asp-action="AllDeactivated"
                            asp-route-currentPage="@(Model.CurrentPage + 1)"
                            asp-route-carMake="@Model.CarMakeId"
                            asp-route-carModel="@Model.CarModelId"

@@ -76,6 +76,9 @@ builder.Services.AddExternalApplicationServices(builder.Configuration);
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddRecaptchaService();
 
+builder.Services.AddMemoryCache();
+builder.Services.AddResponseCaching();
+
 builder.Services.AddSignalR();
 
 builder.Services.AddHangfire(hf => hf.UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireConnection")));
@@ -103,6 +106,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseResponseCaching();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -2,33 +2,33 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using Web.ViewModels.Auction;
+using Web.ViewModels.Listing;
 using Services.Data.Contracts;
 
 using static Common.NotificationTypeConstants;
 using static Common.ExceptionsAndNotificationsMessages;
 
-public class AuctionController : BaseAdminController
+public class ListingController : BaseAdminController
 {
     private readonly ICarService carService;
-    private readonly IAuctionService auctionService;
+    private readonly IListingService listingService;
 
-    public AuctionController(IAuctionService auctionService, ICarService carService)
+    public ListingController(IListingService listingService, ICarService carService)
     {
+        this.listingService = listingService;
         this.carService = carService;
-        this.auctionService = auctionService;
     }
 
-    public async Task<IActionResult> AllActive([FromQuery] AllAuctionsQueryModel queryModel)
+    public async Task<IActionResult> AllActive([FromQuery] AllListingsQueryModel queryModel)
     {
-        var withDeletedAuctions = false;
+        var withDeletedListings = false;
 
         try
         {
-            var serviceModel = await this.auctionService.GetAllAuctionsAsync(queryModel, withDeletedAuctions);
+            var serviceModel = await this.listingService.GetAllListingsAsync(queryModel, withDeletedListings);
 
-            queryModel.Auctions = serviceModel.Auctions;
-            queryModel.TotalAuctions = serviceModel.TotalAuctionsCount;
+            queryModel.Listings = serviceModel.Listings;
+            queryModel.TotalListings = serviceModel.TotalListingsCount;
             queryModel.CarMakes = await this.carService.GetCarMakesAsync();
 
             if (queryModel.CarModelId.HasValue && queryModel.CarMakeId.HasValue)
@@ -49,16 +49,16 @@ public class AuctionController : BaseAdminController
         }
     }
 
-    public async Task<IActionResult> AllDeactivated([FromQuery] AllAuctionsQueryModel queryModel)
+    public async Task<IActionResult> AllDeactivated([FromQuery] AllListingsQueryModel queryModel)
     {
-        var withDeletedAuctions = true;
+        var withDeletedListings = true;
 
         try
         {
-            var serviceModel = await this.auctionService.GetAllAuctionsAsync(queryModel, withDeletedAuctions);
+            var serviceModel = await this.listingService.GetAllListingsAsync(queryModel, withDeletedListings);
 
-            queryModel.Auctions = serviceModel.Auctions;
-            queryModel.TotalAuctions = serviceModel.TotalAuctionsCount;
+            queryModel.Listings = serviceModel.Listings;
+            queryModel.TotalListings = serviceModel.TotalListingsCount;
             queryModel.CarMakes = await this.carService.GetCarMakesAsync();
 
             if (queryModel.CarModelId.HasValue && queryModel.CarMakeId.HasValue)
@@ -70,25 +70,6 @@ public class AuctionController : BaseAdminController
             queryModel.EngineTypes = await this.carService.GetEngineTypesAsync();
 
             return View(queryModel);
-        }
-        catch (Exception)
-        {
-            this.TempData[ErrorMessage] = AnErrorOccurred;
-
-            return RedirectToAction("Index", "Home");
-        }
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Delete(string auctionId)
-    {
-        try
-        {
-            await this.auctionService.HardDeleteAuctionByIdAsync(auctionId);
-
-            this.TempData[WarningMessage] = AuctionDeletedSuccessfully;
-
-            return RedirectToAction("AllDeactivated", "Auction");
         }
         catch (Exception)
         {

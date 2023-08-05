@@ -15,6 +15,7 @@ public static class GeneralApplicationConstants
 
     public const string UserNamePattern = @"^[a-z0-9]([._]?[a-z0-9]){2,49}$";
 
+    public const string AdminAreaName = "Admin";
     public const string AdminRoleName = "Administrator";
     public const string AdminRoleNormalizedName = "ADMINISTRATOR";
 
@@ -34,5 +35,6 @@ public static class GeneralApplicationConstants
     public const string OnlineUsersCookieName = "IsOnline";
     public const int LastActivityBeforeOfflineMinutes = 4;
 
-    public const string AdminAreaName = "Admin";
+    public const string UsersCacheKey = "UsersCache";
+    public const int UsersCacheDurationMinutes = 2;
 }

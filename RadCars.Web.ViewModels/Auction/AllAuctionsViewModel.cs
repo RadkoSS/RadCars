@@ -49,7 +49,9 @@ public class AllAuctionsViewModel : BaseAllViewModel, IMapFrom<Auction>, IMapFro
             .ForMember(dest => dest.CurrentPrice, opt => opt.MapFrom(src => src.Auction.CurrentPrice))
             .ForMember(dest => dest.IsOver, opt => opt.MapFrom(src => src.Auction.IsOver))
             .ForMember(destination => destination.StartTime, options => options.MapFrom(source => source.Auction.StartTime.ToLocalTime()))
-            .ForMember(destination => destination.EndTime, options => options.MapFrom(source => source.Auction.EndTime.ToLocalTime()));
+            .ForMember(destination => destination.EndTime, options => options.MapFrom(source => source.Auction.EndTime.ToLocalTime()))
+            .ForMember(dest => dest.HasBids, opt => opt.MapFrom(src => src.Auction.Bids.Any()))
+            .ForMember(dest => dest.DeletedOn, opt => opt.MapFrom(src => src.Auction.DeletedOn.HasValue ? src.Auction.DeletedOn.Value.ToLocalTime().ToString("f") : string.Empty));
 
         configuration.CreateMap<Auction, AllAuctionsViewModel>()
             .ForMember(destination => destination.StartTime,
@@ -57,6 +59,8 @@ public class AllAuctionsViewModel : BaseAllViewModel, IMapFrom<Auction>, IMapFro
             .ForMember(destination => destination.EndTime,
                 options => options.MapFrom(source => source.EndTime.ToLocalTime()))
             .ForMember(destination => destination.HasBids, options => options.MapFrom(source => source.Bids.Any()))
-            .ForMember(destination => destination.DeletedOn, options => options.MapFrom(source => source.DeletedOn.HasValue ? source.DeletedOn.Value.ToLocalTime().ToString("f") : string.Empty));
+            .ForMember(destination => destination.DeletedOn,
+                options => options.MapFrom(source =>
+                    source.DeletedOn.HasValue ? source.DeletedOn.Value.ToLocalTime().ToString("f") : string.Empty));
     }
 }

@@ -8,7 +8,7 @@ using Web.ViewModels.FeatureCategory;
 
 public interface IAuctionService
 {
-    Task<AllAuctionsFilteredAndPagedServiceModel> GetAllAuctionsAsync(AllAuctionsQueryModel queryModel);
+    Task<AllAuctionsFilteredAndPagedServiceModel> GetAllAuctionsAsync(AllAuctionsQueryModel queryModel, bool withDeleted);
 
     Task<IEnumerable<AllAuctionsViewModel>> GetAllAuctionsByUserIdAsync(string userId);
 

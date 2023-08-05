@@ -1,0 +1,46 @@
+﻿@using static RadCars.Web.Infrastructure.Middlewares.OnlineUsersMiddleware
+
+@model IEnumerable<UserViewModel>
+
+@{
+    ViewBag.Title = "Всички потребители";
+}
+
+<h2 class="text-center mb-4">@ViewBag.Title</h2>
+
+<div>
+    <table class="table table-hover table-success">
+        <thead>
+        <tr>
+            <th>Идентификатор</th>
+            <th><label>Електронна поща</label></th>
+            <th><label>Потребителско име</label></th>
+            <th><label>Имена</label></th>
+            <th><label>Телефонен номер</label></th>
+            <th><label>Онлайн статус</label></th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td><label>@user.Id</label></td>
+                    <td><label>@user.Email</label></td>
+                    <td><label>@user.UserName</label></td>
+                    <td><label>@user.FullName</label></td>
+                    <td><label>@user.PhoneNumber</label></td>
+                    <td>
+                        @if (CheckIfUserIsOnline(user.Id))
+                        {
+                            <label>✔</label>
+                        }
+                        else
+                        {
+                            <label class="text-center">❌</label>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

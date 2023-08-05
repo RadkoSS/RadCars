@@ -27,15 +27,19 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="All">Обяви</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Auction" asp-action="All">Търгове</a>
-                        </li>
+                        @if (User.IsAdmin())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin dashboard</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+                            </li>
+                        }
+
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
@@ -43,6 +47,24 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Auction" asp-action="Create">Създай търг</a>
+                            </li>
+                        }
+                        @if (User.IsAdmin())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Listing" asp-action="AllActive">Активни обяви</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Auction" asp-action="AllActive">Активни търгове</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="All">Обяви</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auction" asp-action="All">Търгове</a>
                             </li>
                         }
                     </ul>

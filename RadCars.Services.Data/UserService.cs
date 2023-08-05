@@ -1,8 +1,11 @@
 ﻿namespace RadCars.Services.Data;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
+using Mapping;
 using Contracts;
+using Web.ViewModels.User;
 using RadCars.Data.Models.User;
 
 public class UserService : IUserService
@@ -29,6 +32,16 @@ public class UserService : IUserService
     public async Task<string> GetUserPhoneNumberByIdAsync(string userId)
     {
         var user = await this.userManager.FindByIdAsync(userId);
-        return user.PhoneNumber;
+        return user.PhoneNumber!;
+    }
+
+    public async Task<IEnumerable<UserViewModel>> GetAllUsersAsync()
+    {
+        var users = await this.userManager
+            .Users
+            .To<UserViewModel>()
+            .ToArrayAsync();
+
+        return users;
     }
 }

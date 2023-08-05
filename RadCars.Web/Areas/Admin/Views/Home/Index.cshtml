@@ -16,13 +16,13 @@
         <div class="d-flex flex-column me-2">
             <a asp-area="Admin" asp-controller="Listing" asp-action="AllActive"
                class="btn btn-success btn-lg mb-2">Всички активни обяви</a>
-            <a asp-area="Admin" asp-controller="Auction" asp-action="AllActive"
-               class="btn btn-success btn-lg">Всички активни търгове</a>
+            <a asp-area="Admin" asp-controller="Listing" asp-action="AllDeactivated"
+               class="btn btn-warning btn-lg">Всички деактивирани обяви</a>
         </div>
     
         <div class="d-flex flex-column me-2">
-            <a asp-area="Admin" asp-controller="Listing" asp-action="AllDeactivated"
-               class="btn btn-warning btn-lg mb-2">Всички деактивирани обяви</a>
+            <a asp-area="Admin" asp-controller="Auction" asp-action="AllActive"
+               class="btn btn-success btn-lg mb-2">Всички активни и приключили търгове</a>
             <a asp-area="Admin" asp-controller="Auction" asp-action="AllDeactivated"
                class="btn btn-warning btn-lg">Всички деактивирани търгове</a>
         </div>

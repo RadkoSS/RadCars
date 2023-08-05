@@ -11,6 +11,7 @@ using Services.Data.Contracts;
 using Infrastructure.Extensions;
 
 using static Common.NotificationTypeConstants;
+using static Common.GeneralApplicationConstants;
 using static Common.ExceptionsAndNotificationsMessages;
 using static Common.EntityValidationConstants.ListingConstants;
 
@@ -154,7 +155,7 @@ public class ListingController : BaseController
 
             return RedirectToAction("ChooseThumbnail", "Listing", new { listingId });
         }
-        catch(InvalidImagesException e)
+        catch (InvalidImagesException e)
         {
             form = await this.ReloadEditForm(form, userId);
             this.TempData[ErrorMessage] = InvalidDataProvidedError;
@@ -179,9 +180,16 @@ public class ListingController : BaseController
     [AllowAnonymous]
     public async Task<IActionResult> All([FromQuery] AllListingsQueryModel queryModel)
     {
+        if (this.User.IsAdmin())
+        {
+            return RedirectToAction("AllActive", "Listing", new { Area = AdminAreaName });
+        }
+
         try
         {
-            var serviceModel = await this.listingService.GetAllListingsAsync(queryModel);
+            var withDeletedListings = false;
+
+            var serviceModel = await this.listingService.GetAllListingsAsync(queryModel, withDeletedListings);
 
             queryModel.Listings = serviceModel.Listings;
             queryModel.TotalListings = serviceModel.TotalListingsCount;
@@ -352,7 +360,7 @@ public class ListingController : BaseController
 
             if (userIsAdmin)
             {
-                return RedirectToAction("Details", "Listing",new { listingId });
+                return RedirectToAction("Details", "Listing", new { listingId });
             }
 
             return RedirectToAction("Mine", "Listing");

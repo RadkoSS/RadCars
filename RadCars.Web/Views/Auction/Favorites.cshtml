@@ -7,9 +7,9 @@
 @if (!Model.Any())
 {
     <div class="d-flex flex-column align-items-center">
-        <h1 class="mb-4">@ViewData["Title"]</h1>
-        <p>Все още нямате любими търгове... Добавете търг в "Любими" и той ще бъде показан тук.</p>
-        <a class="btn btn-success" asp-area="" asp-controller="Auction" asp-action="All">Всички търгове</a>
+        <h1 class="mb-5">@ViewData["Title"]</h1>
+        <p class="fs-4">Все още нямате любими търгове... Добавете търг в "Любими" и той ще бъде показан тук.</p>
+        <a class="btn btn-success mt-4" asp-area="" asp-controller="Auction" asp-action="All">Всички търгове</a>
     </div>
 }
 else

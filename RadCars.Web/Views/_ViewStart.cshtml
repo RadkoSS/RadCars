@@ -1,3 +1,5 @@
-﻿@{
-    Layout = "_Layout";
+﻿@using RadCars.Web.Infrastructure.Extensions
+
+@{
+    Layout = this.User.IsAdmin() ? "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml" : "_Layout";
 }
