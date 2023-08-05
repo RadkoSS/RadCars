@@ -9,14 +9,14 @@
     <div class="d-flex flex-column align-items-center">
         <h1 class="mb-4">@ViewData["Title"]</h1>
         <p>Все още нямате свои обяви... Създайте своята първа обява сега!</p>
-        <a class="btn btn-success" asp-controller="Listing" asp-action="Create">Създай обява</a>
+        <a class="btn btn-success" asp-area="" asp-controller="Listing" asp-action="Create">Създай обява</a>
     </div>
 }
 else
 {
     <div class="container d-flex mt-3 mb-1">
         <div class="row mt-3 justify-content-center">
-            <a asp-controller="Listing" asp-action="MineDeactivated" class="btn btn-outline-info text-black">Виж неактивните си обяви</a>
+            <a asp-area="" asp-controller="Listing" asp-action="MineDeactivated" class="btn btn-outline-info text-black">Виж неактивните си обяви</a>
         </div>
     </div>
 

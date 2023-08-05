@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <section>
-            <form id="account" method="post">
+            <form asp-area="" asp-controller="User" asp-action="Login" id="account" method="post">
                 <h1 class="text-center mb-4">@ViewData["Title"]</h1>
                 <div asp-validation-summary="@ValidationSummary.ModelOnly" class="text-danger"></div>
                 <div class="form-floating mb-2">
@@ -35,7 +35,7 @@
             
             <div class="d-flex align-items-center mt-4">
                 <p class="me-2">
-                    <a asp-controller="User" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-success mt-2 fs-6">Регистрирайте се!</a>
+                    <a asp-area="" asp-controller="User" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-success mt-2 fs-6">Регистрирайте се!</a>
                 </p>
                 <p class="me-2">
                     <a id="forgot-password" href="/Identity/Account/ForgotPassword" class="btn btn-secondary fs-6 mt-2">Забравена парола?</a>
@@ -52,7 +52,7 @@
 
                 <p class="fs-5 mt-4">Алтернативни начини за вход</p>
                 <div class="d-flex flex-column align-content-center">
-                    <form id="external-account" asp-controller="User" asp-action="ExternalLogin" method="post">
+                    <form id="external-account" asp-area="" asp-controller="User" asp-action="ExternalLogin" method="post">
                         <input type="hidden" asp-for="@Model.ReturnUrl"/>
                         @foreach (var provider in Model.ExternalLogins)
                         {

@@ -6,7 +6,7 @@
 
 <div class="container d-flex mt-3 mb-1">
     <div class="row mt-3 justify-content-center">
-        <a asp-controller="Auction" asp-action="MineDeactivated" class="btn btn-outline-info text-black">Виж деактивираните си търгове</a>
+        <a asp-area="" asp-controller="Auction" asp-action="MineDeactivated" class="btn btn-outline-info text-black">Виж деактивираните си търгове</a>
     </div>
 </div>
 
@@ -15,7 +15,7 @@
     <div class="d-flex flex-column align-items-center">
         <h1 class="mb-4">@ViewData["Title"]</h1>
         <p class="mb-3 mt-3 fs-4">Нямате активни търгове. Създайте търг сега!</p>
-        <a class="btn btn-success" asp-controller="Auction" asp-action="Create">Създай</a>
+        <a class="btn btn-success" asp-area="" asp-controller="Auction" asp-action="Create">Създай</a>
     </div>
 }
 else

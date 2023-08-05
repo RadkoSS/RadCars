@@ -13,7 +13,7 @@
         {
             <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card mb-4 shadow-sm w-100">
-                    <a asp-controller="Listing" asp-action="Details" asp-route-listingId="@listing.Id"><img class="card-img-top w-100" src="@listing.Thumbnail.Url" alt="Card image cap" style="height: 25vh; object-fit: cover;"></a>
+                    <a asp-area="" asp-controller="Listing" asp-action="Details" asp-route-listingId="@listing.Id"><img class="card-img-top w-100" src="@listing.Thumbnail.Url" alt="Card image cap" style="height: 25vh; object-fit: cover;"></a>
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">@listing.Title</h5>
                         <p class="card-text flex-grow-1">
@@ -28,17 +28,17 @@
                             </ul>
                         </p>
                         <div class="mt-auto">
-                            <form asp-controller="Listing" asp-action="Details" asp-route-listingId="@listing.Id">
+                            <form asp-area="" asp-controller="Listing" asp-action="Details" asp-route-listingId="@listing.Id">
                                 <input type="submit" class="btn btn-sm btn-outline-info text-black w-100" value="Разгледай обявата" />
                             </form>
 
                             @if (SignInManager.IsSignedIn(User) && (string.Equals(listing.CreatorId, User.GetId()!, StringComparison.CurrentCultureIgnoreCase) || userIsAdmin))
                             {
-                                <form asp-controller="Listing" asp-action="Deactivate" asp-route-listingId="@listing.Id" method="post">
+                                <form asp-area="" asp-controller="Listing" asp-action="Deactivate" asp-route-listingId="@listing.Id" method="post">
                                     <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай обявата" />
                                 </form>
 
-                                <a asp-controller="Listing" asp-action="Edit" asp-route-listingId="@listing.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай обявата</a>
+                                <a asp-area="" asp-controller="Listing" asp-action="Edit" asp-route-listingId="@listing.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай обявата</a>
                             }
                         </div>
                     </div>

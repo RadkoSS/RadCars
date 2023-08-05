@@ -194,9 +194,10 @@ public class AuctionService : IAuctionService
     public async Task<IEnumerable<AllAuctionsViewModel>> GetAllDeactivatedAuctionsByUserIdAsync(string userId)
     {
         var deactivatedAuctions = await this.auctionsRepository.AllWithDeleted()
-            .Where(a => a.IsDeleted && a.CreatorId.ToString() == userId)
-            .OrderByDescending(a => a.DeletedOn)
+            .Where(a => a.IsDeleted == true && a.CreatorId.ToString() == userId)
             .To<AllAuctionsViewModel>().ToArrayAsync();
+
+        deactivatedAuctions = deactivatedAuctions.OrderByDescending(a => a.DeletedOn).ToArray();
 
         return deactivatedAuctions;
     }

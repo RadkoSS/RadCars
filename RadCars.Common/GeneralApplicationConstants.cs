@@ -33,4 +33,6 @@ public static class GeneralApplicationConstants
 
     public const string OnlineUsersCookieName = "IsOnline";
     public const int LastActivityBeforeOfflineMinutes = 4;
+
+    public const string AdminAreaName = "Admin";
 }

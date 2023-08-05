@@ -12,7 +12,7 @@
 
 <div class="row mt-3">
     <div class="col-md-4 offset-md-4">
-        <form id="registerForm" asp-controller="User" asp-action="Confirmation" method="post">
+        <form id="registerForm" asp-area="" asp-controller="User" asp-action="Confirmation" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating mb-2">
                 <input asp-for="@Model.Email" class="form-control" autocomplete="email" />

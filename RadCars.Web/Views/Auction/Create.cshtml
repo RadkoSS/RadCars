@@ -22,7 +22,7 @@
     <button type="button" id="clearImages" class="btn btn-danger mt-3 visually-hidden">Изтрий качените снимки</button>
 </div>
 
-<form asp-controller="Auction" asp-action="Create" id="createAuctionForm" method="post" enctype="multipart/form-data">
+<form asp-area="" asp-controller="Auction" asp-action="Create" id="createAuctionForm" method="post" enctype="multipart/form-data">
 
     <partial name="_AuctionFormPartial" model="@Model" />
 

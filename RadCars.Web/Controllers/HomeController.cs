@@ -3,7 +3,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
+using Infrastructure.Extensions;
 using RadCars.Services.Data.Contracts;
+
+using static Common.GeneralApplicationConstants;
 
 public class HomeController : BaseController
 {
@@ -19,6 +22,11 @@ public class HomeController : BaseController
     [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
+        if (this.User.IsAdmin())
+        {
+            return RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+        }
+
         var viewModel = await this.listingService.GetMostRecentListingsAsync();
 
         return View(viewModel);

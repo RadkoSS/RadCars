@@ -13,7 +13,7 @@
         {
             <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card mb-4 shadow-sm w-100" id="@auction.Id.ToLower()">
-                    <a asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id"><img class="card-img-top w-100" src="@auction.Thumbnail.Url" alt="Card image cap" style="height: 25vh; object-fit: cover;"></a>
+                    <a asp-area="" asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id"><img class="card-img-top w-100" src="@auction.Thumbnail.Url" alt="Card image cap" style="height: 25vh; object-fit: cover;"></a>
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">@auction.Title</h5>
                         <p class="card-text flex-grow-1">
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="mt-auto">
-                            <form asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id">
+                            <form asp-area="" asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id">
                                 <input type="submit" class="btn btn-sm btn-outline-info text-black w-100" value="Виж търг" />
                             </form>
 
@@ -80,12 +80,18 @@
                                     <div class="d-flex flex-column adminAuctionControls">
                                         @if (auction.IsOver.HasValue == false || auction.IsOver is false)
                                         {
-                                            <form asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
+                                            <form asp-area="" asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
                                                 <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай търг" />
                                             </form>
 
-                                            <a asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@auction.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай търг</a>
+                                            <a asp-area="" asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@auction.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай търг</a>
                                         }
+                                    </div>
+
+                                    <div class="d-flex flex-column">
+                                        <form asp-area="Admin" asp-controller="Auction" asp-action="Delete" asp-route-auctionId="@auction.Id" method="post">
+                                            <input type="submit" value="Изтрий търг" class="btn w-100 btn-danger mt-2" />
+                                        </form>
                                     </div>
                                 }
                                 else
@@ -93,11 +99,11 @@
                                     <div class="d-flex flex-column auctionControls">
                                         @if (auction.IsOver.HasValue == false)
                                         {
-                                            <form asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
+                                            <form asp-area="" asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
                                                 <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай търг" />
                                             </form>
 
-                                            <a asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@auction.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай търг</a>
+                                            <a asp-area="" asp-controller="Auction" asp-action="Edit" asp-route-auctionId="@auction.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай търг</a>
                                         }
                                     </div>
                                 }

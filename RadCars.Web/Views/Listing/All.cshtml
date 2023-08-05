@@ -14,7 +14,7 @@
     var shouldNextPageBeDisabled = Model.CurrentPage == maxPage || !Model.Listings.Any();
 }
 
-<form method="get">
+<form asp-area="" asp-controller="Listing" asp-action="All" method="get">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group mb-3">
@@ -150,6 +150,7 @@ else
             <ul class="pagination">
                 <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : string.Empty)">
                     <a class="page-link"
+                       asp-area=""
                        asp-controller="Listing"
                        asp-action="All"
                        asp-route-currentPage="@previousPage"
@@ -165,6 +166,7 @@ else
                 {
                     <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
                         <a class="page-link"
+                           asp-area=""
                            asp-controller="Listing"
                            asp-action="All"
                            asp-route-currentPage="@i"
@@ -179,6 +181,7 @@ else
                 }
                 <li class="page-item @(shouldNextPageBeDisabled ? "disabled" : string.Empty)">
                     <a class="page-link"
+                       asp-area=""
                        asp-controller="Listing"
                        asp-action="All"
                        asp-route-currentPage="@(Model.CurrentPage + 1)"

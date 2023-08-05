@@ -53,6 +53,7 @@ public static class ExceptionsAndNotificationsMessages
     public const string CannotEditActiveAuctionWithBids = "Нямате правомощията, за да редактирате търгове, които имат наддавания!";
     public const string AuctionDoesNotExistError = "Търгът не същестува.";
     public const string AuctionHasAlreadyStarted = "Нямате правомощията да променяте търга след неговото начало или край.";
+    public const string AuctionDeletedSuccessfully = "Търгът беше перманентно изтрит от системата!";
     public const string ErrorCreatingTheAuction =
         "Неуспешно създаване на търг. Моля, опитайте отново по-късно или се свържете с администратор.";
     public const string ErrorEditingTheAuction =

@@ -44,7 +44,7 @@
 
             <div class="row mt-3 justify-content-center ml-2">
                 <div class="col-12">
-                    <a asp-controller="Auction" asp-action="ChooseThumbnail" asp-route-auctionId="@Model.Id" class="btn btn-outline-primary me-3">Смени снимката на обложката</a>
+                    <a asp-area="" asp-controller="Auction" asp-action="ChooseThumbnail" asp-route-auctionId="@Model.Id" class="btn btn-outline-primary me-3">Смени снимката на обложката</a>
                 </div>
             </div>
         }
@@ -52,7 +52,7 @@
         {
             <div class="row mt-3 justify-content-center ml-2">
                 <div class="col-12">
-                    <a asp-controller="Auction" asp-action="Favorites" id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
+                    <a asp-area="" asp-controller="Auction" asp-action="Favorites" id="favoriteButton" class="btn"><i id="heartIcon" class="far fa-heart"></i></a>
                 </div>
             </div>
         }

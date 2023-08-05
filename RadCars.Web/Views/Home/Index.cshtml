@@ -16,7 +16,7 @@
         @if (!listings.Any())
         {
             <p>Все още няма обяви в сайта... Направете първата!</p>
-            <a class="btn btn-success" asp-controller="Listing" asp-action="Create">Създай обява</a>
+            <a class="btn btn-success" asp-area="" asp-controller="Listing" asp-action="Create">Създай обява</a>
         }
         else
         {
@@ -32,7 +32,7 @@
                                  src="@listing.ThumbnailUrl" alt="@listing.Title">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>
-                                    <a class="btn btn-success" asp-controller="Listing" asp-action="Details"
+                                    <a class="btn btn-success" asp-area="" asp-controller="Listing" asp-action="Details"
                                        asp-route-listingId="@listing.Id">@listing.Title</a>
                                 </h5>
                                 <div class="bg-white w-auto bg-opacity-75 mt-3">

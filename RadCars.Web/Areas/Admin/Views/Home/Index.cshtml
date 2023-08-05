@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Админ панел";
+}
+
+<div class="mt-3 p-5 bg-light text-center d-flex flex-column align-items-center">
+    <h2 class="display-4">Панел за администратор</h2>
+    <p class="lead mb-2 mt-5">
+        От тук можете да <b>видите</b>,
+        <b>деактивирате</b>, <b>триете</b> и <b>променяте</b> обяви и търгове.
+    </p>
+    <p class="lead mt-2">
+        Може също да видите <b>всички потребители</b> и <b>всички техни търгове и обяви</b> в системата.
+    </p>
+
+    <div class="d-flex mt-5">
+        <div class="d-flex flex-column me-2">
+            <a asp-area="Admin" asp-controller="Listing" asp-action="AllActive"
+               class="btn btn-success btn-lg mb-2">Всички активни обяви</a>
+            <a asp-area="Admin" asp-controller="Auction" asp-action="AllActive"
+               class="btn btn-success btn-lg">Всички активни търгове</a>
+        </div>
+    
+        <div class="d-flex flex-column me-2">
+            <a asp-area="Admin" asp-controller="Listing" asp-action="AllDeactivated"
+               class="btn btn-warning btn-lg mb-2">Всички деактивирани обяви</a>
+            <a asp-area="Admin" asp-controller="Auction" asp-action="AllDeactivated"
+               class="btn btn-warning btn-lg">Всички деактивирани търгове</a>
+        </div>
+
+        <div class="d-flex flex-column">
+            <a asp-area="Admin" asp-controller="User" asp-action="All"
+               class="btn btn-success btn-lg">Всички потребители</a>
+        </div>
+    </div>
+</div>
