@@ -11,15 +11,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using Data;
+using Middlewares;
 using ViewModels.Home;
 using Data.Models.User;
 using Services.Mapping;
-using Services.Data.Contracts;
-
-using Data;
 using Data.Repositories;
 using Services.Messaging;
 using RadCars.Data.Common;
+using Services.Data.Contracts;
 using Services.Messaging.Contracts;
 using RadCars.Data.Common.Contracts.Repositories;
 
@@ -106,12 +106,12 @@ public static class WebApplicationBuilderExtensions
     /// This method seeds admin role if it does not exist.
     /// Passed email should be valid email of existing user in the application.
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="app"></param>
     /// <param name="email"></param>
     /// <returns>IApplicationBuilder</returns>
-    public static async Task<IApplicationBuilder> SeedAdministratorAsync(this IApplicationBuilder builder, string email)
+    public static async Task<IApplicationBuilder> SeedAdministratorAsync(this IApplicationBuilder app, string email)
     {
-        using IServiceScope scopedServices = builder.ApplicationServices.CreateScope();
+        using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
         IServiceProvider serviceProvider = scopedServices.ServiceProvider;
 
@@ -133,6 +133,9 @@ public static class WebApplicationBuilderExtensions
             await userManager.AddToRoleAsync(adminUser, AdminRoleName);
         }
 
-        return builder;
+        return app;
     }
+
+    public static IApplicationBuilder EnableOnlineUsersCheck(this IApplicationBuilder app)
+        => app.UseMiddleware<OnlineUsersMiddleware>();
 }

@@ -30,4 +30,7 @@ public static class GeneralApplicationConstants
 
     public const string SendGridSenderEmail = "radcars.bg@gmail.com";
     public const string SendGridSenderName = "RadCars";
+
+    public const string OnlineUsersCookieName = "IsOnline";
+    public const int LastActivityBeforeOfflineMinutes = 4;
 }

@@ -8,21 +8,17 @@ using RadCars.Services.Data;
 using RadCars.Data.Models.User;
 using RadCars.Web.BackgroundServices;
 using RadCars.Services.Data.Contracts;
+using RadCars.Web.Infrastructure.Filters;
 using RadCars.Web.Infrastructure.Extensions;
 using RadCars.Web.Infrastructure.ModelBinders;
 using RadCars.Web.BackgroundServices.Contracts;
-
-using static RadCars.Common.GeneralApplicationConstants;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options
-        .UseSqlServer(connectionString)
-        .UseLazyLoadingProxies()
-    );
+    options.UseSqlServer(connectionString).UseLazyLoadingProxies());
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -52,6 +48,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 builder.Services.ConfigureApplicationCookie(cfg =>
 {
     cfg.LoginPath = "/User/Login";
+    cfg.AccessDeniedPath = "/Home/Error/401";
 });
 
 builder.Services.AddAuthentication()
@@ -91,7 +88,6 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseHangfireDashboard("/dashboard");
     app.UseMigrationsEndPoint();
     app.UseDeveloperExceptionPage();
 }
@@ -111,9 +107,31 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+if (app.Environment.IsDevelopment())
+{
+    app.UseHangfireDashboard("/hangfireDashboard");
+}
+else
+{
+    app.UseHangfireDashboard("/hangfireDashboard", new DashboardOptions
+    {
+        Authorization = new[] { new HangfireAuthorizationFilter() }
+    });
+}
+
+app.EnableOnlineUsersCheck();
+
+app.UseEndpoints(endpoints =>
+{
+    //endpoints.MapControllerRoute(
+    //    name: "areas",
+    //    pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    //);
+
+    endpoints.MapDefaultControllerRoute();
+
+    endpoints.MapRazorPages();
+});
 
 app.MapRazorPages();
 
