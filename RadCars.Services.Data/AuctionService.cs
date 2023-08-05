@@ -93,14 +93,11 @@ public class AuctionService : IAuctionService
 
             auctionsQuery = auctionsQuery.Where(a => EF.Functions.Like(a.Title, wildCard) || EF.Functions.Like(a.Description, wildCard) || EF.Functions.Like(a.EngineModel, wildCard));
         }
-
-        //ToDo: implement logic to check if an auction is still not finished. Only Newest and Oldest are working now!
+        
         auctionsQuery = queryModel.AuctionSorting switch
         {
             AuctionSorting.Newest => auctionsQuery.OrderByDescending(a => a.CreatedOn),
             AuctionSorting.Oldest => auctionsQuery.OrderBy(a => a.CreatedOn),
-            AuctionSorting.MostTimeLeft => auctionsQuery.Where(a => a.IsOver.HasValue && a.IsOver == false).OrderByDescending(a => a.EndTime - a.StartTime),
-            AuctionSorting.LeastTimeLeft => auctionsQuery.Where(a => a.IsOver.HasValue && a.IsOver == false).OrderBy(a => a.EndTime - a.StartTime),
             AuctionSorting.NotStarted => auctionsQuery.Where(a => a.IsOver.HasValue == false).OrderByDescending(a => a.StartTime),
             AuctionSorting.Started => auctionsQuery.Where(a => a.IsOver.HasValue && a.IsOver == false).OrderByDescending(a => a.EndTime),
             AuctionSorting.Finished => auctionsQuery.Where(a => a.IsOver.HasValue && a.IsOver == true).OrderByDescending(a => a.CreatedOn),
