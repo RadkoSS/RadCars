@@ -118,6 +118,14 @@ public class AuctionService : IAuctionService
             .To<AllAuctionsViewModel>()
             .ToArrayAsync();
 
+        if (withDeleted == false)
+        {
+            auctions = auctions.OrderBy(a => a.IsOver == false ? 0 : a.IsOver == null ? 1 : 2)
+                .ThenBy(a => a.IsOver == false ? (a.EndTime - DateTime.UtcNow).TotalMinutes : 0)
+                .ThenBy(a => a.IsOver == null ? (a.StartTime - DateTime.UtcNow).TotalMinutes : 0)
+                .ToArray();
+        }
+
         var count = auctionsQuery.Count();
 
         var auctionsQueryModel = new AllAuctionsFilteredAndPagedServiceModel
@@ -136,6 +144,11 @@ public class AuctionService : IAuctionService
             .OrderByDescending(a => a.CreatedOn)
             .To<AllAuctionsViewModel>()
             .ToArrayAsync();
+
+        auctions = auctions.OrderBy(a => a.IsOver == false ? 0 : a.IsOver == null ? 1 : 2)
+            .ThenBy(a => a.IsOver == false ? (a.EndTime - DateTime.UtcNow).TotalMinutes : 0)
+            .ThenBy(a => a.IsOver == null ? (a.StartTime - DateTime.UtcNow).TotalMinutes : 0)
+            .ToArray();
 
         return auctions;
     }
