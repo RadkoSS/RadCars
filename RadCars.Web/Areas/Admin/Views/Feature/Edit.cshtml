@@ -1,0 +1,25 @@
+﻿@model FeatureFormModel
+
+@{
+    ViewData["Title"] = "Редактиране на екстра";
+}
+
+<h2 class="text-center mb-4">@ViewData["Title"]</h2>
+
+<form asp-area="Admin" asp-controller="Feature" asp-action="Edit" method="post">
+    <div class="form-floating mb-2">
+        <input type="hidden" asp-for="@Model.Id"/>
+        <input type="hidden" asp-for="@Model.CategoryId"/>
+        <input asp-for="@Model.Name" class="form-control" aria-required="true"/>
+        <label asp-for="@Model.Name" class="form-label"></label>
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+    </div>
+    <div>
+        <button type="submit" class="w-100 btn btn mt-2 btn-primary">Редактирай</button>
+    </div>
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

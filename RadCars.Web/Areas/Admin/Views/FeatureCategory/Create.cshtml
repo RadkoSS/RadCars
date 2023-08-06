@@ -1,0 +1,23 @@
+﻿@model FeatureCategoryFormModel
+
+@{
+    ViewData["Title"] = "Добавяне на категория";
+}
+
+<h2 class="text-center mb-4">@ViewData["Title"]</h2>
+
+<form asp-area="Admin" asp-controller="FeatureCategory" asp-action="Create" method="post">
+    <div class="form-floating mb-2">
+        <input asp-for="@Model.Name" class="form-control" aria-required="true" />
+        <label asp-for="@Model.Name" class="form-label"></label>
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+    </div>
+    <div>
+        <button type="submit" class="w-100 btn mt-2 btn-success">Създай категория</button>
+    </div>
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

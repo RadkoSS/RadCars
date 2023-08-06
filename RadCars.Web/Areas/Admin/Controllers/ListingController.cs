@@ -3,10 +3,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
-using Web.ViewModels.Listing;
+using ViewModels.City;
+using ViewModels.CarMake;
+using ViewModels.Listing;
 using Services.Data.Contracts;
-using RadCars.Web.ViewModels.City;
-using RadCars.Web.ViewModels.CarMake;
 
 using static Common.NotificationTypeConstants;
 using static Common.GeneralApplicationConstants;

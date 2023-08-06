@@ -44,8 +44,8 @@ public class CarService : ICarService
         => await this.carMakesRepository.AllAsNoTracking()
             .To<CarMakeViewModel>().ToArrayAsync();
 
-    public async Task<IEnumerable<FeatureCategoriesViewModel>> GetFeatureCategoriesAsync()
-        => await this.categoriesRepository.AllAsNoTracking().To<FeatureCategoriesViewModel>().ToArrayAsync();
+    public async Task<IEnumerable<FeaturesWithCategoryViewModel>> GetFeaturesWithCategoriesAsync()
+        => await this.categoriesRepository.AllAsNoTracking().To<FeaturesWithCategoryViewModel>().ToArrayAsync();
 
     public async Task<IEnumerable<CityViewModel>> GetBulgarianCitiesAsync()
         => await this.citiesRepository.AllAsNoTracking().Where(c => c.CountryId == CountryIdOfBulgaria).To<CityViewModel>().ToArrayAsync();
@@ -71,7 +71,9 @@ public class CarService : ICarService
 
     public async Task<bool> SelectedFeaturesIdsExist(IEnumerable<int> selectedFeatures)
     {
-        var features = await this.featuresRepository.All().Select(f => f.Id).ToArrayAsync();
+        var features = await this.featuresRepository.All()
+            .Where(f => f.Category.IsDeleted == false)
+            .Select(f => f.Id).ToArrayAsync();
 
         bool featureIdsExist = true;
         foreach (var featureId in selectedFeatures)

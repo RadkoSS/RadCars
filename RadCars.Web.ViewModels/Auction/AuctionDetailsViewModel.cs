@@ -14,7 +14,7 @@ public class AuctionDetailsViewModel : AllAuctionsViewModel
     {
         this.Images = new HashSet<ImageViewModel>();
         this.Bids = new HashSet<AuctionBidViewModel>();
-        this.AuctionFeatures = new HashSet<FeatureCategoriesViewModel>();
+        this.AuctionFeatures = new HashSet<FeaturesWithCategoryViewModel>();
     }
 
     public DateTime CreatedOn { get; set; }
@@ -49,7 +49,7 @@ public class AuctionDetailsViewModel : AllAuctionsViewModel
     public ICollection<AuctionBidViewModel> Bids { get; set; }
 
     [Display(Name = "Екстри:")]
-    public ICollection<FeatureCategoriesViewModel> AuctionFeatures { get; set; }
+    public ICollection<FeaturesWithCategoryViewModel> AuctionFeatures { get; set; }
 
     public ICollection<ImageViewModel> Images { get; set; }
 

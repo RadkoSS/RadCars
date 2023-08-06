@@ -42,7 +42,7 @@ public interface IAuctionService
 
     Task<int> GetUploadedImagesCountForAuctionByIdAsync(string auctionId);
 
-    Task<ICollection<FeatureCategoriesViewModel>> GetSelectedFeaturesByAuctionIdAsync(string auctionId);
+    Task<ICollection<FeaturesWithCategoryViewModel>> GetSelectedFeaturesByAuctionIdAsync(string auctionId);
 
     Task<AuctionDetailsViewModel> GetAuctionDetailsAsync(string auctionId, string? userId, bool isUserAdmin);
 

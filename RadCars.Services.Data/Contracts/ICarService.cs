@@ -12,7 +12,7 @@ public interface ICarService
 
     Task<IEnumerable<CarMakeViewModel>> GetCarMakesAsync();
 
-    Task<IEnumerable<FeatureCategoriesViewModel>> GetFeatureCategoriesAsync();
+    Task<IEnumerable<FeaturesWithCategoryViewModel>> GetFeaturesWithCategoriesAsync();
 
     Task<IEnumerable<CityViewModel>> GetBulgarianCitiesAsync();
 

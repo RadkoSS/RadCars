@@ -1,13 +1,14 @@
 ﻿const priceRange = document.getElementById('priceRange');
 const priceRangeValue = document.getElementById('priceRangeValue');
 
-const numberFormatter = new Intl.NumberFormat("bg-BG", { style: "currency", currency: "BGN" });
 const kilometersNumberFormatter = Intl.NumberFormat("en", {
     style: "unit",
     unit: "kilometer"
 });
 
 if (priceRange && priceRangeValue) {
+    const numberFormatter = new Intl.NumberFormat("bg-BG", { style: "currency", currency: "BGN" });
+
     if (Number(priceRange.value) > 0) {
         priceRangeValue.innerText = `до ${numberFormatter.format(Number(priceRange.value))}`;
     } else {

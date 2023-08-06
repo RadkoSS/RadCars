@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FeatureCategoryViewModel>
+
+@{
+    ViewData["Title"] = "Всички категории с екстри";
+}
+
+<div class="d-flex flex-column align-items-center">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    <div class="mt-4">
+        <a asp-area="Admin" asp-controller="FeatureCategory" asp-action="Create" class="btn btn-success mt-2 mb-4">Добави категория</a>
+
+        <table class="table table-hover">
+            <thead>
+            <tr class="text-center">
+                <th><label>Идентификатор</label></th>
+                <th><label>Видимост</label></th>
+                <th><label>Име</label></th>
+                <th><label>Брой екстри</label></th>
+                <th><label>Действия</label></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td class="text-center"><label>@category.Id</label></td>
+                    <td class="text-center"><label>@(category.IsDeleted ? "❌" : "✔")</label></td>
+                    <td><label>@category.Name</label></td>
+                    <td class="text-center"><label>@category.FeaturesCount</label></td>
+                    <td>
+                        <div class="d-flex ms-2">
+                            <a asp-area="Admin" asp-controller="Feature" asp-action="AllByCategory" asp-route-categoryId="@category.Id" class="btn btn-sm btn-success ms-2 mb-2">Виж всички екстри</a>
+
+                            <a asp-area="Admin" asp-controller="FeatureCategory" asp-action="Edit" asp-route-categoryId="@category.Id" class="btn btn-sm btn-outline-primary ms-2 mb-2">Редактирай</a>
+
+                            @if (category.IsDeleted)
+                            {
+                                <form asp-area="Admin" asp-controller="FeatureCategory" asp-action="Undelete" asp-route-categoryId="@category.Id" method="post" class="ms-2 mb-2 swal-form">
+                                    <input type="submit" value="Undelete" class="btn btn-sm btn-outline-success"/>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-area="Admin" asp-controller="FeatureCategory" asp-action="SoftDelete" asp-route-categoryId="@category.Id" method="post" class="ms-2 mb-2 swal-form">
+                                    <input type="submit" value="Soft изтриване" class="btn btn-sm btn-danger"/>
+                                </form>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

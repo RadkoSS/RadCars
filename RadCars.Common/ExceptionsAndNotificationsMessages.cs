@@ -42,6 +42,7 @@ public static class ExceptionsAndNotificationsMessages
     public const string LoginSuccessful = "Влязохте успешно в своя акаунт.";
     public const string RegistrationSuccessful = "Регистрирахте се успешно!";
 
+    public const string EntityAlreadyExists = "Това, което се опитвате да създадете, вече същестува!";
     public const string UnsuccessfulRegistration =
         "Получи се грешка при опита за регистрация, моля опитайте отново по-късно.";
 

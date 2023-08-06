@@ -1,6 +1,7 @@
 ﻿const minutesAfter = 5 * 60 * 1000; //ToDo: fix this! For testing it is 5 minutes. It should be 30 minutes!
 const hoursAfter = 0.2 * 60 * 60 * 1000; //ToDo: fix this! For testing it is 0.2 hours (12 minutes). It should be 24 hours!
 const updateIntervalMs = 3000;
+const maximumDaysAheadOfStart = 14 * 24 * 60 * 60 * 1000; // 14 days in milliseconds
 
 let startTimeDifference = null;
 
@@ -25,6 +26,9 @@ const fpStart = flatpickr("#start-time", {
             fpEnd.setDate(endMinTimeFromStart);
         }
         fpEnd.set('minDate', endMinTimeFromStart);
+
+        const endMaxTimeFromStart = new Date(selectedDates[0].getTime() + maximumDaysAheadOfStart);
+        fpEnd.set('maxDate', endMaxTimeFromStart);
     }
 });
 
@@ -54,4 +58,7 @@ setInterval(function () {
         fpEnd.setDate(endMinTimeFromStart);
     }
     fpEnd.set('minDate', endMinTimeFromStart);
+
+    const endMaxTimeFromStart = new Date(startTime.getTime() + maximumDaysAheadOfStart);
+    fpEnd.set('maxDate', endMaxTimeFromStart);
 }, updateIntervalMs);

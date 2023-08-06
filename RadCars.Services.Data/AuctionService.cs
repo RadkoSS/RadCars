@@ -260,24 +260,24 @@ public class AuctionService : IAuctionService
         return detailsViewModel;
     }
 
-    public async Task<ICollection<FeatureCategoriesViewModel>> GetSelectedFeaturesByAuctionIdAsync(string auctionId)
+    public async Task<ICollection<FeaturesWithCategoryViewModel>> GetSelectedFeaturesByAuctionIdAsync(string auctionId)
     {
         var selectedFeatures = await this.auctionsRepository.AllWithDeleted()
-            .Include(l => l.AuctionFeatures)
-            .ThenInclude(lf => lf.Feature)
+            .Include(a => a.AuctionFeatures)
+            .ThenInclude(af => af.Feature)
             .ThenInclude(f => f.Category)
             .AsNoTracking()
-            .Where(l => l.Id.ToString() == auctionId)
-            .SelectMany(l => l.AuctionFeatures)
+            .Where(a => a.Id.ToString() == auctionId)
+            .SelectMany(a => a.AuctionFeatures)
             .ToArrayAsync();
 
-        var auctionFeatures = new HashSet<FeatureCategoriesViewModel>();
+        var auctionFeatures = new HashSet<FeaturesWithCategoryViewModel>();
 
-        foreach (var currentAf in selectedFeatures.DistinctBy(lf => lf.Feature.CategoryId))
+        foreach (var currentAf in selectedFeatures.Where(af => af.Feature.IsDeleted == false && af.Feature.Category.IsDeleted == false).DistinctBy(af => af.Feature.CategoryId))
         {
-            var featuresOfCategory = selectedFeatures.Where(l => l.Feature.CategoryId == currentAf.Feature.CategoryId);
+            var featuresOfCategory = selectedFeatures.Where(a => a.Feature.CategoryId == currentAf.Feature.CategoryId);
 
-            auctionFeatures.Add(new FeatureCategoriesViewModel
+            auctionFeatures.Add(new FeaturesWithCategoryViewModel
             {
                 Id = currentAf.Feature.CategoryId,
                 Name = currentAf.Feature.Category.Name,
@@ -298,7 +298,7 @@ public class AuctionService : IAuctionService
         var formModel = new AuctionFormModel
         {
             CarMakes = await this.carService.GetCarMakesAsync(),
-            FeatureCategories = await this.carService.GetFeatureCategoriesAsync(),
+            FeatureCategories = await this.carService.GetFeaturesWithCategoriesAsync(),
             Cities = await this.carService.GetBulgarianCitiesAsync(),
             EngineTypes = await this.carService.GetEngineTypesAsync()
         };
@@ -482,7 +482,7 @@ public class AuctionService : IAuctionService
         auctionToEdit.CarMakes = await this.carService.GetCarMakesAsync();
         auctionToEdit.CarModels = await this.carService.GetModelsByMakeIdAsync(auctionToEdit.CarMakeId);
         auctionToEdit.EngineTypes = await this.carService.GetEngineTypesAsync();
-        auctionToEdit.FeatureCategories = await this.carService.GetFeatureCategoriesAsync();
+        auctionToEdit.FeatureCategories = await this.carService.GetFeaturesWithCategoriesAsync();
 
         var selectedFeaturesWithCategories = await GetSelectedFeaturesByAuctionIdAsync(auctionId);
 
@@ -768,7 +768,6 @@ public class AuctionService : IAuctionService
         {
             return false;
         }
-        //ToDo: Add front end validation ensuring EndDate is at most 14 days after the StartDate!
         if (endTimeToUtc > startTimeToUtc.AddDays(MaximumDaysOfAuctioning))
         {
             return false;

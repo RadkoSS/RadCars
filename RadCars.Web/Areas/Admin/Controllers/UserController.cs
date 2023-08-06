@@ -3,10 +3,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
-using Web.ViewModels.User;
+using ViewModels.User;
 using Services.Data.Contracts;
 
+using static Common.NotificationTypeConstants;
 using static Common.GeneralApplicationConstants;
+using static Common.ExceptionsAndNotificationsMessages;
 
 public class UserController : BaseAdminController
 {
@@ -19,23 +21,31 @@ public class UserController : BaseAdminController
         this.memoryCache = memoryCache;
     }
     
-    [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client, NoStore = false)]
     public async Task<IActionResult> All()
     {
-        IEnumerable<UserViewModel> users =
-            this.memoryCache.Get<IEnumerable<UserViewModel>>(UsersCacheKey);
-
-        if (users == null)
+        try
         {
-            users = await this.userService.GetAllUsersAsync();
+            IEnumerable<UserViewModel> users =
+                this.memoryCache.Get<IEnumerable<UserViewModel>>(UsersCacheKey);
 
-            MemoryCacheEntryOptions cacheOptions = new MemoryCacheEntryOptions()
-                .SetAbsoluteExpiration(TimeSpan
-                    .FromMinutes(UsersCacheDurationMinutes));
+            if (users == null)
+            {
+                users = await this.userService.GetAllUsersAsync();
 
-            this.memoryCache.Set(UsersCacheKey, users, cacheOptions);
+                MemoryCacheEntryOptions cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan
+                        .FromMinutes(UsersCacheDurationMinutes));
+
+                this.memoryCache.Set(UsersCacheKey, users, cacheOptions);
+            }
+
+            return View(users);
         }
+        catch (Exception)
+        {
+            this.TempData[ErrorMessage] = AnErrorOccurred;
 
-        return View(users);
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

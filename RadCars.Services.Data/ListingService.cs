@@ -226,7 +226,7 @@ public class ListingService : IListingService
         var formModel = new ListingFormModel
         {
             CarMakes = await this.carService.GetCarMakesAsync(),
-            FeatureCategories = await this.carService.GetFeatureCategoriesAsync(),
+            FeatureCategories = await this.carService.GetFeaturesWithCategoriesAsync(),
             Cities = await this.carService.GetBulgarianCitiesAsync(),
             EngineTypes = await this.carService.GetEngineTypesAsync()
         };
@@ -251,7 +251,7 @@ public class ListingService : IListingService
         listingToEdit.CarMakes = await this.carService.GetCarMakesAsync();
         listingToEdit.CarModels = await this.carService.GetModelsByMakeIdAsync(listingToEdit.CarMakeId);
         listingToEdit.EngineTypes = await this.carService.GetEngineTypesAsync();
-        listingToEdit.FeatureCategories = await this.carService.GetFeatureCategoriesAsync();
+        listingToEdit.FeatureCategories = await this.carService.GetFeaturesWithCategoriesAsync();
 
         var selectedFeaturesWithCategories = await GetSelectedFeaturesByListingIdAsync(listingId);
 
@@ -393,10 +393,10 @@ public class ListingService : IListingService
         return detailsViewModel;
     }
 
-    private async Task<ICollection<FeatureCategoriesViewModel>> GetSelectedFeaturesByListingIdAsync(string listingId)
+    private async Task<ICollection<FeaturesWithCategoryViewModel>> GetSelectedFeaturesByListingIdAsync(string listingId)
     {
         var selectedFeatures = await this.listingsRepository.All()
-            .Include(l => l.ListingFeatures)
+            .Include(l => l.ListingFeatures.Where(lf => lf.Feature.IsDeleted == false && lf.Feature.Category.IsDeleted == false))
             .ThenInclude(lf => lf.Feature)
             .ThenInclude(f => f.Category)
             .AsNoTracking()
@@ -404,13 +404,13 @@ public class ListingService : IListingService
             .SelectMany(l => l.ListingFeatures)
             .ToArrayAsync();
 
-        var listingFeatures = new HashSet<FeatureCategoriesViewModel>();
+        var listingFeatures = new HashSet<FeaturesWithCategoryViewModel>();
 
         foreach (var currentLf in selectedFeatures.DistinctBy(lf => lf.Feature.CategoryId))
         {
             var featuresOfCategory = selectedFeatures.Where(l => l.Feature.CategoryId == currentLf.Feature.CategoryId);
 
-            listingFeatures.Add(new FeatureCategoriesViewModel
+            listingFeatures.Add(new FeaturesWithCategoryViewModel
             {
                 Id = currentLf.Feature.CategoryId,
                 Name = currentLf.Feature.Category.Name,

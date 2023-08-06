@@ -477,7 +477,7 @@ public class AuctionController : BaseController
 
         form.EngineTypes = await this.carService.GetEngineTypesAsync();
         form.CarModels = await this.carService.GetModelsByMakeIdAsync(form.CarMakeId);
-        form.FeatureCategories = await this.carService.GetFeatureCategoriesAsync();
+        form.FeatureCategories = await this.carService.GetFeaturesWithCategoriesAsync();
 
         foreach (var category in form.FeatureCategories)
         {

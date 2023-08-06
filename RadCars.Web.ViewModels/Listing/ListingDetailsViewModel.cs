@@ -13,14 +13,12 @@ public class ListingDetailsViewModel : AllListingsViewModel
     public ListingDetailsViewModel()
     {
         this.Images = new HashSet<ImageViewModel>();
-        this.ListingFeatures = new HashSet<FeatureCategoriesViewModel>();
+        this.ListingFeatures = new HashSet<FeaturesWithCategoryViewModel>();
     }
 
     public DateTime CreatedOn { get; set; }
 
     public DateTime? ModifiedOn { get; set; }
-
-    public bool IsDeleted { get; set; }
 
     public string CreatorUserName { get; set; } = null!;
 
@@ -35,7 +33,7 @@ public class ListingDetailsViewModel : AllListingsViewModel
     public int FavoritesCount { get; set; }
 
     [Display(Name = "Екстри:")]
-    public ICollection<FeatureCategoriesViewModel> ListingFeatures { get; set; }
+    public ICollection<FeaturesWithCategoryViewModel> ListingFeatures { get; set; }
 
     public ICollection<ImageViewModel> Images { get; set; }
 

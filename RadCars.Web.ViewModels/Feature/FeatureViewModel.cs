@@ -16,5 +16,5 @@ public class FeatureViewModel : IMapFrom<Feature>
 
     public string Name { get; set; } = null!;
 
-    public int CategoryId { get; set; }
+    public bool IsDeleted { get; set; }
 }

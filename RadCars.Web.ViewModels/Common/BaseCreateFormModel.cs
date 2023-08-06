@@ -24,7 +24,7 @@ public abstract class BaseCreateFormModel
         this.CarMakes = new HashSet<CarMakeViewModel>();
         this.CarModels = new HashSet<CarModelViewModel>();
         this.EngineTypes = new HashSet<EngineTypeViewModel>();
-        this.FeatureCategories = new HashSet<FeatureCategoriesViewModel>();
+        this.FeatureCategories = new HashSet<FeaturesWithCategoryViewModel>();
     }
 
     [Display(Name = "Заглавие")]
@@ -95,5 +95,5 @@ public abstract class BaseCreateFormModel
     [Display(Name = "Снимки")]
     public virtual IEnumerable<IFormFile> Images { get; set; }
 
-    public IEnumerable<FeatureCategoriesViewModel> FeatureCategories { get; set; }
+    public IEnumerable<FeaturesWithCategoryViewModel> FeatureCategories { get; set; }
 }
