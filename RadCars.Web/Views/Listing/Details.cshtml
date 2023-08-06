@@ -153,14 +153,14 @@
     <div class="mt-4">
         <label asp-for="@Model.ListingFeatures" class="modal-header mt-2 fw-bold fs-4"></label>
 
-        <div class="container d-flex flex-column">
+        <div class="container d-flex">
             @foreach (var category in Model.ListingFeatures)
             {
                 <div class="mt-2">
                     <span class="fs-5">@category.Name:</span>
                 </div>
 
-                <ul class="mt-4 d-flex flex-column">
+                <ul class="mt-4 fs-6 d-flex flex-column">
                     @foreach (var feature in category.Features)
                     {
                         <li class="me-4 list-unstyled">

@@ -3,22 +3,22 @@
 @model IEnumerable<UserViewModel>
 
 @{
-    ViewBag.Title = "Всички потребители";
+    ViewData["Title"] = "Всички потребители";
 }
 
-<h2 class="text-center mb-4">@ViewBag.Title</h2>
+<h2 class="text-center mb-4">@ViewData["Title"]</h2>
 
 <div>
     <table class="table table-hover table-success">
         <thead>
-        <tr>
-            <th>Идентификатор</th>
-            <th><label>Електронна поща</label></th>
-            <th><label>Потребителско име</label></th>
-            <th><label>Имена</label></th>
-            <th><label>Телефонен номер</label></th>
-            <th><label>Онлайн статус</label></th>
-        </tr>
+            <tr>
+                <th><label>Идентификатор</label></th>
+                <th><label>Електронна поща</label></th>
+                <th><label>Потребителско име</label></th>
+                <th><label>Имена</label></th>
+                <th><label>Телефонен номер</label></th>
+                <th><label>Онлайн статус</label></th>
+            </tr>
         </thead>
         <tbody>
             @foreach (var user in Model)
