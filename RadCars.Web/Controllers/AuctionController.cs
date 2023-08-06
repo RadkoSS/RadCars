@@ -3,9 +3,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Griesoft.AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
 
+using ViewModels.City;
 using Common.Exceptions;
 using ViewModels.Auction;
+using ViewModels.CarMake;
 using ViewModels.Thumbnail;
 using Services.Data.Contracts;
 using Infrastructure.Extensions;
@@ -19,13 +22,15 @@ using static Common.EntityValidationConstants.ListingConstants;
 public class AuctionController : BaseController
 {
     private readonly ICarService carService;
+    private readonly IMemoryCache memoryCache;
     private readonly IUserService userService;
     private readonly IAuctionService auctionService;
     private readonly IAuctionBackgroundJobService auctionBackgroundJobService;
 
-    public AuctionController(IAuctionService auctionService, IUserService userService, ICarService carService, IAuctionBackgroundJobService auctionBackgroundJobService)
+    public AuctionController(IAuctionService auctionService, IUserService userService, ICarService carService, IAuctionBackgroundJobService auctionBackgroundJobService, IMemoryCache memoryCache)
     {
         this.carService = carService;
+        this.memoryCache = memoryCache;
         this.userService = userService;
         this.auctionService = auctionService;
         this.auctionBackgroundJobService = auctionBackgroundJobService;
@@ -263,14 +268,30 @@ public class AuctionController : BaseController
 
             queryModel.Auctions = serviceModel.Auctions;
             queryModel.TotalAuctions = serviceModel.TotalAuctionsCount;
-            queryModel.CarMakes = await this.carService.GetCarMakesAsync();
 
             if (queryModel.CarModelId.HasValue && queryModel.CarMakeId.HasValue)
             {
                 queryModel.CarModels = await this.carService.GetModelsByMakeIdAsync(queryModel.CarMakeId.Value);
             }
 
-            queryModel.Cities = await this.carService.GetBulgarianCitiesAsync();
+            queryModel.CarMakes = this.memoryCache.Get<IEnumerable<CarMakeViewModel>>(CarMakesCacheKey);
+
+            if (queryModel.CarMakes == null || queryModel.CarMakes.Any() == false)
+            {
+                queryModel.CarMakes = await this.carService.GetCarMakesAsync();
+
+                this.memoryCache.Set(CarMakesCacheKey, queryModel.CarMakes);
+            }
+
+            queryModel.Cities = this.memoryCache.Get<IEnumerable<CityViewModel>>(CitiesCacheKey);
+
+            if (queryModel.Cities == null || queryModel.Cities.Any() == false)
+            {
+                queryModel.Cities = await this.carService.GetBulgarianCitiesAsync();
+
+                this.memoryCache.Set(CitiesCacheKey, queryModel.Cities);
+            }
+
             queryModel.EngineTypes = await this.carService.GetEngineTypesAsync();
 
             return View(queryModel);
@@ -436,8 +457,24 @@ public class AuctionController : BaseController
 
     private async Task<AuctionFormModel> ReloadForm(AuctionFormModel form)
     {
-        form.Cities = await this.carService.GetBulgarianCitiesAsync();
-        form.CarMakes = await this.carService.GetCarMakesAsync();
+        form.Cities = this.memoryCache.Get<IEnumerable<CityViewModel>>(CitiesCacheKey);
+
+        if (form.Cities == null || form.Cities.Any() == false)
+        {
+            form.Cities = await this.carService.GetBulgarianCitiesAsync();
+
+            this.memoryCache.Set(CitiesCacheKey, form.Cities);
+        }
+
+        form.CarMakes = this.memoryCache.Get<IEnumerable<CarMakeViewModel>>(CarMakesCacheKey);
+
+        if (form.CarMakes == null || form.CarMakes.Any() == false)
+        {
+            form.CarMakes = await this.carService.GetCarMakesAsync();
+
+            this.memoryCache.Set(CarMakesCacheKey, form.CarMakes);
+        }
+
         form.EngineTypes = await this.carService.GetEngineTypesAsync();
         form.CarModels = await this.carService.GetModelsByMakeIdAsync(form.CarMakeId);
         form.FeatureCategories = await this.carService.GetFeatureCategoriesAsync();

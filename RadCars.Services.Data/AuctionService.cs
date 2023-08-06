@@ -118,8 +118,8 @@ public class AuctionService : IAuctionService
         if (withDeleted == false)
         {
             auctions = auctions.OrderBy(a => a.IsOver == false ? 0 : a.IsOver == null ? 1 : 2)
-                .ThenBy(a => a.IsOver == false ? (a.EndTime - DateTime.UtcNow).TotalMinutes : 0)
-                .ThenBy(a => a.IsOver == null ? (a.StartTime - DateTime.UtcNow).TotalMinutes : 0)
+                .ThenBy(a => a.IsOver == false ? (a.EndTime - DateTime.UtcNow).TotalSeconds : 0)
+                .ThenBy(a => a.IsOver == null ? (a.StartTime - DateTime.UtcNow).TotalSeconds : 0)
                 .ToArray();
         }
 

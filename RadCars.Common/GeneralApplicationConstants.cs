@@ -37,4 +37,7 @@ public static class GeneralApplicationConstants
 
     public const string UsersCacheKey = "UsersCache";
     public const int UsersCacheDurationMinutes = 2;
+
+    public const string CitiesCacheKey = "Cities";
+    public const string CarMakesCacheKey = "CarMakes";
 }
