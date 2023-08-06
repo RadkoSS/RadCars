@@ -46,11 +46,11 @@ else
 
                                 <a asp-area="" asp-controller="Listing" asp-action="Edit" asp-route-listingId="@listing.Id" class="btn btn-sm btn-outline-primary text-black w-100 mt-2">Редактирай обявата</a>
 
-                                <form asp-area="" asp-controller="Listing" asp-action="Reactivate" asp-route-listingId="@listing.Id" method="post">
+                                <form asp-area="" asp-controller="Listing" asp-action="Reactivate" asp-route-listingId="@listing.Id" method="post" class="swal-form">
                                     <input type="submit" class="btn btn-sm btn-outline-success text-black w-100 mt-2" value="Активирай отново обявата" />
                                 </form>
 
-                                <form asp-area="" asp-controller="Listing" asp-action="Delete" asp-route-listingId="@listing.Id" method="post">
+                                <form asp-area="" asp-controller="Listing" asp-action="Delete" asp-route-listingId="@listing.Id" method="post" class="swal-form">
                                     <input type="submit" class="btn btn-sm btn-danger text-black fw-bold w-100 mt-2" value="Изтрий обявата" />
                                 </form>
                             </div>
@@ -60,4 +60,9 @@ else
             }
         </div>
     </div>
+}
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/js/alertsHandler.js"></script>
 }

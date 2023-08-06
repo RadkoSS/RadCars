@@ -6,6 +6,7 @@ using Web.ViewModels.Auction;
 using Services.Data.Contracts;
 
 using static Common.NotificationTypeConstants;
+using static Common.GeneralApplicationConstants;
 using static Common.ExceptionsAndNotificationsMessages;
 
 public class AuctionController : BaseAdminController
@@ -88,7 +89,7 @@ public class AuctionController : BaseAdminController
 
             this.TempData[WarningMessage] = AuctionDeletedSuccessfully;
 
-            return RedirectToAction("AllDeactivated", "Auction");
+            return RedirectToAction("AllDeactivated", "Auction", new { Area = AdminAreaName });
         }
         catch (Exception)
         {

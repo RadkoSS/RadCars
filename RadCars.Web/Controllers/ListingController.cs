@@ -333,7 +333,7 @@ public class ListingController : BaseController
 
             if (userIsAdmin)
             {
-                return RedirectToAction("DeactivatedDetails", new { listingId });
+                return RedirectToAction("AllDeactivated", "Listing",new { Area = AdminAreaName, listingId });
             }
 
             return RedirectToAction("MineDeactivated", "Listing");

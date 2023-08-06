@@ -78,7 +78,7 @@ else
                                         <input type="submit" value="Активирай търга" class="btn btn-sm btn-success w-100 mt-2" />
                                     </form>
 
-                                    <form asp-area="Admin" asp-controller="Auction" asp-action="Delete" asp-route-auctionId="@auction.Id" method="post">
+                                    <form asp-area="Admin" asp-controller="Auction" asp-action="Delete" asp-route-auctionId="@auction.Id" method="post" class="swal-form">
                                         <input type="submit" value="Изтрий търга" class="btn mt-2 w-100 btn-danger" />
                                     </form>
                                 }
@@ -89,4 +89,9 @@ else
             }
         </div>
     </div>
+}
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/js/alertsHandler.js"></script>
 }

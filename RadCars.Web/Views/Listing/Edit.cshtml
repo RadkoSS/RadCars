@@ -37,7 +37,7 @@
     <button type="button" id="clearImages" class="btn btn-danger mt-3 visually-hidden">Изтрий новите снимки</button>
 </div>
 
-<form asp-area="" asp-controller="Listing" asp-action="Edit" id="editListingForm" method="post" enctype="multipart/form-data">
+<form asp-area="" asp-controller="Listing" asp-action="Edit" id="editListingForm" method="post" enctype="multipart/form-data" class="swal-form">
 
     <input type="hidden" asp-for="@Model.Id" id="listingId"/>
 
@@ -53,4 +53,5 @@
     <script type="module" src="~/js/loadCarModels.js"></script>
     <script type="module" src="~/js/editListingImages.js"></script>
     <script type="text/javascript" src="~/js/previewUploadedImages.js"></script>
+    <script type="text/javascript" src="~/js/alertsHandler.js"></script>
 }

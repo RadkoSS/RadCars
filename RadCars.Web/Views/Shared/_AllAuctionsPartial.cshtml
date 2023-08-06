@@ -80,7 +80,7 @@
                                     <div class="d-flex flex-column adminAuctionControls">
                                         @if ((auction.IsOver.HasValue == false || auction.IsOver is false) && string.IsNullOrWhiteSpace(auction.DeletedOn))
                                         {
-                                            <form asp-area="" asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
+                                            <form asp-area="" asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post" class="swal-form">
                                                 <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай търг" />
                                             </form>
 
@@ -89,13 +89,13 @@
                                         else if (auction.IsOver.HasValue == false && string.IsNullOrWhiteSpace(auction.DeletedOn) == false || auction.IsOver is true)
                                         {
                                             <form asp-area="" asp-controller="Auction" asp-action="Reactivate" asp-route-auctionId="@auction.Id" method="post">
-                                                <input type="submit" class="btn btn-sm text-black btn-outline-success w-100 mt-2" value="Активирай търг" />
+                                                <input type="submit" class="btn btn-sm text-black btn-outline-success w-100 mt-2" value="Пусни търга отново" />
                                             </form>
                                         }
                                     </div>
 
                                     <div class="d-flex flex-column">
-                                        <form asp-area="Admin" asp-controller="Auction" asp-action="Delete" asp-route-auctionId="@auction.Id" method="post">
+                                        <form asp-area="Admin" asp-controller="Auction" asp-action="Delete" asp-route-auctionId="@auction.Id" method="post" class="swal-form">
                                             <input type="submit" value="Изтрий търг" class="btn w-100 btn-danger mt-2" />
                                         </form>
                                     </div>
@@ -105,7 +105,7 @@
                                     <div class="d-flex flex-column auctionControls">
                                         @if (auction.IsOver.HasValue == false)
                                         {
-                                            <form asp-area="" asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post">
+                                            <form asp-area="" asp-controller="Auction" asp-action="Deactivate" asp-route-auctionId="@auction.Id" method="post" class="swal-form">
                                                 <input type="submit" class="btn btn-sm btn-outline-danger text-black w-100 mt-2" value="Деактивирай търг" />
                                             </form>
 

@@ -24,8 +24,8 @@
         {
             <div class="row mt-3 me-2 justify-content-center">
                 <div class="col-12">
-                    <form asp-area="" asp-controller="Listing" asp-action="Delete" asp-route-listingId="@Model.Id" method="post">
-                        <input id="deleteButton" type="submit" value="Изтрий обявата" class="btn btn-danger" />
+                    <form asp-area="" asp-controller="Listing" asp-action="Delete" asp-route-listingId="@Model.Id" method="post" class="swal-form">
+                        <input type="submit" value="Изтрий обявата" class="btn btn-danger" />
                     </form>
                 </div>
             </div>
@@ -37,7 +37,7 @@
             {
                 <div class="row mt-3 me-2 justify-content-center">
                     <div class="col-12">
-                        <form asp-area="" asp-controller="Listing" asp-action="Reactivate" asp-route-listingId="@Model.Id" method="post">
+                        <form asp-area="" asp-controller="Listing" asp-action="Reactivate" asp-route-listingId="@Model.Id" method="post" class="swal-form">
                             <input type="submit" value="Активарай обявата" class="btn btn-success" />
                         </form>
                     </div>
@@ -47,7 +47,7 @@
                 {
                     <div class="row mt-3 me-2 justify-content-center">
                         <div class="col-12">
-                            <form asp-area="" asp-controller="Listing" asp-action="Delete" asp-route-listingId="@Model.Id" method="post">
+                            <form asp-area="" asp-controller="Listing" asp-action="Delete" asp-route-listingId="@Model.Id" method="post" class="swal-form">
                                 <input type="submit" value="Изтрий обявата" class="btn btn-danger" />
                             </form>
                         </div>
@@ -58,8 +58,8 @@
             {
                 <div class="row mt-3 me-2 justify-content-center">
                     <div class="col-12">
-                        <form asp-area="" asp-controller="Listing" asp-action="Deactivate" asp-route-listingId="@Model.Id" method="post">
-                            <input id="deactivateButton" type="submit" value="Деактиварай обявата" class="btn btn-outline-danger" />
+                        <form asp-area="" asp-controller="Listing" asp-action="Deactivate" asp-route-listingId="@Model.Id" method="post" class="swal-form">
+                            <input type="submit" value="Деактиварай обявата" class="btn btn-outline-danger" />
                         </form>
                     </div>
                 </div>
@@ -180,4 +180,6 @@
     <script type="module" src="~/js/listingsFavoriter.js"></script>
 
     <script type="text/javascript" src="~/js/imageViewer.js"></script>
+    
+    <script type="text/javascript" src="~/js/alertsHandler.js"></script>
 }

@@ -39,7 +39,7 @@ else
                                     <input type="submit" class="btn btn-sm btn-outline-info text-black w-100 mb-2" value="Разгледай обявата" />
                                 </form>
 
-                                <form asp-area="" asp-controller="Listing" asp-action="UnFavorite" asp-route-listingId="@listing.Id" method="post">
+                                <form asp-area="" asp-controller="Listing" asp-action="UnFavorite" asp-route-listingId="@listing.Id" method="post" class="swal-form">
                                     <input type="submit" class="btn btn-sm btn-outline-warning text-black w-100" value="Премахни от любими" />
                                 </form>
                             </div>
@@ -49,4 +49,9 @@ else
             }
         </div>
     </div>
+}
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/js/alertsHandler.js"></script>
 }

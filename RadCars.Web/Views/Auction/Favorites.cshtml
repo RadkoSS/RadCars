@@ -81,7 +81,7 @@ else
                                     <input type="submit" class="btn btn-sm btn-outline-info text-black w-100" value="Виж търг" />
                                 </form>
 
-                                <form asp-area="" asp-controller="Auction" asp-action="UnFavorite" asp-route-auctionId="@auction.Id" method="post" class="mt-2">
+                                <form asp-area="" asp-controller="Auction" asp-action="UnFavorite" asp-route-auctionId="@auction.Id" method="post" class="mt-2 swal-form">
                                     <input type="submit" class="btn btn-sm btn-outline-warning text-black w-100" value="Премахни от любими" />
                                 </form>
                             </div>
@@ -98,4 +98,5 @@ else
     <link rel="stylesheet" href="~/css/allAuctionsTimer.css" />
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/allAuctionsUpdater.js"></script>
+    <script type="text/javascript" src="~/js/alertsHandler.js"></script>
 }

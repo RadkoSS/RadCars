@@ -410,7 +410,7 @@ public class AuctionController : BaseController
 
             if (userIsAdmin)
             {
-                return RedirectToAction("Details", new { auctionId });
+                return RedirectToAction("AllDeactivated", "Auction", new { Area = AdminAreaName, auctionId });
             }
 
             return RedirectToAction("MineDeactivated", "Auction");
