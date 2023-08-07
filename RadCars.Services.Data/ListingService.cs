@@ -1,6 +1,8 @@
 ﻿// ReSharper disable IdentifierTypo
 namespace RadCars.Services.Data;
 
+using System.Text.Encodings.Web;
+using AngleSharp.Dom;
 using Ganss.Xss;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +11,7 @@ using Mapping;
 using Contracts;
 using Models.Listing;
 using Common.Exceptions;
+using Messaging.Contracts;
 using Web.ViewModels.Feature;
 using Web.ViewModels.Listing;
 using Web.ViewModels.CarImage;
@@ -20,10 +23,12 @@ using RadCars.Data.Common.Contracts.Repositories;
 
 using static Common.GeneralApplicationConstants;
 using static Common.ExceptionsAndNotificationsMessages;
+using static Messaging.Templates.EmailTemplates.ListingTemplates;
 
 public class ListingService : IListingService
 {
     private readonly IMapper mapper;
+    private readonly IEmailSender emailSender;
     private readonly IHtmlSanitizer htmlSanitizer;
 
     private readonly ICarService carService;
@@ -34,11 +39,19 @@ public class ListingService : IListingService
     private readonly IDeletableEntityRepository<ListingFeature> listingFeaturesRepository;
     private readonly IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepository;
 
-    public ListingService(IListingImageService listingImageService, ICarService carService,
-        IDeletableEntityRepository<Listing> listingsRepository, IDeletableEntityRepository<CarImage> carImagesRepository, IMapper mapper, IDeletableEntityRepository<ListingFeature> listingFeaturesRepository, IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepository, IHtmlSanitizer htmlSanitizer)
+    public ListingService(IListingImageService listingImageService,
+        ICarService carService,
+        IDeletableEntityRepository<Listing> listingsRepository,
+        IDeletableEntityRepository<CarImage> carImagesRepository,
+        IMapper mapper, 
+        IDeletableEntityRepository<ListingFeature> listingFeaturesRepository,
+        IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepository,
+        IHtmlSanitizer htmlSanitizer,
+        IEmailSender emailSender)
     {
         this.mapper = mapper;
         this.carService = carService;
+        this.emailSender = emailSender;
         this.htmlSanitizer = htmlSanitizer;
         this.listingsRepository = listingsRepository;
         this.carImagesRepository = carImagesRepository;
@@ -330,6 +343,8 @@ public class ListingService : IListingService
             await this.listingImageService.DeleteListingImageAsync(form.Id, deletedImgId);
         }
 
+        var oldPrice = listingToEdit.Price;
+
         listingToEdit.Year = form.Year;
         listingToEdit.Price = form.Price;
         listingToEdit.Title = form.Title;
@@ -370,6 +385,19 @@ public class ListingService : IListingService
         {
             var firstImageId = listingToEdit.Images.First().Id.ToString();
             await this.AddThumbnailToListingByIdAsync(listingToEdit.Id.ToString(), firstImageId, userId, isUserAdmin);
+        }
+
+        if (oldPrice * ListingMinimumPriceDecreaseThreshold > listingToEdit.Price)
+        {
+            var usersThatHaveFavoritedTheListing = listingToEdit.Favorites.Select(f => f.User);
+
+            foreach (var user in usersThatHaveFavoritedTheListing)
+            {
+                var emailHtmlContent = string.Format(PriceChangeEmailTemplate, listingToEdit.Title, listingToEdit.Thumbnail!.Url, listingToEdit.CarMake.Name, listingToEdit.CarModel.Name, listingToEdit.Year, listingToEdit.City.Name, listingToEdit.EngineModel, listingToEdit.Mileage.ToString("##,###"), oldPrice.ToString("C"), listingToEdit.Price.ToString("C"), user.FullName);
+
+                await this.emailSender.SendEmailAsync(SendGridSenderEmail, SendGridSenderName, user.Email,
+                    "Намалена цена", emailHtmlContent);
+            }
         }
 
         return listingToEdit.Id.ToString();

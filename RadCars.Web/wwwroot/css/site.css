@@ -28,3 +28,8 @@ body {
 .main-info-text {
     font-size: 18px;
 }
+
+.custom-toast-top-left {
+    top: 7vh !important;
+    left: 2vh !important;
+}

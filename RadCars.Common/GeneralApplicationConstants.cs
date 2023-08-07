@@ -40,4 +40,6 @@ public static class GeneralApplicationConstants
 
     public const string CitiesCacheKey = "Cities";
     public const string CarMakesCacheKey = "CarMakes";
+
+    public const decimal ListingMinimumPriceDecreaseThreshold = 0.96m; //4% off
 }

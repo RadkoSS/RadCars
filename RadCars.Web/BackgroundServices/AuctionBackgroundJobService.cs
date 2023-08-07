@@ -8,17 +8,27 @@ using Hubs;
 using Contracts;
 using Hubs.Contracts;
 using Data.Models.Entities;
+using Services.Messaging.Contracts;
 using Data.Common.Contracts.Repositories;
+
+using static Common.GeneralApplicationConstants;
+using static Services.Messaging.Templates.EmailTemplates.AuctionTemplates;
 
 public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 {
+    private readonly IEmailSender emailSender;
     private readonly IBackgroundJobClient backgroundJobClient;
     private readonly IHubContext<AuctionHub, IAuctionClient> auctionHub;
     private readonly IDeletableEntityRepository<Auction> auctionsRepository;
 
-    public AuctionBackgroundJobService(IBackgroundJobClient backgroundJobClient, IHubContext<AuctionHub, IAuctionClient> auctionHub, IDeletableEntityRepository<Auction> auctionsRepository)
+    public AuctionBackgroundJobService(IBackgroundJobClient backgroundJobClient,
+        IHubContext<AuctionHub, 
+        IAuctionClient> auctionHub,
+        IDeletableEntityRepository<Auction> auctionsRepository,
+        IEmailSender emailSender)
     {
         this.auctionHub = auctionHub;
+        this.emailSender = emailSender;
         this.auctionsRepository = auctionsRepository;
         this.backgroundJobClient = backgroundJobClient;
     }
@@ -79,17 +89,30 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
         var lastBidTime = string.Empty;
         var winnerFullNameAndUserName = string.Empty;
 
+        var auctionEndedAnnounce = NoWinnerAnnounce;
+
         if (auction.Bids.Any())
         {
-            lastBidTime = auction.Bids.OrderByDescending(b => b.CreatedOn).First().CreatedOn.ToLocalTime().ToString("f");
+            var lastBid = auction.Bids.OrderByDescending(b => b.CreatedOn).First();
 
-            winnerFullNameAndUserName = $"{auction.Bids.OrderByDescending(b => b.CreatedOn).First().Bidder.FullName} ({auction.Bids.OrderByDescending(b => b.CreatedOn).First().Bidder.UserName})";
+            lastBidTime = lastBid.CreatedOn.ToLocalTime().ToString("f");
 
-            lastBidAmount = auction.Bids.OrderByDescending(b => b.CreatedOn).First().Amount;
+            winnerFullNameAndUserName = $"{lastBid.Bidder.FullName} ({lastBid.Bidder.UserName})";
+
+            lastBidAmount = lastBid.Amount;
+
+            auctionEndedAnnounce = string.Format(WinnerAnnounce, winnerFullNameAndUserName, lastBidAmount, lastBidTime,
+                lastBid.Bidder.Email, lastBid.Bidder.PhoneNumber);
         }
 
         await this.auctionHub.Clients.All.AuctionEnded(auctionId, lastBidTime, lastBidAmount, winnerFullNameAndUserName);
         await this.auctionHub.Clients.All.AllPageAuctionEnded(auctionId);
+
+        var emailToCreatorHtmlContent = string.Format(AuctionEndedEmailToCreator, auction.Creator.FullName,
+            auction.CarMake.Name, auction.CarModel.Name, auction.Thumbnail!.Url, auction.Title, auctionEndedAnnounce);
+
+        await this.emailSender.SendEmailAsync(SendGridSenderEmail, SendGridSenderName, auction.Creator.Email,
+            $"Край на търга за {auction.CarMake.Name} {auction.CarModel.Name}", emailToCreatorHtmlContent);
     }
 
     public async Task RescheduleEditedAuctionStartAndEndAsync(string auctionId)

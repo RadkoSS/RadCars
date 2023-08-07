@@ -14,7 +14,8 @@ public class FeatureCategoryService : IFeatureCategoryService
     private readonly IDeletableEntityRepository<Feature> featuresRepository;
     private readonly IDeletableEntityRepository<Category> categoriesRepository;
 
-    public FeatureCategoryService(IDeletableEntityRepository<Category> categoriesRepository, IDeletableEntityRepository<Feature> featuresRepository)
+    public FeatureCategoryService(IDeletableEntityRepository<Category> categoriesRepository,
+        IDeletableEntityRepository<Feature> featuresRepository)
     {
         this.featuresRepository = featuresRepository;
         this.categoriesRepository = categoriesRepository;

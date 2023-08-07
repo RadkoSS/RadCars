@@ -9,6 +9,7 @@ using Mapping;
 using Contracts;
 using Models.Auction;
 using Common.Exceptions;
+using Messaging.Contracts;
 using Web.ViewModels.Auction;
 using Web.ViewModels.Feature;
 using Web.ViewModels.CarImage;
@@ -21,10 +22,12 @@ using RadCars.Data.Common.Contracts.Repositories;
 using static Common.GeneralApplicationConstants;
 using static Common.ExceptionsAndNotificationsMessages;
 using static Common.EntityValidationConstants.AuctionConstants;
+using static Messaging.Templates.EmailTemplates.AuctionTemplates;
 
 public class AuctionService : IAuctionService
 {
     private readonly IMapper mapper;
+    private readonly IEmailSender emailSender;
     private readonly IHtmlSanitizer htmlSanitizer;
 
     private readonly ICarService carService;
@@ -36,10 +39,19 @@ public class AuctionService : IAuctionService
     private readonly IDeletableEntityRepository<AuctionFeature> auctionFeaturesRepository;
     private readonly IDeletableEntityRepository<UserFavoriteAuction> userFavoriteAuctionsRepository;
 
-    public AuctionService(IMapper mapper, IHtmlSanitizer htmlSanitizer, ICarService carService, IAuctionImageService auctionImageService, IDeletableEntityRepository<Auction> auctionsRepository, IDeletableEntityRepository<AuctionCarImage> carImagesRepository, IDeletableEntityRepository<AuctionFeature> auctionFeaturesRepository, IDeletableEntityRepository<UserFavoriteAuction> userFavoriteAuctionsRepository, IDeletableEntityRepository<UserAuctionBid> bidsRepository)
+    public AuctionService(IMapper mapper,
+        IHtmlSanitizer htmlSanitizer,
+        ICarService carService,
+        IAuctionImageService auctionImageService,
+        IDeletableEntityRepository<Auction> auctionsRepository,
+        IDeletableEntityRepository<AuctionCarImage> carImagesRepository,
+        IDeletableEntityRepository<AuctionFeature> auctionFeaturesRepository,
+        IDeletableEntityRepository<UserFavoriteAuction> userFavoriteAuctionsRepository,
+        IDeletableEntityRepository<UserAuctionBid> bidsRepository, IEmailSender emailSender)
     {
         this.mapper = mapper;
         this.carService = carService;
+        this.emailSender = emailSender;
         this.htmlSanitizer = htmlSanitizer;
         this.bidsRepository = bidsRepository;
         this.auctionsRepository = auctionsRepository;
@@ -411,6 +423,17 @@ public class AuctionService : IAuctionService
 
             auction.IsOver = true;
             await this.auctionsRepository.SaveChangesAsync();
+
+            var winnerInfo = string.Format(WinnerAnnounce, serviceModel.UserFullNameAndUserName, amount.ToString("C"),
+                serviceModel.CreatedOn, bid.Bidder.Email, bid.Bidder.PhoneNumber);
+
+            var auctionEndEmailToCreatorHtmlContent = string.Format(AuctionEndedEmailToCreator,
+                auction.Creator.FullName, auction.CarMake.Name, auction.CarModel.Name, auction.Thumbnail!.Url,
+                auction.Title, winnerInfo);
+
+            await this.emailSender.SendEmailAsync(SendGridSenderEmail, SendGridSenderName, auction.Creator.Email,
+                $"Край на търга за {auction.CarMake.Name} {auction.CarModel.Name}",
+                auctionEndEmailToCreatorHtmlContent);
         }
 
         return serviceModel;

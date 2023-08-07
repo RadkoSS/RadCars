@@ -2,7 +2,7 @@
 ﻿@using static RadCars.Common.NotificationTypeConstants;
 
 <script>
-    toastr.options.positionClass = 'toast-top-left';
+    toastr.options.positionClass = 'custom-toast-top-left';
 </script>
 
 @if (TempData.TryGetValue(NotificationTypeConstants.ErrorMessage, out var error))

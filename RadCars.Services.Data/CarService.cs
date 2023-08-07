@@ -23,7 +23,12 @@ public class CarService : ICarService
     private readonly IDeletableEntityRepository<Category> categoriesRepository;
     private readonly IDeletableEntityRepository<EngineType> engineTypesRepository;
 
-    public CarService(IDeletableEntityRepository<CarModel> carModelsRepository, IDeletableEntityRepository<CarMake> carMakesRepository, IDeletableEntityRepository<City> citiesRepository, IDeletableEntityRepository<EngineType> engineTypesRepository, IDeletableEntityRepository<Category> categoriesRepository, IDeletableEntityRepository<Feature> featuresRepository)
+    public CarService(IDeletableEntityRepository<CarModel> carModelsRepository,
+        IDeletableEntityRepository<CarMake> carMakesRepository, 
+        IDeletableEntityRepository<City> citiesRepository, 
+        IDeletableEntityRepository<EngineType> engineTypesRepository,
+        IDeletableEntityRepository<Category> categoriesRepository, 
+        IDeletableEntityRepository<Feature> featuresRepository)
     {
         this.citiesRepository = citiesRepository;
         this.carMakesRepository = carMakesRepository;
