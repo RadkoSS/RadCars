@@ -27,7 +27,10 @@ public class UserController : BaseController
     private readonly UserManager<ApplicationUser> userManager;
     private readonly SignInManager<ApplicationUser> signInManager;
 
-    public UserController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IEmailSender emailSender, IMemoryCache memoryCache)
+    public UserController(SignInManager<ApplicationUser> signInManager,
+        UserManager<ApplicationUser> userManager, 
+        IEmailSender emailSender, 
+        IMemoryCache memoryCache)
     {
         this.emailSender = emailSender;
         this.memoryCache = memoryCache;

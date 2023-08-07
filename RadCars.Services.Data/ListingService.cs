@@ -1,8 +1,6 @@
 ﻿// ReSharper disable IdentifierTypo
 namespace RadCars.Services.Data;
 
-using System.Text.Encodings.Web;
-using AngleSharp.Dom;
 using Ganss.Xss;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;

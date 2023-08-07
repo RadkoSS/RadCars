@@ -15,7 +15,9 @@ public class HomeController : BaseController
     private readonly IAuctionService auctionService;
     private readonly IListingService listingService;
 
-    public HomeController(ILogger<HomeController> logger, IListingService listingService, IAuctionService auctionService)
+    public HomeController(ILogger<HomeController> logger,
+        IListingService listingService, 
+        IAuctionService auctionService)
     {
         this.logger = logger;
         this.auctionService = auctionService;

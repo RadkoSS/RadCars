@@ -18,7 +18,9 @@ public class AuctionController : BaseAdminController
     private readonly IMemoryCache memoryCache;
     private readonly IAuctionService auctionService;
 
-    public AuctionController(IAuctionService auctionService, ICarService carService, IMemoryCache memoryCache)
+    public AuctionController(IAuctionService auctionService, 
+        ICarService carService, 
+        IMemoryCache memoryCache)
     {
         this.carService = carService;
         this.memoryCache = memoryCache;

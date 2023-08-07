@@ -25,7 +25,10 @@ public class ListingController : BaseController
     private readonly IUserService userService;
     private readonly IListingService listingService;
 
-    public ListingController(IListingService listingService, ICarService carService, IUserService userService, IMemoryCache memoryCache)
+    public ListingController(IListingService listingService, 
+        ICarService carService, 
+        IUserService userService, 
+        IMemoryCache memoryCache)
     {
         this.carService = carService;
         this.memoryCache = memoryCache;

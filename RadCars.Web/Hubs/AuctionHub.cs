@@ -14,7 +14,9 @@ public class AuctionHub : Hub<IAuctionClient>
     private readonly UserManager<ApplicationUser> userManager;
     private readonly IBackgroundJobClient backgroundJobClient;
 
-    public AuctionHub(UserManager<ApplicationUser> userManager, IBackgroundJobClient backgroundJobClient, IAuctionService auctionService)
+    public AuctionHub(UserManager<ApplicationUser> userManager, 
+        IBackgroundJobClient backgroundJobClient,
+        IAuctionService auctionService)
     {
         this.userManager = userManager;
         this.auctionService = auctionService;
