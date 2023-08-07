@@ -93,7 +93,7 @@ const bidFormContainer = document.getElementById("bidFormContainer");
 let bidForm = document.getElementById("bidForm");
 let bidInput = document.getElementById("bidAmount");
 
-let lastHighestBid = bidInput && parseFloat(bidInput.min);
+let lastHighestBid = bidInput && Number(bidInput.min);
 let minimumStep = bidInput && Number(bidInput.step);
 
 if (bidForm) {

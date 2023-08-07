@@ -34,7 +34,7 @@
                                     <h4 class="text-decoration-underline fw-bold">Търгът приключи!</h4>
                                 </div>
                             }
-                            else
+                            else if (string.IsNullOrWhiteSpace(auction.DeletedOn))
                             {
                                 <section class="mb-2 timer" aria-live="polite">
                                     <div class="fs-6">

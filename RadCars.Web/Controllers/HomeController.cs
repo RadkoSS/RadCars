@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
+using ViewModels.Home;
 using Infrastructure.Extensions;
 using RadCars.Services.Data.Contracts;
 
@@ -11,11 +12,13 @@ using static Common.GeneralApplicationConstants;
 public class HomeController : BaseController
 {
     private readonly ILogger<HomeController> logger;
+    private readonly IAuctionService auctionService;
     private readonly IListingService listingService;
 
-    public HomeController(ILogger<HomeController> logger, IListingService listingService)
+    public HomeController(ILogger<HomeController> logger, IListingService listingService, IAuctionService auctionService)
     {
         this.logger = logger;
+        this.auctionService = auctionService;
         this.listingService = listingService;
     }
 
@@ -27,7 +30,11 @@ public class HomeController : BaseController
             return RedirectToAction("Index", "Home", new { Area = AdminAreaName });
         }
 
-        var viewModel = await this.listingService.GetMostRecentListingsAsync();
+        var viewModel = new IndexViewModel
+        {
+            Listings = await this.listingService.GetMostRecentListingsAsync(),
+            Auctions = await this.auctionService.GetMostRecentAuctionsAsync()
+        };
 
         return View(viewModel);
     }
