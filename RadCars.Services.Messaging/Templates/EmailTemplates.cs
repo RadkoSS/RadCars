@@ -1,7 +1,5 @@
 ﻿namespace RadCars.Services.Messaging.Templates;
 
-using System.Security.Cryptography;
-
 public static class EmailTemplates
 {
     public static class ListingTemplates
