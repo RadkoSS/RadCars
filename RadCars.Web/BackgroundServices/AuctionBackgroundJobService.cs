@@ -101,7 +101,7 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 
             lastBidAmount = lastBid.Amount;
 
-            auctionEndedAnnounce = string.Format(WinnerAnnounce, winnerFullNameAndUserName, lastBidAmount, lastBidTime,
+            auctionEndedAnnounce = string.Format(WinnerAnnounce, winnerFullNameAndUserName, lastBidAmount.ToString("C"), lastBidTime,
                 lastBid.Bidder.Email, lastBid.Bidder.PhoneNumber);
         }
 
