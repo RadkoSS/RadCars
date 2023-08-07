@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@500&display=swap');
+
 html {
   font-size: 14px;
 }
@@ -14,5 +16,15 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    font-family: 'Wix Madefor Display', sans-serif;
+    background-color: rgb(240, 255, 245);
+}
+
+.main-header {
+    font-size: 45px;
+}
+
+.main-info-text {
+    font-size: 18px;
 }
