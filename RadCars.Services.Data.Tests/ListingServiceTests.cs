@@ -6,7 +6,7 @@ using Ganss.Xss;
 
 using Web.ViewModels.Home;
 using Messaging.Contracts;
-
+using Web.ViewModels.Listing;
 using static TestData.DataSeeder.ListingsSeeder;
 using static Common.ExceptionsAndNotificationsMessages;
 using static TestData.DataSeeder.ApplicationUsersSeeder;
@@ -578,5 +578,461 @@ public class ListingServiceTests
         Assert.That(actualCount, Is.Not.Zero);
         Assert.IsFalse(listingExistsAfterRemove);
         Assert.That(expectedCount, Is.EqualTo(actualCount));
+    }
+
+    [Test]
+    public async Task GetAllDeactivatedListingsByUserIdAsyncReturnsCorrectDeactivatedListings()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testUser = GetApplicationUsers()[1];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+        listingRepoMock.Setup(r => r.AllAsNoTrackingWithDeleted()).Returns(listingsAsQueryable.Where(l => l.IsDeleted));
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        var deactivatedListings = await this.listingService.GetAllDeactivatedListingsByUserIdAsync(testUser.Id.ToString());
+
+        //Assert
+        var resultAsList = deactivatedListings.ToList();
+
+        var expectedCount = listingsArray.Count(x => x.IsDeleted && x.CreatorId == testUser.Id);
+        var actualCount = resultAsList.Count;
+
+        Assert.IsNotNull(resultAsList);
+        Assert.IsNotEmpty(resultAsList);
+        Assert.That(actualCount, Is.EqualTo(expectedCount));
+    }
+
+    [Test]
+    public void GetListingEditAsyncThrowsInvalidOperationExceptionWhenListingDoesNotExist()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testUser = GetApplicationUsers()[1];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            await this.listingService.GetListingEditAsync("ListingIdDoesNotExist", testUser.Id.ToString(), false);
+        });
+    }
+
+    [Test]
+    public void GetListingEditAsyncThrowsInvalidOperationExceptionWhenUserIsNotCreatorNorAdmin()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testListing = listingsArray[0];
+        var testUser = GetApplicationUsers()[1];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Assert
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            await this.listingService.GetListingEditAsync(testListing.Id.ToString(), testUser.Id.ToString(), false);
+        });
+    }
+
+    [Test]
+    public void EditListingAsyncThrowsExceptionWhenFormIsEmpty()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testUser = GetApplicationUsers()[1];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Assert
+        Assert.CatchAsync<Exception>(async () =>
+        {
+            var emptyForm = new ListingEditFormModel();
+            await this.listingService.EditListingAsync(emptyForm, testUser.Id.ToString(), false);
+        });
+    }
+
+    [Test]
+    public async Task GetDeactivatedListingDetailsAsyncReturnsCorrectDeactivatedListingWhenUserIsCreator()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testListing = listingsArray[3];
+        var testUser = GetApplicationUsers()[1];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Assert
+        var deactivatedListing = await this.listingService.GetDeactivatedListingDetailsAsync(testListing.Id.ToString(), testUser.Id.ToString(), false);
+
+        var expectedListingId = listingsArray.First(x => x.Id == testListing.Id && x.IsDeleted).Id.ToString();
+        var actualListingId = deactivatedListing.Id;
+
+        Assert.IsNotNull(deactivatedListing);
+        Assert.That(expectedListingId, Is.EqualTo(actualListingId));
+    }
+
+    [Test]
+    public async Task GetDeactivatedListingDetailsAsyncReturnsCorrectDeactivatedListingWhenUserIsAdmin()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testListing = listingsArray[3];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Assert
+        var deactivatedListing = await this.listingService.GetDeactivatedListingDetailsAsync(testListing.Id.ToString(), "AdminId", true);
+
+        var expectedListingId = listingsArray.First(x => x.Id == testListing.Id && x.IsDeleted).Id.ToString();
+        var actualListingId = deactivatedListing.Id;
+
+        Assert.IsNotNull(deactivatedListing);
+        Assert.That(expectedListingId, Is.EqualTo(actualListingId));
+    }
+
+    [Test]
+    public void GetDeactivatedListingDetailsAsyncThrowsExceptionWhenListingDoesNotExist()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testUser = GetApplicationUsers()[1];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Assert
+        Assert.CatchAsync<Exception>(async () =>
+        {
+            await this.listingService.GetDeactivatedListingDetailsAsync("ListingIdDoesNotExist", testUser.Id.ToString(), false);
+        });
+    }
+
+    [Test]
+    public async Task GetChooseThumbnailAsyncGetsListingImagesInAChooseThumbnailFormModelIfListingExistsAndUserIsCreator()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testListing = listingsArray[1];
+        var testUser = GetApplicationUsers()[0];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+        listingRepoMock.Setup(r => r.All()).Returns(listingsAsQueryable.Where(x => x.IsDeleted == false));
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Assert
+        var chooseThumbnailViewModel =
+            await this.listingService.GetChooseThumbnailAsync(testListing.Id.ToString(), testUser.Id.ToString(), false);
+
+        var expectedFirstImageId = testListing.Images.First().Id.ToString();
+        var actualFirstImageId = chooseThumbnailViewModel.Images.First().Id;
+
+        var expectedFirstImageUrl = testListing.Images.First().Url;
+        var actualFirstImageUrl = chooseThumbnailViewModel.Images.First().Url;
+
+        Assert.IsNotNull(chooseThumbnailViewModel);
+        Assert.That(expectedFirstImageId, Is.EqualTo(actualFirstImageId));
+        Assert.That(expectedFirstImageUrl, Is.EqualTo(actualFirstImageUrl));
+    }
+
+    [Test]
+    public void GetChooseThumbnailAsyncThrowExceptionWhenListingDoesNotExist()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testUser = GetApplicationUsers()[0];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+        listingRepoMock.Setup(r => r.All()).Returns(listingsAsQueryable.Where(x => x.IsDeleted == false));
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Assert
+        Assert.CatchAsync<Exception>(async () =>
+        {
+            await this.listingService.GetChooseThumbnailAsync("ListingIdDoesNotExist", testUser.Id.ToString(), false);
+        });
+    }
+
+    [Test]
+    public void GetChooseThumbnailAsyncThrowExceptionWhenTheUserIsNotCreatorNorAdmin()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testUser = GetApplicationUsers()[1];
+        var testListing = listingsArray[0];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+        listingRepoMock.Setup(r => r.All()).Returns(listingsAsQueryable.Where(x => x.IsDeleted == false));
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Assert
+        Assert.CatchAsync<Exception>(async () =>
+        {
+            await this.listingService.GetChooseThumbnailAsync(testListing.Id.ToString(), testUser.Id.ToString(), false);
+        });
+    }
+
+    [Test]
+    public async Task DeactivateListingByIdAsyncSetsIsDeletedToTrueIfListingExistsAndUserIsCreator()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testUser = GetApplicationUsers()[0];
+        var testListing = listingsArray[0];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+
+        listingRepoMock.Setup(r => r.All()).Returns(listingsAsQueryable.Where(x => x.IsDeleted == false));
+
+        listingRepoMock.Setup(r => r.Delete(It.IsAny<Listing>())).Callback((Listing listing) =>
+        {
+            var listingToSoftDelete = listingsArray.First(x => x.Id == listing.Id);
+
+            listingToSoftDelete.IsDeleted = true;
+            listingToSoftDelete.DeletedOn = DateTime.UtcNow;
+        });
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        await this.listingService.DeactivateListingByIdAsync(testListing.Id.ToString(), testUser.Id.ToString(),
+            false);
+
+        //Assert
+        var softDeletionStateOfListing = testListing.IsDeleted;
+
+        Assert.IsTrue(softDeletionStateOfListing);
+        Assert.IsNotNull(testListing.DeletedOn);
+    }
+
+    [Test]
+    public async Task DeactivateListingByIdAsyncSetsIsDeletedToTrueIfListingExistsAndUserIsAdmin()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testListing = listingsArray[0];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+
+        listingRepoMock.Setup(r => r.All()).Returns(listingsAsQueryable.Where(x => x.IsDeleted == false));
+
+        listingRepoMock.Setup(r => r.Delete(It.IsAny<Listing>())).Callback((Listing listing) =>
+        {
+            var listingToSoftDelete = listingsArray.First(x => x.Id == listing.Id);
+
+            listingToSoftDelete.IsDeleted = true;
+            listingToSoftDelete.DeletedOn = DateTime.UtcNow;
+        });
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        await this.listingService.DeactivateListingByIdAsync(testListing.Id.ToString(), "AdminId",
+            true);
+
+        //Assert
+        var softDeletionStateOfListing = testListing.IsDeleted;
+
+        Assert.IsTrue(softDeletionStateOfListing);
+        Assert.IsNotNull(testListing.DeletedOn);
+    }
+
+    [Test]
+    public void DeactivateListingByIdAsyncThrowsExceptionWhenListingDoesNotExistOrIsSoftDeleted()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testUser = GetApplicationUsers()[1];
+        var testListing = listingsArray[3];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+
+        listingRepoMock.Setup(r => r.All()).Returns(listingsAsQueryable.Where(x => x.IsDeleted == false));
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Act & Assert
+        Assert.CatchAsync<Exception>(async () =>
+        {
+            await this.listingService.DeactivateListingByIdAsync(testListing.Id.ToString(), testUser.Id.ToString(),
+                false);
+        });
+        Assert.CatchAsync<Exception>(async () =>
+        {
+            await this.listingService.DeactivateListingByIdAsync("ListingIdDoesNotExist", testUser.Id.ToString(),
+                false);
+        });
+    }
+
+    [Test]
+    public async Task ReactivateListingByIdAsyncUnDeletesTheListingIfItExistsAndTheUserIsCreator()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testUser = GetApplicationUsers()[0];
+        var testListing = listingsArray[0];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
+
+        listingRepoMock.Setup(r => r.Undelete(It.IsAny<Listing>())).Callback((Listing listing) =>
+        {
+            var listingToSoftDelete = listingsArray.First(x => x.Id == listing.Id);
+
+            listingToSoftDelete.IsDeleted = false;
+            listingToSoftDelete.DeletedOn = null;
+        });
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        await this.listingService.ReactivateListingByIdAsync(testListing.Id.ToString(), testUser.Id.ToString(),
+            false);
+
+        //Assert
+        var softDeletionStateOfListing = testListing.IsDeleted;
+
+        Assert.IsFalse(softDeletionStateOfListing);
+        Assert.IsNull(testListing.DeletedOn);
+    }
+
+    [Test]
+    public async Task ReactivateListingByIdAsyncUnDeletesTheListingIfItExistsAndTheUserIsAdmin()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testListing = listingsArray[0];
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
+
+        listingRepoMock.Setup(r => r.Undelete(It.IsAny<Listing>())).Callback((Listing listing) =>
+        {
+            var listingToSoftDelete = listingsArray.First(x => x.Id == listing.Id);
+
+            listingToSoftDelete.IsDeleted = false;
+            listingToSoftDelete.DeletedOn = null;
+        });
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        //Act
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        await this.listingService.ReactivateListingByIdAsync(testListing.Id.ToString(), "AdminId",
+            true);
+
+        //Assert
+        var softDeletionStateOfListing = testListing.IsDeleted;
+
+        Assert.IsFalse(softDeletionStateOfListing);
+        Assert.IsNull(testListing.DeletedOn);
     }
 }

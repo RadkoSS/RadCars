@@ -231,6 +231,7 @@ public class AuctionService : IAuctionService
     {
         var deactivatedAuctions = await this.auctionsRepository.AllWithDeleted()
             .Where(a => a.IsDeleted == true && a.CreatorId.ToString() == userId)
+            .OrderByDescending(a => a.DeletedOn)
             .To<AllAuctionsViewModel>().ToArrayAsync();
 
         deactivatedAuctions = deactivatedAuctions.OrderByDescending(a => a.DeletedOn).ToArray();
