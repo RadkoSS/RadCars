@@ -373,3 +373,5 @@ FodyWeavers.xsd
 /RadCars.Common/SecretCredentials.cs
 /RadCars.Api/appsettings.json
 /RadCars.Api/appsettings.Development.json
+*.lutconfig
+/.gitignore
