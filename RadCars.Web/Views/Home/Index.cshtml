@@ -11,105 +11,119 @@
     </div>
 
     <div class="d-flex flex-column">
-        
+
         <div class="d-flex m-auto mb-5">
             <a asp-area="" asp-controller="Auction" asp-action="All" class="btn btn-success me-5">Търсене на търгове</a>
             <a asp-area="" asp-controller="Listing" asp-action="All" class="btn btn-primary ms-5">Търсене на обяви</a>
         </div>
 
-        <h2 class="text-center">Нови търгове</h2>
+        @if (Model.Auctions.Any() == false)
+        {
+            <h2 class="text-center">Все още няма търгове. Създайте търг и той ще бъде визуализиран тук.</h2>
+        }
+        else
+        {
+            <h2 class="text-center">Нови търгове</h2>
 
-        <div class="row row-cols-1 row-cols-md-3 g-4 mb-3 mt-3">
-            @foreach (var auction in Model.Auctions)
-            {
-                <div class="col">
+            <div class="row row-cols-1 row-cols-md-3 g-4 mb-3 mt-3">
+                @foreach (var auction in Model.Auctions)
+                {
+                    <div class="col">
 
-                    <div class="card h-100 border-success mb-3" id="@auction.Id.ToLower()">
-                        <a asp-area="" asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id">
-                            <div class="ratio ratio-16x9">
-                                <div class="card-img-top" style="background-image: url('@auction.ThumbnailUrl'); background-size: cover; background-position: center;"></div>
-                            </div>
-                        </a>
+                        <div class="card h-100 border-success mb-3" id="@auction.Id.ToLower()">
+                            <a asp-area="" asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id">
+                                <div class="ratio ratio-16x9">
+                                    <div class="card-img-top" style="background-image: url('@auction.ThumbnailUrl'); background-size: cover; background-position: center;"></div>
+                                </div>
+                            </a>
 
-                        <div class="card-body">
-                            <h5 class="card-title">@auction.Title</h5>
+                            <div class="card-body">
+                                <h5 class="card-title">@auction.Title</h5>
 
-                            <div class="d-flex flex-column align-items-center mt-5 auctionInfoContainer">
-                                @if (auction.IsOver is true)
-                                {
-                                    <div class="text-center endAnnounce">
-                                        <h4 class="text-decoration-underline fw-bold">Търгът приключи!</h4>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <section class="mb-2 timer" aria-live="polite">
-                                        <div class="fs-6">
-                                            @if (auction.IsOver.HasValue == false)
-                                            {
-                                                <p class="fw-bold timerText">Начална цена: @auction.StartingPrice.ToString("C") Започва след:</p>
-                                                <input type="hidden" class="time" value="@auction.StartTime" />
-                                            }
-                                            else
-                                            {
-                                                if (auction.CurrentPrice == auction.StartingPrice)
+                                <div class="d-flex flex-column align-items-center mt-5 auctionInfoContainer">
+                                    @if (auction.IsOver is true)
+                                    {
+                                        <div class="text-center endAnnounce">
+                                            <h4 class="text-decoration-underline fw-bold">Търгът приключи!</h4>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <section class="mb-2 timer" aria-live="polite">
+                                            <div class="fs-6">
+                                                @if (auction.IsOver.HasValue == false)
                                                 {
-                                                    <p class="fw-bold timerText">Начална цена @auction.CurrentPrice.ToString("C") Приключва след:</p>
-                                                    <input type="hidden" class="time" value="@auction.EndTime" />
+                                                    <p class="fw-bold timerText">Начална цена: @auction.StartingPrice.ToString("C") Започва след:</p>
+                                                    <input type="hidden" class="time" value="@auction.StartTime" />
                                                 }
                                                 else
                                                 {
-                                                    <p class="fw-bold timerText">Текуща цена @auction.CurrentPrice.ToString("C") Приключва след:</p>
-                                                    <input type="hidden" class="time" value="@auction.EndTime" />
+                                                    if (auction.CurrentPrice == auction.StartingPrice)
+                                                    {
+                                                        <p class="fw-bold timerText">Начална цена @auction.CurrentPrice.ToString("C") Приключва след:</p>
+                                                        <input type="hidden" class="time" value="@auction.EndTime" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="fw-bold timerText">Текуща цена @auction.CurrentPrice.ToString("C") Приключва след:</p>
+                                                        <input type="hidden" class="time" value="@auction.EndTime" />
+                                                    }
                                                 }
-                                            }
-                                        </div>
-                                        <div class="timer-container">
-                                            <span class="days" role="timer">0 дни</span>
-                                            <span class="hours" role="timer">0 часа</span>
-                                            <span class="minutes" role="timer">0 минути</span>
-                                            и
-                                            <span class="seconds" role="timer">0 секунди</span>
-                                        </div>
-                                    </section>
-                                }
+                                            </div>
+                                            <div class="timer-container">
+                                                <span class="days" role="timer">0 дни</span>
+                                                <span class="hours" role="timer">0 часа</span>
+                                                <span class="minutes" role="timer">0 минути</span>
+                                                и
+                                                <span class="seconds" role="timer">0 секунди</span>
+                                            </div>
+                                        </section>
+                                    }
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a asp-area="" asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id" class="btn btn-success btn-sm">Виж търг</a>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <a asp-area="" asp-controller="Auction" asp-action="Details" asp-route-auctionId="@auction.Id" class="btn btn-success btn-sm">Виж търг</a>
-                        </div>
+
                     </div>
+                }
+            </div>
+        }
 
-                </div>
-            }
-        </div>
+        @if (Model.Listings.Any() == false)
+        {
+            <h2 class="text-center mt-4">Все още няма обяви. Създайте обява и тя ще бъде визуализирана тук.</h2>
+        }
+        else
+        {
+            <h2 class="text-center mt-4">Нови обяви</h2>
 
-        <h2 class="text-center mt-4">Нови обяви</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4 mb-3 mt-3">
+                @foreach (var listing in Model.Listings)
+                {
+                    <div class="col">
 
-        <div class="row row-cols-1 row-cols-md-3 g-4 mb-3 mt-3">
-            @foreach (var listing in Model.Listings)
-            {
-                <div class="col">
+                        <div class="card h-100 border-primary mb-3">
+                            <a asp-area="" asp-controller="Listing" asp-action="Details" asp-route-listingId="@listing.Id">
+                                <div class="ratio ratio-16x9">
+                                    <div class="card-img-top" style="background-image: url('@listing.ThumbnailUrl'); background-size: cover; background-position: center;"></div>
+                                </div>
+                            </a>
 
-                    <div class="card h-100 border-primary mb-3">
-                        <a asp-area="" asp-controller="Listing" asp-action="Details" asp-route-listingId="@listing.Id">
-                            <div class="ratio ratio-16x9">
-                                <div class="card-img-top" style="background-image: url('@listing.ThumbnailUrl'); background-size: cover; background-position: center;"></div>
+                            <div class="card-body">
+                                <h5 class="card-title">@listing.Title</h5>
+                                <p class="card-text">Цена: @listing.Price.ToString("C")</p>
                             </div>
-                        </a>
+                            <div class="card-footer">
+                                <a asp-area="" asp-controller="Listing" asp-action="Details" asp-route-listingid="@listing.Id" class="btn btn-primary btn-sm">Виж обява</a>
+                            </div>
+                        </div>
 
-                        <div class="card-body">
-                            <h5 class="card-title">@listing.Title</h5>
-                            <p class="card-text">Цена: @listing.Price.ToString("C")</p>
-                        </div>
-                        <div class="card-footer">
-                            <a asp-area="" asp-controller="Listing" asp-action="Details" asp-route-listingid="@listing.Id" class="btn btn-primary btn-sm">Виж обява</a>
-                        </div>
                     </div>
-
-                </div>
-            }
-        </div>
+                }
+            </div>
+        }
 
     </div>
 </div>

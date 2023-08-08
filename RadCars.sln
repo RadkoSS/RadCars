@@ -33,7 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadCars.Services.Mapping", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadCars.Services.Data.Models", "RadCars.Services.Data.Models\RadCars.Services.Data.Models.csproj", "{D1E0F0E6-D2D7-4056-B33F-3A1A75784C11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.Services.Messaging", "RadCars.Services.Messaging\RadCars.Services.Messaging.csproj", "{22B12C5D-F65D-480E-831A-5C5203D32EC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadCars.Services.Messaging", "RadCars.Services.Messaging\RadCars.Services.Messaging.csproj", "{22B12C5D-F65D-480E-831A-5C5203D32EC7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7BEE97CB-004D-4C32-B886-D4C5864497E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadCars.Services.Data.Tests", "RadCars.Services.Data.Tests\RadCars.Services.Data.Tests.csproj", "{3AF3D9D5-413B-45BF-9591-70CAA4DFAA04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +93,10 @@ Global
 		{22B12C5D-F65D-480E-831A-5C5203D32EC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22B12C5D-F65D-480E-831A-5C5203D32EC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22B12C5D-F65D-480E-831A-5C5203D32EC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AF3D9D5-413B-45BF-9591-70CAA4DFAA04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AF3D9D5-413B-45BF-9591-70CAA4DFAA04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AF3D9D5-413B-45BF-9591-70CAA4DFAA04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AF3D9D5-413B-45BF-9591-70CAA4DFAA04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +113,7 @@ Global
 		{90F61726-E39E-48B1-893F-4E70871E2A27} = {A9CDA973-EB2C-425A-9948-73544F1D1109}
 		{D1E0F0E6-D2D7-4056-B33F-3A1A75784C11} = {A9CDA973-EB2C-425A-9948-73544F1D1109}
 		{22B12C5D-F65D-480E-831A-5C5203D32EC7} = {A9CDA973-EB2C-425A-9948-73544F1D1109}
+		{3AF3D9D5-413B-45BF-9591-70CAA4DFAA04} = {7BEE97CB-004D-4C32-B886-D4C5864497E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09F70478-64A5-4C20-8A93-34DF1347560C}
