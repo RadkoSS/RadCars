@@ -153,6 +153,12 @@ public static class DataSeeder
                             Id = Guid.Parse("13344399-b6e3-429d-a923-4a4e9cee9e4d"),
                             Url = "De da znam",
                             ListingId = Guid.Parse("1adde4a7-4da1-47de-8660-ea7dd90d1154")
+                        },
+                        new CarImage
+                        {
+                            Id = Guid.Parse("e4ab390b-5302-4d5c-b55f-ffc48f6aee82"),
+                            Url = "De znam5",
+                            ListingId = Guid.Parse("1adde4a7-4da1-47de-8660-ea7dd90d1154")
                         }
                     },
                     ThumbnailId = Guid.Parse("13344399-b6e3-429d-a923-4a4e9cee9e4d"),
@@ -570,6 +576,13 @@ public static class DataSeeder
                     ListingId = GetListings()[3].Id,
                     Listing = GetListings()[3]
                 },
+                new CarImage
+                {
+                    Id = Guid.Parse("e4ab390b-5302-4d5c-b55f-ffc48f6aee82"),
+                    Url = "De znam5",
+                    ListingId = GetListings()[0].Id,
+                    Listing = GetListings()[0]
+                }
             };
         }
 

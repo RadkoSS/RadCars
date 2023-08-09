@@ -6,7 +6,9 @@ using Ganss.Xss;
 
 using Web.ViewModels.Home;
 using Messaging.Contracts;
+using Microsoft.EntityFrameworkCore;
 using Web.ViewModels.Listing;
+
 using static TestData.DataSeeder.ListingsSeeder;
 using static Common.ExceptionsAndNotificationsMessages;
 using static TestData.DataSeeder.ApplicationUsersSeeder;
@@ -80,16 +82,19 @@ public class ListingServiceTests
         var lastSelectedFeatureIdExpected = testListing.ListingFeatures.Last().FeatureId;
         var lastSelectedFeatureIdActual = listingDetails.ListingFeatures.SelectMany(f => f.Features).Last().Id;
 
-        Assert.That(listingDetails, Is.Not.Null);
-        Assert.That(listingDetails.Thumbnail, Is.Not.Null);
-        Assert.That(testListing.Title, Is.EqualTo(listingDetails.Title));
-        Assert.That(testListing.Id.ToString(), Is.EqualTo(listingDetails.Id));
-        Assert.That(testListing.Description, Is.EqualTo(listingDetails.Description));
-        Assert.That(testListing.Thumbnail!.Url, Is.EqualTo(listingDetails.Thumbnail.Url));
-        Assert.That(testListing.Creator.FullName, Is.EqualTo(listingDetails.CreatorFullName));
-        Assert.That(testListing.ThumbnailId.ToString(), Is.EqualTo(listingDetails.Thumbnail.Id));
-        Assert.That(expectedSelectedFeaturesCount, Is.EqualTo(actualSelectedFeaturesCount));
-        Assert.That(lastSelectedFeatureIdExpected, Is.EqualTo(lastSelectedFeatureIdActual));
+        Assert.Multiple(() =>
+        {
+            Assert.That(listingDetails, Is.Not.Null);
+            Assert.That(listingDetails.Thumbnail, Is.Not.Null);
+            Assert.That(testListing.Title, Is.EqualTo(listingDetails.Title));
+            Assert.That(testListing.Id.ToString(), Is.EqualTo(listingDetails.Id));
+            Assert.That(testListing.Description, Is.EqualTo(listingDetails.Description));
+            Assert.That(testListing.Thumbnail!.Url, Is.EqualTo(listingDetails.Thumbnail.Url));
+            Assert.That(testListing.Creator.FullName, Is.EqualTo(listingDetails.CreatorFullName));
+            Assert.That(testListing.ThumbnailId.ToString(), Is.EqualTo(listingDetails.Thumbnail.Id));
+            Assert.That(expectedSelectedFeaturesCount, Is.EqualTo(actualSelectedFeaturesCount));
+            Assert.That(lastSelectedFeatureIdExpected, Is.EqualTo(lastSelectedFeatureIdActual));
+        });
     }
 
     [Test]
@@ -150,8 +155,11 @@ public class ListingServiceTests
         var expectedFirstImageUrl = testListing.Images.First().Url;
         var actualFistImageUrl = firstImageViewModel.Url;
 
-        Assert.That(expectedFirstImageId, Is.EqualTo(actualFistImageId));
-        Assert.That(expectedFirstImageUrl, Is.EqualTo(actualFistImageUrl));
+        Assert.Multiple(() =>
+        {
+            Assert.That(expectedFirstImageId, Is.EqualTo(actualFistImageId));
+            Assert.That(expectedFirstImageUrl, Is.EqualTo(actualFistImageUrl));
+        });
     }
 
     [Test]
@@ -184,8 +192,11 @@ public class ListingServiceTests
         var expectedFirstImageUrl = testListing.Images.First().Url;
         var actualFistImageUrl = firstImageViewModel.Url;
 
-        Assert.That(expectedFirstImageId, Is.EqualTo(actualFistImageId));
-        Assert.That(expectedFirstImageUrl, Is.EqualTo(actualFistImageUrl));
+        Assert.Multiple(() =>
+        {
+            Assert.That(expectedFirstImageId, Is.EqualTo(actualFistImageId));
+            Assert.That(expectedFirstImageUrl, Is.EqualTo(actualFistImageUrl));
+        });
     }
 
     [Test]
@@ -210,7 +221,7 @@ public class ListingServiceTests
             await this.listingService.GetUploadedImagesForListingByIdAsync("NonExistingListingId", testListing.CreatorId.ToString(), false);
 
         //Assert
-        Assert.IsEmpty(imagesViewModels);
+        Assert.That(imagesViewModels, Is.Empty);
     }
 
     [Test]
@@ -235,7 +246,7 @@ public class ListingServiceTests
             await this.listingService.GetUploadedImagesForListingByIdAsync(testListing.Id.ToString(), "NotTheCreatorId", false);
 
         //Assert
-        Assert.IsEmpty(imagesViewModels);
+        Assert.That(imagesViewModels, Is.Empty);
     }
 
     [Test]
@@ -267,10 +278,13 @@ public class ListingServiceTests
         var actualLastListingId = listingIndexViewModels.Last().Id;
 
         //Assert
-        Assert.IsNotNull(mostRecentListings);
-        Assert.That(listingIndexViewModels.Count, Is.EqualTo(3));
-        Assert.That(expectedFirstListingId, Is.EqualTo(actualFirstListingId));
-        Assert.That(expectedLastListingId, Is.EqualTo(actualLastListingId));
+        Assert.Multiple(() =>
+        {
+            Assert.That(listingIndexViewModels, Is.Not.Null);
+            Assert.That(listingIndexViewModels.Count, Is.EqualTo(3));
+            Assert.That(expectedFirstListingId, Is.EqualTo(actualFirstListingId));
+            Assert.That(expectedLastListingId, Is.EqualTo(actualLastListingId));
+        });
     }
 
     [Test]
@@ -303,10 +317,13 @@ public class ListingServiceTests
             .OrderByDescending(x => x.CreatedOn).Last().Id.ToString();
         var actualLastListingId = userListingsAsList.Last().Id;
 
-        Assert.IsNotNull(userListingsViewModels);
-        Assert.IsNotEmpty(userListingsAsList);
-        Assert.That(expectedCountOfListings, Is.EqualTo(actualCountOfListings));
-        Assert.That(expectedLastListingId, Is.EqualTo(actualLastListingId));
+        Assert.Multiple(() =>
+        {
+            Assert.That(userListingsAsList, Is.Not.Null);
+            Assert.That(userListingsAsList, Is.Not.Empty);
+            Assert.That(expectedCountOfListings, Is.EqualTo(actualCountOfListings));
+            Assert.That(expectedLastListingId, Is.EqualTo(actualLastListingId));
+        });
     }
 
     [Test]
@@ -332,8 +349,11 @@ public class ListingServiceTests
         //Assert
         var userListingsAsList = userListingsViewModels.ToList();
 
-        Assert.IsNotNull(userListingsViewModels);
-        Assert.IsEmpty(userListingsAsList);
+        Assert.Multiple(() =>
+        {
+            Assert.That(userListingsAsList, Is.Not.Null);
+            Assert.That(userListingsAsList, Is.Empty);
+        });
     }
 
     [Test]
@@ -355,7 +375,7 @@ public class ListingServiceTests
             autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
 
         var favoriteListings = await this.listingService.GetFavoriteListingsByUserIdAsync(testUser.Id.ToString());
-        
+
         //Assert
         var favoriteListingsAsList = favoriteListings.ToList();
 
@@ -364,10 +384,13 @@ public class ListingServiceTests
 
         var userIsCreatorOfFavoriteListing = favoriteListingsAsList.Any(x => x.CreatorId == testUser.Id.ToString());
 
-        Assert.IsNotNull(favoriteListings);
-        Assert.IsNotEmpty(favoriteListingsAsList);
-        Assert.IsFalse(userIsCreatorOfFavoriteListing);
-        Assert.That(actualCount, Is.EqualTo(expectedCount));
+        Assert.Multiple(() =>
+        {
+            Assert.That(favoriteListingsAsList, Is.Not.Null);
+            Assert.That(favoriteListingsAsList, Is.Not.Empty);
+            Assert.That(userIsCreatorOfFavoriteListing, Is.False);
+            Assert.That(actualCount, Is.EqualTo(expectedCount));
+        });
     }
 
     [Test]
@@ -391,7 +414,7 @@ public class ListingServiceTests
 
         var result = await this.listingService.IsListingInUserFavoritesByIdAsync(testListing.Id.ToString(), testUser.Id.ToString());
 
-        Assert.IsFalse(result);
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -415,7 +438,7 @@ public class ListingServiceTests
 
         var result = await this.listingService.IsListingInUserFavoritesByIdAsync(testListing.Id.ToString(), testUser.Id.ToString());
 
-        Assert.IsTrue(result);
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -538,8 +561,11 @@ public class ListingServiceTests
         //Assert
         var expectedCount = userFavoriteListingsList.Count(x => x.ListingId == testListing.Id);
 
-        Assert.That(count, Is.Not.Zero);
-        Assert.That(expectedCount, Is.EqualTo(count));
+        Assert.Multiple(() =>
+        {
+            Assert.That(count, Is.Not.Zero);
+            Assert.That(expectedCount, Is.EqualTo(count));
+        });
     }
 
     [Test]
@@ -575,9 +601,12 @@ public class ListingServiceTests
 
         var listingExistsAfterRemove = userFavoriteListingsList.Any(x => x.ListingId == testListing.Id);
 
-        Assert.That(actualCount, Is.Not.Zero);
-        Assert.IsFalse(listingExistsAfterRemove);
-        Assert.That(expectedCount, Is.EqualTo(actualCount));
+        Assert.Multiple(() =>
+        {
+            Assert.That(actualCount, Is.Not.Zero);
+            Assert.That(listingExistsAfterRemove, Is.False);
+            Assert.That(expectedCount, Is.EqualTo(actualCount));
+        });
     }
 
     [Test]
@@ -606,8 +635,8 @@ public class ListingServiceTests
         var expectedCount = listingsArray.Count(x => x.IsDeleted && x.CreatorId == testUser.Id);
         var actualCount = resultAsList.Count;
 
-        Assert.IsNotNull(resultAsList);
-        Assert.IsNotEmpty(resultAsList);
+        Assert.That(resultAsList, Is.Not.Null);
+        Assert.That(resultAsList, Is.Not.Empty);
         Assert.That(actualCount, Is.EqualTo(expectedCount));
     }
 
@@ -712,8 +741,11 @@ public class ListingServiceTests
         var expectedListingId = listingsArray.First(x => x.Id == testListing.Id && x.IsDeleted).Id.ToString();
         var actualListingId = deactivatedListing.Id;
 
-        Assert.IsNotNull(deactivatedListing);
-        Assert.That(expectedListingId, Is.EqualTo(actualListingId));
+        Assert.Multiple(() =>
+        {
+            Assert.That(deactivatedListing, Is.Not.Null);
+            Assert.That(expectedListingId, Is.EqualTo(actualListingId));
+        });
     }
 
     [Test]
@@ -740,8 +772,11 @@ public class ListingServiceTests
         var expectedListingId = listingsArray.First(x => x.Id == testListing.Id && x.IsDeleted).Id.ToString();
         var actualListingId = deactivatedListing.Id;
 
-        Assert.IsNotNull(deactivatedListing);
-        Assert.That(expectedListingId, Is.EqualTo(actualListingId));
+        Assert.Multiple(() =>
+        {
+            Assert.That(deactivatedListing, Is.Not.Null);
+            Assert.That(expectedListingId, Is.EqualTo(actualListingId));
+        });
     }
 
     [Test]
@@ -798,9 +833,12 @@ public class ListingServiceTests
         var expectedFirstImageUrl = testListing.Images.First().Url;
         var actualFirstImageUrl = chooseThumbnailViewModel.Images.First().Url;
 
-        Assert.IsNotNull(chooseThumbnailViewModel);
-        Assert.That(expectedFirstImageId, Is.EqualTo(actualFirstImageId));
-        Assert.That(expectedFirstImageUrl, Is.EqualTo(actualFirstImageUrl));
+        Assert.Multiple(() =>
+        {
+            Assert.That(chooseThumbnailViewModel, Is.Not.Null);
+            Assert.That(expectedFirstImageId, Is.EqualTo(actualFirstImageId));
+            Assert.That(expectedFirstImageUrl, Is.EqualTo(actualFirstImageUrl));
+        });
     }
 
     [Test]
@@ -888,8 +926,11 @@ public class ListingServiceTests
         //Assert
         var softDeletionStateOfListing = testListing.IsDeleted;
 
-        Assert.IsTrue(softDeletionStateOfListing);
-        Assert.IsNotNull(testListing.DeletedOn);
+        Assert.Multiple(() =>
+        {
+            Assert.That(softDeletionStateOfListing, Is.True);
+            Assert.That(testListing.DeletedOn, Is.Not.Null);
+        });
     }
 
     [Test]
@@ -925,8 +966,11 @@ public class ListingServiceTests
         //Assert
         var softDeletionStateOfListing = testListing.IsDeleted;
 
-        Assert.IsTrue(softDeletionStateOfListing);
-        Assert.IsNotNull(testListing.DeletedOn);
+        Assert.Multiple(() =>
+        {
+            Assert.That(softDeletionStateOfListing, Is.True);
+            Assert.That(testListing.DeletedOn, Is.Not.Null);
+        });
     }
 
     [Test]
@@ -995,8 +1039,11 @@ public class ListingServiceTests
         //Assert
         var softDeletionStateOfListing = testListing.IsDeleted;
 
-        Assert.IsFalse(softDeletionStateOfListing);
-        Assert.IsNull(testListing.DeletedOn);
+        Assert.Multiple(() =>
+        {
+            Assert.That(softDeletionStateOfListing, Is.False);
+            Assert.That(testListing.DeletedOn, Is.Null);
+        });
     }
 
     [Test]
@@ -1032,7 +1079,131 @@ public class ListingServiceTests
         //Assert
         var softDeletionStateOfListing = testListing.IsDeleted;
 
-        Assert.IsFalse(softDeletionStateOfListing);
-        Assert.IsNull(testListing.DeletedOn);
+        Assert.Multiple(() =>
+        {
+            Assert.That(softDeletionStateOfListing, Is.False);
+            Assert.That(testListing.DeletedOn, Is.Null);
+        });
+    }
+
+    [Test]
+    public void AddThumbnailToListingByIdAsyncThrowsExceptionWhenListingDoesNotExist()
+    {
+        //Arrange
+        var testUser = GetApplicationUsers()[0];
+        var testListing = GetListings().First();
+        var newThumbnailId = testListing.Images.Last().Id.ToString();
+        var listingCarImages = GetCarImages();
+
+        var listingImagesAsQueryable = listingCarImages.AsQueryable().BuildMock();
+
+        var listingCarImagesRepoMock = new Mock<IDeletableEntityRepository<CarImage>>();
+        listingCarImagesRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingImagesAsQueryable);
+
+        this.listingCarImagesRepo = listingCarImagesRepoMock.Object;
+
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Act & Assert
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            await this.listingService.AddThumbnailToListingByIdAsync("NotExistingListing", newThumbnailId, testUser.Id.ToString(), false);
+        }, InvalidImageForThumbnailProvided);
+    }
+
+    [Test]
+    public void AddThumbnailToListingByIdAsyncThrowsExceptionWhenImageIdDoesNotExist()
+    {
+        //Arrange
+        var testUser = GetApplicationUsers()[0];
+        var testListing = GetListings().First();
+        var listingCarImages = GetCarImages();
+
+        var listingImagesAsQueryable = listingCarImages.AsQueryable().BuildMock();
+
+        var listingCarImagesRepoMock = new Mock<IDeletableEntityRepository<CarImage>>();
+        listingCarImagesRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingImagesAsQueryable);
+
+        this.listingCarImagesRepo = listingCarImagesRepoMock.Object;
+
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Act & Assert
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            await this.listingService.AddThumbnailToListingByIdAsync(testListing.Id.ToString(), "notExisting", testUser.Id.ToString(), false);
+        }, InvalidImageForThumbnailProvided);
+    }
+
+    [Test]
+    public void AddThumbnailToListingByIdAsyncThrowsExceptionWhenUserIsNotCreatorNorAdmin()
+    {
+        //Arrange
+        var testUser = GetApplicationUsers()[1];
+        var testListing = GetListings().First();
+        var newThumbnailId = testListing.Images.Last().Id.ToString();
+        var listingCarImages = GetCarImages();
+
+        var listingImagesAsQueryable = listingCarImages.AsQueryable().BuildMock();
+
+        var listingCarImagesRepoMock = new Mock<IDeletableEntityRepository<CarImage>>();
+        listingCarImagesRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingImagesAsQueryable);
+
+        this.listingCarImagesRepo = listingCarImagesRepoMock.Object;
+
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Act & Assert
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            await this.listingService.AddThumbnailToListingByIdAsync(testListing.Id.ToString(), newThumbnailId, testUser.Id.ToString(), false);
+        }, InvalidImageForThumbnailProvided);
+    }
+
+    [Test]
+    public async Task AddThumbnailToListingByIdAsyncChangesToThumbnailWhenUserIsCreator()
+    {
+        //Arrange
+        var listingsArray = GetListings();
+        var testUser = GetApplicationUsers()[0];
+        var testListing = GetListings().First();
+        var newThumbnailId = testListing.Images.Last().Id.ToString();
+        var listingCarImages = GetCarImages();
+
+        var listingImagesAsQueryable = listingCarImages.AsQueryable().BuildMock();
+
+        var listingCarImagesRepoMock = new Mock<IDeletableEntityRepository<CarImage>>();
+        listingCarImagesRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingImagesAsQueryable);
+
+        var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+
+        var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
+
+        this.listingsRepo = listingRepoMock.Object;
+
+        this.listingCarImagesRepo = listingCarImagesRepoMock.Object;
+
+        this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
+            autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
+
+        //Act
+        await this.listingService.AddThumbnailToListingByIdAsync(testListing.Id.ToString(), newThumbnailId, testUser.Id.ToString(), false);
+
+        //Assert
+        var changedListing = await listingsAsQueryable.FirstAsync(x => x.Id == testListing.Id);
+
+        var expectedThumbnailId = newThumbnailId;
+        var actualThumbnailId = changedListing.ThumbnailId.ToString();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(testListing.Thumbnail, Is.Not.Null);
+            Assert.That(testListing.ThumbnailId, Is.Not.Null);
+            Assert.That(expectedThumbnailId, Is.EqualTo(actualThumbnailId));
+        });
     }
 }
