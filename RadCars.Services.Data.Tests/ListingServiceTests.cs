@@ -3,10 +3,10 @@ namespace RadCars.Services.Data.Tests;
 using System.Reflection;
 
 using Ganss.Xss;
+using Microsoft.EntityFrameworkCore;
 
 using Web.ViewModels.Home;
 using Messaging.Contracts;
-using Microsoft.EntityFrameworkCore;
 using Web.ViewModels.Listing;
 
 using static TestData.DataSeeder.ListingsSeeder;
@@ -16,20 +16,20 @@ using static TestData.DataSeeder.ApplicationUsersSeeder;
 public class ListingServiceTests
 {
     //Use the instance of AutoMapper with its mapping configuration.
-    private static IMapper autoMapper;
+    private static IMapper autoMapper = null!;
 
-    private IListingService listingService;
+    private IListingService listingService = null!;
 
-    private IEmailSender emailSender;
-    private IHtmlSanitizer htmlSanitizer;
+    private IEmailSender emailSender = null!;
+    private IHtmlSanitizer htmlSanitizer = null!;
 
-    private ICarService carService;
-    private IListingImageService listingImageService;
+    private ICarService carService = null!;
+    private IListingImageService listingImageService = null!;
 
-    private IDeletableEntityRepository<Listing> listingsRepo;
-    private IDeletableEntityRepository<CarImage> listingCarImagesRepo;
-    private IDeletableEntityRepository<ListingFeature> listingFeaturesRepo;
-    private IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepo;
+    private IDeletableEntityRepository<Listing> listingsRepo = null!;
+    private IDeletableEntityRepository<CarImage> listingCarImagesRepo = null!;
+    private IDeletableEntityRepository<ListingFeature> listingFeaturesRepo = null!;
+    private IDeletableEntityRepository<UserFavoriteListing> userFavoriteListingsRepo = null!;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
@@ -591,7 +591,7 @@ public class ListingServiceTests
         this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,
             autoMapper, this.listingFeaturesRepo, this.userFavoriteListingsRepo, this.htmlSanitizer, this.emailSender);
 
-        var userFavoriteCount = userFavoriteListingsList.Count(x => x.UserId == testUser.Id && x.IsDeleted == false);
+        var userFavoriteCount = userFavoriteListingsList.Count(x => x.UserId == testUser.Id);
 
         await this.listingService.UnFavoriteListingByIdAsync(testListing.Id.ToString(), testUser.Id.ToString());
 
@@ -815,7 +815,7 @@ public class ListingServiceTests
         var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
 
         var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
-        listingRepoMock.Setup(r => r.All()).Returns(listingsAsQueryable.Where(x => x.IsDeleted == false));
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
 
         this.listingsRepo = listingRepoMock.Object;
 
@@ -842,7 +842,7 @@ public class ListingServiceTests
     }
 
     [Test]
-    public void GetChooseThumbnailAsyncThrowExceptionWhenListingDoesNotExist()
+    public void GetChooseThumbnailAsyncThrowsExceptionWhenListingDoesNotExist()
     {
         //Arrange
         var listingsArray = GetListings();
@@ -851,7 +851,7 @@ public class ListingServiceTests
         var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
 
         var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
-        listingRepoMock.Setup(r => r.All()).Returns(listingsAsQueryable.Where(x => x.IsDeleted == false));
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
 
         this.listingsRepo = listingRepoMock.Object;
 
@@ -867,7 +867,7 @@ public class ListingServiceTests
     }
 
     [Test]
-    public void GetChooseThumbnailAsyncThrowExceptionWhenTheUserIsNotCreatorNorAdmin()
+    public void GetChooseThumbnailAsyncThrowsExceptionWhenTheUserIsNotCreatorNorAdmin()
     {
         //Arrange
         var listingsArray = GetListings();
@@ -877,7 +877,7 @@ public class ListingServiceTests
         var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
 
         var listingRepoMock = new Mock<IDeletableEntityRepository<Listing>>();
-        listingRepoMock.Setup(r => r.All()).Returns(listingsAsQueryable.Where(x => x.IsDeleted == false));
+        listingRepoMock.Setup(r => r.AllWithDeleted()).Returns(listingsAsQueryable);
 
         this.listingsRepo = listingRepoMock.Object;
 

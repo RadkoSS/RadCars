@@ -42,22 +42,6 @@
                                         <input type="submit" class="btn btn-sm text-black btn-outline-danger w-100 mt-2" value="Деактивирай обявата" />
                                     </form>
                                 }
-
-                                if (userIsAdmin)
-                                {
-                                    if (listing.IsDeleted)
-                                    {
-                                        <form asp-area="" asp-controller="Listing" asp-action="Reactivate" asp-route-listingId="@listing.Id" method="post" class="swal-form">
-                                            <input type="submit" value="Активирай обявата" class="btn btn-sm btn-outline-success w-100 mt-2" />
-                                        </form>
-                                    }
-                                    else
-                                    {
-                                        <form asp-area="" asp-controller="Listing" asp-action="Delete" asp-route-listingId="@listing.Id" method="post" class="swal-form">
-                                            <input type="submit" value="Изтрий обявата" class="btn btn-sm btn-danger w-100 mt-2" />
-                                        </form>
-                                    }
-                                }
                             }
                         </div>
                     </div>

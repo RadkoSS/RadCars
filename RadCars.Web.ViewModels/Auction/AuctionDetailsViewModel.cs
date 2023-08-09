@@ -63,6 +63,6 @@ public class AuctionDetailsViewModel : AllAuctionsViewModel
             .ForMember(destination => destination.CurrentHighestBid, options => options.MapFrom(source => source.Bids.Any() ? source.Bids.Max(b => b.Amount) : 0))
             .ForMember(destination => destination.StartTime, options => options.MapFrom(source => source.StartTime.ToLocalTime()))
             .ForMember(destination => destination.EndTime, options => options.MapFrom(source => source.EndTime.ToLocalTime()))
-            .ForMember(destination => destination.CurrentHighestBidTimeOfCreate, options => options.MapFrom(source => source.Bids.Any() ? source.Bids.OrderByDescending(b => b.Amount).First().CreatedOn.ToLocalTime().ToString("g") : string.Empty));
+            .ForMember(destination => destination.CurrentHighestBidTimeOfCreate, options => options.MapFrom(source => source.Bids.Any() ? source.Bids.OrderByDescending(b => b.Amount).First().CreatedOn.ToLocalTime().ToString("f") : string.Empty));
     }
 }

@@ -465,7 +465,7 @@ public class ListingService : IListingService
     public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string listingId, string userId, bool isUserAdmin)
     {
         var chooseThumbnailViewModel =
-             await this.listingsRepository.All()
+             await this.listingsRepository.AllWithDeleted()
                  .Where(l => l.Id.ToString() == listingId && l.CreatorId.ToString() == userId || l.Id.ToString() == listingId && isUserAdmin)
                  .To<ChooseThumbnailFormModel>()
                  .FirstAsync();

@@ -247,6 +247,11 @@ public class AuctionService : IAuctionService
             .To<AuctionIndexViewModel>()
             .ToArrayAsync();
 
+        mostRecentAuctions = mostRecentAuctions.OrderBy(a => a.IsOver == false ? 0 : a.IsOver == null ? 1 : 2)
+            .ThenBy(a => a.IsOver == false ? (a.EndTime - DateTime.UtcNow).TotalSeconds : 0)
+            .ThenBy(a => a.IsOver == null ? (a.StartTime - DateTime.UtcNow).TotalSeconds : 0)
+            .ToArray();
+
         return mostRecentAuctions;
     }
 
@@ -442,7 +447,7 @@ public class AuctionService : IAuctionService
 
     public async Task<ChooseThumbnailFormModel> GetChooseThumbnailAsync(string auctionId, string userId, bool isUserAdmin)
     {
-        var chooseThumbnailViewModel = await this.auctionsRepository.All()
+        var chooseThumbnailViewModel = await this.auctionsRepository.AllWithDeleted()
             .Where(a => a.Id.ToString() == auctionId && (a.CreatorId.ToString() == userId || isUserAdmin))
             .To<ChooseThumbnailFormModel>()
             .FirstAsync();
