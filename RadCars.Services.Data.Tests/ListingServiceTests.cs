@@ -9,9 +9,9 @@ using Web.ViewModels.Home;
 using Messaging.Contracts;
 using Web.ViewModels.Listing;
 
-using static TestData.DataSeeder.ListingsSeeder;
+using static ListingsSeeder;
+using static ApplicationUsersSeeder;
 using static Common.ExceptionsAndNotificationsMessages;
-using static TestData.DataSeeder.ApplicationUsersSeeder;
 
 public class ListingServiceTests
 {
@@ -448,14 +448,20 @@ public class ListingServiceTests
         var listingsArray = GetListings();
         var testUser = GetApplicationUsers()[1];
         var testListing = GetListings()[1];
+        var favoriteListings = GetUserFavoriteListings();
 
         var listingsAsQueryable = listingsArray.AsQueryable().BuildMock();
+        var favoriteListingsAsQueryable = favoriteListings.AsQueryable().BuildMock();
 
         var listingsRepoMock =
             new Mock<IDeletableEntityRepository<Listing>>();
         listingsRepoMock.Setup(r => r.All()).Returns(listingsAsQueryable.Where(x => x.IsDeleted == false));
 
+        var favoriteListingsRepoMock = new Mock<IDeletableEntityRepository<UserFavoriteListing>>();
+        favoriteListingsRepoMock.Setup(r => r.All()).Returns(favoriteListingsAsQueryable);
+
         this.listingsRepo = listingsRepoMock.Object;
+        this.userFavoriteListingsRepo = favoriteListingsRepoMock.Object;
 
         //Act
         this.listingService = new ListingService(this.listingImageService, this.carService, this.listingsRepo, this.listingCarImagesRepo,

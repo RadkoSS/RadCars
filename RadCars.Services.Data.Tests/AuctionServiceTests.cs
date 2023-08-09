@@ -9,9 +9,9 @@ using Web.ViewModels.Home;
 using Messaging.Contracts;
 using Web.ViewModels.Auction;
 
-using static TestData.DataSeeder.AuctionsSeeder;
+using static AuctionsSeeder;
+using static ApplicationUsersSeeder;
 using static Common.ExceptionsAndNotificationsMessages;
-using static TestData.DataSeeder.ApplicationUsersSeeder;
 
 public class AuctionServiceTests
 {

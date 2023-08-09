@@ -1358,4 +1358,379 @@ public static class DataSeeder
             };
         }
     }
+
+    public static class CarData
+    {
+        public static Country[] GetCountries()
+        {
+            return new Country[]
+            {
+                new Country
+                {
+                    Id = 1,
+                    Name = "Bulgaria",
+                }
+            };
+        }
+
+        public static City[] GetCities()
+        {
+            return new City[]
+            {
+                new City
+                {
+                    Id = 1,
+                    CountryId = GetCountries().First().Id,
+                    Country = GetCountries().First(),
+                    Name = "Sofia"
+                },
+                new City
+                {
+                    Id = 2,
+                    CountryId = GetCountries().First().Id,
+                    Country = GetCountries().First(),
+                    Name = "Pernik"
+                },
+                new City
+                {
+                    Id = 3,
+                    CountryId = GetCountries().First().Id,
+                    Country = GetCountries().First(),
+                    Name = "Samokov"
+                },
+                new City
+                {
+                    Id = 4,
+                    CountryId = GetCountries().First().Id,
+                    Country = GetCountries().First(),
+                    Name = "SoftDeleted",
+                    IsDeleted = true,
+                    DeletedOn = DateTime.UtcNow.AddMinutes(-90)
+                }
+            };
+        }
+
+        public static CarMake[] GetCarMakes()
+        {
+            return new CarMake[]
+            {
+                new CarMake
+                {
+                    Id = 1,
+                    Name = "Audi",
+                    Models = new HashSet<CarModel>
+                    {
+                        new CarModel
+                        {
+                            Id = 1,
+                            Name = "A6",
+                            CarMake = new CarMake
+                            {
+                                Id = 1,
+                                Name = "Audi"
+                            },
+                            CarMakeId = 1
+                        },
+                        new CarModel
+                        {
+                            Id = 2,
+                            Name = "RS6",
+                            CarMake = new CarMake
+                            {
+                                Id = 1,
+                                Name = "Audi"
+                            },
+                            CarMakeId = 1
+                        },
+                        new CarModel
+                        {
+                            Id = 3,
+                            Name = "RS7",
+                            CarMake = new CarMake
+                            {
+                                Id = 1,
+                                Name = "Audi"
+                            },
+                            CarMakeId = 1
+                        }
+                    }
+                },
+                new CarMake
+                {
+                    Id = 2,
+                    Name = "BMW",
+                    Models = new HashSet<CarModel>
+                    {
+                        new CarModel
+                        {
+                            Id = 4,
+                            Name = "M3",
+                            CarMake = new CarMake
+                            {
+                                Id = 2,
+                                Name = "BMW"
+                            },
+                            CarMakeId = 2
+                        }
+                    }
+                },
+                new CarMake
+                {
+                    Id = 3,
+                    Name = "Mercedes-Benz",
+                    Models = new HashSet<CarModel>
+                    {
+                        new CarModel
+                        {
+                            Id = 5,
+                            Name = "S63",
+                            CarMake = new CarMake
+                            {
+                                Id = 3,
+                                Name = "Mercedes-Benz"
+                            },
+                            CarMakeId = 3
+                        }
+                    }
+                },
+                new CarMake
+                {
+                    Id = 4,
+                    Name = "VW",
+                    Models = new HashSet<CarModel>
+                    {
+                        new CarModel
+                        {
+                            Id = 6,
+                            Name = "Golf",
+                            CarMake = new CarMake
+                            {
+                                Id = 4,
+                                Name = "VW"
+                            },
+                            CarMakeId = 4
+                        },
+                        new CarModel
+                        {
+                            Id = 7,
+                            Name = "Deleted Passat",
+                            CarMake = new CarMake
+                            {
+                                Id = 4,
+                                Name = "VW"
+                            },
+                            CarMakeId = 4,
+                            IsDeleted = true,
+                            DeletedOn = DateTime.UtcNow.AddDays(-1)
+                        }
+                    }
+                },
+                new CarMake
+                {
+                    Id = 5,
+                    Name = "SoftDeleted",
+                    Models = new HashSet<CarModel>(),
+                    IsDeleted = true,
+                    DeletedOn = DateTime.UtcNow.AddDays(-12)
+                }
+            };
+        }
+
+        public static CarModel[] GetCarModels()
+        {
+            return new CarModel[]
+            {
+                new CarModel
+                {
+                    Id = 1,
+                    Name = "A6",
+                    CarMake = new CarMake
+                    {
+                        Id = 1,
+                        Name = "Audi"
+                    },
+                    CarMakeId = 1
+                },
+                new CarModel
+                {
+                    Id = 2,
+                    Name = "RS6",
+                    CarMake = new CarMake
+                    {
+                        Id = 1,
+                        Name = "Audi"
+                    },
+                    CarMakeId = 1
+                },
+                new CarModel
+                {
+                    Id = 3,
+                    Name = "RS7",
+                    CarMake = new CarMake
+                    {
+                        Id = 1,
+                        Name = "Audi"
+                    },
+                    CarMakeId = 1
+                },
+                new CarModel
+                {
+                    Id = 4,
+                    Name = "M3",
+                    CarMake = new CarMake
+                    {
+                        Id = 2,
+                        Name = "BMW"
+                    },
+                    CarMakeId = 2
+                },
+                new CarModel
+                {
+                    Id = 5,
+                    Name = "S63",
+                    CarMake = new CarMake
+                    {
+                        Id = 3,
+                        Name = "Mercedes-Benz"
+                    },
+                    CarMakeId = 3
+                },
+                new CarModel
+                {
+                    Id = 6,
+                    Name = "Golf",
+                    CarMake = new CarMake
+                    {
+                        Id = 4,
+                        Name = "VW"
+                    },
+                    CarMakeId = 4
+                },
+                new CarModel
+                {
+                    Id = 7,
+                    Name = "Deleted Passat",
+                    CarMake = new CarMake
+                    {
+                        Id = 4,
+                        Name = "VW"
+                    },
+                    CarMakeId = 4,
+                    IsDeleted = true,
+                    DeletedOn = DateTime.UtcNow.AddDays(-1)
+                },
+            };
+        }
+
+        public static Category[] GetCategories()
+        {
+            return new Category[]
+            {
+                new Category
+                {
+                    Id = 1,
+                    Name = "TestCategory",
+                    Features = new HashSet<Feature>
+                    {
+                        new Feature
+                        {
+                            Id = 1,
+                            Name = "Test",
+                            Category = new Category
+                            {
+                                Id = 1,
+                                Name = "TestCategory",
+                            },
+                            CategoryId = 1
+                        },
+                        new Feature
+                        {
+                            Id = 2,
+                            Name = "Test2",
+                            Category = new Category
+                            {
+                                Id = 1,
+                                Name = "TestCategory",
+                            },
+                            CategoryId = 1
+                        },
+                        new Feature
+                        {
+                            Id = 3,
+                            Name = "Test3",
+                            Category = new Category
+                            {
+                                Id = 1,
+                                Name = "TestCategory",
+                            },
+                            CategoryId = 1
+                        },
+                        new Feature
+                        {
+                            Id = 4,
+                            Name = "Test4",
+                            Category = new Category
+                            {
+                                Id = 1,
+                                Name = "TestCategory",
+                            },
+                            CategoryId = 1
+                        }
+                    }
+                }
+            };
+        }
+
+        public static Feature[] GetFeatures()
+        {
+            return new Feature[]
+            {
+                new Feature
+                {
+                    Id = 1,
+                    Name = "Test",
+                    Category = GetCategories().First(),
+                    CategoryId = GetCategories().First().Id
+                },
+                new Feature
+                {
+                    Id = 2,
+                    Name = "Test2",
+                    Category = GetCategories().First(),
+                    CategoryId = GetCategories().First().Id
+                },
+                new Feature
+                {
+                    Id = 3,
+                    Name = "Test3",
+                    Category = GetCategories().First(),
+                    CategoryId = GetCategories().First().Id
+                },
+                new Feature
+                {
+                    Id = 4,
+                    Name = "Test4",
+                    Category = GetCategories().First(),
+                    CategoryId = GetCategories().First().Id
+                }
+            };
+        }
+
+        public static EngineType[] GetEngineTypes()
+        {
+            return new EngineType[]
+            {
+                new EngineType
+                {
+                    Id = 1,
+                    Name = "Дизел"
+                },
+                new EngineType
+                {
+                    Id = 2,
+                    Name = "Бензин"
+                }
+            };
+        }
+    }
 }
