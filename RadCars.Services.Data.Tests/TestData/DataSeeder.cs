@@ -28,6 +28,15 @@ public static class DataSeeder
                     PhoneNumber = "0896543269",
                     UserName = "PoLesenTest",
                     Email = "test@lesen.bg"
+                },
+                new ApplicationUser
+                {
+                    Id = Guid.Parse("718dc1d9-cf3a-427c-9cb6-498cb5643935"),
+                    FirstName = "Aukcioner",
+                    LastName = "Aukcionerov",
+                    PhoneNumber = "0896543999",
+                    UserName = "aukcionera",
+                    Email = "aukcionerov@aukcionera.bg"
                 }
             };
         }
@@ -42,7 +51,7 @@ public static class DataSeeder
                 new Auction
                 {
                     Id = Guid.Parse("1adde4a7-4da1-47de-8660-ea7dd90d1154"),
-                    CreatedOn = DateTime.UtcNow.AddSeconds(new Random().Next(100)),
+                    CreatedOn = DateTime.UtcNow.AddSeconds(new Random().Next(-100, 1)),
                     IsDeleted = false,
                     Title = "Testtttttttt",
                     Description = "Test123434254345345666363441231235",
@@ -179,7 +188,7 @@ public static class DataSeeder
                 new Auction
                 {
                     Id = Guid.Parse("d33701a6-165d-4341-bab5-572877e0a789"),
-                    CreatedOn = DateTime.UtcNow.AddSeconds(new Random().Next(100)),
+                    CreatedOn = DateTime.UtcNow.AddSeconds(new Random().Next(-100, 1)),
                     IsDeleted = false,
                     Title = "Testtttttttt2",
                     Description = "Test17868786868sdfsdf",
@@ -310,7 +319,7 @@ public static class DataSeeder
                 new Auction
                 {
                     Id = Guid.Parse("75045d55-26dc-4cb0-b03f-28a61634ac57"),
-                    CreatedOn = DateTime.UtcNow.AddSeconds(new Random().Next(100)),
+                    CreatedOn = DateTime.UtcNow.AddSeconds(new Random().Next(-100, 1)),
                     IsDeleted = false,
                     Title = "Testtttttttt3",
                     Description = "Test178687fscasdasdqade1`23",
@@ -441,7 +450,7 @@ public static class DataSeeder
                 new Auction
                 {
                     Id = Guid.Parse("5bc6e47d-cdea-44f7-8114-c01c2d3f3e7c"),
-                    CreatedOn = DateTime.UtcNow.AddSeconds(new Random().Next(100)),
+                    CreatedOn = DateTime.UtcNow.AddSeconds(new Random().Next(-100, 1)),
                     IsDeleted = true,
                     Title = "Testtttttttt4",
                     Description = "Test178687fscasasdsada`2233",
@@ -569,6 +578,138 @@ public static class DataSeeder
                         AuctionId = Guid.Parse("98386ed7-71db-4665-b127-7765741ff06e")
                     }
                 },
+                new Auction
+                {
+                    Id = Guid.Parse("e45d6222-78ec-4f90-ba4e-d77ec19bdf6f"),
+                    CreatedOn = DateTime.UtcNow.AddHours(-1),
+                    IsDeleted = false,
+                    Title = "Testtttttttt12asdasd",
+                    Description = "Test123434254342$$$$$$3441231235",
+                    PhoneNumber = "0882342344",
+                    StartTime = DateTime.UtcNow.AddMinutes(-10),
+                    EndTime = DateTime.UtcNow.AddHours(new Random().Next(6, 24)),
+                    IsOver = false,
+                    StartAuctionJobId = "9",
+                    EndAuctionJobId = "10",
+                    CurrentPrice = 15000,
+                    BlitzPrice = 35000,
+                    MinimumBid = 500,
+                    CarMakeId = 1,
+                    CarMake = new CarMake
+                    {
+                        Id = 1,
+                        Name = "Audi"
+                    },
+                    CarModelId = 1,
+                    CarModel = new CarModel
+                    {
+                        Id = 1,
+                        Name = "A6",
+                        CarMakeId = 1
+                    },
+                    StartingPrice = 15000,
+                    Year = 2013,
+                    Mileage = 86000,
+                    EngineModel = "3.2TFSI",
+                    EngineTypeId = 2,
+                    EngineType = new EngineType
+                    {
+                        Id = 2,
+                        Name = "Бензин"
+                    },
+                    VinNumber = "WVGFF75N19W506969",
+                    Creator = ApplicationUsersSeeder.GetApplicationUsers()[2],
+                    CreatorId = ApplicationUsersSeeder.GetApplicationUsers()[2].Id,
+                    CityId = 1,
+                    City = new City
+                    {
+                        Id = 1,
+                        Name = "Pernik"
+                    },
+                    AuctionFeatures = new HashSet<AuctionFeature>
+                    {
+                        new AuctionFeature
+                        {
+                            AuctionId = Guid.Parse("e45d6222-78ec-4f90-ba4e-d77ec19bdf6f"),
+                            FeatureId = 1,
+                            Feature = new Feature
+                            {
+                                Id = 1,
+                                Name = "Test",
+                                CategoryId = 1,
+                                Category = new Category
+                                {
+                                    Id = 1,
+                                    Name = "TestCategory"
+                                }
+                            }
+                        },
+                        new AuctionFeature
+                        {
+                            AuctionId = Guid.Parse("e45d6222-78ec-4f90-ba4e-d77ec19bdf6f"),
+                            FeatureId = 1,
+                            Feature = new Feature
+                            {
+                                Id = 2,
+                                Name = "Test2",
+                                CategoryId = 1,
+                                Category = new Category
+                                {
+                                    Id = 1,
+                                    Name = "TestCategory"
+                                }
+                            }
+                        },
+                        new AuctionFeature
+                        {
+                            AuctionId = Guid.Parse("e45d6222-78ec-4f90-ba4e-d77ec19bdf6f"),
+                            FeatureId = 1,
+                            Feature = new Feature
+                            {
+                                Id = 3,
+                                Name = "Test3",
+                                CategoryId = 1,
+                                Category = new Category
+                                {
+                                    Id = 1,
+                                    Name = "TestCategory"
+                                }
+                            }
+                        },
+                        new AuctionFeature
+                        {
+                            AuctionId = Guid.Parse("e45d6222-78ec-4f90-ba4e-d77ec19bdf6f"),
+                            FeatureId = 1,
+                            Feature = new Feature
+                            {
+                                Id = 4,
+                                Name = "Test4",
+                                CategoryId = 1,
+                                Category = new Category
+                                {
+                                    Id = 1,
+                                    Name = "TestCategory"
+                                }
+                            }
+                        }
+                    },
+                    Images = new HashSet<AuctionCarImage>
+                    {
+                        new AuctionCarImage
+                        {
+                            Id = Guid.Parse("69ed093c-0640-41d2-8097-c70bd64122e3"),
+                            Url = "De da znam6",
+                            AuctionId = Guid.Parse("e45d6222-78ec-4f90-ba4e-d77ec19bdf6f")
+                        }
+                    },
+                    ThumbnailId = Guid.Parse("69ed093c-0640-41d2-8097-c70bd64122e3"),
+                    Thumbnail = new AuctionCarImage
+                    {
+                        Id = Guid.Parse("69ed093c-0640-41d2-8097-c70bd64122e3"),
+                        Url = "De da znam6",
+                        AuctionId = Guid.Parse("e45d6222-78ec-4f90-ba4e-d77ec19bdf6f")
+                    }
+                },
             };
         }
 
@@ -580,6 +721,13 @@ public static class DataSeeder
                 {
                     Id = GetAuctions().First().Images.First().Id,
                     Url = "De da znam",
+                    AuctionId = GetAuctions().First().Id,
+                    Auction = GetAuctions().First()
+                },
+                new AuctionCarImage
+                {
+                    Id = Guid.Parse("e4ab390b-5302-4d5c-b55f-ffc48f6aee82"),
+                    Url = "De znam5",
                     AuctionId = GetAuctions().First().Id,
                     Auction = GetAuctions().First()
                 },
@@ -606,10 +754,10 @@ public static class DataSeeder
                 },
                 new AuctionCarImage
                 {
-                    Id = Guid.Parse("e4ab390b-5302-4d5c-b55f-ffc48f6aee82"),
-                    Url = "De znam5",
-                    AuctionId = GetAuctions()[0].Id,
-                    Auction = GetAuctions()[0]
+                    Id = Guid.Parse("69ed093c-0640-41d2-8097-c70bd64122e3"),
+                    Url = "De da znam6",
+                    AuctionId = GetAuctions()[4].Id,
+                    Auction = GetAuctions()[4]
                 }
             };
         }

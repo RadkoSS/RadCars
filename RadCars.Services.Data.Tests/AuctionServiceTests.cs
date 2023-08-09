@@ -57,6 +57,342 @@ public class AuctionServiceTests
     }
 
     [Test]
+    public void CreateBidAsyncThrowsInvalidOperationExceptionIfTheAuctionHasNotStarted()
+    {
+        //Arrange
+        var auctionsArray = GetAuctions();
+        var testBidder = GetApplicationUsers()[1];
+        var testAuction = auctionsArray[0];
+
+        var auctionsQueryable = auctionsArray.AsQueryable().BuildMock();
+
+        var auctionsRepoMock = new Mock<IDeletableEntityRepository<Auction>>();
+        auctionsRepoMock.Setup(r => r.All()).Returns(auctionsQueryable.Where(l => l.IsDeleted == false));
+
+        this.auctionsRepo = auctionsRepoMock.Object;
+
+        this.auctionService = new AuctionService(autoMapper, this.htmlSanitizer, this.carService, this.auctionImageService, this.auctionsRepo, this.auctionCarImagesRepo, this.auctionFeaturesRepo, this.userFavoriteAuctionsRepo, this.bidsRepo, this.emailSender);
+
+        //Act & Assert
+        Assert.CatchAsync<InvalidOperationException>(async () =>
+        {
+            await this.auctionService.CreateBidAsync(testAuction.Id.ToString(), testBidder.Id.ToString(), testAuction.StartingPrice);
+        });
+    }
+
+    [Test]
+    public async Task CreateBidAsyncCreatesBidAtTheStartingPriceIfTheAuctionExistsHasStartedHasNoBidsAndUserIsNotCreator()
+    {
+        //Arrange
+        var auctionsArray = GetAuctions();
+        var testBidder = GetApplicationUsers()[1];
+        var testAuction = auctionsArray[4];
+
+        var auctionsQueryable = auctionsArray.AsQueryable().BuildMock();
+
+        var auctionsRepoMock = new Mock<IDeletableEntityRepository<Auction>>();
+        auctionsRepoMock.Setup(r => r.All()).Returns(auctionsQueryable.Where(l => l.IsDeleted == false));
+
+        var auctionBids = new HashSet<UserAuctionBid>();
+
+        this.auctionsRepo = auctionsRepoMock.Object;
+
+        var userAuctionBidsRepoMock = new Mock<IDeletableEntityRepository<UserAuctionBid>>();
+        userAuctionBidsRepoMock.Setup(r => r.AddAsync(It.IsAny<UserAuctionBid>())).Callback((UserAuctionBid bid) =>
+        {
+            bid.Bidder = testBidder;
+            auctionBids.Add(bid);
+        });
+
+        this.bidsRepo = userAuctionBidsRepoMock.Object;
+
+        this.auctionService = new AuctionService(autoMapper, this.htmlSanitizer, this.carService, this.auctionImageService, this.auctionsRepo, this.auctionCarImagesRepo, this.auctionFeaturesRepo, this.userFavoriteAuctionsRepo, this.bidsRepo, this.emailSender);
+
+        //Act
+        var auctionServiceModel = await this.auctionService.CreateBidAsync(testAuction.Id.ToString(), testBidder.Id.ToString(), testAuction.StartingPrice);
+
+        //Assert
+        var expectedBidsCount = testAuction.Bids.Count(x => x.AuctionId == testAuction.Id && x.BidderId == testBidder.Id);
+        var actualCount = auctionBids.Count(x => x.AuctionId == testAuction.Id && x.BidderId == testBidder.Id);
+
+        var auctionBidderFullNameExpected = $"{testBidder.FullName} ({testBidder.UserName})";
+        var auctionBidderFullNameActual = auctionServiceModel.UserFullNameAndUserName;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(auctionServiceModel, Is.Not.Null);
+            Assert.That(expectedBidsCount, Is.EqualTo(actualCount));
+            Assert.That(auctionBidderFullNameExpected, Is.EqualTo(auctionBidderFullNameActual));
+            Assert.That(auctionServiceModel.OverBlitzPrice, Is.False);
+        });
+    }
+
+    [Test]
+    public async Task CreateBidAsyncCreatesBidGreaterThanThePreviousOneIfTheAuctionExistsHasStartedAndUserIsNotCreator()
+    {
+        //Arrange
+        var auctionsArray = GetAuctions();
+        var testAuction = auctionsArray[4];
+        var testBidder = GetApplicationUsers()[1];
+
+        var auctionBids = new HashSet<UserAuctionBid>();
+
+        var auctionsQueryable = auctionsArray.AsQueryable().BuildMock();
+
+        var modifiedTestAuction = await auctionsQueryable.FirstAsync(a => a.Id == testAuction.Id);
+
+        var testBid = new UserAuctionBid
+        {
+            Bidder = GetApplicationUsers().First(),
+            BidderId = GetApplicationUsers().First().Id,
+            Auction = testAuction,
+            AuctionId = testAuction.Id,
+            Amount = testAuction.StartingPrice
+        };
+
+        modifiedTestAuction.Bids.Add(testBid);
+        modifiedTestAuction.CurrentPrice = testBid.Amount;
+
+        var newBidAmount = modifiedTestAuction.MinimumBid;
+        var expectedCurrentPriceAfterSecondBid = modifiedTestAuction.CurrentPrice + newBidAmount;
+
+        var auctionsRepoMock = new Mock<IDeletableEntityRepository<Auction>>();
+        auctionsRepoMock.Setup(r => r.All()).Returns(auctionsQueryable.Where(l => l.IsDeleted == false));
+
+        this.auctionsRepo = auctionsRepoMock.Object;
+
+        var userAuctionBidsRepoMock = new Mock<IDeletableEntityRepository<UserAuctionBid>>();
+        userAuctionBidsRepoMock.Setup(r => r.AddAsync(It.IsAny<UserAuctionBid>())).Callback((UserAuctionBid bid) =>
+        {
+            bid.Bidder = testBidder;
+            auctionBids.Add(bid);
+        });
+
+        this.bidsRepo = userAuctionBidsRepoMock.Object;
+
+        this.auctionService = new AuctionService(autoMapper, this.htmlSanitizer, this.carService, this.auctionImageService, this.auctionsRepo, this.auctionCarImagesRepo, this.auctionFeaturesRepo, this.userFavoriteAuctionsRepo, this.bidsRepo, this.emailSender);
+
+        //Act
+        var auctionServiceModel = await this.auctionService.CreateBidAsync(testAuction.Id.ToString(), testBidder.Id.ToString(), testAuction.CurrentPrice + newBidAmount);
+
+        //Assert
+        var expectedBidsCount = testAuction.Bids.Count(x => x.AuctionId == testAuction.Id && x.BidderId == testBidder.Id);
+        var actualCount = auctionBids.Count(x => x.AuctionId == testAuction.Id && x.BidderId == testBidder.Id);
+
+        var auctionBidderFullNameExpected = $"{testBidder.FullName} ({testBidder.UserName})";
+        var auctionBidderFullNameActual = auctionServiceModel.UserFullNameAndUserName;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(auctionServiceModel, Is.Not.Null);
+            Assert.That(expectedBidsCount, Is.EqualTo(actualCount));
+            Assert.That(auctionBidderFullNameExpected, Is.EqualTo(auctionBidderFullNameActual));
+            Assert.That(auctionServiceModel.OverBlitzPrice, Is.False);
+            Assert.That(expectedCurrentPriceAfterSecondBid, Is.EqualTo(modifiedTestAuction.CurrentPrice));
+        });
+    }
+
+    [Test]
+    public async Task CreateBidAsyncMarksTheAuctionAsEndedIfThereIsBlitzPriceAndTheNextBidIsHigherThanOrEqualToTheBlitzPrice()
+    {
+        //Arrange
+        var auctionsArray = GetAuctions();
+        var testAuction = auctionsArray[4];
+        var testBidder = GetApplicationUsers()[1];
+
+        var auctionBids = new HashSet<UserAuctionBid>();
+
+        var auctionsQueryable = auctionsArray.AsQueryable().BuildMock();
+
+        var modifiedTestAuction = await auctionsQueryable.FirstAsync(a => a.Id == testAuction.Id);
+
+        var testBid = new UserAuctionBid
+        {
+            Bidder = GetApplicationUsers().First(),
+            BidderId = GetApplicationUsers().First().Id,
+            Auction = testAuction,
+            AuctionId = testAuction.Id,
+            Amount = testAuction.StartingPrice
+        };
+
+        modifiedTestAuction.Bids.Add(testBid);
+        modifiedTestAuction.CurrentPrice = testBid.Amount;
+
+        var newBidAmount = modifiedTestAuction.BlitzPrice!.Value;
+
+        var auctionsRepoMock = new Mock<IDeletableEntityRepository<Auction>>();
+        auctionsRepoMock.Setup(r => r.All()).Returns(auctionsQueryable.Where(l => l.IsDeleted == false));
+
+        this.auctionsRepo = auctionsRepoMock.Object;
+
+        var userAuctionBidsRepoMock = new Mock<IDeletableEntityRepository<UserAuctionBid>>();
+        userAuctionBidsRepoMock.Setup(r => r.AddAsync(It.IsAny<UserAuctionBid>())).Callback((UserAuctionBid bid) =>
+        {
+            bid.Bidder = testBidder;
+            auctionBids.Add(bid);
+        });
+
+        this.bidsRepo = userAuctionBidsRepoMock.Object;
+
+        this.auctionService = new AuctionService(autoMapper, this.htmlSanitizer, this.carService, this.auctionImageService, this.auctionsRepo, this.auctionCarImagesRepo, this.auctionFeaturesRepo, this.userFavoriteAuctionsRepo, this.bidsRepo, this.emailSender);
+
+        //Act
+        var auctionServiceModel = await this.auctionService.CreateBidAsync(testAuction.Id.ToString(), testBidder.Id.ToString(), newBidAmount);
+
+        //Assert
+        var expectedBidsCount = testAuction.Bids.Count(x => x.AuctionId == testAuction.Id && x.BidderId == testBidder.Id);
+        var actualCount = auctionBids.Count(x => x.AuctionId == testAuction.Id && x.BidderId == testBidder.Id);
+
+        var auctionBidderFullNameExpected = $"{testBidder.FullName} ({testBidder.UserName})";
+        var auctionBidderFullNameActual = auctionServiceModel.UserFullNameAndUserName;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(auctionServiceModel, Is.Not.Null);
+            Assert.That(expectedBidsCount, Is.EqualTo(actualCount));
+            Assert.That(auctionBidderFullNameExpected, Is.EqualTo(auctionBidderFullNameActual));
+            Assert.That(auctionServiceModel.OverBlitzPrice, Is.True);
+            Assert.That(modifiedTestAuction.IsOver, Is.True);
+            Assert.That(newBidAmount, Is.EqualTo(modifiedTestAuction.CurrentPrice));
+        });
+    }
+
+    [Test]
+    public void CreateBidAsyncThrowsInvalidOperationExceptionIfTheFirstBidIsLowerThanTheStartingPrice()
+    {
+        //Arrange
+        var auctionsArray = GetAuctions();
+        var testBidder = GetApplicationUsers()[1];
+        var testAuction = auctionsArray[4];
+
+        var auctionsQueryable = auctionsArray.AsQueryable().BuildMock();
+
+        var auctionsRepoMock = new Mock<IDeletableEntityRepository<Auction>>();
+        auctionsRepoMock.Setup(r => r.All()).Returns(auctionsQueryable.Where(l => l.IsDeleted == false));
+
+        this.auctionsRepo = auctionsRepoMock.Object;
+
+        this.auctionService = new AuctionService(autoMapper, this.htmlSanitizer, this.carService, this.auctionImageService, this.auctionsRepo, this.auctionCarImagesRepo, this.auctionFeaturesRepo, this.userFavoriteAuctionsRepo, this.bidsRepo, this.emailSender);
+
+        //Act & Assert
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            await this.auctionService.CreateBidAsync(testAuction.Id.ToString(), testBidder.Id.ToString(), testAuction.StartingPrice - 1);
+        });
+    }
+
+    [Test]
+    public async Task CreateBidAsyncThrowsInvalidOperationExceptionIfTheAmountOfTheNewestBidIsLowerThanTheSumOfThePreviousBidAndTheMinimumBid()
+    {
+        //Arrange
+        var auctionsArray = GetAuctions();
+        var testAuction = auctionsArray[4];
+        var testBidder = GetApplicationUsers()[1];
+
+        var auctionsQueryable = auctionsArray.AsQueryable().BuildMock();
+
+        var modifiedTestAuction = await auctionsQueryable.FirstAsync(a => a.Id == testAuction.Id);
+
+        var testBid = new UserAuctionBid
+        {
+            Bidder = GetApplicationUsers().First(),
+            BidderId = GetApplicationUsers().First().Id,
+            Auction = testAuction,
+            AuctionId = testAuction.Id,
+            Amount = testAuction.StartingPrice
+        };
+
+        modifiedTestAuction.Bids.Add(testBid);
+        modifiedTestAuction.CurrentPrice = testBid.Amount;
+
+        var newBidAmount = modifiedTestAuction.MinimumBid - 1;
+
+        var auctionsRepoMock = new Mock<IDeletableEntityRepository<Auction>>();
+        auctionsRepoMock.Setup(r => r.All()).Returns(auctionsQueryable.Where(l => l.IsDeleted == false));
+
+        this.auctionsRepo = auctionsRepoMock.Object;
+
+        this.auctionService = new AuctionService(autoMapper, this.htmlSanitizer, this.carService, this.auctionImageService, this.auctionsRepo, this.auctionCarImagesRepo, this.auctionFeaturesRepo, this.userFavoriteAuctionsRepo, this.bidsRepo, this.emailSender);
+
+        //Act
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            await this.auctionService.CreateBidAsync(testAuction.Id.ToString(), testBidder.Id.ToString(), newBidAmount);
+        });
+    }
+
+    [Test]
+    public void CreateBidAsyncThrowsExceptionIfTheAuctionDoesNotExist()
+    {
+        //Arrange
+        var auctionsArray = GetAuctions();
+        var testBidder = GetApplicationUsers()[1];
+        var testAuction = auctionsArray[0];
+
+        var auctionsQueryable = auctionsArray.AsQueryable().BuildMock();
+
+        var auctionsRepoMock = new Mock<IDeletableEntityRepository<Auction>>();
+        auctionsRepoMock.Setup(r => r.All()).Returns(auctionsQueryable.Where(l => l.IsDeleted == false));
+
+        this.auctionsRepo = auctionsRepoMock.Object;
+
+        this.auctionService = new AuctionService(autoMapper, this.htmlSanitizer, this.carService, this.auctionImageService, this.auctionsRepo, this.auctionCarImagesRepo, this.auctionFeaturesRepo, this.userFavoriteAuctionsRepo, this.bidsRepo, this.emailSender);
+
+        //Act & Assert
+        Assert.CatchAsync<Exception>(async () =>
+        {
+            await this.auctionService.CreateBidAsync("IdOfAuctionDoesNotExist", testBidder.Id.ToString(), testAuction.StartingPrice);
+        });
+    }
+
+    [Test]
+    public void CreateBidAsyncThrowsExceptionIfTheUserIsAuctionCreator()
+    {
+        //Arrange
+        var auctionsArray = GetAuctions();
+        var testBidder = GetApplicationUsers()[2];
+        var testAuction = auctionsArray[4];
+
+        var auctionsQueryable = auctionsArray.AsQueryable().BuildMock();
+
+        var auctionsRepoMock = new Mock<IDeletableEntityRepository<Auction>>();
+        auctionsRepoMock.Setup(r => r.All()).Returns(auctionsQueryable.Where(l => l.IsDeleted == false));
+
+        this.auctionsRepo = auctionsRepoMock.Object;
+
+        this.auctionService = new AuctionService(autoMapper, this.htmlSanitizer, this.carService, this.auctionImageService, this.auctionsRepo, this.auctionCarImagesRepo, this.auctionFeaturesRepo, this.userFavoriteAuctionsRepo, this.bidsRepo, this.emailSender);
+
+        //Act & Assert
+        Assert.CatchAsync<Exception>(async () =>
+        {
+            await this.auctionService.CreateBidAsync(testAuction.Id.ToString(), testBidder.Id.ToString(), testAuction.StartingPrice);
+        });
+    }
+
+    [Test]
+    public async Task GetBidsCountForAuctionByIdAsyncReturnsZeroIfThereAreNoBidsForAuction()
+    {
+        //Arrange
+        var auctionsArray = GetAuctions();
+        var testAuction = auctionsArray[4];
+
+        var auctionsQueryable = auctionsArray.AsQueryable().BuildMock();
+
+        var auctionsRepoMock = new Mock<IDeletableEntityRepository<Auction>>();
+        auctionsRepoMock.Setup(r => r.AllAsNoTrackingWithDeleted()).Returns(auctionsQueryable);
+
+        this.auctionsRepo = auctionsRepoMock.Object;
+
+        this.auctionService = new AuctionService(autoMapper, this.htmlSanitizer, this.carService, this.auctionImageService, this.auctionsRepo, this.auctionCarImagesRepo, this.auctionFeaturesRepo, this.userFavoriteAuctionsRepo, this.bidsRepo, this.emailSender);
+
+        //Act
+        var result = await this.auctionService.GetBidsCountForAuctionByIdAsync(testAuction.Id.ToString());
+
+        //Assert
+        Assert.That(result, Is.Zero);
+    }
+
+    [Test]
     public async Task GetAuctionDetailsAsyncReturnsTheCorrectDetailsForUser()
     {
         //Arrange
@@ -267,13 +603,13 @@ public class AuctionServiceTests
 
         var auctionIndexViewModels = mostRecentAuctions.ToList();
 
-        var expectedFirstAuctionId = auctionsArray.Where(l => l.IsDeleted == false).OrderBy(a => a.IsOver == false ? 0 : a.IsOver == null ? 1 : 2)
+        var expectedFirstAuctionId = auctionsArray.Where(a => a.IsDeleted == false).OrderByDescending(a => a.CreatedOn).Take(3).OrderBy(a => a.IsOver == false ? 0 : a.IsOver == null ? 1 : 2)
             .ThenBy(a => a.IsOver == false ? (a.EndTime - DateTime.UtcNow).TotalSeconds : 0)
             .ThenBy(a => a.IsOver == null ? (a.StartTime - DateTime.UtcNow).TotalSeconds : 0).First().Id.ToString();
 
         var actualFirstAuctionId = auctionIndexViewModels.First().Id;
 
-        var expectedLastAuctionId = auctionsArray.Where(l => l.IsDeleted == false).OrderBy(a => a.IsOver == false ? 0 : a.IsOver == null ? 1 : 2)
+        var expectedLastAuctionId = auctionsArray.Where(l => l.IsDeleted == false).OrderByDescending(a => a.CreatedOn).Take(3).OrderBy(a => a.IsOver == false ? 0 : a.IsOver == null ? 1 : 2)
             .ThenBy(a => a.IsOver == false ? (a.EndTime - DateTime.UtcNow).TotalSeconds : 0)
             .ThenBy(a => a.IsOver == null ? (a.StartTime - DateTime.UtcNow).TotalSeconds : 0).Last().Id.ToString();
 
@@ -407,19 +743,24 @@ public class AuctionServiceTests
         var auctionsArray = GetAuctions();
         var testUser = GetApplicationUsers()[1];
         var testAuction = GetAuctions()[1];
+        var userAuctionFavorites = GetUserFavoriteAuctions();
 
         var auctionsAsQueryable = auctionsArray.AsQueryable().BuildMock();
+        var userFavoritesAsQueryable = userAuctionFavorites.AsQueryable().BuildMock();
 
         var auctionsRepoMock =
             new Mock<IDeletableEntityRepository<Auction>>();
         auctionsRepoMock.Setup(r => r.All()).Returns(auctionsAsQueryable.Where(x => x.IsDeleted == false));
 
-        this.auctionsRepo = auctionsRepoMock.Object;
+        var userFavoriteAuctionsRepoMock = new Mock<IDeletableEntityRepository<UserFavoriteAuction>>();
+        userFavoriteAuctionsRepoMock.Setup(r => r.All()).Returns(userFavoritesAsQueryable);
 
-        //Act
+        this.auctionsRepo = auctionsRepoMock.Object;
+        this.userFavoriteAuctionsRepo = userFavoriteAuctionsRepoMock.Object;
+
         this.auctionService = new AuctionService(autoMapper, this.htmlSanitizer, this.carService, this.auctionImageService, this.auctionsRepo, this.auctionCarImagesRepo, this.auctionFeaturesRepo, this.userFavoriteAuctionsRepo, this.bidsRepo, this.emailSender);
 
-        //Assert
+        //Act & Assert
         Assert.ThrowsAsync<InvalidOperationException>(async () =>
         {
             await this.auctionService.FavoriteAuctionByIdAsync(testAuction.Id.ToString(), testUser.Id.ToString());
@@ -587,9 +928,12 @@ public class AuctionServiceTests
         var expectedCount = auctionsArray.Count(x => x.IsDeleted && x.CreatorId == testUser.Id);
         var actualCount = resultAsList.Count;
 
-        Assert.That(resultAsList, Is.Not.Null);
-        Assert.That(resultAsList, Is.Not.Empty);
-        Assert.That(actualCount, Is.EqualTo(expectedCount));
+        Assert.Multiple(() =>
+        {
+            Assert.That(resultAsList, Is.Not.Null);
+            Assert.That(resultAsList, Is.Not.Empty);
+            Assert.That(actualCount, Is.EqualTo(expectedCount));
+        });
     }
 
     [Test]

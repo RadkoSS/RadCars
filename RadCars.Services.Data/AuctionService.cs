@@ -378,6 +378,11 @@ public class AuctionService : IAuctionService
             .Where(a => a.Id.ToString() == auctionId && a.CreatorId.ToString() != userId)
             .FirstAsync();
 
+        if (auction.IsOver.HasValue == false || auction.IsOver is true)
+        {
+            throw new InvalidOperationException();
+        }
+
         if (auction.Bids.Any() == false)
         {
             if (amount < auction.StartingPrice)
@@ -393,11 +398,6 @@ public class AuctionService : IAuctionService
             {
                 throw new InvalidOperationException();
             }
-        }
-
-        if (auction.IsOver.HasValue == false || auction.IsOver is true)
-        {
-            throw new InvalidOperationException();
         }
 
         var bid = new UserAuctionBid
