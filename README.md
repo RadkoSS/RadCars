@@ -7,11 +7,11 @@
 
 ### 📌 Table of Contents
 
-- [Features Overview](#features-overview)
-- [Details about some features](#details-about-features)
+- [Features Overview 🌟](#features-overview)
+- [Details about some features 🌟](#details-about-features)
 - [User permissions and functionalities](#user-permissions-and-functionalities)
 - [Getting Started](#getting-started)
-- [Build with](#built-with)
+- [Built With 🛠️](#built-with)
 - [Demonstrations with Pictures and GIFs](#demonstrations-with-pictures-and-gifs)
 - [Contributing](#contributing)
 - [License](#license)
