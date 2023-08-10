@@ -175,7 +175,7 @@
 - ![AdminAllFeatureCategories](https://github.com/RadkoSS/RadCars/assets/94465605/403e549d-cf80-4b26-b5ac-1527d6ab40e0)
 - ![AdminAllFeaturesOfCategory](https://github.com/RadkoSS/RadCars/assets/94465605/c3ca0b79-3721-47f1-81a8-355741f7dea4)
 
-- Hangfire dashboard (visible to admins only in Production):
+- Hangfire dashboard (in Production environment the dashboard is visible only to the Admins):
 - ![HangfireDashboard](https://github.com/RadkoSS/RadCars/assets/94465605/1ac29e81-aed0-4e2b-826d-67dc9a70f091)
 
 ## Contributing
