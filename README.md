@@ -16,7 +16,7 @@
 - [Demonstrations with GIFs and pictures](#demonstrations-with-gifs-and-pictures)
 - [Contributing](#contributing)
 - [License](#license)
-- [Acknowledgments](#-acknowledgments)
+- [Acknowledgments](#acknowledgments)
 
 ## Architecture of the project
 
