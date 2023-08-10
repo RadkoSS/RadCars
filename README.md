@@ -8,14 +8,31 @@
 ## 📌 Table of Contents
 
 - [Features Overview](#features-overview)
+- [Architecture of the project](#architecture-of-the-project)
 - [Details about some features](#details-about-some-features)
 - [User permissions and functionalities](#user-permissions-and-functionalities)
 - [Getting Started](#getting-started)
 - [Built With](#built-with)
-- [Demonstrations with Pictures and GIFs](#demonstration-pictures-and-gifs)
+- [Demonstrations with GIFs and pictures](#demonstrations-with-gifs-and-pictures)
 - [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgments](#-acknowledgments)
+
+## Architecture of the project
+
+- **[RadCars.Web](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Web)**: Contains the code for the web application with all the views, controllers, hubs, background job services, etc.
+- **[RadCars.Web.ViewModels](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Web.ViewModels)**: Contains all the view models and form models for the application.
+- **[RadCars.Api](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Api)**: Contains the code for the Web API.
+- **[RadCars.Data](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Data)**: Contains the configurations for all the entities, the implementations of the repositories and the DB context.
+- **[RadCars.Data.Models](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Data.Models)**: Contains all the entity classes for the application.
+- **[RadCars.Data.Common](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Data.Common)**: Provides abstract generics classes and interfaces, which hold information about the entities. Provides also interfaces for generic repositories - IDeletableEntityRepository and IRepository.
+- **[RadCars.Services.Data](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Services.Data)**: Contains the business logic of the application, separated into different services.
+- **[RadCars.Services.Data.Models](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Services.Data.Models)**: Contains the service models (DTOs).
+- **[RadCars.Services.Data.Tests](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Services.Data.Tests)**: Contains all the unit tests for the business logic.
+- **[RadCars.Services.Mapping](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Services.Mapping)**: Contains the IQueryable extension methods for AutoMapper and the logic for registering all mappings. 
+- **[RadCars.Services.Messaging](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Services.Messaging)**: Contains an implementation of the SendGrid API for easy emailing services.
+- **[RadCars.Infrastructure](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Web.Infrastructure)**: Contains all the extension methods for the web application and registers services
+- **[RadCars.Common](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Common)**: Contains global constants, exception and notification messages accessible from every project inside the solution.
 
 ## Features Overview
 
@@ -23,7 +40,8 @@
 - **User Profiles:** Create listings, auctions, and save your favorites.
 - **Areas Separation:** Admins have full control over all Auctions and Listings.
 - **Web API:** Enhancing the user experience with dynamic data updates.
-- **Real-world Data:** Seeded car makes and models and also all cities of Bulgaria.
+- **Responsive and dynamic design:** Real time updates on pages that need to stay up to date.
+- **Real-world Data:** Seeded car makes and models and also all cities of Bulgaria to the database.
 
 ## Details about some features
 
@@ -33,7 +51,7 @@
 - **Web API:** Enhancing the user experience and ensuring that the data presented is always up-to-date.
 - **Real-world Car Data:** Seeded to the Database, thanks to [TyresAddict](https://tiresaddict.com/help/databases/cars/)
 - **Real-world Cities Data:** The cities of Bulgaria seeded to the Database, thanks to [SimpleMaps](https://simplemaps.com/data/bg-cities)
-- **Background Jobs scheduling:** Auctions are ensured to begin at the desired StartTime and then end at the chosen EndTime thanks to background jobs scheduling. 
+- **Background Jobs scheduling:** Auctions are ensured to begin at the desired StartTime and then end at the chosen EndTime thanks to background jobs scheduling with Hangfire (the Hangfire dashboard is secured for Admin access only in production). 
 - **Real-Time dynamic refreshing:** Real-time refreshing with SignalR for the Auctions ensuring good user experience and instant refresh of pages when a change is being made.
 - **Real-Time Bidding system:** Real-Time bids with SignalR for the Auctions, only non-creator Users can bid to an Auction with amounts that meet the rules set by the Creator of the Auction.
 - **Email notifications:** Implemented SendGrid for email notifications on new registration and related to the user events in the application - for example, the Creator of the Auction is being notified on Auction End and users are getting notifications when a Listing they had added to their Favorites gets a price decrease by more than 4%.
@@ -50,8 +68,8 @@
 - **Admins can:** See all the active and deactivated Listings and Auctions in the Admin area and can modify them.
 - **Admins can:** See all the Users of the application and their online status.
 - **Admins can:** See, Create, Edit and SoftDelete the Categories of the Car features and also see, create, edit and softDelete all features of each Category.
-- **Admins can:** Create, Edit, Deactivate (SoftDelete) and Delete any Listing and Create, Edit, Deactivate (SoftDelete) or Delete any Auction at any time (Deactivating an Auction cancels the background jobs for that Auction if it's not started or is active and also removes all the bids that have been placed if there are any).
-- **Admins can:** Reactivate Auction after it ended (deleting all the bids if there are any) or Reactivate Auction that has been Deactivated.
+- **Admins can:** Create, Edit, Deactivate (SoftDelete) and Delete any Listing and Create, Edit, Deactivate (SoftDelete) or Delete any Auction at any time (Deactivating an Auction cancels the background jobs for that Auction if it's not started or is active and also removes all the bids that had been placed if there were any).
+- **Admins can:** Reactivate Auction after it ends (deleting all the bids if there were any) or Reactivate Auction that was Deactivated.
 
 ## Getting Started
 
@@ -64,67 +82,96 @@
 
 **1. Normal user**
    - Email: user77@gmail.com
-   - Password: user69
+      - Password: user69
+
 **2. Admin user**
    - Email: admin77@gmail.com
-   - Password: admin69
+      - Password: admin69
   
 ## Built With
 
 - The architecure of the **[ASP.NET MVC Template by Nikolay Kostov](https://github.com/NikolayIT/ASP.NET-Core-Template/tree/master)**
 - **.NET 6 and ASP NET CORE 6**: The backbone of the web application.
-- **SQL Server**: for the database
+- **SQL Server**: For the database
 - **Entity Framework Core 6** with LazyLoading: For robust database operations.
 - **CloudinaryDotNet**: Images uploading to cloud.
 - **Hangfire** with SQL Server: The scheduler providing the application with managing background jobs.
 - **SignalR**: For real-time changes and functionalities.
 - **AutoMapper**: Efficient object-object mapping.
-- **SendGrid**: for sending emails,
-- **HTML Sanitizer**: for sanitizing user-generated data before sending it to the database
+- **SendGrid**: For sending emails,
+- **HTML Sanitizer**: For sanitizing user-generated data before sending it to the database
 - **Recaptcha V3**,
-- **CsvHelper**: for seeding the database from .CSV files
-- **NUnit Testing Framework**: for UnitTesting,
-- **Moq**: for mocking dependencies,
-- **MoqQueryable.Moq**: for mocking collections for the Repositories,
+- **CsvHelper**: For seeding the database from .CSV files
+- **NUnit Testing Framework**: For UnitTesting,
+- **Moq**: For mocking dependencies,
+- **MoqQueryable.Moq**: For mocking collections for the Repositories,
 - **ByteSizeLib**
 - **Razor View syntax + Bootstrap 5 + CSS + VanillaJS**,
 - **JQuery**,
-- **SweetAlert 2**: for alerts to the users,
-- **Toastr**: for user notifications on interactions,
-- **FlatPickr**: for picking dates
+- **SweetAlert 2**: For alerts to the users,
+- **Toastr**: For user notifications on interactions,
+- **FlatPickr**: For picking dates
 
-## Demonstration GIFs and pictures
+## Demonstration with GIFs and pictures
 
-- Auction that has started, visited by logged-in user that is not the creator:
-![StartedAuctionVisitByNonCreatorUser](https://github.com/RadkoSS/RadCars/assets/94465605/b3cceedd-8537-4c91-9504-5def0483d4c6)
+- Auction that has started, visited by logged-in user that is not the creator: 
+- ![StartedAuctionVisitByNonCreatorUser](https://github.com/RadkoSS/RadCars/assets/94465605/b3cceedd-8537-4c91-9504-5def0483d4c6)
 
 - Making the first bid of an Auction:
-![MakingTheFirstBid](https://github.com/RadkoSS/RadCars/assets/94465605/1e2c9e27-0f3b-4774-b812-b4a51cc4dd79)
+- ![MakingTheFirstBid](https://github.com/RadkoSS/RadCars/assets/94465605/1e2c9e27-0f3b-4774-b812-b4a51cc4dd79)
 
 - Real-time refresh when someone else makes a bid on the Auction you are viewing:
-![WatchingBids](https://github.com/RadkoSS/RadCars/assets/94465605/b3cea2ec-897f-4ea0-91fe-5cc3237de9ff)
+- ![WatchingBids](https://github.com/RadkoSS/RadCars/assets/94465605/b3cea2ec-897f-4ea0-91fe-5cc3237de9ff)
 
 - Real-time refresh when someone wins the auction by placing by placing a price higher or equal to the Blitz price (if there is Blitz price):
-![winnerAnnounceByBlitzPrice](https://github.com/RadkoSS/RadCars/assets/94465605/b4f61a65-dd74-42c5-93df-9623d8df0e84)
+- ![winnerAnnounceByBlitzPrice](https://github.com/RadkoSS/RadCars/assets/94465605/b4f61a65-dd74-42c5-93df-9623d8df0e84)
 
 - Add and remove an Auction from Favorites
-![favoriteAndUnfavoriteAuction](https://github.com/RadkoSS/RadCars/assets/94465605/b036fcca-e987-4eb9-9e57-47c124169259)
+- ![favoriteAndUnfavoriteAuction](https://github.com/RadkoSS/RadCars/assets/94465605/b036fcca-e987-4eb9-9e57-47c124169259)
 
 - Marking an image for deletion when editing an Auction or a Listing:
-![markingAnImageForDeletionOnEdit](https://github.com/RadkoSS/RadCars/assets/94465605/81d85294-0d45-4196-b0f0-3f3ecaac7e2e)
+- ![markingAnImageForDeletionOnEdit](https://github.com/RadkoSS/RadCars/assets/94465605/81d85294-0d45-4196-b0f0-3f3ecaac7e2e)
 
 - Reverting changes when editing an Auction or a Listing (the image "marked" for deletion will not be deleted now):
-![revertingChangesOnEdit](https://github.com/RadkoSS/RadCars/assets/94465605/bb92c44b-2e65-45b3-923b-cc26da1aa61a)
+- ![revertingChangesOnEdit](https://github.com/RadkoSS/RadCars/assets/94465605/bb92c44b-2e65-45b3-923b-cc26da1aa61a)
 
 - Preview uploaded images when creating an Auction or a Listing:
-![imagePreviewOnUpload](https://github.com/RadkoSS/RadCars/assets/94465605/c50a1bed-a74d-4f4c-9c92-3203619a1437)
+- ![imagePreviewOnUpload](https://github.com/RadkoSS/RadCars/assets/94465605/c50a1bed-a74d-4f4c-9c92-3203619a1437)
 
+- All Listings view for normal user:
+- ![AllListings](https://github.com/RadkoSS/RadCars/assets/94465605/0e143fca-2074-4aa1-95af-450d8d22a69a)
+
+- All Auctions view for normal user:
+- ![AllAuctions](https://github.com/RadkoSS/RadCars/assets/94465605/c6bf5592-c102-4a41-9981-29d0de15d253)
+
+- All my active listings:
+- ![AllMyActiveListings](https://github.com/RadkoSS/RadCars/assets/94465605/0253c52e-e261-486e-a107-46815380fe94)
+
+- All my deactivated listings:
+- ![AllMyDeactivateListings](https://github.com/RadkoSS/RadCars/assets/94465605/a522f273-7c69-49d4-a8f4-39ec98303a37)
+
+- All my Favorite Listings:
+- ![AllFavoriteListings](https://github.com/RadkoSS/RadCars/assets/94465605/bd215806-9bd5-4ad9-b35a-4a31e1760432)
+
+- All my Active Auctions:
+- ![AllMyActiveAuctions](https://github.com/RadkoSS/RadCars/assets/94465605/951bce55-1d06-4cd2-8cc4-b61721bf6725)
+
+- All my Ended Auctions:
+- ![AllMyEndedAuctions](https://github.com/RadkoSS/RadCars/assets/94465605/a9a7505b-23bd-48c9-8349-2d80e3eed804)
+
+- Admin dashboard:
+- ![AdminIndexPage](https://github.com/RadkoSS/RadCars/assets/94465605/8e12f0ff-5d45-4221-8ad2-8ab3459c37a2)
+- ![AdminAllDeactivatedListings](https://github.com/RadkoSS/RadCars/assets/94465605/cf167af6-afac-4201-a01e-2d9d6d8366c0)
+- ![AdminAllDeactivatedAuctions](https://github.com/RadkoSS/RadCars/assets/94465605/5a3c9c12-f328-4338-b5ec-de40d2da586e)
+- ![AdminAllUsersLists](https://github.com/RadkoSS/RadCars/assets/94465605/ded60e3c-4039-458e-83e4-0e1624b3c836)
+- ![AdminAllFeatureCategories](https://github.com/RadkoSS/RadCars/assets/94465605/403e549d-cf80-4b26-b5ac-1527d6ab40e0)
+- ![AdminAllFeaturesOfCategory](https://github.com/RadkoSS/RadCars/assets/94465605/c3ca0b79-3721-47f1-81a8-355741f7dea4)
 
 ## Contributing
-- I welcome contributions from the community! If you'd like to contribute, please fork the repository and create a pull request. For major changes, open an issue first to discuss your proposed changes.
+- 🤝 I welcome contributions from the community! If you'd like to contribute, please fork the repository and create a pull request. For major changes, open an issue first to discuss your proposed changes.
 
 ## License
-- RadCars is licensed under the MIT License. See the LICENSE.md file for more details.
+- 📄 RadCars is licensed under the MIT License. See the LICENSE.md file for more details.
 
 ## Special Thanks
-- A heartfelt appreciation to SoftUni and all the lecturers for their invaluable guidance and support throughout the learning journey that led to the creation of this project.
+- 🙏 A heartfelt appreciation to SoftUni and all the lecturers for their invaluable guidance and support throughout the learning journey that led to the creation of this project.
