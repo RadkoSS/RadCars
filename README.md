@@ -16,7 +16,7 @@
 - [Demonstrations with GIFs and pictures](#demonstrations-with-gifs-and-pictures)
 - [Contributing](#contributing)
 - [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [Special Thanks](#special-thanks)
 
 ## Architecture of the project
 
@@ -168,10 +168,10 @@
 - ![AdminAllFeaturesOfCategory](https://github.com/RadkoSS/RadCars/assets/94465605/c3ca0b79-3721-47f1-81a8-355741f7dea4)
 
 ## Contributing
-- 🤝 I welcome contributions from the community! If you'd like to contribute, please fork the repository and create a pull request. For major changes, open an issue first to discuss your proposed changes.
+🤝 I welcome contributions from the community! If you'd like to contribute, please fork the repository and create a pull request. For major changes, open an issue first to discuss your proposed changes.
 
 ## License
-- 📄 RadCars is licensed under the MIT License. See the LICENSE.md file for more details.
+📄 RadCars is licensed under the MIT License. See the LICENSE.md file for more details.
 
 ## Special Thanks
-- 🙏 A heartfelt appreciation to SoftUni and all the lecturers for their invaluable guidance and support throughout the learning journey that led to the creation of this project.
+🙏 A heartfelt appreciation to SoftUni and all the lecturers for their invaluable guidance and support throughout the learning journey that led to the creation of this project.
