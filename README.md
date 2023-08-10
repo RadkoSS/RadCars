@@ -7,14 +7,14 @@
 
 ## 📌 Table of Contents
 
-- [🌟 Features Overview](#-features-overview)
-- [🌟 Details about some features](#-details-about-some-features)
-- [⛔ User permissions and functionalities](#-user-permissions-and-functionalities)
-- [🚀 Getting Started](#-getting-started)
-- [🛠️ Built With](#-built-with)
-- [📽️ Demonstrations with Pictures and GIFs](#-demonstration-pictures-and-gifs)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+- [🌟 Features Overview](#features-overview)
+- [🌟 Details about some features](#details-about-some-features)
+- [⛔ User permissions and functionalities](#user-permissions-and-functionalities)
+- [🚀 Getting Started](#getting-started)
+- [🛠️ Built With](#built-with)
+- [📽️ Demonstrations with Pictures and GIFs](#demonstration-pictures-and-gifs)
+- [🤝 Contributing](#contributing)
+- [📄 License](#license)
 - [🙏 Acknowledgments](#-acknowledgments)
 
 ## 🌟 Features Overview
