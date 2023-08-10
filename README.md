@@ -1,9 +1,9 @@
 # RadCars - ASP.NET CORE PROJECT
 
-- **RadCars** 🚗 is a cutting-edge car selling application designed to help users find the perfect car based on their preferences. Built with the latest technologies, RadCars aims to provide a seamless experience for both car enthusiasts and casual browsers.
+- **RadCars** 🚗 is a cutting-edge car sales application designed to help users find the perfect car based on their preferences. Built with the latest technologies, RadCars aims to provide a seamless experience for both car enthusiasts and casual browsers.
 
 ![HomePage](https://github.com/RadkoSS/RadCars/assets/94465605/b0e5b8a3-629a-4942-83ee-cd3dc45fd933)
-![HomePage](https://github.com/RadkoSS/RadCars/assets/94465605/d15e2958-d684-43bf-ad60-d495b303c987)
+![HomePage](https://github.com/RadkoSS/RadCars/assets/94465605/f5a5ac20-1dbb-4c2f-afd9-c44467dfd2d1)
 
 ## 📌 Table of Contents
 
@@ -31,8 +31,8 @@
 - **User Profiles:** Create listings and auctions, save your favorite listings so you get notified about price changes. You can add Auctions to favorites too! Users can place bids on auctions that have started.
 - **Areas separation:** There is an Administrator Area where Admins have full control over all the Auctions and Listings.
 - **Web API:** Enhancing the user experience and ensuring that the data presented is always up-to-date.
-- **Real-world Car Data:** Seeded to the Database, thanks to [TyresAddict(https://tiresaddict.com/help/databases/cars/)]
-- **Real-world Cities Data:** The cities of Bulgaria seeded to the Database, thanks to [SimpleMaps(https://simplemaps.com/data/bg-cities)]
+- **Real-world Car Data:** Seeded to the Database, thanks to [TyresAddict](https://tiresaddict.com/help/databases/cars/)
+- **Real-world Cities Data:** The cities of Bulgaria seeded to the Database, thanks to [SimpleMaps](https://simplemaps.com/data/bg-cities)
 - **Background Jobs scheduling:** Auctions are ensured to begin at the desired StartTime and then end at the chosen EndTime thanks to background jobs scheduling. 
 - **Real-Time dynamic refreshing:** Real-time refreshing with SignalR for the Auctions ensuring good user experience and instant refresh of pages when a change is being made.
 - **Real-Time Bidding system:** Real-Time bids with SignalR for the Auctions, only non-creator Users can bid to an Auction with amounts that meet the rules set by the Creator of the Auction.
@@ -62,7 +62,7 @@
 
 ## Built With 🛠️
 
-- The architecure of the **[ASP.NET MVC Template by Nikolay Kostov(https://github.com/NikolayIT/ASP.NET-Core-Template/tree/master)]**
+- The architecure of the **[ASP.NET MVC Template by Nikolay Kostov](https://github.com/NikolayIT/ASP.NET-Core-Template/tree/master)**
 - **.NET 6 and ASP NET CORE 6**: The backbone of the web application.
 - **SQL Server**: for the database
 - **Entity Framework Core 6** with LazyLoading: For robust database operations.
