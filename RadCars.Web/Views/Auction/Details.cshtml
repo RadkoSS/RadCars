@@ -245,7 +245,7 @@
                 <form id="bidForm" method="post">
                     <div class="form-group mb-2">
                         <label for="bidAmount" class="mb-2">Сума на наддаване</label>
-                        <input type="number" class="form-control" id="bidAmount" name="bidAmount" placeholder="Направете своето наддаване в лева (BGN)." min="@Model.CurrentHighestBid" step="@Model.MinimumBid" required>
+                        <input type="number" class="form-control" id="bidAmount" name="bidAmount" placeholder="Направете своето наддаване в лева (BGN)." min="@(Model.CurrentHighestBid == 0 ? Model.StartingPrice : Model.CurrentHighestBid)" step="@Model.MinimumBid" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Потвърди</button>
                 </form>

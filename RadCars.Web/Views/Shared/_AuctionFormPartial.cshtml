@@ -73,11 +73,11 @@
     <label asp-for="@Model.BlitzPrice" class="mb-1"></label>
     @if (Model.BlitzPrice.HasValue)
     {
-        <input asp-for="@Model.BlitzPrice" value="@Model.BlitzPrice.Value" placeholder="Въведете блиц цена в лева" id="blitz-price" class="form-control" required>
+        <input asp-for="@Model.BlitzPrice" value="@Model.BlitzPrice.Value" placeholder="Въведете блиц цена в лева" id="blitz-price" class="form-control">
     }
     else
     {
-        <input asp-for="@Model.BlitzPrice" value="" placeholder="Въведете блиц цена в лева" id="blitz-price" class="form-control" required>
+        <input asp-for="@Model.BlitzPrice" value="" placeholder="Въведете блиц цена в лева" id="blitz-price" class="form-control">
     }
     <span asp-validation-for="@Model.BlitzPrice" class="small text-danger"></span>
 </div>

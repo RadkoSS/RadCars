@@ -49,10 +49,10 @@ const startCountdown = () => {
         endCountdown();
     }
 
-    let days = Math.floor(difference / (60 * 60 * 24));
-    let hours = Math.floor((difference % (60 * 60 * 24)) / (60 * 60));
-    let minutes = Math.floor((difference % (60 * 60)) / 60);
-    let seconds = Math.floor(difference % 60);
+    const days = Math.floor(difference / (60 * 60 * 24));
+    const hours = Math.floor((difference % (60 * 60 * 24)) / (60 * 60));
+    const minutes = Math.floor((difference % (60 * 60)) / 60);
+    const seconds = Math.floor(difference % 60);
 
     daysElem.innerHTML = formatTime(days, "ден");
     hoursElem.innerHTML = formatTime(hours, "час");
@@ -93,7 +93,7 @@ const bidFormContainer = document.getElementById("bidFormContainer");
 let bidForm = document.getElementById("bidForm");
 let bidInput = document.getElementById("bidAmount");
 
-let lastHighestBid = bidInput && Number(bidInput.min);
+let lastHighestBid = bidInput && parseFloat(bidInput.min);
 let minimumStep = bidInput && Number(bidInput.step);
 
 if (bidForm) {
