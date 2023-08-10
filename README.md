@@ -1,4 +1,4 @@
-# RadCars - ASP.NET CORE PROJECT
+# 🚗 RadCars - ASP.NET CORE PROJECT
 
 - **RadCars** 🚗 is a cutting-edge car sales application designed to help users find the perfect car based on their preferences. Built with the latest technologies, RadCars aims to provide a seamless experience for both car enthusiasts and casual browsers.
 
@@ -23,7 +23,7 @@
 - **User Profiles:** Create listings, auctions, and save your favorites.
 - **Areas Separation:** Admins have full control over all Auctions and Listings.
 - **Web API:** Enhancing the user experience with dynamic data updates.
-- **Real-world Data:** Seeded car and city data.
+- **Real-world Data:** Seeded car makes and models and also all cities of Bulgaria.
 
 ## Details about some features
 
@@ -60,6 +60,15 @@
 - **Create a RadCarsHangfire database for the Background jobs storage**,
 - **Run the project!**
 
+## Test credentials
+
+**1. Normal user**
+   - Email: user77@gmail.com
+   - Password: user69
+**2. Admin user**
+   - Email: admin77@gmail.com
+   - Password: admin69
+  
 ## Built With
 
 - The architecure of the **[ASP.NET MVC Template by Nikolay Kostov](https://github.com/NikolayIT/ASP.NET-Core-Template/tree/master)**
@@ -84,9 +93,31 @@
 - **Toastr**: for user notifications on interactions,
 - **FlatPickr**: for picking dates
 
-## Demonstration pictures and GIFs
+## Demonstration GIFs and pictures
 
+- Auction that has started, visited by logged-in user that is not the creator:
+![StartedAuctionVisitByNonCreatorUser](https://github.com/RadkoSS/RadCars/assets/94465605/b3cceedd-8537-4c91-9504-5def0483d4c6)
 
+- Making the first bid of an Auction:
+![MakingTheFirstBid](https://github.com/RadkoSS/RadCars/assets/94465605/1e2c9e27-0f3b-4774-b812-b4a51cc4dd79)
+
+- Real-time refresh when someone else makes a bid on the Auction you are viewing:
+![WatchingBids](https://github.com/RadkoSS/RadCars/assets/94465605/b3cea2ec-897f-4ea0-91fe-5cc3237de9ff)
+
+- Real-time refresh when someone wins the auction by placing by placing a price higher or equal to the Blitz price (if there is Blitz price):
+![winnerAnnounceByBlitzPrice](https://github.com/RadkoSS/RadCars/assets/94465605/b4f61a65-dd74-42c5-93df-9623d8df0e84)
+
+- Add and remove an Auction from Favorites
+![favoriteAndUnfavoriteAuction](https://github.com/RadkoSS/RadCars/assets/94465605/b036fcca-e987-4eb9-9e57-47c124169259)
+
+- Marking an image for deletion when editing an Auction or a Listing:
+![markingAnImageForDeletionOnEdit](https://github.com/RadkoSS/RadCars/assets/94465605/81d85294-0d45-4196-b0f0-3f3ecaac7e2e)
+
+- Reverting changes when editing an Auction or a Listing (the image "marked" for deletion will not be deleted now):
+![revertingChangesOnEdit](https://github.com/RadkoSS/RadCars/assets/94465605/bb92c44b-2e65-45b3-923b-cc26da1aa61a)
+
+- Preview uploaded images when creating an Auction or a Listing:
+![imagePreviewOnUpload](https://github.com/RadkoSS/RadCars/assets/94465605/c50a1bed-a74d-4f4c-9c92-3203619a1437)
 
 
 ## Contributing
