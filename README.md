@@ -2,7 +2,8 @@
 
 - **RadCars** 🚗 is a cutting-edge car selling application designed to help users find the perfect car based on their preferences. Built with the latest technologies, RadCars aims to provide a seamless experience for both car enthusiasts and casual browsers.
 
-![Home page](https://github.com/RadkoSS/RadCars/assets/94465605/0fa9d03c-2629-49ab-a6c5-94eed7f8cb13)
+![HomePage](https://github.com/RadkoSS/RadCars/assets/94465605/b0e5b8a3-629a-4942-83ee-cd3dc45fd933)
+![HomePage](https://github.com/RadkoSS/RadCars/assets/94465605/d15e2958-d684-43bf-ad60-d495b303c987)
 
 ## 📌 Table of Contents
 
@@ -49,12 +50,11 @@
 - **Admins can:** See all the active and deactivated Listings and Auctions in the Admin area and can modify them.
 - **Admins can:** See all the Users of the application and their online status.
 - **Admins can:** See, Create, Edit and SoftDelete the Categories of the Car features and also see, create, edit and softDelete all features of each Category.
-- **Admins can:** Create, Edit, Deactivate (SoftDelete) and Delete any Listing and Create, Edit, Deactivate (SoftDelete) or Delete any Auction at any time (Deactivating an Auction cancels the background jobs for that Auction if it not started or is active and also removes all the bids that have been placed if there are any).
+- **Admins can:** Create, Edit, Deactivate (SoftDelete) and Delete any Listing and Create, Edit, Deactivate (SoftDelete) or Delete any Auction at any time (Deactivating an Auction cancels the background jobs for that Auction if it's not started or is active and also removes all the bids that have been placed if there are any).
 - **Admins can:** Reactivate Auction after it ended (deleting all the bids if there are any) or Reactivate Auction that has been Deactivated.
 
 ## Getting Started 🚀
 
-- Prerequisites:
 - **Update the secrets.json for both the RadCars web app, and the Web API**,
 - **Update-Database command**,
 - **Create a RadCarsHangfire database for the Background jobs storage**,
@@ -81,8 +81,8 @@
 - **Razor View syntax + Bootstrap 5 + CSS + VanillaJS**,
 - **JQuery**,
 - **SweetAlert 2**: for alerts to the users,
-- **Toastr**: for notifications,
-- **FlatPickr**: for picking dates,
+- **Toastr**: for user notifications on interactions,
+- **FlatPickr**: for picking dates
 
 ## Demonstration pictures and GIFs 📽️
 
