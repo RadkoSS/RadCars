@@ -17,7 +17,7 @@
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
 
-## Features Overview 🌟
+🌟 ## Features Overview
 
 - **Search Functionality:** Quickly find car Auctions and Listings based on various criteria.
 - **User Profiles:** Create listings, auctions, and save your favorites.
@@ -53,7 +53,7 @@
 - **Admins can:** Create, Edit, Deactivate (SoftDelete) and Delete any Listing and Create, Edit, Deactivate (SoftDelete) or Delete any Auction at any time (Deactivating an Auction cancels the background jobs for that Auction if it's not started or is active and also removes all the bids that have been placed if there are any).
 - **Admins can:** Reactivate Auction after it ended (deleting all the bids if there are any) or Reactivate Auction that has been Deactivated.
 
-## Getting Started 🚀
+🚀 ## Getting Started
 
 - **Update the secrets.json for both the RadCars web app, and the Web API**,
 - **Update-Database command**,
