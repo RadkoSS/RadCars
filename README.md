@@ -7,17 +7,17 @@
 
 ## 📌 Table of Contents
 
-- [🌟 Features Overview](#features-overview)
-- [🌟 Details about some features](#details-about-some-features)
-- [⛔ User permissions and functionalities](#user-permissions-and-functionalities)
-- [🚀 Getting Started](#getting-started)
-- [🛠️ Built With](#built-with)
-- [📽️ Demonstrations with Pictures and GIFs](#demonstration-pictures-and-gifs)
-- [🤝 Contributing](#contributing)
-- [📄 License](#license)
-- [🙏 Acknowledgments](#-acknowledgments)
+- [Features Overview](#features-overview)
+- [Details about some features](#details-about-some-features)
+- [User permissions and functionalities](#user-permissions-and-functionalities)
+- [Getting Started](#getting-started)
+- [Built With](#built-with)
+- [Demonstrations with Pictures and GIFs](#demonstration-pictures-and-gifs)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgments](#-acknowledgments)
 
-## 🌟 Features Overview
+## Features Overview
 
 - **Search Functionality:** Quickly find car Auctions and Listings based on various criteria.
 - **User Profiles:** Create listings, auctions, and save your favorites.
@@ -25,7 +25,7 @@
 - **Web API:** Enhancing the user experience with dynamic data updates.
 - **Real-world Data:** Seeded car and city data.
 
-## 🌟 Details about some features
+## Details about some features
 
 - **Search Functionality:** Quickly find car Auctions and Listings based on various criteria such as Car Make, Car Model, City, Engine Type, Description, Title, Total Mileage, Price range etc.
 - **User Profiles:** Create listings and auctions, save your favorite listings so you get notified about price changes. You can add Auctions to favorites too! Users can place bids on auctions that have started.
@@ -39,7 +39,7 @@
 - **Email notifications:** Implemented SendGrid for email notifications on new registration and related to the user events in the application - for example, the Creator of the Auction is being notified on Auction End and users are getting notifications when a Listing they had added to their Favorites gets a price decrease by more than 4%.
 - **Responsive design:** The application has a responsive design and is working well with different screen sizes.
 
-## ⛔ User permissions and functionalities
+## User permissions and functionalities
 
 - **Users can:** Create, Edit, Deactivate (SoftDelete) and Delete Listings that they have created.
 - **Users can:** Create, Edit and Deactivate (SoftDelete) Auction that they have created. They can Edit and Deactivate Auctions that have not yet started. Editing started Auction is not allowed, neither is Deactivating.
@@ -53,14 +53,14 @@
 - **Admins can:** Create, Edit, Deactivate (SoftDelete) and Delete any Listing and Create, Edit, Deactivate (SoftDelete) or Delete any Auction at any time (Deactivating an Auction cancels the background jobs for that Auction if it's not started or is active and also removes all the bids that have been placed if there are any).
 - **Admins can:** Reactivate Auction after it ended (deleting all the bids if there are any) or Reactivate Auction that has been Deactivated.
 
-## 🚀 Getting Started
+## Getting Started
 
 - **Update the secrets.json for both the RadCars web app, and the Web API**,
 - **Update-Database command**,
 - **Create a RadCarsHangfire database for the Background jobs storage**,
 - **Run the project!**
 
-## 🛠️ Built With
+## Built With
 
 - The architecure of the **[ASP.NET MVC Template by Nikolay Kostov](https://github.com/NikolayIT/ASP.NET-Core-Template/tree/master)**
 - **.NET 6 and ASP NET CORE 6**: The backbone of the web application.
@@ -84,16 +84,16 @@
 - **Toastr**: for user notifications on interactions,
 - **FlatPickr**: for picking dates
 
-## 📽️ Demonstration pictures and GIFs
+## Demonstration pictures and GIFs
 
 
 
 
-## 🤝 Contributing
+## Contributing
 - I welcome contributions from the community! If you'd like to contribute, please fork the repository and create a pull request. For major changes, open an issue first to discuss your proposed changes.
 
-## 📄 License
+## License
 - RadCars is licensed under the MIT License. See the LICENSE.md file for more details.
 
-## 🙏 Special Thanks
+## Special Thanks
 - A heartfelt appreciation to SoftUni and all the lecturers for their invaluable guidance and support throughout the learning journey that led to the creation of this project.
