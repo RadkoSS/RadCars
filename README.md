@@ -126,6 +126,14 @@
 - Real-time refresh when someone wins the auction by placing by placing a price higher or equal to the Blitz price (if there is Blitz price):
 - ![winnerAnnounceByBlitzPrice](https://github.com/RadkoSS/RadCars/assets/94465605/b4f61a65-dd74-42c5-93df-9623d8df0e84)
 
+- Emails sent to the Creators of the Auctions notifiying them about the outcome of their Auctions:
+- ![AuctionEndedEmailWithWinner](https://github.com/RadkoSS/RadCars/assets/94465605/362402c1-4153-4b69-bc52-7469d34533a7)
+
+- ![AuctionEndedEmailWithNoWinner](https://github.com/RadkoSS/RadCars/assets/94465605/a0891d7b-5b0f-45c1-985c-5a7967c32792)
+
+- Emails sent to users about a price decrease for a Listing they have in their favorites:
+- ![ListingPriceChangeEmail](https://github.com/RadkoSS/RadCars/assets/94465605/30ec39f9-3a7f-4266-a7b2-e6c704ac3925)
+
 - Add and remove an Auction from Favorites
 - ![favoriteAndUnfavoriteAuction](https://github.com/RadkoSS/RadCars/assets/94465605/b036fcca-e987-4eb9-9e57-47c124169259)
 
