@@ -3,6 +3,7 @@
 using System.Reflection;
 
 using Ganss.Xss;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 using Web.ViewModels.Home;
@@ -11,6 +12,7 @@ using Web.ViewModels.Auction;
 
 using static AuctionsSeeder;
 using static ApplicationUsersSeeder;
+using static Mapping.AutoMapperConfig;
 using static Common.ExceptionsAndNotificationsMessages;
 
 public class AuctionServiceTests

@@ -4,9 +4,9 @@ namespace RadCars.Services.Data;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 using Contracts;
-using Microsoft.EntityFrameworkCore;
 using RadCars.Data.Models.Entities;
 using RadCars.Data.Common.Contracts.Repositories;
 

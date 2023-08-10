@@ -3,6 +3,7 @@ namespace RadCars.Services.Data.Tests;
 using System.Reflection;
 
 using Ganss.Xss;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 using Web.ViewModels.Home;
@@ -11,7 +12,9 @@ using Web.ViewModels.Listing;
 
 using static ListingsSeeder;
 using static ApplicationUsersSeeder;
+using static Mapping.AutoMapperConfig;
 using static Common.ExceptionsAndNotificationsMessages;
+
 
 public class ListingServiceTests
 {

@@ -1,12 +1,15 @@
 ﻿namespace RadCars.Services.Data.Tests;
 
 using System.Reflection;
+
 using Microsoft.EntityFrameworkCore;
+
+using Web.ViewModels.Home;
 using Web.ViewModels.Feature;
 using Web.ViewModels.FeatureCategory;
-using Web.ViewModels.Home;
 
 using static CarData;
+using static Mapping.AutoMapperConfig;
 
 public class FeatureCategoryServiceTests
 {

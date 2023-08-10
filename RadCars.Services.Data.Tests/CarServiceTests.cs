@@ -5,6 +5,7 @@ using System.Reflection;
 using Web.ViewModels.Home;
 
 using static CarData;
+using static Mapping.AutoMapperConfig;
 
 public class CarServiceTests
 {
