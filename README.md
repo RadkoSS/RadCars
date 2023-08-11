@@ -73,19 +73,18 @@
 
 ## Getting Started
 
-- **Update the secrets.json for both the RadCars web app, and the Web API**,
+- **Update the secrets.json for both the RadCars web app and the Web API**,
 - **Update-Database command**,
-- **Create a RadCarsHangfire database for the Background jobs storage**,
 - **Run the project!**
 
 ## Test credentials
 
 **1. Normal user**
-   - Email: user77@gmail.com
+   - Email: user77@gmail.com or Username: tegav_admin
       - Password: user69
 
 **2. Admin user**
-   - Email: admin77@gmail.com
+   - Email: admin77@gmail.com or Username: tegav_user
       - Password: admin69
   
 ## Built With
