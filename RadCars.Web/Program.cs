@@ -81,13 +81,18 @@ builder.Services.AddResponseCaching();
 
 builder.Services.AddSignalR();
 
+await builder.Services.CreateHangfireDatabaseIfItDoesNotExistAsync(builder.Configuration);
+
 builder.Services.AddHangfire(hf => hf.UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireConnection")));
+
 builder.Services.AddHangfireServer();
 
 builder.Services.AddScoped<IBackgroundJobClient, BackgroundJobClient>();
 builder.Services.AddScoped<IAuctionBackgroundJobService, AuctionBackgroundJobService>();
 
 var app = builder.Build();
+
+await app.SeedAllDataAsync();
 
 if (app.Environment.IsDevelopment())
 {

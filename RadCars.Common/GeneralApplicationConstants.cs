@@ -20,14 +20,14 @@ public static class GeneralApplicationConstants
     public const string AdminRoleNormalizedName = "ADMINISTRATOR";
 
     public const string DevelopmentAdminEmail = "admin77@gmail.com";
-    public const string DevelopmentAdminNormalizedEmail = "ADMIN77@GMAIL.COM";
     public const string DevelopmentAdminUserName = "tegav_admin";
-    public const string DevelopmentAdminNormalizedUserName = "TEGAV_ADMIN";
+    public const string DevelopmentAdminPhoneNumber = "+359896969699";
+    public const string DevelopmentAdminPassword = "admin69";
 
     public const string DevelopmentUserEmail = "user77@gmail.com";
-    public const string DevelopmentUserNormalizedEmail = "USER77@GMAIL.COM";
+    public const string DevelopmentUserPhoneNumber = "+359896969999";
     public const string DevelopmentUserUserName = "tegav_user";
-    public const string DevelopmentUserNormalizedUserName = "TEGAV_USER";
+    public const string DevelopmentUserPassword = "user69";
 
     public const string SendGridSenderEmail = "radcars.bg@gmail.com";
     public const string SendGridSenderName = "RadCars";

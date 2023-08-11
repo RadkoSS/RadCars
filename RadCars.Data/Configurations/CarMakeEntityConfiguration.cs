@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using Models.Entities;
-using static Seeding.MakesSeeder;
 
 internal class CarMakeEntityConfiguration : IEntityTypeConfiguration<CarMake>
 {
@@ -13,7 +12,5 @@ internal class CarMakeEntityConfiguration : IEntityTypeConfiguration<CarMake>
         builder
             .HasMany(m => m.Models)
             .WithOne(m => m.CarMake);
-
-        builder.HasData(SeedMakes());
     }
 }

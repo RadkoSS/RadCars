@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using Models.Entities;
-using static Seeding.FeaturesSeeder;
 
 internal class FeatureEntityConfiguration : IEntityTypeConfiguration<Feature>
 {
@@ -14,7 +13,5 @@ internal class FeatureEntityConfiguration : IEntityTypeConfiguration<Feature>
             .HasOne(f => f.Category)
             .WithMany(c => c.Features)
             .HasForeignKey(f => f.CategoryId);
-
-        builder.HasData(SeedFeatures());
     }
 }

@@ -6,15 +6,15 @@ using SendGrid;
 using Ganss.Xss;
 using AutoMapper;
 using CloudinaryDotNet;
+using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Data;
 using Middlewares;
+using Data.Seeding;
 using ViewModels.Home;
-using Data.Models.User;
 using Services.Mapping;
 using Data.Repositories;
 using Services.Messaging;
@@ -22,8 +22,6 @@ using RadCars.Data.Common;
 using Services.Data.Contracts;
 using Services.Messaging.Contracts;
 using RadCars.Data.Common.Contracts.Repositories;
-
-using static Common.GeneralApplicationConstants;
 
 public static class WebApplicationBuilderExtensions
 {
@@ -97,41 +95,56 @@ public static class WebApplicationBuilderExtensions
             }
         });
 
-        //Register Sendgrid
+        //Register SendGrid
         services.AddSingleton<ISendGridClient>(new SendGridClient(configuration.GetSection("Authentication:SendGrid:ApiKey").Value));
         services.AddSingleton<IEmailSender, SendGridEmailSender>();
     }
 
     /// <summary>
-    /// This method seeds admin role if it does not exist.
-    /// Passed email should be valid email of existing user in the application.
+    /// This method creates the Hangfire database if it does not exist with the name specified in the Hangfire connection string.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    public static async Task CreateHangfireDatabaseIfItDoesNotExistAsync(this IServiceCollection services, IConfiguration configuration)
+    {
+        var hangfireDbName = configuration.GetConnectionString("HangfireConnection").Split(';', StringSplitOptions.RemoveEmptyEntries)[1].Split('=', StringSplitOptions.RemoveEmptyEntries)[1];
+
+        var masterConnectionString =
+            configuration.GetConnectionString("HangfireConnection").Replace(hangfireDbName, "master");
+
+        await using var connection = new SqlConnection(masterConnectionString);
+        await connection.OpenAsync();
+
+        const string query = @"
+         IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = @dbName) 
+                 BEGIN
+               DECLARE @sql NVARCHAR(40)
+                   SET @sql = N'CREATE DATABASE [' + @dbName + N']'
+                  EXEC sp_executesql @sql
+                   END";
+
+        //Secured from SQL injection, this query connects to **master** and creates the Hangfire database if it does not exist.
+        await using var command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@dbName", hangfireDbName);
+
+        await command.ExecuteNonQueryAsync();
+        await connection.CloseAsync();
+    }
+
+    /// <summary>
+    /// This method seeds all the data registered in the classes that implement the ISeeder interface on application startup.
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="email"></param>
-    /// <returns>IApplicationBuilder</returns>
-    public static async Task<IApplicationBuilder> SeedAdministratorAsync(this IApplicationBuilder app, string email)
+    public static async Task<IApplicationBuilder> SeedAllDataAsync(this IApplicationBuilder app)
     {
-        using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
+        using var serviceScope = app.ApplicationServices.CreateScope();
 
-        IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+        var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        UserManager<ApplicationUser> userManager =
-            serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        RoleManager<ApplicationRole> roleManager =
-            serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+        //Migrations should be applied with the package manager console or power shell. If you want automatic migration applying - uncomment this code:
+        //await dbContext.Database.MigrateAsync();
 
-        if (!await roleManager.RoleExistsAsync(AdminRoleName))
-        {
-            ApplicationRole role = new ApplicationRole(AdminRoleName);
-            await roleManager.CreateAsync(role);
-        }
-
-        ApplicationUser adminUser = await userManager.FindByEmailAsync(email);
-
-        if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, AdminRoleName))
-        {
-            await userManager.AddToRoleAsync(adminUser, AdminRoleName);
-        }
+        await new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider);
 
         return app;
     }

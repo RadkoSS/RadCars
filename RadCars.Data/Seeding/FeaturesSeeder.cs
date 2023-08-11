@@ -1,10 +1,25 @@
 ﻿namespace RadCars.Data.Seeding;
 
+using System;
+
+using Microsoft.EntityFrameworkCore;
+
+using Contracts;
 using Models.Entities;
 
-internal static class FeaturesSeeder
+internal class FeaturesSeeder : ISeeder
 {
-    internal static Feature[] SeedFeatures()
+    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+    {
+        if (await dbContext.Features.AnyAsync())
+        {
+            return;
+        }
+
+        await SeedFeaturesAsync(dbContext);
+    }
+
+    private static async Task SeedFeaturesAsync(ApplicationDbContext dbContext)
     {
         var features = new HashSet<Feature>();
 
@@ -13,7 +28,6 @@ internal static class FeaturesSeeder
         //Системи за безопасност
         feature = new Feature
         {
-            Id = 1,
             CategoryId = 1,
             Name = "Автоматичен контрол на стабилността"
         };
@@ -21,7 +35,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 2,
             CategoryId = 1,
             Name = "ABS - система против блокиране на колелата"
         };
@@ -29,7 +42,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 3,
             CategoryId = 1,
             Name = "Предни въздушни възглавници"
         };
@@ -37,7 +49,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 4,
             CategoryId = 1,
             Name = "Задни въздушни възглавници"
         };
@@ -45,7 +56,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 5,
             CategoryId = 1,
             Name = "Странични въздушни възглавници"
         };
@@ -53,7 +63,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 6,
             CategoryId = 1,
             Name = "EBD - разпределяне на спирачното усилие"
         };
@@ -61,7 +70,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 7,
             CategoryId = 1,
             Name = "Контрол на налягането на гумите"
         };
@@ -69,7 +77,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 8,
             CategoryId = 1,
             Name = "Парктроник"
         };
@@ -77,7 +84,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 9,
             CategoryId = 1,
             Name = "Система за защита от пробуксуване"
         };
@@ -85,7 +91,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 10,
             CategoryId = 1,
             Name = "Distronic - система за контрол на дистанцията"
         };
@@ -93,7 +98,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 11,
             CategoryId = 1,
             Name = "BAS - система за подпомагане на спирането"
         };
@@ -101,7 +105,6 @@ internal static class FeaturesSeeder
         
         feature = new Feature
         {
-            Id = 12,
             CategoryId = 1,
             Name = "Електронна програма за стабилизиране"
         };
@@ -109,7 +112,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 13,
             CategoryId = 1,
             Name = "Блокаж на диференциала"
         };
@@ -118,7 +120,6 @@ internal static class FeaturesSeeder
         //Системи за комфорт
         feature = new Feature
         {
-            Id = 14,
             CategoryId = 2,
             Name = "Старт/Стоп система"
         };
@@ -126,7 +127,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 15,
             CategoryId = 2,
             Name = "USB, audio/video, IN/AUX изводи"
         };
@@ -134,7 +134,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 16,
             CategoryId = 2,
             Name = "Ел. огледала"
         };
@@ -142,7 +141,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 17,
             CategoryId = 2,
             Name = "Ел. стъкла"
         };
@@ -150,7 +148,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 18,
             CategoryId = 2,
             Name = "Автоматични чистачки"
         };
@@ -158,7 +155,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 19,
             CategoryId = 2,
             Name = "Автоматични фарове"
         };
@@ -166,7 +162,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 20,
             CategoryId = 2,
             Name = "Ел. регулиране на окачването"
         };
@@ -174,7 +169,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 21,
             CategoryId = 2,
             Name = "Ел. регулиране на седалките"
         };
@@ -182,7 +176,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 22,
             CategoryId = 2,
             Name = "Ел. усилвател на волана"
         };
@@ -190,7 +183,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 23,
             CategoryId = 2,
             Name = "Климатик"
         };
@@ -198,7 +190,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 24,
             CategoryId = 2,
             Name = "Мултифункционален волан"
         };
@@ -206,7 +197,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 25,
             CategoryId = 2,
             Name = "Навигация"
         };
@@ -214,7 +204,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 26,
             CategoryId = 2,
             Name = "Подгев на предните седалките"
         };
@@ -222,7 +211,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 27,
             CategoryId = 2,
             Name = "Подгев на задните седалките"
         };
@@ -230,7 +218,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 28,
             CategoryId = 2,
             Name = "Регулиране на волана"
         };
@@ -238,7 +225,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 29,
             CategoryId = 2,
             Name = "Серво усилвател на волана"
         };
@@ -246,7 +232,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 30,
             CategoryId = 2,
             Name = "Система за измиване на фаровете"
         };
@@ -254,7 +239,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 31,
             CategoryId = 2,
             Name = "Круиз контрол"
         };
@@ -262,7 +246,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 32,
             CategoryId = 2,
             Name = "Хладилна жабка"
         };
@@ -270,7 +253,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 33,
             CategoryId = 2,
             Name = "Безключово палене"
         };
@@ -278,7 +260,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 34,
             CategoryId = 2,
             Name = "Bluetooth мултимедия"
         };
@@ -286,7 +267,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 35,
             CategoryId = 2,
             Name = "Stereo уредба"
         };
@@ -294,7 +274,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 40,
             CategoryId = 2,
             Name = "Ел. багажник"
         };
@@ -303,7 +282,6 @@ internal static class FeaturesSeeder
         //Системи за защита
         feature = new Feature
         {
-            Id = 36,
             CategoryId = 3,
             Name = "Аларма"
         };
@@ -311,7 +289,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 37,
             CategoryId = 3,
             Name = "Автокаско"
         };
@@ -319,7 +296,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 38,
             CategoryId = 3,
             Name = "Централно заключване"
         };
@@ -327,7 +303,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 39,
             CategoryId = 3,
             Name = "GPS проследяване"
         };
@@ -336,7 +311,6 @@ internal static class FeaturesSeeder
         //Платени разходи
         feature = new Feature
         {
-            Id = 41,
             CategoryId = 4,
             Name = "Годишен данък"
         };
@@ -344,7 +318,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 42,
             CategoryId = 4,
             Name = "Гражданска отговорност"
         };
@@ -352,7 +325,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 43,
             CategoryId = 4,
             Name = "Платен и преминат ГТП"
         };
@@ -360,7 +332,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 44,
             CategoryId = 4,
             Name = "Обслужени базови консумативи"
         };
@@ -368,7 +339,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 45,
             CategoryId = 4,
             Name = "Винетка"
         };
@@ -377,7 +347,6 @@ internal static class FeaturesSeeder
         //Вътрешни екстри
         feature = new Feature
         {
-            Id = 46,
             CategoryId = 5,
             Name = "Кожен салон"
         };
@@ -385,7 +354,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 47,
             CategoryId = 5,
             Name = "Алкантара салон"
         };
@@ -393,7 +361,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 48,
             CategoryId = 5,
             Name = "Тапициран таван"
         };
@@ -401,7 +368,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 49,
             CategoryId = 5,
             Name = "Кожени стелки"
         };
@@ -409,7 +375,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 50,
             CategoryId = 5,
             Name = "Гумени стелки"
         };
@@ -417,7 +382,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 51,
             CategoryId = 5,
             Name = "DVD"
         };
@@ -425,7 +389,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 52,
             CategoryId = 5,
             Name = "Поставки за чаши"
         };
@@ -433,7 +396,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 53,
             CategoryId = 5,
             Name = "Подлакатник с поставки"
         };
@@ -441,7 +403,6 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 54,
             CategoryId = 2,
             Name = "Масаж на предните седалки"
         };
@@ -449,12 +410,11 @@ internal static class FeaturesSeeder
 
         feature = new Feature
         {
-            Id = 55,
             CategoryId = 2,
             Name = "Масаж на задните седалки"
         };
         features.Add(feature);
 
-        return features.ToArray();
+        await dbContext.Features.AddRangeAsync(features);
     }
 }

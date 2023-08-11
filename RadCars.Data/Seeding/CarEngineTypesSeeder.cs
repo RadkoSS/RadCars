@@ -1,45 +1,52 @@
 ﻿namespace RadCars.Data.Seeding;
 
+using Microsoft.EntityFrameworkCore;
+
+using Contracts;
 using Models.Entities;
 
-internal static class CarEngineTypesSeeder
+internal class CarEngineTypesSeeder : ISeeder
 {
-    internal static EngineType[] SeedEngineTypes()
+    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+    {
+        if (await dbContext.EngineTypes.AnyAsync())
+        {
+            return;
+        }
+
+        await SeedEngineTypesAsync(dbContext);
+    }
+
+    private static async Task SeedEngineTypesAsync(ApplicationDbContext dbContext)
     {
         var engineTypes = new HashSet<EngineType>
         {
             new EngineType
             {
-                Id = 1,
                 Name = "Бензин"
             },
             new EngineType
             {
-                Id = 2,
                 Name = "Дизел"
             },
             new EngineType
             {
-                Id = 3,
                 Name = "Газ / Бензин"
             },
             new EngineType
             {
-                Id = 4,
                 Name = "Метан / Бензин"
             },
             new EngineType
             {
-                Id = 5,
                 Name = "Електрически"
             },
             new EngineType
             {
-                Id = 6,
                 Name = "Хибрид"
             }
         };
 
-        return engineTypes.ToArray();
+        await dbContext.EngineTypes.AddRangeAsync(engineTypes);
     }
 }

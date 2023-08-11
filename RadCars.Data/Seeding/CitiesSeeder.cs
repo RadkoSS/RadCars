@@ -1,16 +1,28 @@
 ﻿namespace RadCars.Data.Seeding;
 
+using Microsoft.EntityFrameworkCore;
+
+using Contracts;
 using Models.Entities;
 
 using static CsvData.BulgariaCitiesCsvReader;
 
-internal class CitiesSeeder
+internal class CitiesSeeder : ISeeder
 {
-    internal static City[] SeedBulgarianCities()
+    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+    {
+        if (await dbContext.Cities.AnyAsync())
+        {
+            return;
+        }
+
+        await SeedBulgarianCitiesAsync(dbContext);
+    }
+
+    private static async Task SeedBulgarianCitiesAsync(ApplicationDbContext dbContext)
     {
         var cities = new HashSet<City>();
         var idOfBulgaria = 1;
-        var cityId = 1;
 
         var bulgarianCitiesCsvData = ReadBulgarianCities();
 
@@ -18,7 +30,6 @@ internal class CitiesSeeder
         {
             var newCity = new City
             {
-                Id = cityId,
                 Name = cityName,
                 Latitude = latitude,
                 Longitude = longitude,
@@ -26,9 +37,8 @@ internal class CitiesSeeder
             };
 
             cities.Add(newCity);
-            cityId++;
         }
 
-        return cities.ToArray();
+        await dbContext.AddRangeAsync(cities);
     }
 }

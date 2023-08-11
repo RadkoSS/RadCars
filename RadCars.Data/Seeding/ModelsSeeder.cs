@@ -1,19 +1,34 @@
 ﻿namespace RadCars.Data.Seeding;
 
+using System;
+using System.Threading.Tasks;
+
+using Microsoft.EntityFrameworkCore;
+
+using Contracts;
 using Models.Entities;
 
 using static CsvData.CarMakesModelsCsvReader;
 
-internal static class ModelsSeeder
+internal class ModelsSeeder : ISeeder
 {
-    internal static CarModel[] SeedModels()
+    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+    {
+        if (await dbContext.CarModels.AnyAsync())
+        {
+            return;
+        }
+
+        await SeedModelsAsync(dbContext);
+    }
+
+    private static async Task SeedModelsAsync(ApplicationDbContext dbContext)
     {
         var modelEntities = new HashSet<CarModel>();
 
         var makesAndModels = ReadMakesAndModels();
 
         var makeId = 1;
-        var modelId = 1;
 
         foreach (var (makeName, models) in makesAndModels)
         {
@@ -21,18 +36,15 @@ internal static class ModelsSeeder
             {
                 var newModel = new CarModel
                 {
-                    Id = modelId,
                     Name = modelName,
                     CarMakeId = makeId
                 };
 
                 modelEntities.Add(newModel);
-
-                modelId++;
             }
             makeId++;
         }
 
-        return modelEntities.ToArray();
+        await dbContext.CarModels.AddRangeAsync(modelEntities);
     }
 }

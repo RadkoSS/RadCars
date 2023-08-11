@@ -1,10 +1,23 @@
 ﻿namespace RadCars.Data.Seeding;
 
+using Microsoft.EntityFrameworkCore;
+
+using Contracts;
 using Models.Entities;
 
-internal static class FeatureCategoriesSeeder
+internal class FeatureCategoriesSeeder : ISeeder
 {
-    internal static Category[] SeedFeatureCategories()
+    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+    {
+        if (await dbContext.Categories.AnyAsync())
+        {
+            return;
+        }
+
+        await SeedFeatureCategoriesAsync(dbContext);
+    }
+
+    private static async Task SeedFeatureCategoriesAsync(ApplicationDbContext dbContext)
     {
         var featureCategories = new HashSet<Category>();
 
@@ -12,39 +25,34 @@ internal static class FeatureCategoriesSeeder
 
         category = new Category
         {
-            Id = 1,
             Name = "Системи за безопасност"
         };
         featureCategories.Add(category);
 
         category = new Category
         {
-            Id = 2,
             Name = "Системи за комфорт"
         };
         featureCategories.Add(category);
 
         category = new Category
         {
-            Id = 3,
             Name = "Системи за защита"
         };
         featureCategories.Add(category);
 
         category = new Category
         {
-            Id = 4,
             Name = "Платени разходи"
         };
         featureCategories.Add(category);
 
         category = new Category
         {
-            Id = 5,
             Name = "Вътрешни екстри"
         };
         featureCategories.Add(category);
 
-        return featureCategories.ToArray();
+        await dbContext.Categories.AddRangeAsync(featureCategories);
     }
 }
