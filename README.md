@@ -73,7 +73,7 @@
 
 ## Getting Started
 
-- **Update the secrets.json for both the RadCars web app, and the Web API**,
+- **Update the secrets.json for both the RadCars web app and the Web API**,
 - **Update-Database command**,
 - **Run the project!**
 
