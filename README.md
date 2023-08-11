@@ -75,7 +75,6 @@
 
 - **Update the secrets.json for both the RadCars web app, and the Web API**,
 - **Update-Database command**,
-- **Create a RadCarsHangfire database for the Background jobs storage**,
 - **Run the project!**
 
 ## Test credentials
