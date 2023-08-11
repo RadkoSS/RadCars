@@ -114,7 +114,7 @@
 - **FlatPickr**: For picking dates
 
 ## Current Database diagram
--![CurrentDbDiagramOfRadCars](https://github.com/RadkoSS/RadCars/assets/94465605/f3317742-9303-4b0c-91e0-db3858f6835d)
+- ![CurrentDbDiagramOfRadCars](https://github.com/RadkoSS/RadCars/assets/94465605/f3317742-9303-4b0c-91e0-db3858f6835d)
 
 ## Demonstration with GIFs and pictures
 
