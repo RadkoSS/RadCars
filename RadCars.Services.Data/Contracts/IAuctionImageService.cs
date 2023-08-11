@@ -1,6 +1,7 @@
 ﻿namespace RadCars.Services.Data.Contracts;
 
 using Microsoft.AspNetCore.Http;
+
 using RadCars.Data.Models.Entities;
 
 public interface IAuctionImageService

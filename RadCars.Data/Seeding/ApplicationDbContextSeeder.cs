@@ -4,11 +4,11 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 using Contracts;
-using Microsoft.EntityFrameworkCore;
 
 public class ApplicationDbContextSeeder : ISeeder
 {

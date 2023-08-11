@@ -15,7 +15,6 @@ using static ApplicationUsersSeeder;
 using static Mapping.AutoMapperConfig;
 using static Common.ExceptionsAndNotificationsMessages;
 
-
 public class ListingServiceTests
 {
     //Use the instance of AutoMapper with its mapping configuration.
