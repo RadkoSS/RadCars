@@ -13,17 +13,19 @@
 - [User permissions and functionalities](#user-permissions-and-functionalities)
 - [Getting Started](#getting-started)
 - [Built With](#built-with)
+- [Current Database diagram](#current-database-diagram)
 - [Demonstrations with GIFs and pictures](#demonstrations-with-gifs-and-pictures)
 - [Contributing](#contributing)
 - [License](#license)
 - [Special Thanks](#special-thanks)
 
 ## Architecture of the project
-
+- The architecture of this project is inspired by the **[ASP.NET MVC Template by Nikolay Kostov](https://github.com/NikolayIT/ASP.NET-Core-Template/tree/master)**
+  
 - **[RadCars.Web](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Web)**: Contains the code for the web application with all the views, controllers, hubs, background job services, etc.
 - **[RadCars.Web.ViewModels](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Web.ViewModels)**: Contains all the view models and form models for the application.
 - **[RadCars.Api](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Api)**: Contains the code for the Web API.
-- **[RadCars.Data](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Data)**: Contains the configurations for all the entities, the implementations of the repositories and the DB context.
+- **[RadCars.Data](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Data)**: Contains the configurations for all the entities, the implementations of the repositories and the DB context and the seeding for the DB.
 - **[RadCars.Data.Models](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Data.Models)**: Contains all the entity classes for the application.
 - **[RadCars.Data.Common](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Data.Common)**: Provides abstract generics classes and interfaces, which hold information about the entities. Provides also interfaces for generic repositories - IDeletableEntityRepository and IRepository.
 - **[RadCars.Services.Data](https://github.com/RadkoSS/RadCars/tree/master/RadCars.Services.Data)**: Contains the business logic of the application, separated into different services.
@@ -60,7 +62,7 @@
 ## User permissions and functionalities
 
 - **Users can:** Create, Edit, Deactivate (SoftDelete) and Delete Listings that they have created.
-- **Users can:** Create, Edit and Deactivate (SoftDelete) Auction that they have created. They can Edit and Deactivate Auctions that have not yet started. Editing started Auction is not allowed, neither is Deactivating.
+- **Users can:** Create, Edit and Deactivate (SoftDelete) Auction that they have created. They can Edit and Deactivate Auctions that have not yet started. When Editing a pending Auction end time and start time are always being chose again. Editing started Auction is not allowed, neither is Deactivating.
 - **Users can:** Reactivate an Auction if it ended with no bids or they had previously deactivated before its start.
 - **Users and Admins can:** Add Listings and Auctions that they have not created to their collections of Favorites. There are to separated collections - one for Listings and one for Auctions - they can be found in the navigation "Моите: -> Обяви / Търгове -> Любими"
 - **Users and Admins can:** See their own active and deactivated Listings and Auctions. There are to separated collections - one for Listings and one for Auctions"
@@ -68,7 +70,7 @@
 - **Admins can:** See all the active and deactivated Listings and Auctions in the Admin area and can modify them.
 - **Admins can:** See all the Users of the application and their online status.
 - **Admins can:** See, Create, Edit and SoftDelete the Categories of the Car features and also see, create, edit and softDelete all features of each Category.
-- **Admins can:** Create, Edit, Deactivate (SoftDelete) and Delete any Listing and Create, Edit, Deactivate (SoftDelete) or Delete any Auction at any time (Deactivating an Auction cancels the background jobs for that Auction if it's not started or is active and also removes all the bids that had been placed if there were any).
+- **Admins can:** Create, Edit, Deactivate (SoftDelete) and Delete any Listing and Create, Edit, Deactivate (SoftDelete) or Delete any Auction at any time (Deactivating an Auction cancels the background jobs for that Auction if it's not started or is active and also removes all the bids that had been placed if there were any). Editing an Auction always requires choosing new start and end times.
 - **Admins can:** Reactivate Auction after it ends (deleting all the bids if there were any) or Reactivate Auction that was Deactivated.
 
 ## Getting Started
@@ -110,6 +112,9 @@
 - **SweetAlert 2**: For alerts to the users,
 - **Toastr**: For user notifications on interactions,
 - **FlatPickr**: For picking dates
+
+## Current Database diagram
+-![CurrentDbDiagramOfRadCars](https://github.com/RadkoSS/RadCars/assets/94465605/f3317742-9303-4b0c-91e0-db3858f6835d)
 
 ## Demonstration with GIFs and pictures
 
