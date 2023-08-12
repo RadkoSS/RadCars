@@ -121,13 +121,13 @@
 - Auction that has started, visited by logged-in user that is not the creator: 
 - ![StartedAuctionVisitByNonCreatorUser](https://github.com/RadkoSS/RadCars/assets/94465605/b3cceedd-8537-4c91-9504-5def0483d4c6)
 
-- Making the first bid of an Auction:
+- Making the first Bid of an Auction:
 - ![MakingTheFirstBid](https://github.com/RadkoSS/RadCars/assets/94465605/1e2c9e27-0f3b-4774-b812-b4a51cc4dd79)
 
-- Real-time refresh when someone else makes a bid on the Auction you are viewing:
+- Real-time refresh when someone else makes a Bid on the Auction you are viewing:
 - ![WatchingBids](https://github.com/RadkoSS/RadCars/assets/94465605/b3cea2ec-897f-4ea0-91fe-5cc3237de9ff)
 
-- Real-time refresh when someone wins the auction by placing by placing a price higher or equal to the Blitz price (if there is Blitz price):
+- Real-time refresh when someone wins the Auction by placing a Bid with amount higher or equal to the Blitz price (if there is a Blitz price set by the creator):
 - ![winnerAnnounceByBlitzPrice](https://github.com/RadkoSS/RadCars/assets/94465605/b4f61a65-dd74-42c5-93df-9623d8df0e84)
 
 - Emails sent to the Creators of the Auctions notifiying them about the outcome of their Auctions:
@@ -138,13 +138,13 @@
 - Emails sent to users about a price decrease for a Listing they have in their favorites:
 - ![ListingPriceChangeEmail](https://github.com/RadkoSS/RadCars/assets/94465605/30ec39f9-3a7f-4266-a7b2-e6c704ac3925)
 
-- Add and remove an Auction from Favorites
+- Add and remove an Auction from favorites
 - ![favoriteAndUnfavoriteAuction](https://github.com/RadkoSS/RadCars/assets/94465605/b036fcca-e987-4eb9-9e57-47c124169259)
 
 - Marking an image for deletion when editing an Auction or a Listing:
 - ![markingAnImageForDeletionOnEdit](https://github.com/RadkoSS/RadCars/assets/94465605/81d85294-0d45-4196-b0f0-3f3ecaac7e2e)
 
-- Reverting changes when editing an Auction or a Listing (the image "marked" for deletion will not be deleted now):
+- Reverting changes when editing an Auction or a Listing (the image "marked" for deletion now will not get deleted after submit):
 - ![revertingChangesOnEdit](https://github.com/RadkoSS/RadCars/assets/94465605/bb92c44b-2e65-45b3-923b-cc26da1aa61a)
 
 - Preview uploaded images when creating an Auction or a Listing:
@@ -156,19 +156,19 @@
 - All Auctions view for normal user:
 - ![AllAuctions](https://github.com/RadkoSS/RadCars/assets/94465605/c6bf5592-c102-4a41-9981-29d0de15d253)
 
-- All my active listings:
+- All my active Listings:
 - ![AllMyActiveListings](https://github.com/RadkoSS/RadCars/assets/94465605/0253c52e-e261-486e-a107-46815380fe94)
 
-- All my deactivated listings:
+- All my deactivated Listings:
 - ![AllMyDeactivateListings](https://github.com/RadkoSS/RadCars/assets/94465605/a522f273-7c69-49d4-a8f4-39ec98303a37)
 
-- All my Favorite Listings:
+- All my favorite Listings:
 - ![AllFavoriteListings](https://github.com/RadkoSS/RadCars/assets/94465605/bd215806-9bd5-4ad9-b35a-4a31e1760432)
 
-- All my Active Auctions:
+- All my active Auctions:
 - ![AllMyActiveAuctions](https://github.com/RadkoSS/RadCars/assets/94465605/951bce55-1d06-4cd2-8cc4-b61721bf6725)
 
-- All my Ended Auctions:
+- All my ended Auctions:
 - ![AllMyEndedAuctions](https://github.com/RadkoSS/RadCars/assets/94465605/a9a7505b-23bd-48c9-8349-2d80e3eed804)
 
 - Admin dashboard:
