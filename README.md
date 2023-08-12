@@ -82,11 +82,11 @@
 ## Test credentials
 
 **1. Normal user**
-   - Email: user77@gmail.com or Username: tegav_admin
+   - Email: user77@gmail.com or Username: tegav_user
       - Password: user69
 
 **2. Admin user**
-   - Email: admin77@gmail.com or Username: tegav_user
+   - Email: admin77@gmail.com or Username: tegav_admin
       - Password: admin69
   
 ## Built With
