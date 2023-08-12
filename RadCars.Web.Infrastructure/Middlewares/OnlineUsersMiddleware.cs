@@ -39,7 +39,14 @@ public class OnlineUsersMiddleware
                 // First login after being offline
                 userId = context.User.GetId()!;
 
-                context.Response.Cookies.Append(this.cookieName, userId, new CookieOptions { HttpOnly = true, MaxAge = TimeSpan.FromDays(30) });
+                context.Response.Cookies.Append(this.cookieName, userId, 
+                    new CookieOptions
+                    {
+                        HttpOnly = true,
+                        MaxAge = TimeSpan.FromDays(30),
+                        Secure = true,
+                        SameSite = SameSiteMode.None
+                    });
             }
 
             memoryCache.GetOrCreate(userId, cacheEntry =>
