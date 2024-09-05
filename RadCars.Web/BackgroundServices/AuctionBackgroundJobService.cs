@@ -35,7 +35,9 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 
     public async Task ScheduleAuctionStart(string auctionId)
     {
-        var auctionToSchedule = await this.auctionsRepository.All().Where(a => a.Id.ToString() == auctionId).FirstAsync();
+        var auctionIdGuid = Guid.Parse(auctionId);
+
+        var auctionToSchedule = await this.auctionsRepository.All().Where(a => a.Id == auctionIdGuid).FirstAsync();
 
         var dateOfInvoke = auctionToSchedule.StartTime - auctionToSchedule.CreatedOn;
 
@@ -48,7 +50,9 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 
     public async Task ScheduleAuctionEnd(string auctionId)
     {
-        var auctionToSchedule = await this.auctionsRepository.All().Where(a => a.Id.ToString() == auctionId).FirstAsync();
+        var auctionIdGuid = Guid.Parse(auctionId);
+
+        var auctionToSchedule = await this.auctionsRepository.All().Where(a => a.Id == auctionIdGuid).FirstAsync();
 
         var dateOfInvoke = auctionToSchedule.EndTime - auctionToSchedule.CreatedOn;
 
@@ -61,8 +65,10 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 
     public async Task StartAuction(string auctionId)
     {
+        var auctionIdGuid = Guid.Parse(auctionId);
+
         var auction = await this.auctionsRepository.All()
-            .Where(a => a.Id.ToString() == auctionId)
+            .Where(a => a.Id == auctionIdGuid)
             .FirstAsync();
 
         auction.IsOver = false;
@@ -77,8 +83,10 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 
     public async Task EndAuction(string auctionId)
     {
+        var auctionIdGuid = Guid.Parse(auctionId);
+
         var auction = await this.auctionsRepository.All()
-            .Where(a => a.Id.ToString() == auctionId)
+            .Where(a => a.Id == auctionIdGuid)
             .FirstAsync();
 
         auction.IsOver = true;
@@ -117,8 +125,10 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 
     public async Task RescheduleEditedAuctionStartAndEndAsync(string auctionId)
     {
+        var auctionIdGuid = Guid.Parse(auctionId);
+
         var editedAuction = await this.auctionsRepository.AllWithDeleted()
-            .Where(a => a.Id.ToString() == auctionId)
+            .Where(a => a.Id == auctionIdGuid)
             .FirstAsync();
 
         if (string.IsNullOrWhiteSpace(editedAuction.StartAuctionJobId) == false
@@ -157,8 +167,10 @@ public class AuctionBackgroundJobService : IAuctionBackgroundJobService
 
     public async Task CancelAuctionStartAndEnd(string auctionId)
     {
+        var auctionIdGuid = Guid.Parse(auctionId);
+
         var auction = await this.auctionsRepository.AllWithDeleted()
-            .Where(a => a.Id.ToString() == auctionId)
+            .Where(a => a.Id == auctionIdGuid)
             .FirstAsync();
 
         this.CancelBackgroundJob(auction.StartAuctionJobId!);
