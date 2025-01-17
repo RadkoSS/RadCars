@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="8.0.865" />
     <PackageReference Include="SendGrid" Version="9.28.1" />
   </ItemGroup>
 

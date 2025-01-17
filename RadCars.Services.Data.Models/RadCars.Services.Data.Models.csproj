@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="8.0.865" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RadCars.Web.ViewModels\RadCars.Web.ViewModels.csproj" />
   </ItemGroup>
 
