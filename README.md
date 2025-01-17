@@ -116,7 +116,7 @@
 ## Current Database diagram
 - ![CurrentDbDiagramOfRadCars](https://github.com/RadkoSS/RadCars/assets/94465605/f3317742-9303-4b0c-91e0-db3858f6835d)
 
-## Demonstration with GIFs and pictures
+## Demonstrations with GIFs and pictures
 
 - Auction that has started, visited by logged-in user that is not the creator: 
 - ![StartedAuctionVisitByNonCreatorUser](https://github.com/RadkoSS/RadCars/assets/94465605/b3cceedd-8537-4c91-9504-5def0483d4c6)
